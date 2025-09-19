@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aquatic Ecosystems - Part 2: Ecosystems & Assessment</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        .highlight {
+            background-color: #fde047; /* Tailwind yellow-200 */
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #6b7280;
+            margin-top: 0.5rem;
+        }
+        .text-content p, .text-content li {
+            text-align: left;
+        }
+        .quiz-option {
+            transition: background-color 0.2s ease-in-out;
+        }
+        .quiz-option.selected {
+            background-color: #dbeafe; /* Tailwind blue-100 */
+            border-color: #3b82f6; /* Tailwind blue-500 */
+        }
+        .quiz-option.correct {
+            background-color: #dcfce7; /* Tailwind green-100 */
+            border-color: #22c55e; /* Tailwind green-500 */
+        }
+        .quiz-option.incorrect {
+            background-color: #fee2e2; /* Tailwind red-100 */
+            border-color: #ef4444; /* Tailwind red-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen items-center justify-center p-4 sm:p-6 md:p-8">
+
+        <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 w-full max-w-4xl text-left">
+        
+                <nav class="mb-8">
+            <ul class="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 text-center">
+                <li><a href="part1.html" class="px-4 py-2 text-blue-500 font-semibold rounded-full hover:bg-blue-100 transition-colors duration-200">Part 1</a></li>
+                <li><a href="part2.html" class="px-4 py-2 bg-blue-500 text-white font-semibold rounded-full hover:bg-blue-600 transition-colors duration-200 shadow-md">Part 2</a></li>
+                <li><a href="part3.html" class="px-4 py-2 text-blue-500 font-semibold rounded-full hover:bg-blue-100 transition-colors duration-200">Part 3</a></li>
+            </ul>
+        </nav>
+        
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 border-b-4 border-blue-500 pb-2">Aquatic Ecosystems Textbook</h1>
+            <p class="text-lg text-gray-500 mt-2">A Comprehensive Guide to Water Resource Management</p>
+        </header>
+
+                <div class="text-content">
+            <section class="mb-8" id="part-2">
+                <h2 class="text-2xl font-semibold text-blue-600">Part 2: Aquatic Ecosystems and Their Assessment</h2>
+                <h3 class="text-lg font-bold text-gray-800 mt-4">Section 2.1: Water's Role in Ecosystems</h3>
+                
+                <p class="mt-2 text-gray-700 pl-4">Water is more than a simple compound; it is the very foundation of aquatic ecosystems. Aquatic organisms, from microscopic algae to large fish, have evolved to live within this medium, relying on its unique properties for survival. The distinction between <b>freshwater</b> and <b>marine</b> habitats, based primarily on salinity, creates vastly different environments that support unique communities of life.</p>
+                
+                <h3 class="text-lg font-bold text-gray-800 mt-4">Freshwater Ecosystems</h3>
+                <p class="mt-2 text-gray-700 pl-4">These ecosystems are characterized by their low salt concentration (typically less than 1%) and can be divided into two main categories: <b>lentic</b> (standing water) and <b>lotic</b> (flowing water). For a visual overview, you can watch this video: <a href="https://www.youtube.com/watch?v=SexLZIyo_FA" class="text-blue-500 hover:text-blue-700 underline" target="_blank">Types of Freshwater Ecosystems</a>.</p>
+                <ul class="list-disc list-inside mt-2 space-y-2 pl-4">
+                    <li>
+                        <b>Lakes & Ponds:</b> As lentic systems, these are bodies of still water. Their characteristics vary greatly by depth and light penetration, creating distinct zones.
+                        <div class="image-container">
+                            <img src="https://kascomarine.com/wp-content/uploads/C9_fig_9.3-aquatic-science-texas.jpg" alt="Diagram showing the distinct zones of a lake" class="rounded-lg shadow-md max-w-full h-auto w-3/4">
+                            <p class="image-caption">The distinct zones of a lake ecosystem, showing the littoral, limnetic, and profundal zones.</p>
+                        </div>
+                        
+                        <p class="mt-2 text-gray-700">Lakes and ponds are often stratified into distinct layers based on a combination of light penetration and temperature, which greatly influences the types of organisms that can live in each zone.</p>
+                        
+                        <h4 class="text-md font-bold text-gray-700 mt-4">Light Zones</h4>
+                        <p class="mt-2 text-gray-700">The availability of sunlight creates three primary zones based on how deeply light can penetrate the water column. The amount of light directly impacts the rate of photosynthesis and, consequently, the amount of dissolved oxygen available to aquatic life.</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>The <b>littoral zone</b> is the shallow area near the shore. It is often the most productive part of the lake, as sunlight reaches the bottom, allowing rooted aquatic plants and algae to thrive. This abundant plant life provides food and habitat for a wide variety of invertebrates, fish, and amphibians.</li>
+                            <li>The <b>limnetic zone</b> is the well-lit, open-water surface layer that extends as far down as sunlight can penetrate. It is dominated by floating organisms like phytoplankton, which form the base of the food web and produce a significant amount of the oxygen in the lake. Fish that prefer open water, such as trout and perch, are commonly found here.</li>
+                            <li>The <b>profundal zone</b> is the deep, dark, and cold area below the limnetic zone where little to no light can reach. Due to the lack of light, photosynthesis cannot occur. The organisms in this zone, such as fungi, bacteria, and specific types of fish, rely on decomposing organic matter that sinks from the zones above for their energy and nutrients.</li>
+                        </ul>
+                        
+                        <h4 class="text-md font-bold text-gray-700 mt-4">Temperature Zones (Thermal Stratification)</h4>
+                        <p class="mt-2 text-gray-700">During summer months, lakes with sufficient depth often form three distinct temperature layers, a process known as thermal stratification. This is due to water's unique property where its density changes with temperature, preventing mixing between the layers.</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>The <b>epilimnion</b> is the warm, sunlit, and well-mixed surface layer. It has the highest concentration of dissolved oxygen due to contact with the atmosphere and photosynthesis by algae. This is where most recreational activities occur, and it is a rich habitat for many fish and other aquatic animals.</li>
+                            <li>The <b>metalimnion</b> (or thermocline) is the middle layer, characterized by a sharp and rapid drop in temperature. This sudden change in temperature creates a density barrier that separates the upper and lower layers of the lake, preventing the transfer of nutrients and oxygen between them.</li>
+                            <li>The <b>hypolimnion</b> is the deepest and coldest layer of water. It remains at a consistently low temperature, typically around 4°C. This layer receives little to no sunlight, and oxygen levels are often low due to a lack of photosynthesis and the decomposition of organic matter.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b>Rivers & Streams:</b> As lotic systems, these are defined by their flowing water. The constant movement of the water creates higher concentrations of dissolved oxygen, supporting different species than those found in standing water. The characteristics of a river change from its source to its mouth, creating three distinct zones.
+                        <h4 class="text-md font-bold text-gray-700 mt-4">The River Continuum Concept</h4>
+                        <p class="mt-2 text-gray-700">Ecologists often describe rivers and streams in terms of a "continuum," where the physical and biological characteristics change progressively from the source to the mouth. This can be simplified into three primary zones, each with its own unique habitat.</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>The <b>Source Zone</b> is typically the narrow, fast-flowing headwater stream located at a high elevation. The water is cold, clear, and highly oxygenated due to its rapid movement and turbulence. These areas have low nutrient levels and are primarily fed by melting snow or groundwater. Organisms here are specialized for high-flow environments, such as algae that cling to rocks and fish like trout that are adapted to cold, fast-moving water.</li>
+                            <li>The <b>Transitional Zone</b> is found at a lower elevation where the stream widens and the gradient lessens. The water flow slows, it becomes warmer, and turbidity (cloudiness) increases as it picks up sediment. This zone supports a greater diversity of aquatic life, including a mix of cold-water and warm-water fish species, along with a variety of aquatic insects and submerged plants.</li>
+                            <li>The <b>Floodplain Zone</b> is the broad, slow-moving lower stretch of the river, often located at the lowest elevation before the river meets a larger body of water. The water is warmer, more turbid, and nutrient-rich. Dissolved oxygen levels can be lower here, making it a suitable habitat for warm-water fish like catfish and carp. The river's path may meander, and its wide floodplains support diverse wetland ecosystems.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <b>Wetlands:</b> These are areas of land saturated with water for at least part of the year. They are among the most biologically diverse and productive ecosystems on Earth. Their unique hydric soils (water-logged) and specific plant communities distinguish them from other habitats. Wetlands play a crucial role in water purification, flood control, and as critical habitats for a vast number of species.
+                        <h4 class="text-md font-bold text-gray-700 mt-4">Types of Wetlands</h4>
+                        <p class="mt-2 text-gray-700">Wetlands are classified into several types based on their water source, vegetation, and soil characteristics.</p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li><b>Marshes</b> are characterized by herbaceous, non-woody plants like grasses, reeds, and sedges. They are typically found along the edges of lakes and rivers, receiving nutrients from surface water flow. Marshes are excellent natural filters, trapping pollutants and improving water quality.</li>
+                            <li><b>Swamps</b> are forested wetlands dominated by woody plants such as trees and shrubs. They often occur in low-lying areas with slow-moving water, like river floodplains. Swamps are essential for flood control, as their dense vegetation can absorb large amounts of excess water.</li>
+                            <li><b>Bogs</b> are freshwater wetlands characterized by acidic, nutrient-poor conditions. Their primary water source is precipitation, not groundwater or runoff. Bogs are known for their thick layers of sphagnum moss and decaying plant matter (peat). The low oxygen and high acidity of bogs prevent decomposition, making them unique carbon sinks.</li>
+                            <li><b>Fens</b> are similar to bogs but receive water and nutrients from groundwater and surface runoff, making them less acidic and more biologically diverse. They are typically dominated by grasses, sedges, and wildflowers. Fens are also known for their ability to store carbon and support a unique collection of plant and animal species.</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold text-gray-800 mt-4">Marine Ecosystems</h3>
+                <p class="mt-2 text-gray-700 pl-4">Covering over 70% of the Earth's surface, marine ecosystems are defined by their high salt content. They are home to a vast diversity of life and are crucial for global climate regulation and oxygen production.</p>
+                <p class="mt-2 text-gray-700 pl-4">Marine organisms can be categorized into three main groups based on how they move and where they live in the water column: **plankton**, **nekton**, and **benthos**. </p>
+                <ul class="list-disc list-inside mt-2 space-y-2 pl-4">
+                    <li><b>Plankton:</b> These organisms are typically microscopic and cannot swim against the current. They are passive drifters, forming the base of the marine food web. **Phytoplankton**, like algae, are producers that perform photosynthesis, while **zooplankton** are tiny animals that feed on phytoplankton.</li>
+                    <li><b>Nekton:</b> This group includes all marine animals that are free-swimming and can actively move through the water, regardless of the current. Examples include fish, whales, dolphins, seals, and squid. They are often found in the open ocean but can also inhabit coastal areas and estuaries.</li>
+                    <li><b>Benthos:</b> These are organisms that live on or in the bottom of the sea floor, from shallow coastal zones to the deepest parts of the ocean. The diversity of the benthos is immense and includes a wide range of life forms, such as crabs, clams, sea stars, lobsters, and deep-sea worms.</li>
+                    <li><b>Oceans & Open Ocean:</b> The open ocean, or <b>pelagic zone</b>, is divided into distinct vertical layers based on depth and light penetration. The <b>epipelagic zone</b> is the sunlit surface layer where most photosynthesis occurs. Below this are the <b>mesopelagic</b> (twilight), <b>bathypelagic</b> (dark), and <b>abyssopelagic</b> (abyss) zones, where life forms are adapted to increasing pressure, cold temperatures, and the absence of light, often using bioluminescence to survive.</li>
+                    <li>
+                        <b>Coral Reefs:</b> Often called the "rainforests of the sea," these are highly biodiverse ecosystems found in warm, shallow waters. The coral itself is a living organism with a symbiotic relationship with algae, providing habitat and food for about 25% of all marine species.
+                        <p class="mt-2 text-gray-700">Coral reefs are primarily located in the tropics and subtropics, within a narrow band generally between <span class="highlight">30° North and 30° South latitude</span>. This is because they require specific conditions to thrive: warm, shallow, and clear water with ample sunlight. The most famous example is the Great Barrier Reef in Australia.</p>
+                        <p class="mt-2 text-gray-700">The unique foundation of a coral reef is the <b>coral polyp</b>, a tiny invertebrate animal. These polyps live in a symbiotic relationship with microscopic algae called <b>zooxanthellae</b>. The coral provides a protected home for the algae, and in return, the algae use photosynthesis to produce energy-rich sugars that feed the coral. This relationship is crucial for the coral's survival and growth.</p>
+                        <p class="mt-2 text-gray-700">Over time, as coral polyps grow and die, they secrete a hard, stony skeleton made of <b>calcium carbonate</b>. These skeletons accumulate and fuse together, building the massive, three-dimensional structures that form the reef. This complex habitat provides countless nooks and crannies that serve as shelter, nurseries, and hunting grounds for a staggering variety of marine organisms. The reef's structure can protect coastlines from erosion and provide a safe harbor for marine life to flourish.</p>
+                        <p class="mt-2 text-gray-700">The term <b>"rainforest of the sea"</b> is a powerful metaphor used to describe the incredible biodiversity of coral reefs. Like their terrestrial counterparts, these ecosystems support a disproportionately high number of species. While they occupy less than 1% of the ocean floor, they are home to about 25% of all known marine species, including thousands of fish, invertebrate, and plant species. This immense variety and productivity make them vital to the health of the global ocean and the economies of coastal communities that depend on them for tourism and fisheries.</p>
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold text-gray-800 mt-4">The Transition Zone: Estuaries</h3>
+                <p class="mt-2 text-gray-700 pl-4">An estuary is a unique and highly productive coastal body of water where freshwater from rivers and streams mixes with salt water from the ocean. This creates a challenging and dynamic environment with fluctuating salinity, temperature, and depth. Organisms in estuaries, such as crabs, oysters, and many species of fish, must be highly adaptable to these conditions.</p>
+                
+                <h4 class="text-md font-bold text-gray-700 mt-4 pl-4">Key Characteristics of an Estuary</h4>
+                <ul class="list-disc list-inside ml-4 space-y-1 pl-4">
+                    <li>The defining characteristic of an estuary is the presence of <b>brackish water</b>, a mixture of freshwater and saltwater. The salinity of an estuary can fluctuate daily with the tides, which makes it a challenging and dynamic environment for the organisms that live there.</li>
+                    <li>Estuaries are known for their <b>high productivity</b>. The mixing of nutrient-rich freshwater runoff from land with nutrient-rich saltwater from the ocean creates an ideal environment for algae and other producers, which in turn support a complex food web.</li>
+                    <li>Due to their high productivity and sheltered nature, estuaries serve as a critical <b>nursery habitat</b>. Many commercially important fish and shellfish species, such as shrimp, crabs, and flounder, use estuaries as breeding grounds and as a protected place for their young to grow before moving to the open ocean.</li>
+                </ul>
+
+                <h3 class="text-lg font-bold text-gray-800 mt-4">Section 2.2: The Importance of a Watershed: A Case Study of the South Saskatchewan River Watershed</h3>
+                <p class="mt-2 text-gray-700 pl-4">A <b>watershed</b> is a land area that channels rainfall and snowmelt to creeks, streams, and rivers, and eventually to outflow points such as reservoirs, bays, and the ocean. Every landmass on Earth, no matter how small, is part of a watershed. The health of a watershed directly impacts the health of the aquatic ecosystems within it. To illustrate this concept on a large scale, we can examine the **South Saskatchewan River watershed**. It is an immense system that drains a vast area of the Canadian prairies, with its headwaters in the Rocky Mountains of Alberta and its lower reaches extending into Saskatchewan and Manitoba.</p>
+                
+                <p class="mt-2 text-gray-700 pl-4">The watershed is a critical resource for millions of people and a key driver of the regional economy, providing water for drinking, agriculture, industry, and hydroelectric power. However, its health is under constant threat from various human activities.</p>
+                <p class="mt-2 text-gray-700 pl-4">To truly understand the interconnectedness of this system, consider the journey of water from Okotoks, Alberta, to Eatonia, Saskatchewan. Runoff from the foothills around Okotoks feeds into the Sheep River, which then flows into the Highwood River and eventually into the Bow River. The Bow River then joins the Oldman River to form the South Saskatchewan River. The water continues its long journey eastward, passing through many communities, before reaching places like Eatonia. This illustrates how the quality of water in Eatonia is directly influenced by the activities of upstream communities, industries, and agricultural operations in Alberta, underscoring the vital, shared nature of the watershed.</p>
+                <ul class="list-disc list-inside mt-2 space-y-2 pl-4">
+                    <li><b>Agricultural Runoff:</b> The prairie region is dominated by agriculture. Runoff from farms carries fertilizers and pesticides into local streams and rivers. This can lead to a phenomenon known as <a href="#eutrophication">eutrophication</a>, where excess nutrients cause algal blooms that can deplete dissolved oxygen and harm aquatic life.</li>
+                    <li><b>Urban and Industrial Impacts:</b> Major cities like Calgary, Medicine Hat, and Saskatoon are located within the watershed. Municipal and industrial wastewater discharges, even when treated, can introduce pollutants into the river system.</li>
+                    <li><b>Climate Change:</b> The watershed's primary water source is snowmelt from the Rocky Mountains. Climate change threatens this supply, leading to less predictable runoff, more frequent floods or droughts, and warmer water temperatures that can stress aquatic species.</li>
+                </ul>
+            </section>
+
+            <section class="mb-8" id="part-2-3">
+                <h3 class="text-lg font-bold text-gray-800 mt-4">Section 2.3: The 8 Key Ecological Functions of Riparian Zones</h3>
+                <p class="mt-2 text-gray-700 pl-4">A <b>riparian zone</b> is the area of land that runs along the banks of a river, stream, lake, or wetland. These zones act as a critical transition between the aquatic environment and the surrounding upland landscape. On the Canadian prairies, where a vast, open landscape is the norm, these green corridors are exceptionally important for both biodiversity and water quality. While they are often the only forested or heavily vegetated areas for miles, they provide essential habitat for wildlife and act as a natural filter for the prairie ecosystem. The health of a riparian zone is directly linked to the health of the water body it borders, and its functions are vital for a healthy, balanced ecosystem. </p>
+
+                <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4 pl-4">
+                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="py-3 px-6">Function</th>
+                                <th scope="col" class="py-3 px-6">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Water Filtration</td>
+                                <td class="py-4 px-6">The dense, complex root systems of riparian vegetation act as natural filters, trapping sediment, nutrients, and pollutants like pesticides from surface runoff before they can enter the adjacent water body. This filtering process prevents sediment from smothering fish spawning beds and prevents nutrient pollution from causing harmful algal blooms.</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Bank Stabilization</td>
+                                <td class="py-4 px-6">The extensive root networks of riparian plants bind soil together, which stabilizes stream and river banks and protects them from erosion. By holding the soil in place, this function helps maintain the natural shape of the channel and reduces sediment entering the water.</td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Flood Control</td>
+                                <td class="py-4 px-6">During periods of heavy rainfall or snowmelt, riparian zones act as natural sponges that absorb and store excess water. The vegetation reduces the velocity of floodwaters, decreases downstream flood risk, and minimizes soil erosion.</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Temperature Regulation</td>
+                                <td class="py-4 px-6">Overhanging trees and shrubs provide shade over water bodies, which helps regulate water temperature. By keeping water cooler, the vegetation increases the amount of dissolved oxygen available for aquatic life, which is crucial for the survival of many fish and invertebrate species.</td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Biodiversity and Habitat Support</td>
+                                <td class="py-4 px-6">As transitional areas between aquatic and terrestrial ecosystems, riparian zones are hotspots for biodiversity. They offer food, shelter, migration corridors, and breeding and rearing grounds for a wide variety of species, including fish, amphibians, birds, and mammals.</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b dark:bg-gray-900 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Groundwater Recharge</td>
+                                <td class="py-4 px-6">Riparian vegetation slows the flow of surface water, allowing it more time to seep into the soil and replenish underground water reserves. This groundwater can then seep back into streams during dry periods, helping to maintain a consistent flow.</td>
+                            </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">Support for Aquatic Food Webs</td>
+                                <td class="py-4 px-6">Riparian vegetation supplies streams and rivers with organic matter, such as fallen leaves, branches, and woody debris. This material is a vital food source for aquatic invertebrates, forming the base of a critical food
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
