@@ -15,31 +15,34 @@
     header {
       background-color: rgba(255, 255, 255, 0.85);
       padding: 2rem;
- font-size: 2.5rem;
+      text-align: center;
       color: #3e5c3a;
     }
     header p {
       font-size: 1.2rem;
       color: #5a7d5a;
     }
-    nav {
+    .button-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       margin: 2rem;
       gap: 1rem;
     }
-    nav a {
-      background-color: rgba(255, 255, 255, 0.9);
+    .button-container a {
+      background-color: #e6f2e6;
       padding: 1rem 2rem;
       text-decoration: none;
       color: #3e5c3a;
+      border: 2px solid #c2d6c2;
       border-radius: 8px;
+      font-weight: bold;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    nav a:hover {
+    .button-container a:hover {
       background-color: #dbead3;
+      transform: scale(1.05);
     }
     footer {
       text-align: center;
@@ -56,20 +59,17 @@
     <p>Explore the chapters below to dive into key environmental topics</p>
   </header>
 
-  <nav>
-    chapter1.htmlChapter 1: Introduction</a>
-    chapter2.htmlChapter 2: Ecosystems</a>
-    #Chapter 3: Climate Change</a>
+  <div class="button-container">
+    part1.htmlHydrologic Cycle</a>
+    <a href="part2.htmlcosystems Overview</a>
+    <a hrefr 3: Climate Change</a>
     #Chapter 4: Sustainability</a>
-    #Chapter 5: Human Impact</a>
-    #Chapter 6: Future Solutions</a>
-  </nav>
+    <a hrefr 5: Human Impact</a>
+    <a hrefr 6: Future Solutions</a>
+  </div>
 
   <footer>
     &copy; 2025 Scott Carey | Environmental Science 20 Digital Textbook
   </footer>
 </body>
 </html>
-
-</html>
-
