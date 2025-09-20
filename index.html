@@ -1,75 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Environmental Science 20</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
-      background-size: cover;
-      color: #2e3d2f;
-    }
-    header {
-      background-color: rgba(255, 255, 255, 0.85);
-      padding: 2rem;
-      text-align: center;
-      color: #3e5c3a;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #5a7d5a;
-    }
-    .button-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 2rem;
-      gap: 1rem;
-    }
-    .button-container a {
-      background-color: #e6f2e6;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      color: #3e5c3a;
-      border: 2px solid #c2d6c2;
-      border-radius: 8px;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .button-container a:hover {
-      background-color: #dbead3;
-      transform: scale(1.05);
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.85);
-      font-size: 0.9rem;
-      color: #4a5f4a;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Science 20 Textbook</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <h1>Environmental Science 20</h1>
-    <p>Explore the chapters below to dive into key environmental topics</p>
-  </header>
-
-  <div class="button-container">
-    part1.htmlHydrologic Cycle</a>
-    <a href="part2.htmlcosystems Overview</a>
-    <a hrefr 3: Climate Change</a>
-    #Chapter 4: Sustainability</a>
-    <a hrefr 5: Human Impact</a>
-    <a hrefr 6: Future Solutions</a>
-  </div>
-
-  <footer>
-    &copy; 2025 Scott Carey | Environmental Science 20 Digital Textbook
-  </footer>
+<body class="p-4 bg-stone-100">
+    <div class="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full text-center">
+        <h1 class="text-3xl font-bold text-stone-900 mb-6">Environmental Science 20 Textbook</h1>
+        <div class="space-y-4">
+            <!-- Button for the Hydrologic Cycle -->
+            <a href="part1.html" class="block w-full px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg shadow-md hover:bg-amber-700 transition duration-300 transform hover:scale-105">
+                Hydrologic Cycle
+            </a>
+            
+            <!-- Button for Types of Aquatic Ecosystems -->
+            <a href="part2.html" class="block w-full px-6 py-3 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
+                Types of Aquatic Ecosystems
+            </a>
+        </div>
+    </div>
 </body>
 </html>
