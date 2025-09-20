@@ -19,18 +19,115 @@
 </head>
 <body class="p-4 bg-stone-100">
     <div class="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full text-center">
-        <h1 class="text-3xl font-bold text-stone-900 mb-6">Environmental Science 20 Textbook</h1>
-        <div class="space-y-4">
-            <!-- Button for the Hydrologic Cycle -->
-            <a href="part1.html" class="block w-full px-6 py-3 bg-amber-600 text-white font-semibold rounded-lg shadow-md hover:bg-amber-700 transition duration-300 transform hover:scale-105">
-                Hydrologic Cycle
-            </a>
-            
-            <!-- Button for Types of Aquatic Ecosystems -->
-            <a href="part2.html" class="block w-full px-6 py-3 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
-                Types of Aquatic Ecosystems
-            </a>
+        <h1 class="text-3xl font-bold text-stone-900 mb-8">Environmental Science 20 Textbook</h1>
+        
+        <!-- Search Functionality -->
+        <div class="mb-8">
+            <form id="searchForm" class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="searchInput" placeholder="Search the textbook..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                <button type="submit" class="px-6 py-2 bg-stone-700 text-white font-semibold rounded-lg shadow-md hover:bg-stone-800 transition duration-300">Search</button>
+            </form>
+            <div id="messageBox" class="mt-2 text-sm text-red-500"></div>
+            <div id="results" class="mt-4 text-left"></div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold text-stone-700 mb-4">Aquatic Ecosystems</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Row for Hydrologic Cycle -->
+                <a href="part1.html" class="p-4 bg-amber-600 text-white font-semibold rounded-lg shadow-md hover:bg-amber-700 transition duration-300 transform hover:scale-105">
+                    Hydrologic Cycle
+                </a>
+                
+                <!-- Row for Types of Aquatic Ecosystems -->
+                <a href="part2.html" class="p-4 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
+                    Types of Aquatic Ecosystems
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-2xl font-semibold text-stone-700 mb-4">Terrestrial Ecosystems</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Placeholder row -->
+                <div class="p-4 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md">
+                    More chapters coming soon...
+                </div>
+            </div>
         </div>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchForm = document.getElementById('searchForm');
+            const searchInput = document.getElementById('searchInput');
+            const messageBox = document.getElementById('messageBox');
+            const resultsDiv = document.getElementById('results');
+
+            const textbookPages = [
+                {
+                    title: 'Hydrologic Cycle',
+                    url: 'https://scareysci.github.io/envsci20textbook/part1.html',
+                    content: ''
+                },
+                {
+                    title: 'Types of Aquatic Ecosystems',
+                    url: 'https://scareysci.github.io/envsci20textbook/part2.html',
+                    content: ''
+                }
+            ];
+
+            const fetchAllContent = async () => {
+                try {
+                    messageBox.textContent = 'Loading content for search...';
+                    const fetchPromises = textbookPages.map(async (page) => {
+                        const response = await fetch(page.url);
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const text = await response.text();
+                        // Extract content from within the body tags
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(text, 'text/html');
+                        page.content = doc.body.textContent || '';
+                    });
+                    await Promise.all(fetchPromises);
+                    messageBox.textContent = ''; // Clear message after loading
+                } catch (error) {
+                    console.error('Failed to fetch pages:', error);
+                    messageBox.textContent = 'Error loading content for search.';
+                }
+            };
+
+            fetchAllContent();
+
+            searchForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                resultsDiv.innerHTML = '';
+                messageBox.textContent = '';
+                
+                if (searchTerm === '') {
+                    messageBox.textContent = 'Please enter a search term.';
+                    return;
+                }
+
+                let foundResults = false;
+                textbookPages.forEach(page => {
+                    if (page.content.toLowerCase().includes(searchTerm)) {
+                        foundResults = true;
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'p-2 bg-stone-100 rounded-lg mb-2';
+                        resultItem.innerHTML = `<a href="${page.url}" class="font-semibold text-lime-800 hover:underline">${page.title}</a>`;
+                        resultsDiv.appendChild(resultItem);
+                    }
+                });
+
+                if (!foundResults) {
+                    messageBox.textContent = 'No matching results found.';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
