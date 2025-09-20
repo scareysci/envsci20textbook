@@ -100,7 +100,7 @@
             </section>
             
             <div class="flex justify-center mb-8">
-                <button id="quiz-button" data-toggle="modal" data-target="freshwater-quiz" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                <button id="quiz-button" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
                     Start the Freshwater Ecosystems Quiz!
                 </button>
             </div>
@@ -185,7 +185,7 @@
                                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                                     <td class="py-3 px-6 text-left whitespace-nowrap font-medium">Support for Aquatic Food Webs</td>
                                     <td class="py-3 px-6 text-left">Riparian vegetation supplies streams and rivers with organic matter, such as fallen leaves, branches, and woody debris. This material is a vital food source for aquatic invertebrates, forming the base of a critical food web.</td>
-                                </tr>
+                                </li>
                                 <tr class="hover:bg-gray-50">
                                     <td class="py-3 px-6 text-left whitespace-now-wrap font-medium">Nutrient Cycling</td>
                                     <td class="py-3 px-6 text-left">Riparian zones facilitate the cycling of nutrients, particularly nitrogen and phosphorus. The vegetation and microorganisms within the soil can absorb and process excess nutrients from runoff, preventing their accumulation in the water body where they can cause harmful algal blooms and anoxic conditions.</td>
@@ -199,8 +199,8 @@
     </div>
     
     <!-- Modal HTML -->
-    <div id="quiz-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-xl shadow-xl p-8 max-w-lg w-full transform transition-transform duration-300 scale-100">
+    <div id="quiz-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-lg w-full transform transition-transform duration-300 scale-100 my-8">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Freshwater Ecosystems Quiz</h3>
                 <button id="close-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
@@ -209,30 +209,202 @@
                     </svg>
                 </button>
             </div>
-            <p class="text-gray-700">The quiz is ready! In a complete web application, clicking this button would launch the interactive quiz. This message box confirms that the button is now fully functional.</p>
+            
+            <form id="quiz-form">
+                <!-- Quiz questions will be dynamically inserted here by JavaScript -->
+            </form>
+
+            <div id="results" class="mt-4 text-center hidden">
+                <h4 class="text-2xl font-bold text-gray-900 mb-2">Quiz Results</h4>
+                <p id="score-text" class="text-lg text-gray-700"></p>
+                <p id="feedback-text" class="text-sm text-gray-500 mt-2"></p>
+                <button id="retake-quiz" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors">Retake Quiz</button>
+            </div>
         </div>
     </div>
 
-    <!-- JavaScript to handle the modal -->
+    <!-- JavaScript to handle the quiz logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const quizButton = document.getElementById('quiz-button');
             const quizModal = document.getElementById('quiz-modal');
             const closeModalButton = document.getElementById('close-modal');
+            const quizForm = document.getElementById('quiz-form');
+            const resultsDiv = document.getElementById('results');
+            const scoreText = document.getElementById('score-text');
+            const feedbackText = document.getElementById('feedback-text');
+            const retakeButton = document.getElementById('retake-quiz');
 
-            if (quizButton && quizModal && closeModalButton) {
-                // Show the modal when the button is clicked
-                quizButton.addEventListener('click', () => {
-                    quizModal.style.display = 'flex';
+            // Array of quiz questions
+            const quizQuestions = [
+                {
+                    question: "What is the primary characteristic that distinguishes freshwater from marine ecosystems?",
+                    options: ["Temperature", "Salinity", "Depth", "Oxygen levels"],
+                    answer: "Salinity"
+                },
+                {
+                    question: "Lakes and ponds are examples of what type of freshwater ecosystem?",
+                    options: ["Lotic", "Brackish", "Lentic", "Estuarine"],
+                    answer: "Lentic"
+                },
+                {
+                    question: "Which of the following is NOT one of the three light zones of a lake?",
+                    options: ["Littoral zone", "Limnetic zone", "Profundal zone", "Epilimnion zone"],
+                    answer: "Epilimnion zone"
+                },
+                {
+                    question: "The layer of a lake with a sharp and rapid drop in temperature is called the:",
+                    options: ["Epilimnion", "Hypolimnion", "Metalimnion", "Littoral zone"],
+                    answer: "Metalimnion"
+                },
+                {
+                    question: "Which river zone is typically cold, clear, fast-flowing, and highly oxygenated?",
+                    options: ["Source Zone", "Transitional Zone", "Floodplain Zone", "Estuary Zone"],
+                    answer: "Source Zone"
+                },
+                {
+                    question: "What is a wetland characterized by acidic, nutrient-poor conditions and a thick layer of peat?",
+                    options: ["Marsh", "Swamp", "Bog", "Fen"],
+                    answer: "Bog"
+                },
+                {
+                    question: "A forested wetland dominated by trees and shrubs is known as a:",
+                    options: ["Marsh", "Swamp", "Bog", "Fen"],
+                    answer: "Swamp"
+                },
+                {
+                    question: "The process where excess nutrients cause algal blooms is called:",
+                    options: ["Photosynthesis", "Erosion", "Eutrophication", "Stratification"],
+                    answer: "Eutrophication"
+                },
+                {
+                    question: "Which of the following is NOT a function of a riparian zone?",
+                    options: ["Water filtration", "Bank stabilization", "Providing a habitat for deep-sea fish", "Flood control"],
+                    answer: "Providing a habitat for deep-sea fish"
+                },
+                {
+                    question: "Riparian vegetation helps regulate water temperature by providing:",
+                    options: ["Nutrients", "Sunlight", "Shade", "Salt"],
+                    answer: "Shade"
+                }
+            ];
+
+            function renderQuiz() {
+                quizForm.innerHTML = ''; // Clear previous questions
+                quizQuestions.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'mb-4';
+                    
+                    const questionText = document.createElement('p');
+                    questionText.className = 'text-gray-800 font-semibold mb-2';
+                    questionText.textContent = `${index + 1}. ${q.question}`;
+                    questionDiv.appendChild(questionText);
+
+                    const optionsDiv = document.createElement('div');
+                    q.options.forEach(option => {
+                        const optionLabel = document.createElement('label');
+                        optionLabel.className = 'block text-gray-700 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors';
+                        
+                        const input = document.createElement('input');
+                        input.type = 'radio';
+                        input.name = `question${index}`;
+                        input.value = option;
+                        input.className = 'mr-2';
+                        
+                        optionLabel.appendChild(input);
+                        optionLabel.appendChild(document.createTextNode(option));
+                        optionsDiv.appendChild(optionLabel);
+                    });
+                    questionDiv.appendChild(optionsDiv);
+                    quizForm.appendChild(questionDiv);
                 });
 
-                // Hide the modal when the close button is clicked
-                closeModalButton.addEventListener('click', () => {
-                    quizModal.style.display = 'none';
-                });
+                const submitButton = document.createElement('button');
+                submitButton.type = 'submit';
+                submitButton.className = 'w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors';
+                submitButton.textContent = 'Submit Answers';
+                quizForm.appendChild(submitButton);
+
+                quizForm.classList.remove('hidden');
+                resultsDiv.classList.add('hidden');
             }
+
+            function checkAnswers(event) {
+                event.preventDefault();
+                let score = 0;
+                let allAnswered = true;
+
+                quizQuestions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                    if (selectedOption) {
+                        if (selectedOption.value === q.answer) {
+                            score++;
+                        }
+                    } else {
+                        allAnswered = false;
+                    }
+                });
+
+                if (!allAnswered) {
+                    // Use a custom message box instead of alert
+                    showCustomMessage("Please answer all the questions before submitting.");
+                    return;
+                }
+
+                const totalQuestions = quizQuestions.length;
+                const percentage = (score / totalQuestions) * 100;
+                
+                let feedback = '';
+                if (percentage === 100) {
+                    feedback = "Excellent! You are a master of aquatic ecosystems.";
+                } else if (percentage >= 70) {
+                    feedback = "Great job! You have a solid understanding of the material.";
+                } else if (percentage >= 50) {
+                    feedback = "You're getting there! Review the concepts and try again.";
+                } else {
+                    feedback = "Keep studying! A quick review will help a lot.";
+                }
+
+                scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%).`;
+                feedbackText.textContent = feedback;
+                
+                quizForm.classList.add('hidden');
+                resultsDiv.classList.remove('hidden');
+            }
+
+            function showCustomMessage(message) {
+                // A simple way to show a message box within the modal
+                const messageDiv = document.createElement('div');
+                messageDiv.className = "fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50";
+                messageDiv.innerHTML = `
+                    <div class="bg-white rounded-xl shadow-xl p-6 max-w-sm w-full text-center">
+                        <p class="text-gray-800 mb-4">${message}</p>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors" onclick="this.parentNode.parentNode.remove()">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(messageDiv);
+            }
+
+            // Event Listeners
+            quizButton.addEventListener('click', () => {
+                renderQuiz();
+                quizModal.style.display = 'flex';
+            });
+
+            closeModalButton.addEventListener('click', () => {
+                quizModal.style.display = 'none';
+            });
+
+            quizForm.addEventListener('submit', checkAnswers);
+
+            retakeButton.addEventListener('click', () => {
+                renderQuiz();
+            });
         });
     </script>
 
 </body>
 </html>
+
+</html>
+
