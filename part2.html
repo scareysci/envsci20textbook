@@ -10,6 +10,8 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
+            /* Add some padding to the body so the fixed header doesn't cover the content */
+            padding-top: 5rem;
         }
         .highlight {
             background-color: #fde047; /* yellow-200 */
@@ -25,11 +27,26 @@
 </head>
 <body class="bg-sky-50 flex flex-col min-h-screen items-center justify-center p-4 sm:p-6 md:p-8">
 
-    <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 w-full max-w-4xl text-left">
+    <!-- Sticky Header/Banner -->
+    <header id="main-header" class="fixed top-0 left-0 right-0 z-50 bg-slate-800 text-white shadow-xl py-2 px-4 flex items-center justify-between rounded-b-lg">
+        <!-- Home Button -->
+        <a href="index.html" class="inline-block bg-slate-600 hover:bg-slate-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors">
+            Home
+        </a>
+
+        <!-- Search Feature -->
+        <div class="flex items-center space-x-2">
+            <input type="text" id="search-input" placeholder="Search this page..." class="rounded-lg p-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 w-full max-w-sm">
+            <button id="search-button" class="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="content-area" class="bg-white rounded-xl shadow-lg p-8 md:p-12 w-full max-w-4xl text-left">
         <header class="text-center mb-8">
-            <a href="index.html" class="inline-block mb-6 bg-slate-200 hover:bg-slate-300 text-slate-800 font-semibold py-2 px-4 rounded-lg shadow-md transition-colors">
-                Home
-            </a>
             <h1 class="text-4xl font-bold text-sky-800 border-b-4 border-cyan-500 pb-2">Types of Aquatic Ecosystems</h1>
             <p class="text-lg text-slate-500 mt-2">Freshwater, Marine, and Estuaries</p>
         </header>
@@ -268,6 +285,11 @@
             const feedbackText = document.getElementById('feedback-text');
             const retakeButton = document.getElementById('retake-quiz');
             
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const contentArea = document.getElementById('content-area');
+            const originalContent = contentArea.innerHTML;
+
             let currentQuestionIndex = 0;
             let userAnswers = [];
 
@@ -424,6 +446,55 @@
                 document.body.appendChild(messageDiv);
             }
 
+            function performSearch() {
+                const query = searchInput.value.trim();
+                if (query === '') {
+                    // Remove all highlights if the search bar is empty
+                    removeHighlights();
+                    return;
+                }
+                
+                removeHighlights();
+                
+                const regex = new RegExp(query, 'gi');
+                let matches = [...contentArea.innerHTML.matchAll(regex)];
+
+                if (matches.length > 0) {
+                    // Use a temporary div to avoid re-parsing the DOM multiple times
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = contentArea.innerHTML;
+                    
+                    let html = tempDiv.innerHTML;
+                    let offset = 0;
+                    
+                    // Replace text with highlighted span, but only within non-highlighted areas
+                    html = html.replace(regex, (match, index) => {
+                        return `<span class="highlight">${match}</span>`;
+                    });
+
+                    contentArea.innerHTML = html;
+
+                    // Scroll to the first highlighted element
+                    const firstHighlight = document.querySelector('.highlight');
+                    if (firstHighlight) {
+                        firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    showCustomMessage(`No results found for "${query}".`);
+                }
+            }
+            
+            function removeHighlights() {
+                let highlightedElements = document.querySelectorAll('.highlight');
+                highlightedElements.forEach(el => {
+                    const parent = el.parentNode;
+                    // Replace the span with its inner text
+                    parent.replaceChild(document.createTextNode(el.textContent), el);
+                });
+                // After removing all highlights, re-insert the original content. This prevents issues with subsequent searches.
+                contentArea.innerHTML = originalContent;
+            }
+
             // Event Listeners
             quizButton.addEventListener('click', () => {
                 currentQuestionIndex = 0;
@@ -440,6 +511,13 @@
                 currentQuestionIndex = 0;
                 userAnswers = [];
                 renderQuestion();
+            });
+            
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
             });
         });
     </script>
