@@ -68,12 +68,12 @@
                 {
                     title: 'Hydrologic Cycle',
                     url: 'https://scareysci.github.io/envsci20textbook/part1.html',
-                    content: ''
+                    doc: null
                 },
                 {
                     title: 'Types of Aquatic Ecosystems',
                     url: 'https://scareysci.github.io/envsci20textbook/part2.html',
-                    content: ''
+                    doc: null
                 }
             ];
 
@@ -87,8 +87,7 @@
                         }
                         const text = await response.text();
                         const parser = new DOMParser();
-                        const doc = parser.parseFromString(text, 'text/html');
-                        page.content = doc.body.textContent || '';
+                        page.doc = parser.parseFromString(text, 'text/html');
                     });
                     await Promise.all(fetchPromises);
                     messageBox.textContent = '';
@@ -113,30 +112,20 @@
 
                 let foundResults = false;
                 textbookPages.forEach(page => {
-                    const contentLower = page.content.toLowerCase();
-                    let index = contentLower.indexOf(searchTerm);
-                    let count = 0;
-
-                    while (index !== -1 && count < 5) { // Limit results to prevent overload
-                        foundResults = true;
-                        const start = Math.max(0, index - 50);
-                        const end = Math.min(page.content.length, index + searchTerm.length + 50);
-                        const snippet = page.content.substring(start, end).trim();
-
-                        const resultItem = document.createElement('div');
-                        resultItem.className = 'p-2 bg-stone-100 rounded-lg mb-2';
-                        
-                        // Create a unique ID from the search term
-                        const anchorId = searchTerm.replace(/\s+/g, '-');
-                        
-                        resultItem.innerHTML = `
-                            <a href="${page.url}#${anchorId}" class="font-semibold text-lime-800 hover:underline">${page.title}</a>
-                            <p class="text-xs text-gray-600 mt-1">...${snippet}...</p>
-                        `;
-                        resultsDiv.appendChild(resultItem);
-
-                        index = contentLower.indexOf(searchTerm, index + 1);
-                        count++;
+                    if (page.doc) {
+                        const headings = page.doc.querySelectorAll('h1[id], h2[id], h3[id], h4[id]');
+                        headings.forEach(heading => {
+                            if (heading.textContent.toLowerCase().includes(searchTerm)) {
+                                foundResults = true;
+                                const resultItem = document.createElement('div');
+                                resultItem.className = 'p-2 bg-stone-100 rounded-lg mb-2';
+                                
+                                resultItem.innerHTML = `
+                                    <a href="${page.url}#${heading.id}" class="font-semibold text-lime-800 hover:underline">${page.title}: ${heading.textContent}</a>
+                                `;
+                                resultsDiv.appendChild(resultItem);
+                            }
+                        });
                     }
                 });
 
