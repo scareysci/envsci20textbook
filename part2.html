@@ -185,7 +185,7 @@
                                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                                     <td class="py-3 px-6 text-left whitespace-nowrap font-medium">Support for Aquatic Food Webs</td>
                                     <td class="py-3 px-6 text-left">Riparian vegetation supplies streams and rivers with organic matter, such as fallen leaves, branches, and woody debris. This material is a vital food source for aquatic invertebrates, forming the base of a critical food web.</td>
-                                </li>
+                                </tr>
                                 <tr class="hover:bg-gray-50">
                                     <td class="py-3 px-6 text-left whitespace-now-wrap font-medium">Nutrient Cycling</td>
                                     <td class="py-3 px-6 text-left">Riparian zones facilitate the cycling of nutrients, particularly nitrogen and phosphorus. The vegetation and microorganisms within the soil can absorb and process excess nutrients from runoff, preventing their accumulation in the water body where they can cause harmful algal blooms and anoxic conditions.</td>
@@ -199,11 +199,13 @@
     </div>
     
     <!-- Modal HTML -->
-    <div id="quiz-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto">
+    <!-- The `style="display: none;"` attribute ensures the modal is hidden immediately on page load,
+         preventing any brief flash of content before the CSS is applied. -->
+    <div id="quiz-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto" style="display: none;">
         <div class="bg-white rounded-xl shadow-xl p-8 max-w-lg w-full transform transition-transform duration-300 scale-100 my-8">
             <div class="flex justify-between items-center border-b pb-3 mb-4">
                 <h3 class="text-xl font-bold text-gray-800">Freshwater Ecosystems Quiz</h3>
-                <button id="close-modal" class="text-gray-500 hover:text-gray-700 transition-colors">
+                <button id="close-button" class="text-gray-500 hover:text-gray-700 transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -228,12 +230,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             const quizButton = document.getElementById('quiz-button');
             const quizModal = document.getElementById('quiz-modal');
-            const closeModalButton = document.getElementById('close-modal');
+            const closeButton = document.getElementById('close-button');
             const quizForm = document.getElementById('quiz-form');
             const resultsDiv = document.getElementById('results');
             const scoreText = document.getElementById('score-text');
             const feedbackText = document.getElementById('feedback-text');
             const retakeButton = document.getElementById('retake-quiz');
+            
+            let currentQuestionIndex = 0;
+            let userAnswers = [];
 
             // Array of quiz questions
             const quizQuestions = [
@@ -289,67 +294,70 @@
                 }
             ];
 
-            function renderQuiz() {
-                quizForm.innerHTML = ''; // Clear previous questions
-                quizQuestions.forEach((q, index) => {
-                    const questionDiv = document.createElement('div');
-                    questionDiv.className = 'mb-4';
+            function renderQuestion() {
+                const q = quizQuestions[currentQuestionIndex];
+                quizForm.innerHTML = ''; // Clear previous content
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4';
+                
+                const questionText = document.createElement('p');
+                questionText.className = 'text-gray-800 font-semibold mb-2';
+                questionText.textContent = `${currentQuestionIndex + 1}. ${q.question}`;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                q.options.forEach(option => {
+                    const optionLabel = document.createElement('label');
+                    optionLabel.className = 'block text-gray-700 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors';
                     
-                    const questionText = document.createElement('p');
-                    questionText.className = 'text-gray-800 font-semibold mb-2';
-                    questionText.textContent = `${index + 1}. ${q.question}`;
-                    questionDiv.appendChild(questionText);
-
-                    const optionsDiv = document.createElement('div');
-                    q.options.forEach(option => {
-                        const optionLabel = document.createElement('label');
-                        optionLabel.className = 'block text-gray-700 cursor-pointer hover:bg-gray-100 p-2 rounded-md transition-colors';
-                        
-                        const input = document.createElement('input');
-                        input.type = 'radio';
-                        input.name = `question${index}`;
-                        input.value = option;
-                        input.className = 'mr-2';
-                        
-                        optionLabel.appendChild(input);
-                        optionLabel.appendChild(document.createTextNode(option));
-                        optionsDiv.appendChild(optionLabel);
-                    });
-                    questionDiv.appendChild(optionsDiv);
-                    quizForm.appendChild(questionDiv);
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question${currentQuestionIndex}`;
+                    input.value = option;
+                    input.className = 'mr-2';
+                    
+                    optionLabel.appendChild(input);
+                    optionLabel.appendChild(document.createTextNode(option));
+                    optionsDiv.appendChild(optionLabel);
                 });
+                questionDiv.appendChild(optionsDiv);
+                quizForm.appendChild(questionDiv);
 
-                const submitButton = document.createElement('button');
-                submitButton.type = 'submit';
-                submitButton.className = 'w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors';
-                submitButton.textContent = 'Submit Answers';
-                quizForm.appendChild(submitButton);
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors';
+                button.textContent = (currentQuestionIndex < quizQuestions.length - 1) ? 'Next Question' : 'Submit Answers';
+                button.addEventListener('click', handleNext);
+                quizForm.appendChild(button);
 
                 quizForm.classList.remove('hidden');
                 resultsDiv.classList.add('hidden');
             }
-
-            function checkAnswers(event) {
-                event.preventDefault();
-                let score = 0;
-                let allAnswered = true;
-
-                quizQuestions.forEach((q, index) => {
-                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
-                    if (selectedOption) {
-                        if (selectedOption.value === q.answer) {
-                            score++;
-                        }
-                    } else {
-                        allAnswered = false;
-                    }
-                });
-
-                if (!allAnswered) {
-                    // Use a custom message box instead of alert
-                    showCustomMessage("Please answer all the questions before submitting.");
+            
+            function handleNext() {
+                const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+                if (!selectedOption) {
+                    showCustomMessage("Please select an answer before moving on.");
                     return;
                 }
+                userAnswers[currentQuestionIndex] = selectedOption.value;
+
+                if (currentQuestionIndex < quizQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                } else {
+                    calculateScore();
+                }
+            }
+
+            function calculateScore() {
+                let score = 0;
+                quizQuestions.forEach((q, index) => {
+                    if (userAnswers[index] === q.answer) {
+                        score++;
+                    }
+                });
 
                 const totalQuestions = quizQuestions.length;
                 const percentage = (score / totalQuestions) * 100;
@@ -387,18 +395,20 @@
 
             // Event Listeners
             quizButton.addEventListener('click', () => {
-                renderQuiz();
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                renderQuestion();
                 quizModal.style.display = 'flex';
             });
 
-            closeModalButton.addEventListener('click', () => {
+            closeButton.addEventListener('click', () => {
                 quizModal.style.display = 'none';
             });
 
-            quizForm.addEventListener('submit', checkAnswers);
-
             retakeButton.addEventListener('click', () => {
-                renderQuiz();
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                renderQuestion();
             });
         });
     </script>
@@ -406,5 +416,5 @@
 </body>
 </html>
 
-</html>
+
 
