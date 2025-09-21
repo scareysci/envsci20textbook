@@ -103,6 +103,13 @@
                         </div>
                         <p class="text-center italic text-slate-500 mt-2">A conceptual diagram of the River Continuum Concept, showing changes from the source to the floodplain zone.</p>
                     </li>
+                </ul>
+                <div class="flex justify-center mb-8">
+                    <button id="sask-button" class="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                        Freshwater Bodies of Saskatchewan
+                    </button>
+                </div>
+                <ul>
                     <li>
                         <b>Wetlands:</b> These are areas of land saturated with water for at least part of the year. They are among the most biologically diverse and productive ecosystems on Earth. Their unique hydric soils (water-logged) and specific plant communities distinguish them from other habitats. Wetlands play a crucial role in water purification, flood control, and as critical habitats for a vast number of species.
                         <div class="ml-4">
@@ -273,6 +280,52 @@
         </div>
     </div>
 
+    <!-- Saskatchewan Modal -->
+    <div id="sask-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 overflow-y-auto" style="display: none;">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-4xl w-full transform transition-transform duration-300 scale-100 my-8">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-xl font-bold text-slate-800">Freshwater Bodies & Systems in Saskatchewan</h3>
+                <button id="close-sask-button" class="text-slate-500 hover:text-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="overflow-x-auto relative shadow-md sm:rounded-lg mt-4">
+                <table class="w-full text-sm text-left text-gray-500 striped-table">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="py-3 px-6">Freshwater Body Type</th>
+                            <th scope="col" class="py-3 px-6">Geographic Location</th>
+                            <th scope="col" class="py-3 px-6">Typical Features</th>
+                            <th scope="col" class="py-3 px-6">Ecological Significance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200">
+                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Rivers</td>
+                            <td class="py-4 px-6">North and South Saskatchewan, Churchill, Qu'Appelle</td>
+                            <td class="py-4 px-6">Fast-flowing at headwaters, becoming slower and wider with heavy silt loads. The Churchill River has many rapids and interconnected lakes.</td>
+                            <td class="py-4 px-6">Provides diverse habitats for fish and wildlife; critical for agriculture and urban water supply.</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Lakes</td>
+                            <td class="py-4 px-6">Lake Diefenbaker, glacial pothole lakes, interconnected lakes of the Churchill River</td>
+                            <td class="py-4 px-6">Vary from deep reservoirs to numerous small, shallow glacial lakes. Divided into littoral, open-water, and deep-water zones.</td>
+                            <td class="py-4 px-6">Supports a wide range of aquatic life adapted to different depths and light levels.</td>
+                        </tr>
+                        <tr class="border-b border-gray-200">
+                            <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Wetlands</td>
+                            <td class="py-4 px-6">Found throughout the province, particularly in the prairie regions. Marshes, swamps, and bogs.</td>
+                            <td class="py-4 px-6">Lands that are wet for significant periods, with specialized plant life like grasses, reeds, trees, or mosses.</td>
+                            <td class="py-4 px-6">Act as natural filters for pollutants, reduce flood risk, and provide essential habitat for many species, including birds and endangered wildlife.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
     <!-- JavaScript to handle the quiz logic -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -289,6 +342,10 @@
             const searchButton = document.getElementById('search-button');
             const contentArea = document.getElementById('content-area');
             const originalContent = contentArea.innerHTML;
+
+            const saskButton = document.getElementById('sask-button');
+            const saskModal = document.getElementById('sask-modal');
+            const closeSaskButton = document.getElementById('close-sask-button');
 
             let currentQuestionIndex = 0;
             let userAnswers = [];
@@ -519,8 +576,18 @@
                     performSearch();
                 }
             });
+
+            saskButton.addEventListener('click', () => {
+                saskModal.style.display = 'flex';
+            });
+
+            closeSaskButton.addEventListener('click', () => {
+                saskModal.style.display = 'none';
+            });
         });
     </script>
 
 </body>
 </html>
+</html>
+
