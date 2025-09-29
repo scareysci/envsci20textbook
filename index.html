@@ -43,6 +43,11 @@
                 <a href="part2.html" class="p-4 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
                     Types of Aquatic Ecosystems
                 </a>
+
+                <!-- NEW ROW for Abiotic Factors -->
+                <a href="part3.html" class="p-4 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
+                    Abiotic Factors of Aquatic Ecosystems
+                </a>
             </div>
         </div>
 
@@ -71,6 +76,12 @@
                     title: 'Types of Aquatic Ecosystems',
                     url: 'https://scareysci.github.io/envsci20textbook/part2.html',
                     doc: null
+                },
+                // Added the new chapter for search indexing
+                {
+                    title: 'Abiotic Factors of Aquatic Ecosystems',
+                    url: 'https://scareysci.github.io/envsci20textbook/part3.html',
+                    doc: null
                 }
             ];
 
@@ -78,13 +89,29 @@
                 try {
                     messageBox.textContent = 'Loading content for search...';
                     const fetchPromises = textbookPages.map(async (page) => {
-                        const response = await fetch(page.url);
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
+                        // Implement exponential backoff for fetching content
+                        const maxRetries = 3;
+                        let lastError = null;
+                        for (let i = 0; i < maxRetries; i++) {
+                            try {
+                                const response = await fetch(page.url);
+                                if (!response.ok) {
+                                    throw new Error(`HTTP error! status: ${response.status}`);
+                                }
+                                const text = await response.text();
+                                const parser = new DOMParser();
+                                page.doc = parser.parseFromString(text, 'text/html');
+                                return; // Success
+                            } catch (error) {
+                                lastError = error;
+                                if (i < maxRetries - 1) {
+                                    const delay = Math.pow(2, i) * 1000;
+                                    await new Promise(resolve => setTimeout(resolve, delay));
+                                }
+                            }
                         }
-                        const text = await response.text();
-                        const parser = new DOMParser();
-                        page.doc = parser.parseFromString(text, 'text/html');
+                        // If all retries fail, re-throw the last error
+                        if (lastError) throw lastError;
                     });
                     await Promise.all(fetchPromises);
                     messageBox.textContent = '';
@@ -110,23 +137,36 @@
                 let foundResults = false;
                 textbookPages.forEach(page => {
                     if (page.doc) {
-                        const pageContent = page.doc.body.textContent.toLowerCase();
+                        // Use document.body.innerText for reliable text content extraction
+                        const pageContent = (page.doc.body.innerText || '').toLowerCase();
                         const searchTermIndex = pageContent.indexOf(searchTerm);
 
                         if (searchTermIndex !== -1) {
                             foundResults = true;
                             
-                            // Find the closest preceding heading with an ID
-                            const headings = page.doc.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]');
+                            // 1. Get all elements with IDs in the body
+                            const allElementsWithId = page.doc.querySelectorAll('body [id]');
+                            
+                            // 2. Find the closest preceding element
                             let closestHeading = null;
                             let closestHeadingIndex = -1;
 
-                            headings.forEach(heading => {
-                                const headingText = heading.textContent.toLowerCase();
-                                const headingIndex = pageContent.indexOf(headingText);
-                                if (headingIndex !== -1 && headingIndex < searchTermIndex && headingIndex > closestHeadingIndex) {
-                                    closestHeading = heading;
-                                    closestHeadingIndex = headingIndex;
+                            // We iterate through all elements that have an ID and find the one that appears
+                            // right before the location of the search term.
+                            allElementsWithId.forEach(element => {
+                                // For simplicity, we search the page content again for the element's text to find its index
+                                // A more robust solution would track DOM tree positions, but this approach is usually sufficient
+                                const elementText = element.textContent.toLowerCase().trim();
+                                if (elementText.length > 0) {
+                                    const elementIndex = pageContent.indexOf(elementText.substring(0, 30)); // Look at the start of the element's text
+
+                                    if (elementIndex !== -1 && elementIndex < searchTermIndex && elementIndex > closestHeadingIndex) {
+                                        // Check if the element is actually a heading (H1-H6)
+                                        if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
+                                            closestHeading = element;
+                                            closestHeadingIndex = elementIndex;
+                                        }
+                                    }
                                 }
                             });
 
@@ -157,5 +197,6 @@
     </script>
 </body>
 </html>
+
 
 
