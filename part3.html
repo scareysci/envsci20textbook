@@ -26,6 +26,9 @@
         h4 {
             @apply text-lg font-bold text-slate-700 mt-4;
         }
+        .modal {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-sky-50 flex flex-col min-h-screen items-center justify-center p-4 sm:p-6 md:p-8">
@@ -205,6 +208,12 @@
                 </ul>
                 <p class="mt-2 text-slate-700">Beyond limiting photosynthesis, high turbidity from suspended sediments can have direct negative impacts on aquatic life. It can smother fish eggs laid on the bottom of rivers, clog the delicate gill structures of fish and invertebrates, and reduce the ability of visual predators, like trout, to find food. The loss of water clarity also eliminates habitat for submerged aquatic plants (macrophytes), which are critical as food sources and as nursery areas for young fish.</p>
                 <p class="mt-2 text-slate-700">It is essential to recognize that turbidity itself is not an absolute measure of ecosystem health; its significance is entirely dependent on its origin. This presents a duality in how turbidity is interpreted across Western Canada. The milky turquoise hue of a glacial-fed lake in Banff National Park is a natural characteristic of a pristine mountain ecosystem, a result of geological processes to which its inhabitants are adapted. In contrast, the muddy brown water of a prairie stream after a thunderstorm, or the green cloudiness of a lake in southern Manitoba during a summer algal bloom, are clear symptoms of environmental stress—namely, excessive soil erosion and nutrient pollution from the surrounding landscape. Therefore, assessing water quality requires not just measuring turbidity, but understanding its source.</p>
+                <!-- Quiz Button for Part 1 -->
+                <div class="flex justify-center mt-8">
+                    <button data-quiz="1" class="quiz-button bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                        Test Your Knowledge: Part 1 Quiz
+                    </button>
+                </div>
             </section>
             
             <section class="mb-8">
@@ -244,6 +253,10 @@
                 <p class="mt-2 text-slate-700">While organisms are built from many elements, their growth and abundance in most freshwater ecosystems are constrained by the availability of two key nutrients: phosphorus (P) and nitrogen (N). These are often referred to as limiting nutrients because the entire food web's productivity is limited by whichever of these is in shortest supply. The movement and transformation of these elements through the ecosystem is described by their biogeochemical cycles.</p>
                 
                 <h4>The Phosphorus Cycle</h4>
+                <div class="flex justify-center my-6">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Phosphorus_cycle.png/500px-Phosphorus_cycle.png" alt="A diagram illustrating the phosphorus cycle, showing its movement through rocks, soil, water, and organisms." class="rounded-lg shadow-md max-w-full h-auto w-3/4">
+                </div>
+                <p class="text-center italic text-slate-500 mt-2 mb-4">A diagram of the phosphorus cycle, showing how phosphorus moves between land, water, and living organisms.</p>
                 <p class="mt-2 text-slate-700">Phosphorus is often considered the primary driver of productivity in freshwater lakes. It is a critical component of DNA, RNA, and ATP (the energy currency of cells).</p>
                 <ul class="list-disc list-inside mt-2 space-y-2">
                     <li><b>Forms of Phosphorus:</b> Phosphorus exists in water in both dissolved and particulate forms. The only form that algae and plants can directly take up is dissolved inorganic phosphate, specifically orthophosphate (PO<sub>4</sub><sup>3-</sup>). All other forms must be converted to orthophosphate to become biologically available.</li>
@@ -252,6 +265,10 @@
                 </ul>
                 
                 <h4>The Nitrogen Cycle</h4>
+                <div class="flex justify-center my-6">
+                    <img src="https://andaman-ag.com/andaman-wordpress/wp-content/uploads/2021/02/1280px-Nitrogen_Cycle_2.svg_.png" alt="A diagram illustrating the nitrogen cycle, showing its movement through the atmosphere, soil, water, and organisms." class="rounded-lg shadow-md max-w-full h-auto w-3/4">
+                </div>
+                <p class="text-center italic text-slate-500 mt-2 mb-4">The nitrogen cycle, highlighting processes like nitrogen fixation, nitrification, and denitrification.</p>
                 <p class="mt-2 text-slate-700">Nitrogen is another essential nutrient, vital for building proteins and nucleic acids. Although nitrogen gas (N<sub>2</sub>) makes up about 78% of the atmosphere, it is unusable by most organisms in this form. It must be "fixed" into biologically available forms like ammonium (NH<sub>4</sub><sup>+</sup>) and nitrate (NO<sub>3</sub><sup>-</sup>).</p>
                 <ul class="list-disc list-inside mt-2 space-y-2">
                     <li><b>Key Processes:</b> The freshwater nitrogen cycle is a complex, microbially-driven process with several key steps that are highly dependent on the presence or absence of oxygen:
@@ -263,6 +280,12 @@
                     </li>
                 </ul>
                 <p class="mt-2 text-slate-700">The chemical characteristics of a freshwater ecosystem are not a collection of independent variables but rather a set of deeply interconnected, biologically-driven processes. A change in one parameter can trigger a cascade of effects throughout the system. Consider the addition of excess phosphorus from agricultural runoff. This initial chemical change sets off a chain reaction: the excess phosphorus fuels a massive algal bloom. During the day, the intense photosynthesis by this bloom consumes huge amounts of dissolved carbon dioxide, causing the lake's pH to spike to highly alkaline levels. When this massive bloom inevitably dies, the algae sink to the bottom. The ensuing decomposition by bacteria consumes vast quantities of dissolved oxygen, driving the hypolimnion into anoxia. This anoxic state then triggers the chemical release of even more phosphorus from the bottom sediments (internal loading), creating a self-perpetuating cycle that fuels future blooms. Furthermore, the anoxia simultaneously creates the perfect conditions for denitrification, potentially causing a loss of nitrogen from the system, which can shift the competitive balance to favour nitrogen-fixing cyanobacteria. This demonstrates how a single abiotic perturbation can radically re-engineer the entire chemical environment of a lake.</p>
+                <!-- Quiz Button for Part 2 -->
+                <div class="flex justify-center mt-8">
+                    <button data-quiz="2" class="quiz-button bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                        Test Your Knowledge: Part 2 Quiz
+                    </button>
+                </div>
             </section>
             
             <section class="mb-8">
@@ -323,13 +346,12 @@
                 <p class="mt-2 text-slate-700">Eutrophication is the process of nutrient enrichment in a water body, which leads to increased growth of algae and aquatic plants. This process can be divided into two types: natural and cultural.</p>
                 <p class="mt-2 text-slate-700"><b>Natural Eutrophication</b> is the slow, natural aging process of a lake or pond. Over geological timescales, spanning hundreds to thousands of years, a lake gradually accumulates nutrients from the weathering of rocks, soil runoff from its watershed, and the decomposition of organic matter produced within the lake itself. This gradual enrichment slowly increases the lake's biological productivity, causing it to transition from a nutrient-poor, clear state (oligotrophic) to a moderately productive state (mesotrophic), and eventually to a nutrient-rich, productive state (eutrophic). This is a natural succession that eventually sees a lake become a wetland and then dry land over millennia.</p>
                 <p class="mt-2 text-slate-700"><b>Cultural Eutrophication</b>, in contrast, is the dramatic acceleration of this process due to human activities. This phenomenon became a widespread problem in the mid-20th century with the rise of intensive agriculture and urbanization. The primary culprits are excess phosphorus and nitrogen, which enter waterways through agricultural runoff containing fertilizers and manure, effluent from municipal wastewater treatment plants, and urban stormwater runoff. Instead of taking thousands of years, cultural eutrophication can degrade a water body in a matter of decades, triggering harmful algal blooms, depleting oxygen, and causing a loss of biodiversity.</p>
-                 <h4>Focus Study: The Greening of Lake Winnipeg</h4>
-                 <p class="mt-2 text-slate-700">Lake Winnipeg, the tenth-largest freshwater lake in the world by surface area, serves as a stark example of advanced cultural eutrophication. Its watershed is immense, nearly one million square kilometres, draining a vast agricultural landscape across the Canadian prairies and parts of the northern United States. This enormous drainage basin, 40 times the size of the lake itself, funnels nutrients from millions of hectares of farmland and numerous urban centres into the lake.</p>
-                 <ul class="list-disc list-inside mt-2 space-y-2">
-                    <li><b>The Causes:</b> Since the 1990s, Lake Winnipeg has experienced a dramatic increase in the frequency and intensity of massive algal blooms, earning it the title of "Canada's Sickest Lake". The primary driver is an overload of phosphorus, delivered mainly by the Red River, which flows north from the United States through Winnipeg. This phosphorus originates from the widespread use of synthetic fertilizers on crops and the concentration of livestock operations (hog and cattle) within the watershed. The problem is compounded by an increased frequency of major spring floods, which act as powerful flushing events, washing decades of accumulated nutrients from the landscape into the river system and ultimately into the lake.</li>
-                    <li><b>Abiotic Consequences:</b> The ecological effects of this nutrient overload are profound and directly alter the lake's abiotic character. The blooms themselves, often dominated by toxin-producing cyanobacteria (blue-green algae), are so vast they can be seen from space. This creates extreme turbidity, turning the water a murky green and blocking sunlight from penetrating to deeper waters. When these massive blooms die and sink, their decomposition by bacteria consumes enormous quantities of dissolved oxygen, creating vast anoxic "dead zones" in the lake's bottom waters, particularly in the North Basin. During peak bloom activity, the high rate of photosynthesis removes so much dissolved CO<sub>2</sub> that it can cause the pH to swing dramatically, reaching highly alkaline levels during the day.</li>
-                    <li><b>The Legacy Effect:</b> A formidable challenge in restoring Lake Winnipeg is the problem of "legacy phosphorus." Decades of excessive loading have saturated the lake's bottom sediments with phosphorus. During periods of anoxia, this stored phosphorus is chemically released back into the water column through internal loading. This creates a powerful positive feedback loop, where the effects of eutrophication (anoxia) trigger the release of more nutrients, which in turn fuel more algal blooms and more anoxia. This internal recycling means that even if all external sources of phosphorus were cut off today, the lake could continue to suffer from severe algal blooms for many years to come. Research has shown that shallow, nutrient-rich prairie lakes in Manitoba, Saskatchewan, and Alberta are particularly susceptible to this process of internal phosphorus loading.</li>
-                 </ul>
+                 <!-- Quiz Button for Part 3 -->
+                <div class="flex justify-center mt-8">
+                    <button data-quiz="3" class="quiz-button bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 active:scale-95">
+                        Test Your Knowledge: Part 3 Quiz
+                    </button>
+                </div>
             </section>
 
             <section class="mb-8">
@@ -382,42 +404,59 @@
             </section>
             
             <section class="mb-8">
-                <h3>3.2 Industrial Contamination: From the Air and Land</h3>
+                <h2 id="part4" class="text-2xl font-semibold text-cyan-700">Part 4: Focus Studies on Human Impact</h2>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-2">4.1: Cultural Eutrophication</h3>
+                <div class="mt-4 pl-4 border-l-2 border-slate-200">
+                    <h4 class="text-xl font-bold text-slate-800 mt-6 mb-2">Focus Study: The Greening of Lake Winnipeg</h4>
+                     <p class="mt-2 text-slate-700">Lake Winnipeg, the tenth-largest freshwater lake in the world by surface area, serves as a stark example of advanced cultural eutrophication. Its watershed is immense, nearly one million square kilometres, draining a vast agricultural landscape across the Canadian prairies and parts of the northern United States. This enormous drainage basin, 40 times the size of the lake itself, funnels nutrients from millions of hectares of farmland and numerous urban centres into the lake.</p>
+                     <ul class="list-disc list-inside mt-2 space-y-2">
+                        <li><b>The Causes:</b> Since the 1990s, Lake Winnipeg has experienced a dramatic increase in the frequency and intensity of massive algal blooms, earning it the title of "Canada's Sickest Lake". The primary driver is an overload of phosphorus, delivered mainly by the Red River, which flows north from the United States through Winnipeg. This phosphorus originates from the widespread use of synthetic fertilizers on crops and the concentration of livestock operations (hog and cattle) within the watershed. The problem is compounded by an increased frequency of major spring floods, which act as powerful flushing events, washing decades of accumulated nutrients from the landscape into the river system and ultimately into the lake.</li>
+                        <li><b>Abiotic Consequences:</b> The ecological effects of this nutrient overload are profound and directly alter the lake's abiotic character. The blooms themselves, often dominated by toxin-producing cyanobacteria (blue-green algae), are so vast they can be seen from space. This creates extreme turbidity, turning the water a murky green and blocking sunlight from penetrating to deeper waters. When these massive blooms die and sink, their decomposition by bacteria consumes enormous quantities of dissolved oxygen, creating vast anoxic "dead zones" in the lake's bottom waters, particularly in the North Basin. During peak bloom activity, the high rate of photosynthesis removes so much dissolved CO<sub>2</sub> that it can cause the pH to swing dramatically, reaching highly alkaline levels during the day.</li>
+                        <li><b>The Legacy Effect:</b> A formidable challenge in restoring Lake Winnipeg is the problem of "legacy phosphorus." Decades of excessive loading have saturated the lake's bottom sediments with phosphorus. During periods of anoxia, this stored phosphorus is chemically released back into the water column through internal loading. This creates a powerful positive feedback loop, where the effects of eutrophication (anoxia) trigger the release of more nutrients, which in turn fuel more algal blooms and more anoxia. This internal recycling means that even if all external sources of phosphorus were cut off today, the lake could continue to suffer from severe algal blooms for many years to come. Research has shown that shallow, nutrient-rich prairie lakes in Manitoba, Saskatchewan, and Alberta are particularly susceptible to this process of internal phosphorus loading.</li>
+                     </ul>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-2">4.2 Industrial Contamination: From the Air and Land</h3>
                 <p class="mt-2 text-slate-700">Industrial activities can release a wide range of contaminants that alter the chemistry of freshwater ecosystems. These pollutants can enter waterways directly through discharge pipes or indirectly through the atmosphere.</p>
                 
-                <h4>Focus Study: The Athabasca River and the Oil Sands</h4>
-                <p class="mt-2 text-slate-700">The Athabasca oil sands in northern Alberta represent one of the largest industrial developments in Canada. The process of extracting and upgrading bitumen from sand releases a variety of substances into the environment. While much attention is paid to tailings ponds and water withdrawals, a significant pathway for contamination is through the atmosphere.</p>
-                <p class="mt-2 text-slate-700"><b>A Unique Pathway of Contamination:</b> Upgrading facilities emit pollutants, including heavy metals and a class of toxic organic compounds known as polycyclic aromatic hydrocarbons (PAHs), from their stacks. These airborne contaminants are deposited across the vast boreal forest landscape. During the winter, they accumulate in the snowpack. When the snow melts in the spring, these stored pollutants are released in a concentrated pulse that flows with the meltwater into the Athabasca River and its tributaries.</p>
-                <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> This annual spring flush represents a major event that alters the river's water chemistry. Studies have found increased concentrations of dissolved PAHs in tributaries downstream of oil sands development. These compounds are known to be toxic to aquatic life, with research showing that they can impair the development and survival of fish embryos. The particulate matter that carries these PAHs also contributes to increased turbidity when it is washed into the river system. Analysis of sediment cores from lakes downwind of the facilities shows that PAH concentrations have increased by as much as 23-fold since large-scale oil sands production began, shifting the chemical signature of the sediments away from natural sources like forest fires towards an industrial, petrogenic source.</p>
+                <div class="mt-4 pl-4 border-l-2 border-slate-200">
+                    <h4 class="text-xl font-bold text-slate-800 mt-6 mb-2">Focus Study: The Athabasca River and the Oil Sands</h4>
+                    <p class="mt-2 text-slate-700">The Athabasca oil sands in northern Alberta represent one of the largest industrial developments in Canada. The process of extracting and upgrading bitumen from sand releases a variety of substances into the environment. While much attention is paid to tailings ponds and water withdrawals, a significant pathway for contamination is through the atmosphere.</p>
+                    <p class="mt-2 text-slate-700"><b>A Unique Pathway of Contamination:</b> Upgrading facilities emit pollutants, including heavy metals and a class of toxic organic compounds known as polycyclic aromatic hydrocarbons (PAHs), from their stacks. These airborne contaminants are deposited across the vast boreal forest landscape. During the winter, they accumulate in the snowpack. When the snow melts in the spring, these stored pollutants are released in a concentrated pulse that flows with the meltwater into the Athabasca River and its tributaries.</p>
+                    <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> This annual spring flush represents a major event that alters the river's water chemistry. Studies have found increased concentrations of dissolved PAHs in tributaries downstream of oil sands development. These compounds are known to be toxic to aquatic life, with research showing that they can impair the development and survival of fish embryos. The particulate matter that carries these PAHs also contributes to increased turbidity when it is washed into the river system. Analysis of sediment cores from lakes downwind of the facilities shows that PAH concentrations have increased by as much as 23-fold since large-scale oil sands production began, shifting the chemical signature of the sediments away from natural sources like forest fires towards an industrial, petrogenic source.</p>
+                </div>
                 
-                <h4>Focus Study: Acid Rain on the Boreal Shield</h4>
-                <p class="mt-2 text-slate-700">Acid deposition, commonly known as acid rain, occurs when emissions of sulphur dioxide (SO<sub>2</sub>) and nitrogen oxides (NOx) from burning fossil fuels react in the atmosphere to form sulphuric and nitric acids. These acids then fall to the earth in rain, snow, or as dry particles.</p>
-                <p class="mt-2 text-slate-700"><b>A Western Canadian Threat:</b> While often considered an issue for Eastern Canada, acid rain poses an emerging threat to the lakes of the Boreal Shield in northern Saskatchewan and Manitoba. These lakes are exceptionally vulnerable because they are situated on a landscape of hard, crystalline granite bedrock and thin soils. This geology provides very little of the calcium carbonate needed to neutralize incoming acids, giving the lakes a low natural alkalinity, or buffering capacity. These sensitive ecosystems lie downwind of major acid-emitting sources, including the oil sands operations in Alberta and base metal smelters in Flin Flon and Thompson, Manitoba.</p>
-                <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> The primary abiotic effect of acid deposition is a lowering of the water's pH. While surveys have found few lakes in the region that are currently critically acidic (pH below 6.0), a significant number are classified as highly sensitive to acidification. A drop in pH can have cascading effects on water chemistry, most notably by increasing the solubility of toxic heavy metals like aluminum and mercury from the surrounding watershed soils into the water, where they can harm aquatic organisms.</p>
+                <div class="mt-4 pl-4 border-l-2 border-slate-200">
+                    <h4 class="text-xl font-bold text-slate-800 mt-6 mb-2">Focus Study: Acid Rain on the Boreal Shield</h4>
+                    <p class="mt-2 text-slate-700">Acid deposition, commonly known as acid rain, occurs when emissions of sulphur dioxide (SO<sub>2</sub>) and nitrogen oxides (NOx) from burning fossil fuels react in the atmosphere to form sulphuric and nitric acids. These acids then fall to the earth in rain, snow, or as dry particles.</p>
+                    <p class="mt-2 text-slate-700"><b>A Western Canadian Threat:</b> While often considered an issue for Eastern Canada, acid rain poses an emerging threat to the lakes of the Boreal Shield in northern Saskatchewan and Manitoba. These lakes are exceptionally vulnerable because they are situated on a landscape of hard, crystalline granite bedrock and thin soils. This geology provides very little of the calcium carbonate needed to neutralize incoming acids, giving the lakes a low natural alkalinity, or buffering capacity. These sensitive ecosystems lie downwind of major acid-emitting sources, including the oil sands operations in Alberta and base metal smelters in Flin Flon and Thompson, Manitoba.</p>
+                    <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> The primary abiotic effect of acid deposition is a lowering of the water's pH. While surveys have found few lakes in the region that are currently critically acidic (pH below 6.0), a significant number are classified as highly sensitive to acidification. A drop in pH can have cascading effects on water chemistry, most notably by increasing the solubility of toxic heavy metals like aluminum and mercury from the surrounding watershed soils into the water, where they can harm aquatic organisms.</p>
+                </div>
             </section>
             
             <section class="mb-8">
-                <h3>3.3 Re-engineering the Flow: Dams and Thermal Pollution</h3>
+                <h3 class="text-xl font-bold text-slate-800 mt-6 mb-2">4.3 Re-engineering the Flow: Dams and Thermal Pollution</h3>
                 <p class="mt-2 text-slate-700">Perhaps no human activity alters the abiotic character of a river more completely than the construction of a large dam. Dams fundamentally re-engineer a river's flow, temperature, and sediment transport, with consequences that extend hundreds of kilometres downstream.</p>
                 
-                <h4>Focus Study: Taming the Peace River</h4>
-                <p class="mt-2 text-slate-700">The W.A.C. Bennett Dam in northern British Columbia, completed in 1968, impounds the massive Williston Reservoir and is the first of a series of dams on the Peace River. Its construction and operation have profoundly and permanently altered the downstream environment, reaching far into Alberta and the Peace-Athabasca Delta.</p>
-                <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b></p>
-                <ol class="list-decimal list-inside mt-2 space-y-2">
-                    <li><b>Altered Thermal Regime:</b> Large reservoirs like Williston stratify thermally, similar to a lake. The Bennett Dam is designed to release water from deep within the hypolimnion. This has a dramatic effect on the downstream river's temperature. The river is now significantly colder in the summer than it was naturally, and, because the deep reservoir water remains above freezing, it is much warmer in the winter. This form of thermal pollution has completely changed the river's ice regime. Historically, the Peace River would freeze over in early November; now, the release of warmer winter water prevents a stable ice cover from forming for hundreds of kilometres downstream, and freeze-up at the town of Peace River, Alberta, has been delayed by as much as two months.</li>
-                    <li><b>Sediment Trapping:</b> The vast, slow-moving water of the Williston Reservoir acts as an enormous sediment trap. The majority of the silt and sand that the river once carried downstream now settles to the bottom of the reservoir. This has resulted in a 54% reduction in suspended sediment immediately downstream of the dam. The clearer water, often called "hungry water," has increased erosive power, scouring the riverbed and banks downstream. Farther downstream, this sediment starvation has had devastating effects on the Peace-Athabasca Delta, one of the world's largest freshwater deltas, contributing to its drying and ecological transformation by depriving it of the annual sediment deposits needed to build and maintain its landscape.</li>
-                    <li><b>Flow Regulation:</b> The dam's operation is dictated by the demand for electricity, not the natural rhythm of the seasons. The natural annual flood pulse, driven by spring snowmelt, has been eliminated and replaced by fluctuating daily discharges that can rise and fall rapidly. This unnatural flow regime disrupts temperature and habitat cues for fish, and rapid de-watering can strand fish and other organisms in side channels.</li>
-                </ol>
+                <div class="mt-4 pl-4 border-l-2 border-slate-200">
+                    <h4 class="text-xl font-bold text-slate-800 mt-6 mb-2">Focus Study: Taming the Peace River</h4>
+                    <p class="mt-2 text-slate-700">The W.A.C. Bennett Dam in northern British Columbia, completed in 1968, impounds the massive Williston Reservoir and is the first of a series of dams on the Peace River. Its construction and operation have profoundly and permanently altered the downstream environment, reaching far into Alberta and the Peace-Athabasca Delta.</p>
+                    <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b></p>
+                    <ol class="list-decimal list-inside mt-2 space-y-2">
+                        <li><b>Flow Regulation:</b> The dam's operation is dictated by the demand for electricity, not the natural rhythm of the seasons. The natural annual flood pulse, driven by spring snowmelt, has been eliminated and replaced by fluctuating daily discharges that can rise and fall rapidly. This unnatural flow regime disrupts temperature and habitat cues for fish, and rapid de-watering can strand fish and other organisms in side channels.</li>
+                    </ol>
+                </div>
                 
-                <h4>Focus Study: The Warm Waters of Wabamun Lake</h4>
-                <p class="mt-2 text-slate-700">Thermal pollution is not limited to hydroelectric dams. For many decades, coal-fired power plants located on the shores of Wabamun Lake, west of Edmonton, used a "once-through" cooling process. This involved drawing large volumes of lake water into the plant, circulating it to cool condensers, and then discharging the heated water back into the lake.</p>
-                <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> The Sundance and Wabamun power plants discharged cooling water that was, on average, 8°C warmer in the summer and 14°C warmer in the winter than the ambient lake temperature. This created a persistent plume of thermal pollution that measurably warmed the eastern basin of the lake. The most dramatic effect was observed in winter, when the thermal discharge prevented ice from forming over a large area near the outfall canals, creating an artificial, year-round open-water habitat. While this attracted waterfowl, it represented a significant and unnatural alteration of the lake's fundamental thermal cycle. This practice has largely been phased out in Alberta, with modern plants like the Genesee Generating Station now required to use closed-loop systems with cooling ponds or towers to dissipate heat before water is returned to the environment, mitigating such direct thermal impacts.</p>
+                <div class="mt-4 pl-4 border-l-2 border-slate-200">
+                    <h4 class="text-xl font-bold text-slate-800 mt-6 mb-2">Focus Study: The Warm Waters of Wabamun Lake</h4>
+                    <p class="mt-2 text-slate-700">Thermal pollution is not limited to hydroelectric dams. For many decades, coal-fired power plants located on the shores of Wabamun Lake, west of Edmonton, used a "once-through" cooling process. This involved drawing large volumes of lake water into the plant, circulating it to cool condensers, and then discharging the heated water back into the lake.</p>
+                    <p class="mt-2 text-slate-700"><b>Abiotic Consequences:</b> The Sundance and Wabamun power plants discharged cooling water that was, on average, 8°C warmer in the summer and 14°C warmer in the winter than the ambient lake temperature. This created a persistent plume of thermal pollution that measurably warmed the eastern basin of the lake. The most dramatic effect was observed in winter, when the thermal discharge prevented ice from forming over a large area near the outfall canals, creating an artificial, year-round open-water habitat. While this attracted waterfowl, it represented a significant and unnatural alteration of the lake's fundamental thermal cycle. This practice has largely been phased out in Alberta, with modern plants like the Genesee Generating Station now required to use closed-loop systems with cooling ponds or towers to dissipate heat before water is returned to the environment, mitigating such direct thermal impacts.</p>
+                </div>
                 <p class="mt-2 text-slate-700">The far-reaching effects of projects like the W.A.C. Bennett Dam reveal how a single human intervention can trigger a cascade of secondary and tertiary abiotic changes. The primary goal was electricity generation, but the consequences rippled through the entire ecosystem. The initial act of trapping sediment in the reservoir led to a clearer river downstream. This, in turn, allowed more light to penetrate the water, potentially altering aquatic plant growth. Hundreds of kilometres away, the lack of sediment replenishment contributed to the slow drying of the Peace-Athabasca Delta, a landscape-level transformation. Similarly, altering the river's temperature did more than just make the water warmer in winter; it fundamentally changed the process of ice formation, a key physical driver with its own suite of ecological functions. This illustrates that when humans alter one major abiotic factor, the effects are rarely contained, often setting off a domino effect that re-architects the ecosystem in ways that are complex and difficult to predict.</p>
             </section>
             
             <section class="mb-8">
-                <h2 id="part4" class="text-2xl font-semibold text-cyan-700">Part 4: Synthesis and Conclusion</h2>
-                <h3>4.1 A System of Systems: The Interconnectivity of Abiotic Factors</h3>
+                <h2 id="part5" class="text-2xl font-semibold text-cyan-700">Part 5: Synthesis and Conclusion</h2>
+                <h3>5.1 A System of Systems: The Interconnectivity of Abiotic Factors</h3>
                 <p class="mt-2 text-slate-700">The abiotic characteristics of freshwater ecosystems are not a simple checklist of independent variables. They are a deeply interconnected web of physical and chemical processes, where a change in one factor inevitably ripples through the others. The case studies from across Western Canada vividly illustrate this principle. The nutrient pollution in Lake Winnipeg does not just increase phosphorus levels; it triggers a cascade that alters turbidity, depletes dissolved oxygen, and causes wild swings in pH. The construction of a dam on the Peace River does not just stop water; it fundamentally re-engineers the river's temperature, its ability to transport sediment, and its seasonal pulse, with consequences felt hundreds of kilometres downstream. The atmospheric emissions from industrial sites do not just pollute the air; they alter the fundamental chemistry of the snowpack and, ultimately, the water and sediments of remote rivers and lakes.</p>
                 <p class="mt-2 text-slate-700">Into this already complex system, global climate change is emerging as a powerful "threat multiplier". Rising air temperatures are leading to warmer water temperatures in lakes and rivers across Canada. This warming will directly reduce the capacity of water to hold dissolved oxygen while simultaneously increasing the metabolic rates and oxygen demands of aquatic organisms. Warmer temperatures can also lead to longer periods of summer stratification in lakes, increasing the risk and severity of deep-water anoxia. Furthermore, changes in precipitation patterns—more intense rain events and shifts in snowmelt timing—will likely increase erosion and runoff, exacerbating problems of turbidity and nutrient loading in agricultural and urbanized watersheds.</p>
                 <p class="mt-2 text-slate-700">The freshwater ecosystems of Western Canada are therefore not static environments but dynamic systems facing a confluence of interacting pressures. Understanding their future requires moving beyond the study of individual abiotic factors in isolation and embracing a holistic view that recognizes their profound interconnectivity and their sensitivity to both direct human alteration and overarching global change. The health of these vital water resources depends on our ability to manage the complex interplay of their unseen architects.</p>
@@ -426,9 +465,110 @@
             <section class="mb-8">
                 <h2 id="attributions" class="text-2xl font-semibold text-cyan-700">Works Cited</h2>
                 <p class="mt-2 text-slate-700 text-xs">Note: The "Works Cited" list is from the source document and is provided for attribution. The links have not been verified and are dated to the document's creation.</p>
-                 <!-- Works Cited list will be populated here -->
+                 <ul class="list-decimal list-inside mt-4 text-sm text-slate-600 space-y-2">
+                    <li>Abiotic Components of a Freshwater System - Educational Outreach..., accessed on September 29, 2025, <a href="https://eoss.asu.edu/sites/g/files/litvpz141/files/Abiotic-Components.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://eoss.asu.edu/sites/g/files/litvpz141/files/Abiotic-Components.pdf</a></li>
+                    <li>Freshwater Ecology Unit - Stroud Water Research Center, accessed on September 29, 2025, <a href="https://stroudcenter.org/wp-content/uploads/freshwater-ecology-unit.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://stroudcenter.org/wp-content/uploads/freshwater-ecology-unit.pdf</a></li>
+                    <li>Freshwater chemistry | Research Starters - EBSCO, accessed on September 29, 2025, <a href="https://www.ebsco.com/research-starters/chemistry/freshwater-chemistry" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.ebsco.com/research-starters/chemistry/freshwater-chemistry</a></li>
+                    <li>Aquatic Ecosystems | Abiotic Factors & Importance - Lesson - Study.com, accessed on September 29, 2025, <a href="https://study.com/academy/lesson/aquatic-ecosystems-abiotic-factors.html" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://study.com/academy/lesson/aquatic-ecosystems-abiotic-factors.html</a></li>
+                    <li>Temperature and Water | U.S. Geological Survey - USGS.gov, accessed on September 29, 2025, <a href="https://www.usgs.gov/water-science-school/science/temperature-and-water" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.usgs.gov/water-science-school/science/temperature-and-water</a></li>
+                    <li>www.epa.gov, accessed on September 29, 2025, <a href="https://www.epa.gov/caddis/dissolved-oxygen" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.epa.gov/caddis/dissolved-oxygen</a></li>
+                    <li>How and Why Lakes Stratify and Turn Over: We explain the science ..., accessed on September 29, 2025, <a href="https://www.iisd.org/ela/blog/lakes-stratify-turn-explain-science-behind-phenomena/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.iisd.org/ela/blog/lakes-stratify-turn-explain-science-behind-phenomena/</a></li>
+                    <li>www.iisd.org, accessed on September 29, 2025, <a href="https://www.iisd.org/ela/blog/lakes-stratify-turn-explain-science-behind-phenomena/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.iisd.org/ela/blog/lakes-stratify-turn-explain-science-behind-phenomena/</a></li>
+                    <li>3 Threats to Canada's Fresh Water Ecosystem | IISD-ELA, accessed on September 29, 2025, <a href="https://www.iisd.org/ela/blog/three-major-threats-canadas-fresh-water-iisd-ela-overcome/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.iisd.org/ela/blog/three-major-threats-canadas-fresh-water-iisd-ela-overcome/</a></li>
+                    <li>pubs.rsc.org, accessed on September 29, 2025, <a href="https://pubs.rsc.org/en/content/articlehtml/2023/va/d2va00327a" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://pubs.rsc.org/en/content/articlehtml/2023/va/d2va00327a</a></li>
+                    <li>SL314/SS526: Water Quality Notes: Water Clarity (Turbidity, Suspended Solids, and Color), accessed on September 29, 2025, <a href="https://edis.ifas.ufl.edu/publication/SS526" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://edis.ifas.ufl.edu/publication/SS526</a></li>
+                    <li>Canadian Water Quality Guidelines for the Protection of Aquatic Life - Total Particulate Matter - CCME, accessed on September 29, 2025, <a href="https://ccme.ca/en/res/total-particulate-matter-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://ccme.ca/en/res/total-particulate-matter-en-canadian-water-quality-guidelines-for-the-protection-of-aquatic-life.pdf</a></li>
+                    <li>Turbidity and Alberta's Lakes - ALMS, accessed on September 29, 2025, <a href="https://alms.ca/wp-content/uploads/2014/02/TurbidityLakes_AWQA.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://alms.ca/wp-content/uploads/2014/02/TurbidityLakes_AWQA.pdf</a></li>
+                    <li>4. Light turbidity and Colour - Site Selection For Aquaculture ..., accessed on September 29, 2025, <a href="https://www.fao.org/4/ac174e/AC174E04.htm" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.fao.org/4/ac174e/AC174E04.htm</a></li>
+                    <li>Turbidity in freshwater habitats of Alaska - A review of published and unpublished literature relevant t, accessed on September 29, 2025, <a href="https://www.adfg.alaska.gov/static/home/library/pdfs/habitat/85_01.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.adfg.alaska.gov/static/home/library/pdfs/habitat/85_01.pdf</a></li>
+                    <li>Turbidity, accessed on September 29, 2025, <a href="https://www.gov.nt.ca/sites/ecc/files/turbidity.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.gov.nt.ca/sites/ecc/files/turbidity.pdf</a></li>
+                    <li>Physical processes affecting epilimnetic turbidity in a glacier-fed hydroelectric reservoir, accessed on September 29, 2025, <a href="https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0424329" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://open.library.ubc.ca/soa/cIRcle/collections/ubctheses/24/items/1.0424329</a></li>
+                    <li>Estimation of glacial melt contributions to the Bow River, Alberta, Canada, using a radiation-temperature melt model - ResearchGate, accessed on September 29, 2025, <a href="https://www.researchgate.net/publication/263013737_Estimation_of_glacial_melt_contributions_to_the_Bow_River_Alberta_Canada_using_a_radiation-temperature_melt_model" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.researchgate.net/publication/263013737_Estimation_of_glacial_melt_contributions_to_the_Bow_River_Alberta_Canada_using_a_radiation-temperature_melt_model</a></li>
+                    <li>When the Bow River is the Low River, accessed on September 29, 2025, <a href="https://brbc.ab.ca/blog/when-the-bow-river-becomes-the-low-river" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://brbc.ab.ca/blog/when-the-bow-river-becomes-the-low-river</a></li>
+                    <li>How Alberta Farms Are Tackling Their Biggest Environmental Challenge, accessed on September 29, 2025, <a href="https://organicagcentre.ca/policy-and-standards/how-alberta-farms-are-tackling-their-biggest-environmental-challenge/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://organicagcentre.ca/policy-and-standards/how-alberta-farms-are-tackling-their-biggest-environmental-challenge/</a></li>
+                    <li>agr cultural impacts on water quality in alberta - Agriculture and Irrigation, accessed on September 29, 2025, <a href="https://www1.agric.gov.ab.ca/$department/deptdocs.nsf/all/irr15532/$file/agricultural-impacts-on-water-quality-Alberta.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www1.agric.gov.ab.ca/$department/deptdocs.nsf/all/irr15532/$file/agricultural-impacts-on-water-quality-Alberta.pdf</a></li>
+                    <li>Southern Alberta's Watershed: An Overview, accessed on September 29, 2025, <a href="http://www.albertapcf.org/rsu_docs/occasional_paper_5.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">http://www.albertapcf.org/rsu_docs/occasional_paper_5.pdf</a></li>
+                    <li>Agricultural runoff and lake water quality, accessed on September 29, 2025, <a href="https://open.alberta.ca/dataset/044998b8-d9a0-4d5c-af97-a2629dbd32d1/resource/7600a142-b142-43fc-a15a-cef7db24c20c/download/7965.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://open.alberta.ca/dataset/044998b8-d9a0-4d5c-af97-a2629dbd32d1/resource/7600a142-b142-43fc-a15a-cef7db24c20c/download/7965.pdf</a></li>
+                    <li>pH and Dissolved Oxygen, Explained - Coosa Riverkeeper, accessed on September 29, 2025, <a href="https://coosariver.org/waterqualityparameterspart1/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://coosariver.org/waterqualityparameterspart1/</a></li>
+                    <li>coosariver.org, accessed on September 29, 2025, <a href="https://coosariver.org/waterqualityparameterspart1/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://coosariver.org/waterqualityparameterspart1/</a></li>
+                    <li>Dissolved Oxygen Fact Sheet - State Water Resources Control Board, accessed on September 29, 2025, <a href="https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/cwt/guidance/3110en.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.waterboards.ca.gov/water_issues/programs/swamp/docs/cwt/guidance/3110en.pdf</a></li>
+                    <li>Teacher Guide-Physical Science Module - Activity 1- Chemistry in an Estuary - NOAA Office for Coastal Management, accessed on September 29, 2025, <a href="https://coast.noaa.gov/data/estuaries/pdf/chemistry-in-an-estuary-combined-teacher-student.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://coast.noaa.gov/data/estuaries/pdf/chemistry-in-an-estuary-combined-teacher-student.pdf</a></li>
+                    <li>What's Wrong With Lake Winnipeg? - FortWhyte Alive, accessed on September 29, 2025, <a href="https://www.fortwhyte.org/wp-content/uploads/2015/08/SlowTheFlow-LiquidAssets-Spring2009.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.fortwhyte.org/wp-content/uploads/2015/08/SlowTheFlow-LiquidAssets-Spring2009.pdf</a></li>
+                    <li>Does Dissolved Oxygen Affect pH? - Atlas Scientific, accessed on September 29, 2025, <a href="https://atlas-scientific.com/blog/does-dissolved-oxygen-affect-ph/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://atlas-scientific.com/blog/does-dissolved-oxygen-affect-ph/</a></li>
+                    <li>Recently surveyed lakes in northern Manitoba and Saskatchewan, Canada: Characteristics and critical loads of acidity - ResearchGate, accessed on September 29, 2025, <a href="https://www.researchgate.net/publication/228683144_Recently_surveyed_lakes_in_northern_Manitoba_and_Saskatchewan_Canada_Characteristics_and_critical_loads_of_acidity" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.researchgate.net/publication/228683144_Recently_surveyed_lakes_in_northern_Manitoba_and_Saskatchewan_Canada_Characteristics_and_critical_loads_of_acidity</a></li>
+                    <li>Chemical characteristics and acid sensitivity of boreal headwater lakes in northwest Saskatchewan - ResearchGate, accessed on September 29, 2025, <a href="https://www.researchgate.net/publication/255822008_Chemical_characteristics_and_acid_sensitivity_of_boreal_headwater_lakes_in_northwest_Saskatchewan" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.researchgate.net/publication/255822008_Chemical_characteristics_and_acid_sensitivity_of_boreal_headwater_lakes_in_northwest_Saskatchewan</a></li>
+                    <li>The Roles of Phosphorus and Nitrogen in Lake Ecosystems - Alaska ..., accessed on September 29, 2025, <a href="https://www.adfg.alaska.gov/fedaidpdfs/RIR.4K.2003.42.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.adfg.alaska.gov/fedaidpdfs/RIR.4K.2003.42.pdf</a></li>
+                    <li>BACK TO BASICS: How and Why Phosphorus Cycles through a Lake, accessed on September 29, 2025, <a href="https://www.iisd.org/ela/blog/back-to-basics-how-and-why-phosphorus-cycles-through-a-lake/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.iisd.org/ela/blog/back-to-basics-how-and-why-phosphorus-cycles-through-a-lake/</a></li>
+                    <li>Nutrients and Eutrophication | U.S. Geological Survey - USGS.gov, accessed on September 29, 2025, <a href="https://www.usgs.gov/mission-areas/water-resources/science/nutrients-and-eutrophication" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.usgs.gov/mission-areas/water-resources/science/nutrients-and-eutrophication</a></li>
+                    <li>An important process fueling harmful algal blooms investigated in Canadian water bodies | Lake Futures | University of Waterloo, accessed on September 29, 2025, <a href="https://uwaterloo.ca/lake-futures/news/important-process-fueling-harmful-algal-blooms-investigated" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://uwaterloo.ca/lake-futures/news/important-process-fueling-harmful-algal-blooms-investigated</a></li>
+                    <li>Study finds Manitoba lakes among most susceptible to algal blooms | CBC News, accessed on September 29, 2025, <a href="https://www.cbc.ca/news/canada/manitoba/manitoba-lakes-algal-blooms-research-1.4288999" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.cbc.ca/news/canada/manitoba/manitoba-lakes-algal-blooms-research-1.4288999</a></li>
+                    <li>Difference between natural and cultural eutrophication - Cssprepforum, accessed on September 29, 2025, <a href="https://cssprepforum.com/define-eutrophication-explain-the-difference-between-natural-and-cultural-eutrophication-discuss-the-methods-of-combating-eutrophication/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://cssprepforum.com/define-eutrophication-explain-the-difference-between-natural-and-cultural-eutrophication-discuss-the-methods-of-combating-eutrophication/</a></li>
+                    <li>Measuring Eutrophication - Michigan Inland Lakes Partnership, accessed on September 29, 2025, <a href="https://www.canr.msu.edu/michiganlakes/lake_ecology/measuring_eutrophication" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.canr.msu.edu/michiganlakes/lake_ecology/measuring_eutrophication</a></li>
+                    <li>Lake Eutrophication - NH.gov, accessed on September 29, 2025, <a href="https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/bb-3.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/bb-3.pdf</a></li>
+                    <li>Eutrophication - Wikipedia, accessed on September 29, 2025, <a href="https://en.wikipedia.org/wiki/Eutrophication" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Eutrophication</a></li>
+                    <li>Ponds and eutrophication - Cary Institute of Ecosystem Studies, accessed on September 29, 2025, <a href="https://www.caryinstitute.org/sites/default/files/public/downloads/curriculum-project/4C3_eutrophication_reading.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.caryinstitute.org/sites/default/files/public/downloads/curriculum-project/4C3_eutrophication_reading.pdf</a></li>
+                    <li>Age of Lakes - Articles about Lake Weeds, Boatlifts, Muck, & Docks | LakeMat, accessed on September 29, 2025, <a href="https://lakemat.com/articles/age-of-lakes" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://lakemat.com/articles/age-of-lakes</a></li>
+                    <li>Aging is a natural process in lake ecosystems! Our actions can either speed up or stabilize the process., accessed on September 29, 2025, <a href="https://lakes.grace.edu/wp-content/uploads/2021/10/Lake-Aging_FINAL.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://lakes.grace.edu/wp-content/uploads/2021/10/Lake-Aging_FINAL.pdf</a></li>
+                    <li>The Life of a Lake, accessed on September 29, 2025, <a href="https://nhlakes.org/wp-content/uploads/3-Lake-Ecology-The-Life-of-a-Lake-NH-LAKES.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://nhlakes.org/wp-content/uploads/3-Lake-Ecology-The-Life-of-a-Lake-NH-LAKES.pdf</a></li>
+                    <li>Cultural eutrophication | Research Starters - EBSCO, accessed on September 29, 2025, <a href="https://www.ebsco.com/research-starters/science/cultural-eutrophication" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.ebsco.com/research-starters/science/cultural-eutrophication</a></li>
+                    <li>Lake Winnipeg algae threat - Wikipedia, accessed on September 29, 2025, <a href="https://en.wikipedia.org/wiki/Lake_Winnipeg_algae_threat" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Lake_Winnipeg_algae_threat</a></li>
+                    <li>State of Lake Winnipeg - Province of Manitoba, accessed on September 29, 2025, <a href="https://www.gov.mb.ca/sd/pubs/water/lakes-beaches-rivers/state_lake_wpg_report_tech.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.gov.mb.ca/sd/pubs/water/lakes-beaches-rivers/state_lake_wpg_report_tech.pdf</a></li>
+                    <li>Accidental guardians: How reservoirs are decreasing nitrogen and phosphorus loads reaching Lake Winnipeg | Water Institute | University of Waterloo, accessed on September 29, 2025, <a href="https://uwaterloo.ca/water-institute/news/accidental-guardians-how-reservoirs-are-decreasing-nitrogen" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://uwaterloo.ca/water-institute/news/accidental-guardians-how-reservoirs-are-decreasing-nitrogen</a></li>
+                    <li>The rapid eutrophication of Lake Winnipeg: Greening under global change - ResearchGate, accessed on September 29, 2025, <a href="https://www.researchgate.net/publication/257230697_The_rapid_eutrophication_of_Lake_Winnipeg_Greening_under_global_change" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.researchgate.net/publication/257230697_The_rapid_eutrophication_of_Lake_Winnipeg_Greening_under_global_change</a></li>
+                    <li>Characteristics of Oligotrophic and Eutrophic Lakes - Environment Notes - Prepp, accessed on September 29, 2025, <a href="https://prepp.in/news/e-492-characteristics-of-oligotrophic-and-eutrophic-lakes-environment-notes" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://prepp.in/news/e-492-characteristics-of-oligotrophic-and-eutrophic-lakes-environment-notes</a></li>
+                    <li>Water indicators - Lake trophic status | Alberta.ca, accessed on September 29, 2025, <a href="https://www.alberta.ca/water-indicators-lake-trophic-status" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.alberta.ca/water-indicators-lake-trophic-status</a></li>
+                    <li>www.des.nh.gov, accessed on September 29, 2025, <a href="https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/laketrophic-explain-current.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.des.nh.gov/sites/g/files/ehbemt341/files/documents/2020-01/laketrophic-explain-current.pdf</a></li>
+                    <li>Exploring Trophic Status of Seneca Lake & Environmental Stewardship - Hobart and William Smith Colleges, accessed on September 29, 2025, <a href="https://www.hws.edu/centers/finger-lakes-institute/pdf/trophic-status-worksheet.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.hws.edu/centers/finger-lakes-institute/pdf/trophic-status-worksheet.pdf</a></li>
+                    <li>Pond & Lake Life Cycle - Kasco Marine, accessed on September 29, 2025, <a href="https://kascomarine.com/blog/pond-lake-life-cycle-2/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://kascomarine.com/blog/pond-lake-life-cycle-2/</a></li>
+                    <li>Oilsands pollution and the Athabasca River: - Ecojustice Canada, accessed on September 29, 2025, <a href="https://ecojustice.ca/wp-content/uploads/2014/08/Oilsands-pollution-and-the-Athabasca-River.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://ecojustice.ca/wp-content/uploads/2014/08/Oilsands-pollution-and-the-Athabasca-River.pdf</a></li>
+                    <li>History of environmental contamination by oil sands extraction - PNAS, accessed on September 29, 2025, <a href="https://www.pnas.org/doi/10.1073/pnas.1221660110" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.pnas.org/doi/10.1073/pnas.1221660110</a></li>
+                    <li>Air pollution: drivers and impacts - Canada.ca, accessed on September 29, 2025, <a href="https://www.canada.ca/en/environment-climate-change/services/environmental-indicators/air-pollution-drivers-impacts.html" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.canada.ca/en/environment-climate-change/services/environmental-indicators/air-pollution-drivers-impacts.html</a></li>
+                    <li>Recently surveyed lakes in northern Manitoba and Saskatchewan, Canada: characteristics and critical loads of acidity | Journal of Limnology, accessed on September 29, 2025, <a href="https://www.jlimnol.it/index.php/jlimnol/article/view/114" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.jlimnol.it/index.php/jlimnol/article/view/114</a></li>
+                    <li>Recently surveyed lakes in northern Manitoba and Saskatchewan, Canada: characteristics and critical loads of acidity | Journal of Limnology, accessed on September 29, 2025, <a href="https://www.jlimnol.it/jlimnol/article/view/jlimnol.2010.s1.45" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.jlimnol.it/jlimnol/article/view/jlimnol.2010.s1.45</a></li>
+                    <li>W. A. C. Bennett Dam - Wikipedia, accessed on September 29, 2025, <a href="https://en.wikipedia.org/wiki/W._A._C._Bennett_Dam" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/W._A._C._Bennett_Dam</a></li>
+                    <li>Canada - Northern River Basins Study, accessed on September 29, 2025, <a href="https://publications.gc.ca/collections/collection_2025/eccc/r71/R71-49-3-122-eng.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://publications.gc.ca/collections/collection_2025/eccc/r71/R71-49-3-122-eng.pdf</a></li>
+                    <li>Peace River Baseline TGP/Temperature | Year 3 | April 30, 2012. - BC Hydro, accessed on September 29, 2025, <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/environment-sustainability/water-use-planning/northern-interior/peace-river-baseline-tgp-temperature-gmsworks-2-year-3-april-2012.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/environment-sustainability/water-use-planning/northern-interior/peace-river-baseline-tgp-temperature-gmsworks-2-year-3-april-2012.pdf</a></li>
+                    <li>GMSWORKS-2 | Peace River Baseline TDG and Temperature | Year 6 | April 2015 - BC Hydro, accessed on September 29, 2025, <a href="https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/environment-sustainability/water-use-planning/northern-interior/gmsworks-2-yr6-2015-04-01.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.bchydro.com/content/dam/BCHydro/customer-portal/documents/corporate/environment-sustainability/water-use-planning/northern-interior/gmsworks-2-yr6-2015-04-01.pdf</a></li>
+                    <li>Dammed If You Do Article - Alberta Wilderness Association, accessed on September 29, 2025, <a href="https://albertawilderness.ca/wp-content/uploads/200202_AR_WAT1.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://albertawilderness.ca/wp-content/uploads/200202_AR_WAT1.pdf</a></li>
+                    <li>Site C hydroelectric project: predicted changes in Peace River morphology and sediment transport - Knight Piésold, accessed on September 29, 2025, <a href="https://www.knightpiesold.com/sites/en/assets/File/ICOLD%202017%20-%20Site%20C%20Hydroelectric%20Project-%20Predicted%20Changes%20in%20Peace%20River%20Morphology%20and%20Sediment%20Transport.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.knightpiesold.com/sites/en/assets/File/ICOLD%202017%20-%20Site%20C%20Hydroelectric%20Project-%20Predicted%20Changes%20in%20Peace%20River%20Morphology%20and%20Sediment%20Transport.pdf</a></li>
+                    <li>Dams: impacts on salmon and steelhead - Northwest Power and Conservation Council, accessed on September 29, 2025, <a href="https://www.nwcouncil.org/history/DamsImpacts/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.nwcouncil.org/history/DamsImpacts/</a></li>
+                    <li>Map of Wabamun Lake and vicinity showing the locations of the sampling site ( ) and power plants ( ) - ResearchGate, accessed on September 29, 2025, <a href="https://www.researchgate.net/figure/Map-of-Wabamun-Lake-and-vicinity-showing-the-locations-of-the-sampling-site-and-power_fig1_221766915" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.researchgate.net/figure/Map-of-Wabamun-Lake-and-vicinity-showing-the-locations-of-the-sampling-site-and-power_fig1_221766915</a></li>
+                    <li>Lake Wabamun study: a report commissioned by the Honourable W.J. Yurko, Minister of the Environment of the Province of Alberta - Open Government, accessed on September 29, 2025, <a href="https://open.alberta.ca/publications/468866" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://open.alberta.ca/publications/468866</a></li>
+                    <li>The effect of thermal effluent in Lake Wabamun, Alberta: With 5 photos, 4 figures and 4 tables in the text and on 1 folder, accessed on September 29, 2025, <a href="https://www.tandfonline.com/doi/pdf/10.1080/03680770.1971.11895992" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://www.tandfonline.com/doi/pdf/10.1080/03680770.1971.11895992</a></li>
+                    <li>An overview of recent studies on Wabamun Lake - Open Government program, accessed on September 29, 2025, <a href="https://open.alberta.ca/dataset/7b7468d0-8a3a-446a-884b-5668fa66b4c3/resource/e65f5e20-5e47-4237-85fc-6e76feab312b/download/6138.pdf" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://open.alberta.ca/dataset/7b7468d0-8a3a-446a-884b-5668fa66b4c3/resource/e65f5e20-5e47-4237-85fc-6e76feab312b/download/6138.pdf</a></li>
+                    <li>Genesee Generating Station - Wikipedia, accessed on September 29, 2025, <a href="https://en.wikipedia.org/wiki/Genesee_Generating_Station" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://en.wikipedia.org/wiki/Genesee_Generating_Station</a></li>
+                    <li>Treating cooling pond water for Wabamun Lake level mitigation project in Alberta, accessed on September 29, 2025, <a href="https://esemag.com/archives/treating-cooling-pond-water-for-wabamun-lake-level-mitigation-project-in-alberta/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://esemag.com/archives/treating-cooling-pond-water-for-wabamun-lake-level-mitigation-project-in-alberta/</a></li>
+                    <li>Understanding Climate Change Impacts - Living Lakes Canada, accessed on September 29, 2025, <a href="https://livinglakescanada.ca/understanding-climate-change-impacts/" class="text-blue-600 hover:underline break-all" target="_blank" rel="noopener noreferrer">https://livinglakescanada.ca/understanding-climate-change-impacts/</a></li>
+                 </ul>
             </section>
 
+        </div>
+    </div>
+    
+    <!-- Modal HTML -->
+    <div id="quiz-modal" class="modal fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-[60] overflow-y-auto" style="display: none;">
+        <div class="bg-white rounded-xl shadow-xl p-8 max-w-lg w-full transform transition-transform duration-300 scale-100 my-8">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 id="quiz-title" class="text-xl font-bold text-slate-800">Quiz</h3>
+                <button id="close-button" class="text-slate-500 hover:text-slate-700 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="quiz-form"></form>
+
+            <div id="results" class="mt-4 text-center hidden">
+                <h4 class="text-2xl font-bold text-slate-900 mb-2">Quiz Results</h4>
+                <p id="score-text" class="text-lg text-slate-700"></p>
+                <p id="feedback-text" class="text-sm text-slate-500 mt-2"></p>
+                
+                <div id="strengths-summary" class="mt-6 text-left"></div>
+                <div id="review-summary" class="mt-4 text-left"></div>
+
+                <button id="retake-quiz" class="mt-6 bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors">Retake Quiz</button>
+            </div>
         </div>
     </div>
 
@@ -438,7 +578,223 @@
             const searchButton = document.getElementById('search-button');
             const contentArea = document.getElementById('content-area');
             const originalContent = contentArea.innerHTML;
+            
+            // Quiz Elements
+            const quizModal = document.getElementById('quiz-modal');
+            const closeButton = document.getElementById('close-button');
+            const quizForm = document.getElementById('quiz-form');
+            const quizTitle = document.getElementById('quiz-title');
+            const resultsDiv = document.getElementById('results');
+            const scoreText = document.getElementById('score-text');
+            const feedbackText = document.getElementById('feedback-text');
+            const strengthsSummary = document.getElementById('strengths-summary');
+            const reviewSummary = document.getElementById('review-summary');
+            const retakeButton = document.getElementById('retake-quiz');
+            const quizButtons = document.querySelectorAll('.quiz-button');
+            
+            let currentQuestionIndex = 0;
+            let userAnswers = [];
+            let currentQuizQuestions = [];
 
+            // --- QUIZ DATA ---
+            const quizData = {
+                '1': {
+                    title: "Part 1: The Physical Stage",
+                    questions: [
+                        { question: "What unique property of water allows it to be a 'universal solvent'?", options: ["Its high boiling point", "Its polar molecular structure", "Its solid form (ice) floats", "Its transparency"], answer: "Its polar molecular structure", concept: "Properties of Water" },
+                        { question: "At approximately what temperature is water at its most dense?", options: ["0°C", "100°C", "4°C", "-1°C"], answer: "4°C", concept: "Properties of Water" },
+                        { question: "What is the name for the top, warm, well-lit layer of a stratified lake?", options: ["Hypolimnion", "Thermocline", "Benthic Zone", "Epilimnion"], answer: "Epilimnion", concept: "Thermal Stratification" },
+                        { question: "The seasonal process where the entire water column of a lake mixes is called:", options: ["Stratification", "Turnover", "Eutrophication", "Stagnation"], answer: "Turnover", concept: "Lake Turnover" },
+                        { question: "A lake that mixes twice a year (in spring and fall) is called:", options: ["Monomictic", "Polymictic", "Dimictic", "Amictic"], answer: "Dimictic", concept: "Lake Turnover" },
+                        { question: "Turbidity in water is a measure of its:", options: ["Temperature", "Acidity (pH)", "Cloudiness", "Oxygen content"], answer: "Cloudiness", concept: "Turbidity and Light" },
+                        { question: "The region in a lake with enough light for photosynthesis is known as the:", options: ["Aphotic zone", "Profundal zone", "Euphotic zone", "Littoral zone"], answer: "Euphotic zone", concept: "Turbidity and Light" },
+                        { question: "What is the primary cause of the milky, turquoise color of glacial-fed rivers?", options: ["Dissolved salts", "Algal blooms", "Suspended rock silt (glacial flour)", "Low oxygen levels"], answer: "Suspended rock silt (glacial flour)", concept: "Turbidity and Light" },
+                        { question: "High turbidity from sediment can negatively impact fish by:", options: ["Clogging their gills", "Smothering their eggs", "Reducing their ability to find food", "All of the above"], answer: "All of the above", concept: "Turbidity and Light" },
+                        { question: "What is the name for the cold, dark, bottom layer of a stratified lake?", options: ["Epilimnion", "Hypolimnion", "Thermocline", "Euphotic Zone"], answer: "Hypolimnion", concept: "Thermal Stratification" },
+                    ]
+                },
+                '2': {
+                    title: "Part 2: The Chemical Symphony",
+                    questions: [
+                        { question: "What is the main source of dissolved oxygen (DO) for a fast-flowing river?", options: ["Photosynthesis from algae", "Groundwater seepage", "Atmospheric diffusion", "Decomposition"], answer: "Atmospheric diffusion", concept: "Dissolved Oxygen" },
+                        { question: "Which biological process produces oxygen in aquatic ecosystems?", options: ["Respiration", "Decomposition", "Photosynthesis", "Nitrification"], answer: "Photosynthesis", concept: "Dissolved Oxygen" },
+                        { question: "What is a major biological process that consumes a large amount of dissolved oxygen?", options: ["Decomposition of organic matter", "Gas solubility", "Water turbulence", "Sunlight penetration"], answer: "Decomposition of organic matter", concept: "Dissolved Oxygen" },
+                        { question: "How does water temperature affect its ability to hold dissolved oxygen?", options: ["Warm water holds more oxygen", "Cold water holds more oxygen", "Temperature has no effect", "Only salty water is affected by temperature"], answer: "Cold water holds more oxygen", concept: "Dissolved Oxygen" },
+                        { question: "A water sample with a pH of 5 is how many times more acidic than a sample with a pH of 6?", options: ["2 times", "10 times", "100 times", "1 time (the same)"], answer: "10 times", concept: "pH and Alkalinity" },
+                        { question: "What gives water 'buffering capacity' to resist changes in pH?", options: ["High dissolved oxygen", "High turbidity", "The presence of carbonate and bicarbonate ions", "Low temperature"], answer: "The presence of carbonate and bicarbonate ions", concept: "pH and Alkalinity" },
+                        { question: "What is the term for the biologically usable form of phosphorus that algae can absorb?", options: ["Particulate phosphorus", "Phosphoric acid", "Orthophosphate", "Phosphine gas"], answer: "Orthophosphate", concept: "Nutrient Cycles" },
+                        { question: "The process where phosphorus is released from bottom sediments under anoxic conditions is called:", options: ["Nitrogen fixation", "Internal phosphorus loading", "Denitrification", "Eutrophication"], answer: "Internal phosphorus loading", concept: "Nutrient Cycles" },
+                        { question: "The conversion of atmospheric nitrogen gas (N₂) into a usable form like ammonium (NH₄⁺) is called:", options: ["Denitrification", "Nitrification", "Nitrogen fixation", "Ammonification"], answer: "Nitrogen fixation", concept: "Nutrient Cycles" },
+                        { question: "Denitrification is an important process because it:", options: ["Produces oxygen", "Removes nitrogen from the ecosystem back to the atmosphere", "Makes nitrogen available for algae", "Increases water acidity"], answer: "Removes nitrogen from the ecosystem back to the atmosphere", concept: "Nutrient Cycles" },
+                    ]
+                },
+                '3': {
+                    title: "Part 3: The Human Footprint",
+                    questions: [
+                        { question: "The dramatic, human-caused acceleration of nutrient enrichment in a lake is known as:", options: ["Natural succession", "Oligotrophication", "Cultural eutrophication", "Thermal stratification"], answer: "Cultural eutrophication", concept: "Eutrophication" },
+                        { question: "What are the two primary nutrients responsible for cultural eutrophication?", options: ["Calcium and Magnesium", "Iron and Silica", "Sodium and Chloride", "Phosphorus and Nitrogen"], answer: "Phosphorus and Nitrogen", concept: "Eutrophication" },
+                        { question: "A lake with low nutrient levels, high water clarity, and high deep-water oxygen is called:", options: ["Eutrophic", "Mesotrophic", "Oligotrophic", "Dystrophic"], answer: "Oligotrophic", concept: "Trophic States" },
+                        { question: "Which of the following is a key characteristic of a eutrophic lake?", options: ["Deep, rocky basin", "Low biological productivity", "Clear water", "Frequent, dense algal blooms"], answer: "Frequent, dense algal blooms", concept: "Trophic States" },
+                        { question: "A major source of nutrient pollution from agricultural landscapes is:", options: ["Acid rain", "Runoff containing fertilizers and manure", "Glacial meltwater", "Dust from fields"], answer: "Runoff containing fertilizers and manure", concept: "Eutrophication" },
+                        { question: "Which type of fish community is typically found in a cold, deep, oligotrophic lake?", options: ["Carp and catfish", "Trout and salmon", "Sunfish and perch", "Bass and pike"], answer: "Trout and salmon", concept: "Trophic States" },
+                        { question: "The slow, natural aging process of a lake over thousands of years is called:", options: ["Cultural eutrophication", "Natural eutrophication", "Lake turnover", "Limnology"], answer: "Natural eutrophication", concept: "Eutrophication" },
+                        { question: "What is a common consequence of dense algal blooms dying and decomposing?", options: ["Increased water clarity", "Depletion of dissolved oxygen (anoxia)", "Cooling of surface waters", "A decrease in pH"], answer: "Depletion of dissolved oxygen (anoxia)", concept: "Eutrophication" },
+                        { question: "A shallow, mucky-bottomed lake is more likely to be:", options: ["Oligotrophic", "Eutrophic", "Pristine", "Glacial-fed"], answer: "Eutrophic", concept: "Trophic States" },
+                        { question: "Which human activity is the primary driver of cultural eutrophication?", options: ["Building dams", "Fishing", "Intensive agriculture and urbanization", "Boating"], answer: "Intensive agriculture and urbanization", concept: "Eutrophication" },
+                    ]
+                }
+            };
+
+            function startQuiz(quizId) {
+                const quiz = quizData[quizId];
+                if (!quiz) return;
+                
+                currentQuizQuestions = quiz.questions;
+                quizTitle.textContent = quiz.title + " Quiz";
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                
+                renderQuestion();
+                quizModal.style.display = 'flex';
+            }
+
+            function renderQuestion() {
+                const q = currentQuizQuestions[currentQuestionIndex];
+                quizForm.innerHTML = ''; // Clear previous content
+
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4';
+                
+                const questionText = document.createElement('p');
+                questionText.className = 'text-slate-800 font-semibold mb-2';
+                questionText.textContent = `${currentQuestionIndex + 1}. ${q.question}`;
+                questionDiv.appendChild(questionText);
+
+                const optionsDiv = document.createElement('div');
+                q.options.forEach(option => {
+                    const optionLabel = document.createElement('label');
+                    optionLabel.className = 'block text-slate-700 cursor-pointer hover:bg-slate-100 p-2 rounded-md transition-colors';
+                    
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question${currentQuestionIndex}`;
+                    input.value = option;
+                    input.className = 'mr-2';
+                    
+                    optionLabel.appendChild(input);
+                    optionLabel.appendChild(document.createTextNode(option));
+                    optionsDiv.appendChild(optionLabel);
+                });
+                questionDiv.appendChild(optionsDiv);
+                quizForm.appendChild(questionDiv);
+
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors';
+                button.textContent = (currentQuestionIndex < currentQuizQuestions.length - 1) ? 'Next Question' : 'Submit Answers';
+                button.addEventListener('click', handleNext);
+                quizForm.appendChild(button);
+
+                quizForm.classList.remove('hidden');
+                resultsDiv.classList.add('hidden');
+            }
+            
+            function handleNext() {
+                const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+                if (!selectedOption) {
+                    showCustomMessage("Please select an answer before moving on.");
+                    return;
+                }
+                userAnswers[currentQuestionIndex] = selectedOption.value;
+
+                if (currentQuestionIndex < currentQuizQuestions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                } else {
+                    calculateScore();
+                }
+            }
+
+            function calculateScore() {
+                let score = 0;
+                const conceptResults = {};
+
+                currentQuizQuestions.forEach((q, index) => {
+                    const concept = q.concept;
+                    if (!conceptResults[concept]) {
+                        conceptResults[concept] = { correct: 0, total: 0 };
+                    }
+                    conceptResults[concept].total++;
+
+                    if (userAnswers[index] === q.answer) {
+                        score++;
+                        conceptResults[concept].correct++;
+                    }
+                });
+
+                const totalQuestions = currentQuizQuestions.length;
+                const percentage = (score / totalQuestions) * 100;
+                
+                let feedback = '';
+                if (percentage === 100) {
+                    feedback = "Excellent! You've mastered this section.";
+                } else if (percentage >= 70) {
+                    feedback = "Great job! You have a solid understanding of the material.";
+                } else if (percentage >= 50) {
+                    feedback = "You're on the right track! Review the concepts and try again.";
+                } else {
+                    feedback = "Keep studying! A quick review of this section will help a lot.";
+                }
+
+                scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%).`;
+                feedbackText.textContent = feedback;
+                
+                // Generate strengths and review summaries
+                let strengthsHtml = `<h4 class="text-lg font-bold text-green-700">You're strong in:</h4><ul class="list-disc list-inside text-slate-700 mt-2">`;
+                let reviewHtml = `<h4 class="text-lg font-bold text-amber-700">Areas for review:</h4><ul class="list-disc list-inside text-slate-700 mt-2">`;
+                let hasStrengths = false;
+                let hasReviewAreas = false;
+
+                for (const concept in conceptResults) {
+                    if (conceptResults[concept].correct === conceptResults[concept].total) {
+                        strengthsHtml += `<li>${concept}</li>`;
+                        hasStrengths = true;
+                    } else {
+                        reviewHtml += `<li>${concept}</li>`;
+                        hasReviewAreas = true;
+                    }
+                }
+
+                strengthsHtml += `</ul>`;
+                reviewHtml += `</ul>`;
+
+                strengthsSummary.innerHTML = hasStrengths ? strengthsHtml : '';
+                reviewSummary.innerHTML = hasReviewAreas ? reviewHtml : '';
+                
+                quizForm.classList.add('hidden');
+                resultsDiv.classList.remove('hidden');
+            }
+            
+            // --- EVENT LISTENERS ---
+            quizButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const quizId = button.getAttribute('data-quiz');
+                    startQuiz(quizId);
+                });
+            });
+            
+            closeButton.addEventListener('click', () => {
+                quizModal.style.display = 'none';
+            });
+
+            retakeButton.addEventListener('click', () => {
+                // Restart the current quiz
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                renderQuestion();
+            });
+
+            // --- SEARCH AND UTILITY FUNCTIONS ---
             function showCustomMessage(message) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = "fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-[100]";
@@ -467,7 +823,6 @@
                         textNodes.push(node);
                     } else {
                         for (const child of node.childNodes) {
-                            // Do not search within script or style tags
                             if (child.nodeName !== 'SCRIPT' && child.nodeName !== 'STYLE') {
                                 getTextNodes(child);
                             }
@@ -485,18 +840,15 @@
                         const fragment = document.createDocumentFragment();
                         let lastIndex = 0;
                         text.replace(regex, (match, index) => {
-                            // Add the text before the match
                             if (index > lastIndex) {
                                 fragment.appendChild(document.createTextNode(text.substring(lastIndex, index)));
                             }
-                            // Add the highlighted match
                             const span = document.createElement('span');
                             span.className = 'highlight';
                             span.textContent = match;
                             fragment.appendChild(span);
                             lastIndex = index + match.length;
                         });
-                        // Add any remaining text after the last match
                         if (lastIndex < text.length) {
                             fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
                         }
@@ -518,11 +870,10 @@
                 contentArea.innerHTML = originalContent;
             }
 
-            // Event Listeners
             searchButton.addEventListener('click', performSearch);
             searchInput.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
-                    event.preventDefault(); // Prevent form submission if it's in a form
+                    event.preventDefault(); 
                     performSearch();
                 }
             });
@@ -530,3 +881,5 @@
     </script>
 </body>
 </html>
+</html>
+
