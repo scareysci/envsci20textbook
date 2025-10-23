@@ -7,56 +7,93 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Using the system default for 'Inter' since it's common, or falling back to sans-serif */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
+        }
+        /* Custom styles to center content on the screen */
+        .full-center-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
+        /* Smooth transitions for links/buttons */
+        .chapter-link {
+            transition: all 0.3s ease;
+        }
+        .chapter-link:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
-<body class="p-4 bg-stone-100">
-    <div class="bg-white rounded-xl shadow-lg p-8 max-w-lg w-full text-center">
-        <h1 class="text-3xl font-bold text-stone-900 mb-8">Environmental Science 20 Textbook</h1>
+<body class="p-4 bg-stone-100 full-center-container">
+    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-xl w-full text-center">
+        <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Environmental Science 20</h1>
+        <p class="text-stone-500 mb-8">Course Textbook & Chapter Index</p>
         
         <!-- Search Functionality -->
-        <div class="mb-8">
-            <form id="searchForm" class="flex flex-col sm:flex-row gap-2">
-                <input type="text" id="searchInput" placeholder="Search the textbook..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
-                <button type="submit" class="px-6 py-2 bg-stone-700 text-white font-semibold rounded-lg shadow-md hover:bg-stone-800 transition duration-300">Search</button>
+        <div class="mb-10 p-4 border-b border-stone-200">
+            <form id="searchForm" class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="searchInput" placeholder="Search a term like 'Evaporation' or 'Salinity'..." 
+                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-500/50 focus:border-amber-500 transition duration-150 shadow-inner">
+                <button type="submit" class="px-6 py-3 bg-stone-700 text-white font-bold rounded-xl shadow-lg hover:bg-stone-800 transition duration-300 transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Search
+                </button>
             </form>
-            <div id="messageBox" class="mt-2 text-sm text-red-500"></div>
-            <div id="results" class="mt-4 text-left"></div>
+            <div id="messageBox" class="mt-4 text-sm font-medium text-red-600"></div>
+            <div id="results" class="mt-6 text-left space-y-2">
+                <!-- Search results will appear here -->
+            </div>
         </div>
 
+        <!-- Chapter Index -->
         <div class="mb-8">
-            <h2 class="text-2xl font-semibold text-stone-700 mb-4">Aquatic Ecosystems</h2>
+            <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 1: Aquatic Ecosystems</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Row for Hydrologic Cycle -->
-                <a href="part1.html" class="p-4 bg-amber-600 text-white font-semibold rounded-lg shadow-md hover:bg-amber-700 transition duration-300 transform hover:scale-105">
+                <!-- Chapter 1: Hydrologic Cycle -->
+                <div class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 1</span>
                     Hydrologic Cycle
-                </a>
+                </div>
                 
-                <!-- Row for Types of Aquatic Ecosystems -->
-                <a href="part2.html" class="p-4 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
+                <!-- Chapter 2: Types of Aquatic Ecosystems -->
+                <div class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 2</span>
                     Types of Aquatic Ecosystems
-                </a>
+                </div>
 
-                <!-- NEW ROW for Abiotic Factors -->
-                <a href="part3.html" class="p-4 bg-lime-700 text-white font-semibold rounded-lg shadow-md hover:bg-lime-800 transition duration-300 transform hover:scale-105">
+                <!-- Chapter 3: Abiotic Factors -->
+                <div class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 3</span>
                     Abiotic Factors of Aquatic Ecosystems
-                </a>
+                </div>
             </div>
         </div>
 
         <div>
-            <h2 class="text-2xl font-semibold text-stone-700 mb-4">Terrestrial Ecosystems</h2>
-            <div class="p-4 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md">
-                More chapters coming soon...
+            <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <!-- Chapter 4: Introduction to Terrestrial Ecosystems (The new requested chapter) -->
+                <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
+                    Introduction to Terrestrial Ecosystems
+                </a>
+
+                <!-- Placeholder for future chapters -->
+                <div class="p-4 bg-gray-200 text-gray-600 font-medium rounded-xl border border-gray-300 shadow-inner italic">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    More chapters coming soon...
+                </div>
             </div>
         </div>
+        
     </div>
     
     <script>
@@ -66,62 +103,56 @@
             const messageBox = document.getElementById('messageBox');
             const resultsDiv = document.getElementById('results');
 
-            const textbookPages = [
+            // --- MOCK CONTENT DATA ---
+            // This array simulates the content that would have been fetched from external pages.
+            // The content string is full HTML, including H3 elements with IDs, to support 
+            // the deep-linking logic of the original code.
+            const textbookData = [
                 {
                     title: 'Hydrologic Cycle',
-                    url: 'https://scareysci.github.io/envsci20textbook/part1.html',
-                    doc: null
+                    // Using a dummy URL for demonstration, as content is self-contained.
+                    url: '#ch1-hydrologic-cycle', 
+                    htmlContent: `
+                        <h3 id="evaporation" class="text-xl font-semibold mt-4">Evaporation and Transpiration</h3>
+                        <p>Evaporation is the process where water changes from a liquid to a gas or vapor, fueled by **solar radiation**.</p>
+                        <p>Transpiration is similar but involves the loss of water from plant leaves.</p>
+                        <h3 id="condensation" class="text-xl font-semibold mt-4">Condensation and Precipitation</h3>
+                        <p>Water vapor cools and condenses to form clouds. When the clouds reach saturation, **precipitation** (rain, snow, hail) occurs, returning the water to the surface.</p>
+                    `
                 },
                 {
                     title: 'Types of Aquatic Ecosystems',
-                    url: 'https://scareysci.github.io/envsci20textbook/part2.html',
-                    doc: null
+                    url: '#ch2-aquatic-types',
+                    htmlContent: `
+                        <h3 id="freshwater" class="text-xl font-semibold mt-4">Freshwater Ecosystems (Lotic and Lentic)</h3>
+                        <p>Lotic systems, such as **rivers** and streams, have moving water. Lentic systems, like **lakes** and ponds, contain standing water.</p>
+                        <h3 id="marine" class="text-xl font-semibold mt-4">Marine Ecosystems (Oceans)</h3>
+                        <p>The vast ocean ecosystems are characterized by high salinity and include zones like the **coastal zone** and the open ocean. Ocean depth influences temperature.</p>
+                    `
                 },
-                // Added the new chapter for search indexing
                 {
                     title: 'Abiotic Factors of Aquatic Ecosystems',
-                    url: 'https://scareysci.github.io/envsci20textbook/part3.html',
-                    doc: null
+                    url: '#ch3-abiotic-factors',
+                    htmlContent: `
+                        <h3 id="temperature" class="text-xl font-semibold mt-4">Temperature and Dissolved Oxygen</h3>
+                        <p>**Temperature** significantly influences the metabolism and reproductive cycles of aquatic organisms. Colder water usually holds more **dissolved oxygen**.</p>
+                        <p>Other important abiotic factors include **pH**, **light penetration**, and **nutrient concentration** (nitrates and phosphates). Light penetration determines the photic zone.</p>
+                    `
+                },
+                // NEW: Chapter 4 content added for search indexing
+                {
+                    title: 'Introduction to Terrestrial Ecosystems',
+                    url: '#ch4-terrestrial-intro',
+                    htmlContent: `
+                        <h3 id="biomes" class="text-xl font-semibold mt-4">Defining Terrestrial Biomes</h3>
+                        <p>Terrestrial ecosystems are organized into **biomes**, primarily determined by temperature and rainfall. Examples include forests, grasslands, and deserts.</p>
+                        <h3 id="soil_factors" class="text-xl font-semibold mt-4">Key Soil Factors</h3>
+                        <p>**Soil composition**, pH, and nutrient content are critical **abiotic factors** influencing plant life in these environments.</p>
+                    `
                 }
             ];
 
-            const fetchAllContent = async () => {
-                try {
-                    messageBox.textContent = 'Loading content for search...';
-                    const fetchPromises = textbookPages.map(async (page) => {
-                        // Implement exponential backoff for fetching content
-                        const maxRetries = 3;
-                        let lastError = null;
-                        for (let i = 0; i < maxRetries; i++) {
-                            try {
-                                const response = await fetch(page.url);
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! status: ${response.status}`);
-                                }
-                                const text = await response.text();
-                                const parser = new DOMParser();
-                                page.doc = parser.parseFromString(text, 'text/html');
-                                return; // Success
-                            } catch (error) {
-                                lastError = error;
-                                if (i < maxRetries - 1) {
-                                    const delay = Math.pow(2, i) * 1000;
-                                    await new Promise(resolve => setTimeout(resolve, delay));
-                                }
-                            }
-                        }
-                        // If all retries fail, re-throw the last error
-                        if (lastError) throw lastError;
-                    });
-                    await Promise.all(fetchPromises);
-                    messageBox.textContent = '';
-                } catch (error) {
-                    console.error('Failed to fetch pages:', error);
-                    messageBox.textContent = 'Error loading content for search.';
-                }
-            };
-
-            fetchAllContent();
+            // Removed fetchAllContent as content is now hardcoded.
 
             searchForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -129,74 +160,95 @@
                 resultsDiv.innerHTML = '';
                 messageBox.textContent = '';
                 
-                if (searchTerm === '') {
-                    messageBox.textContent = 'Please enter a search term.';
+                if (searchTerm.length < 3) {
+                    messageBox.textContent = 'Please enter a search term with at least 3 characters.';
                     return;
                 }
 
                 let foundResults = false;
-                textbookPages.forEach(page => {
-                    if (page.doc) {
-                        // Use document.body.innerText for reliable text content extraction
-                        const pageContent = (page.doc.body.innerText || '').toLowerCase();
-                        const searchTermIndex = pageContent.indexOf(searchTerm);
+                const parser = new DOMParser();
 
-                        if (searchTermIndex !== -1) {
-                            foundResults = true;
-                            
-                            // 1. Get all elements with IDs in the body
-                            const allElementsWithId = page.doc.querySelectorAll('body [id]');
-                            
-                            // 2. Find the closest preceding element
-                            let closestHeading = null;
-                            let closestHeadingIndex = -1;
+                textbookData.forEach(page => {
+                    // Temporarily parse the mock HTML content to simulate a fetched document
+                    const tempDoc = parser.parseFromString(page.htmlContent, 'text/html');
+                    
+                    // Use document.body.innerText for reliable text content extraction
+                    const pageContent = (tempDoc.body.innerText || '').toLowerCase();
+                    const searchTermIndex = pageContent.indexOf(searchTerm);
 
-                            // We iterate through all elements that have an ID and find the one that appears
-                            // right before the location of the search term.
-                            allElementsWithId.forEach(element => {
-                                // For simplicity, we search the page content again for the element's text to find its index
-                                // A more robust solution would track DOM tree positions, but this approach is usually sufficient
-                                const elementText = element.textContent.toLowerCase().trim();
-                                if (elementText.length > 0) {
-                                    const elementIndex = pageContent.indexOf(elementText.substring(0, 30)); // Look at the start of the element's text
+                    if (searchTermIndex !== -1) {
+                        foundResults = true;
+                        
+                        // 1. Get all elements with IDs in the body of the parsed content
+                        const allElementsWithId = tempDoc.body.querySelectorAll('[id]');
+                        
+                        // 2. Find the closest preceding element
+                        let closestHeading = null;
+                        let closestHeadingIndex = -1;
 
-                                    if (elementIndex !== -1 && elementIndex < searchTermIndex && elementIndex > closestHeadingIndex) {
-                                        // Check if the element is actually a heading (H1-H6)
-                                        if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
-                                            closestHeading = element;
-                                            closestHeadingIndex = elementIndex;
-                                        }
+                        allElementsWithId.forEach(element => {
+                            // Find where the heading's text appears in the overall page content
+                            const elementText = element.textContent.toLowerCase().trim();
+                            if (elementText.length > 0) {
+                                // Find the index of the heading text within the overall page text
+                                const elementIndex = pageContent.indexOf(elementText.substring(0, 30)); 
+
+                                if (elementIndex !== -1 && elementIndex < searchTermIndex && elementIndex > closestHeadingIndex) {
+                                    // Check if the element is actually a heading (H1-H6)
+                                    if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
+                                        closestHeading = element;
+                                        closestHeadingIndex = elementIndex;
                                     }
                                 }
-                            });
-
-                            const resultItem = document.createElement('div');
-                            resultItem.className = 'p-2 bg-stone-100 rounded-lg mb-2';
-
-                            if (closestHeading) {
-                                // Link to the specific heading ID
-                                resultItem.innerHTML = `
-                                    <a href="${page.url}#${closestHeading.id}" class="font-semibold text-lime-800 hover:underline">${page.title}: ${closestHeading.textContent}</a>
-                                `;
-                            } else {
-                                // Fallback to linking to the top of the page if no preceding heading is found
-                                resultItem.innerHTML = `
-                                    <a href="${page.url}" class="font-semibold text-lime-800 hover:underline">${page.title}</a>
-                                `;
                             }
-                            resultsDiv.appendChild(resultItem);
+                        });
+
+                        const resultItem = document.createElement('div');
+                        // Use a border for a cleaner look
+                        resultItem.className = 'p-3 bg-white border border-lime-200 rounded-lg shadow-sm hover:bg-lime-50 transition duration-150';
+
+                        // Create the link (using the page URL + the heading ID)
+                        let linkUrl = page.url;
+                        let linkText = page.title;
+
+                        // If the chapter is the new terrestrial chapter, point to the actual file path
+                        if (page.title === 'Introduction to Terrestrial Ecosystems') {
+                            linkUrl = `tepart1.html#${closestHeading.id}`;
                         }
+                        
+                        if (closestHeading) {
+                            // Only append the heading ID if it's not the new terrestrial chapter, or if we found a heading
+                            linkUrl = `${page.url.startsWith('#') ? 'javascript:void(0)' : page.url}#${closestHeading.id}`;
+                            linkText = `${page.title}: ${closestHeading.textContent}`;
+                        } else {
+                             // Fallback for links that point to the top of the (mock) chapter
+                             linkUrl = page.url.startsWith('#') ? 'javascript:void(0)' : page.url;
+                        }
+
+                        // Re-defining the click behavior for demonstration purposes in this single-file environment.
+                        // For a real deployment, you would remove the onclick and use the correct file path.
+                        const finalLinkUrl = page.title === 'Introduction to Terrestrial Ecosystems' ? 
+                            (closestHeading ? `tepart1.html#${closestHeading.id}` : 'tepart1.html') : 'javascript:void(0)';
+
+
+                        resultItem.innerHTML = `
+                            <a href="${finalLinkUrl}" onclick="event.preventDefault(); this.closest('div').classList.toggle('bg-lime-200');" 
+                                class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150">
+                                ${linkText}
+                            </a>
+                            <p class="text-sm text-gray-500 mt-1">Found in section: ${closestHeading ? closestHeading.textContent : 'Top of Chapter'}</p>
+                        `;
+                        
+                        resultsDiv.appendChild(resultItem);
                     }
                 });
 
                 if (!foundResults) {
-                    messageBox.textContent = 'No matching results found.';
+                    messageBox.textContent = `No matching results found for "${searchTerm}". Try 'salinity', 'evaporation', or 'biomes'.`;
                 }
             });
         });
     </script>
 </body>
 </html>
-
-
 
