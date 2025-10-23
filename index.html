@@ -55,30 +55,30 @@
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 1: Aquatic Ecosystems</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Chapter 1: Hydrologic Cycle -->
-                <div class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                <!-- Chapter 1: Hydrologic Cycle - NOW a working link -->
+                <a href="part1.html" class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg hover:bg-amber-700">
                     <span class="text-xs font-light opacity-80 block mb-1">Chapter 1</span>
                     Hydrologic Cycle
-                </div>
+                </a>
                 
-                <!-- Chapter 2: Types of Aquatic Ecosystems -->
-                <div class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                <!-- Chapter 2: Types of Aquatic Ecosystems - NOW a working link -->
+                <a href="part2.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
                     <span class="text-xs font-light opacity-80 block mb-1">Chapter 2</span>
                     Types of Aquatic Ecosystems
-                </div>
+                </a>
 
-                <!-- Chapter 3: Abiotic Factors -->
-                <div class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg cursor-default">
+                <!-- Chapter 3: Abiotic Factors - NOW a working link -->
+                <a href="part3.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
                     <span class="text-xs font-light opacity-80 block mb-1">Chapter 3</span>
                     Abiotic Factors of Aquatic Ecosystems
-                </div>
+                </a>
             </div>
         </div>
 
         <div>
             <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Chapter 4: Introduction to Terrestrial Ecosystems (The new requested chapter) -->
+                <!-- Chapter 4: Introduction to Terrestrial Ecosystems -->
                 <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
                     <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
                     Introduction to Terrestrial Ecosystems
@@ -104,14 +104,11 @@
             const resultsDiv = document.getElementById('results');
 
             // --- MOCK CONTENT DATA ---
-            // This array simulates the content that would have been fetched from external pages.
-            // The content string is full HTML, including H3 elements with IDs, to support 
-            // the deep-linking logic of the original code.
+            // URLs updated to reflect the actual file paths for working links.
             const textbookData = [
                 {
                     title: 'Hydrologic Cycle',
-                    // Using a dummy URL for demonstration, as content is self-contained.
-                    url: '#ch1-hydrologic-cycle', 
+                    url: 'part1.html', 
                     htmlContent: `
                         <h3 id="evaporation" class="text-xl font-semibold mt-4">Evaporation and Transpiration</h3>
                         <p>Evaporation is the process where water changes from a liquid to a gas or vapor, fueled by **solar radiation**.</p>
@@ -122,7 +119,7 @@
                 },
                 {
                     title: 'Types of Aquatic Ecosystems',
-                    url: '#ch2-aquatic-types',
+                    url: 'part2.html',
                     htmlContent: `
                         <h3 id="freshwater" class="text-xl font-semibold mt-4">Freshwater Ecosystems (Lotic and Lentic)</h3>
                         <p>Lotic systems, such as **rivers** and streams, have moving water. Lentic systems, like **lakes** and ponds, contain standing water.</p>
@@ -132,17 +129,16 @@
                 },
                 {
                     title: 'Abiotic Factors of Aquatic Ecosystems',
-                    url: '#ch3-abiotic-factors',
+                    url: 'part3.html',
                     htmlContent: `
                         <h3 id="temperature" class="text-xl font-semibold mt-4">Temperature and Dissolved Oxygen</h3>
                         <p>**Temperature** significantly influences the metabolism and reproductive cycles of aquatic organisms. Colder water usually holds more **dissolved oxygen**.</p>
                         <p>Other important abiotic factors include **pH**, **light penetration**, and **nutrient concentration** (nitrates and phosphates). Light penetration determines the photic zone.</p>
                     `
                 },
-                // NEW: Chapter 4 content added for search indexing
                 {
                     title: 'Introduction to Terrestrial Ecosystems',
-                    url: '#ch4-terrestrial-intro',
+                    url: 'tepart1.html',
                     htmlContent: `
                         <h3 id="biomes" class="text-xl font-semibold mt-4">Defining Terrestrial Biomes</h3>
                         <p>Terrestrial ecosystems are organized into **biomes**, primarily determined by temperature and rainfall. Examples include forests, grasslands, and deserts.</p>
@@ -151,8 +147,6 @@
                     `
                 }
             ];
-
-            // Removed fetchAllContent as content is now hardcoded.
 
             searchForm.addEventListener('submit', function(event) {
                 event.preventDefault();
@@ -207,33 +201,23 @@
                         // Use a border for a cleaner look
                         resultItem.className = 'p-3 bg-white border border-lime-200 rounded-lg shadow-sm hover:bg-lime-50 transition duration-150';
 
-                        // Create the link (using the page URL + the heading ID)
                         let linkUrl = page.url;
                         let linkText = page.title;
-
-                        // If the chapter is the new terrestrial chapter, point to the actual file path
-                        if (page.title === 'Introduction to Terrestrial Ecosystems') {
-                            linkUrl = `tepart1.html#${closestHeading.id}`;
-                        }
                         
+                        // Construct the final functional URL
+                        const finalLinkUrl = closestHeading 
+                            ? `${page.url}#${closestHeading.id}` 
+                            : page.url;
+
                         if (closestHeading) {
-                            // Only append the heading ID if it's not the new terrestrial chapter, or if we found a heading
-                            linkUrl = `${page.url.startsWith('#') ? 'javascript:void(0)' : page.url}#${closestHeading.id}`;
                             linkText = `${page.title}: ${closestHeading.textContent}`;
-                        } else {
-                             // Fallback for links that point to the top of the (mock) chapter
-                             linkUrl = page.url.startsWith('#') ? 'javascript:void(0)' : page.url;
                         }
 
-                        // Re-defining the click behavior for demonstration purposes in this single-file environment.
-                        // For a real deployment, you would remove the onclick and use the correct file path.
-                        const finalLinkUrl = page.title === 'Introduction to Terrestrial Ecosystems' ? 
-                            (closestHeading ? `tepart1.html#${closestHeading.id}` : 'tepart1.html') : 'javascript:void(0)';
-
-
+                        // Updated the search result link to be fully functional, removing the dummy 'onclick'
                         resultItem.innerHTML = `
-                            <a href="${finalLinkUrl}" onclick="event.preventDefault(); this.closest('div').classList.toggle('bg-lime-200');" 
-                                class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150">
+                            <a href="${finalLinkUrl}" 
+                                class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150"
+                                title="Go to ${linkText}">
                                 ${linkText}
                             </a>
                             <p class="text-sm text-gray-500 mt-1">Found in section: ${closestHeading ? closestHeading.textContent : 'Top of Chapter'}</p>
@@ -251,4 +235,3 @@
     </script>
 </body>
 </html>
-
