@@ -99,16 +99,13 @@
 </head>
 <body class="bg-[#f8f8f8]">
 
-    <!-- FIXED HEADER WITH HOME BUTTON AND SEARCH -->
-    <header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
+    <!-- FIXED HEADER WITH HOME BUTTON AND SEARCH --><header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
         <div class="max-w-4xl mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap gap-2">
-            <!-- Home Button -->
-            <a href="index.html" class="px-3 py-1 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 text-sm w-full sm:w-auto text-center">
+            <!-- Home Button --><a href="index.html" class="px-3 py-1 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 text-sm w-full sm:w-auto text-center">
                 Home (ES20 Textbook)
             </a>
             
-            <!-- Search Feature -->
-            <div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
+            <!-- Search Feature --><div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
                 <input type="text" id="document-search" placeholder="Search chapter..." class="p-1 rounded-lg text-sm text-es-dark flex-grow min-w-40 sm:min-w-64">
                 <button onclick="searchDocument()" class="px-2 py-1 bg-es-blue text-white rounded-lg hover:bg-blue-600 transition duration-150 text-sm">
                     Search
@@ -137,8 +134,7 @@
     <!-- Overlay to close glossary when clicking outside --><div id="glossary-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50" onclick="hideGlossary()"></div>
 
 
-    <!-- Content Wrapper with Offset -->
-    <div class="pt-20 p-4 sm:p-8"> 
+    <!-- Content Wrapper with Offset --><div class="pt-20 p-4 sm:p-8"> 
         <div class="max-w-4xl mx-auto bg-white rounded-xl textbook-card p-6 sm:p-10">
 
             <h1 class="text-4xl font-extrabold text-es-dark mb-2 border-b-4 border-es-green pb-2">Unit 3: Terrestrial Ecosystems – The Living Land</h1>
@@ -152,8 +148,7 @@
 
                 <h3 class="text-xl font-semibold text-es-dark mt-6 mb-3">Key Characteristics of Saskatchewan's Major Biomes</h3>
 
-                <!-- Biome Table -->
-                <div class="overflow-x-auto mb-6">
+                <!-- Biome Table --><div class="overflow-x-auto mb-6">
                     <table class="min-w-full divide-y divide-gray-300 rounded-lg shadow-md">
                         <thead class="bg-gray-100">
                             <tr>
@@ -198,8 +193,7 @@
                     </table>
                 </div>
                 
-                <!-- Palliser's Triangle Mini Section -->
-                <div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500 my-6 shadow-md">
+                <!-- Palliser's Triangle Mini Section --><div class="bg-red-50 p-4 rounded-xl border-l-4 border-red-500 my-6 shadow-md">
                     <h3 class="font-bold text-xl mb-2 text-red-800">Geographical Context: Palliser's Triangle</h3>
                     <p class="text-sm text-gray-800">The term <strong>Palliser’s Triangle</strong> refers to the semi-arid region in the southwest corner of the Canadian prairies, primarily encompassing Saskatchewan’s Grasslands biome.</p>
                     <ul class="list-disc list-inside ml-4 space-y-1 text-sm text-gray-700 mt-2">
@@ -209,9 +203,7 @@
                     </ul>
                     <p class="text-xs italic text-red-600 mt-3">Understanding Palliser's report is key to grasping the historical challenges of soil erosion and water management in Saskatchewan.</p>
                 </div>
-                <!-- END NEW SECTION -->
-
-                <p class="mb-4">The challenges explored in this unit—soil degradation, biodiversity loss, and resource use—are experienced differently across these major regions. For instance, soil <strong>salinization</strong> is a major problem in the Grasslands and Parkland due to historical agricultural practices, while forestry management is critical in the Boreal Forest and Mid-Boreal Upland regions.</p>
+                <!-- END NEW SECTION --><p class="mb-4">The challenges explored in this unit—soil degradation, biodiversity loss, and resource use—are experienced differently across these major regions. For instance, soil <strong>salinization</strong> is a major problem in the Grasslands and Parkland due to historical agricultural practices, while forestry management is critical in the Boreal Forest and Mid-Boreal Upland regions.</p>
 
                 <p class="mb-6">In this expanded chapter, we will explore the essential and often undervalued components of our land-based systems, recognizing that their health and stability are directly tied to our own economic and ecological sustainability.</p>
 
@@ -223,8 +215,7 @@
                 </figure>
                 
                 
-                <!-- NEW: Embedded Video -->
-                <h3 class="text-xl font-semibold text-es-dark mt-6 mb-3">Video Resource: Grasslands – North America’s Most Endangered Ecosystem</h3>
+                <!-- NEW: Embedded Video --><h3 class="text-xl font-semibold text-es-dark mt-6 mb-3">Video Resource: Grasslands – North America’s Most Endangered Ecosystem</h3>
                 <div class="video-container">
                     <iframe 
                         width="560" 
@@ -236,9 +227,7 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                <!-- END NEW VIDEO -->
-                
-                <hr class="my-6 border-gray-200">
+                <!-- END NEW VIDEO --><hr class="my-6 border-gray-200">
             </section>
 
             <!-- Section 1: Soil (ES20-TE1) --><section class="mb-8" id="section-soil">
@@ -248,460 +237,568 @@
                 <p class="mb-4">Soil is often called the "skin of the Earth" because it is a thin, fragile layer that connects the abiotic (geosphere, atmosphere, hydrosphere) world with the biotic (biosphere) world. Soil formation is incredibly slow—it can take over 500 years to form just one inch of topsoil, making it an effectively non-renewable resource in the human timescale.</p>
 
                 <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">1.1 Soil Composition and Structure</h4>
-                <p class="mb-2">Healthy soil is a complex mixture of four primary components:</p>
-                <ol class="list-decimal list-inside ml-4 space-y-1 mb-4">
-                    <li><strong>Mineral Matter (45%):</strong> Sand, silt, and clay particles derived from weathered rock. The relative proportion of these three sizes determines the <span class="glossary-term" data-term="Soil Texture" data-definition="The proportion of sand, silt, and clay in the soil, which determines how well it retains water and nutrients." data-example="A farmer checks the soil texture to decide irrigation needs for canola crops.">soil texture</span> (e.g., loam, sandy clay).</li>
-                    <li><strong>Organic Matter (5%):</strong> Decaying plant and animal material (humus) that gives fertile prairie soil its dark colour. Organic matter is crucial for binding soil particles, improving water retention, and providing nutrients.</li>
-                    <li><strong>Soil Water (25%):</strong> Water held in the pore spaces, essential for dissolving nutrients and making them available to plants.</li>
-                    <li><strong>Soil Air (25%):1.2 Soil Nutrient Cycling
-    <p class="mb-2">Soil is the primary medium for two crucial cycles:</p>
-    <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
-        <li><strong>Nitrogen Cycle:</strong> Bacteria in the soil convert atmospheric nitrogen (N<span class="sub">2</span>) into forms plants can use (nitrates and ammonium) through processes like <strong>nitrogen fixation</strong> and <strong>nitrification</strong>.</li>
-        <li><strong>Carbon Cycle:</strong> Organic matter decomposition releases carbon back to the atmosphere as CO<span class="sub">2</span>, while vegetation pulls CO<span class="sub">2</span> from the air and transfers it to the soil via roots and detritus. Soil is the largest terrestrial carbon reservoir.</li>
-    </ul>
-
-    <h4 class="text-lg font-medium text-es-dark mt-6 mb-2">1.3 Major Threats to Soil Integrity in Saskatchewan</h4>
-    <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
-        <li><span class="glossary-term" data-term="Erosion" data-definition="The process by which wind or water wears away and carries the vital topsoil layer, often accelerated when protective plant cover is removed." data-example="Strong prairie winds blowing soil off a field that was not protected by crop residue.">Erosion</span>: The removal of topsoil by wind and water, accelerated when protective plant cover (like native grasses or crop residue) is removed. The fertile A-horizon is lost first.</li>
-        <li><span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">Salinization</span>: The buildup of salts on the soil surface, primarily in low-lying areas. This occurs when high water tables bring dissolved salts to the surface, where the water evaporates, leaving the salts behind. Salinization significantly reduces crop yields.</li>
-        <li><strong>Organic Matter Depletion:</strong> Continuous cropping without sufficient cover crops or manure slowly depletes the organic matter, reducing the soil’s ability to retain water and nutrients, and making it more susceptible to compaction.</li>
-    </ol>
-    <hr class="my-6 border-gray-200">
-</section>
-
-<!-- Section 2: Plants (ES20-TE2) --><section class="mb-8" id="section-plants">
-    <h2 class="text-3xl font-bold text-es-green mb-4">Section 2: The Producers: Plants, Ecosystem Services, and Human Reliance (ES20-TE2)</h2>
-
-    <p class="mb-4">Plants are the primary producers in almost all terrestrial ecosystems. They capture solar energy through photosynthesis, forming the energy base for the entire food web. <strong>Curriculum Outcome ES20-TE2</strong> asks us to examine the critical role plants play, including the ways in which humans use them for economic and cultural benefit.</p>
-
-    <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.1 Ecosystem Services Provided by Plants</h4>
-    <p class="mb-2">The value of native plants extends far beyond what we harvest:</p>
-    <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
-        <li><strong>Soil Stabilization:</strong> Native prairie grasses (e.g., <em>Stipa</em> and <em>Bouteloua</em>) have massive root systems that hold the soil together, dramatically reducing wind and water erosion.</li>
-        <li><strong>Water Regulation:</strong> Deep roots improve the soil's infiltration rate, allowing rainwater to soak in rather than running off, which recharges groundwater supplies.</li>
-        <li><span class="glossary-term" data-term="Carbon Sinks" data-definition="Natural or artificial reservoirs (like forests or oceans) that absorb and store more carbon than they release." data-example="The vast Boreal Forests of Northern Saskatchewan actively removing CO2 from the atmosphere.">Carbon Sequestration</span>: Forests and grasslands act as vital <span class="glossary-term" data-term="Carbon Sinks" data-definition="Natural or artificial reservoirs (like forests or oceans) that absorb and store more carbon than they release." data-example="The vast Boreal Forests of Northern Saskatchewan actively removing CO2 from the atmosphere.">carbon sinks</span>, pulling CO<span class="sub">2</span> out of the atmosphere and storing the carbon in plant biomass and soil organic matter, mitigating climate change. </li>
-    </ul>
-
-    <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.2 Human Reliance on Terrestrial Plant Resources</h4>
-    <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
-        <li><strong>Food and Fiber (Agriculture):</strong> Saskatchewan’s key crops (wheat, canola, pulse crops) feed the world. Managing these crops requires careful balancing of input (synthetic fertilizers, pesticides, water) and output (yield). This intensive management can sometimes conflict with ecosystem health, necessitating the shift toward sustainable and precision agriculture practices.</li>
-        <li><strong>Timber and Forestry:</strong> The Northern Boreal Forest is a critical source of lumber and pulp. Sustainable forestry involves managing harvest rates, ensuring adequate regeneration, and protecting old-growth areas that provide unique habitat and store maximum carbon. Clear-cutting, while efficient, can lead to immediate habitat loss and temporary increases in erosion.</li>
-        <li><strong>Medicines and Traditional Uses:</strong> Many plants native to our province have significant medicinal and cultural value, particularly within Indigenous communities. For instance, Sweetgrass (<em>Hierochloe odorata</em>) is used in ceremonies and relies on careful, traditional harvesting techniques that ensure the plant’s continued health (an example of sustainable harvest).</li>
-    </ol>
-
-    <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">2.3 Spotlight: Traditional Ecological Knowledge (TEK) and Indigenous Land Stewardship</h3>
-    <p class="mb-2">Indigenous worldviews often emphasize the concept of <span class="glossary-term" data-term="Reciprocity" data-definition="An Indigenous worldview concept describing a balanced, mutual relationship where humans give back to the land in exchange for what they take." data-example="Practicing sustainable harvesting of medicinal plants to ensure the plants thrive for future generations.">reciprocity</span>—a relationship where humans take only what they need and actively give back to the land, viewing themselves as part of the ecosystem, not separate from it.</p>
-    <p class="mb-2"><span class="glossary-term" data-term="Traditional Ecological Knowledge (TEK)" data-definition="The long-standing body of traditional knowledge developed by Indigenous peoples about the environment and its relationships." data-example="The use of cultural burning practices to maintain the health and diversity of local parklands.">Traditional Ecological Knowledge (TEK)</span> is the cumulative body of knowledge, practice, and belief, evolving by adaptive processes and handed down through generations, relating to the relationship of living beings (including humans) with their environment. TEK often includes practices such as:</p>
-    <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
-        <li><strong>Cultural Burning:</strong> Historically used in some regions to clear old brush, reduce dangerous fuel loads, and stimulate the growth of valuable forage plants, promoting ecosystem health and resilience.</li>
-        <li><strong>Seasonal Rotation:</strong> Moving camps and harvesting areas to allow ecosystems time to recover, ensuring resources are available for future generations.</li>
-    </ul>
-    <p>These practices embody a deep understanding of local ecology that is increasingly being integrated into modern environmental management plans across Canada.</p>
-    <hr class="my-6 border-gray-200">
-</section>
-
-<!-- Section 3: Biodiversity (ES20-TE3) --><section class="mb-8" id="section-biodiversity">
-    <h2 class="text-3xl font-bold text-es-green mb-4">Section 3: Biodiversity, Habitat Fragmentation, and Conservation (ES20-TE3)</h2>
-
-    <h3 class="text-xl font-semibold text-es-brown mb-2">3.1 The Need for Intact Habitat and Measuring Biodiversity</h3>
-    <p class="mb-4"><strong>Curriculum Outcome ES20-TE3</strong> focuses on recognizing the need for intact habitat to support animal populations and overall biodiversity. <strong>Biodiversity</strong> is the variety of life at three levels: genetic diversity, species diversity, and ecosystem diversity. A high level of biodiversity increases the resilience of an ecosystem—its ability to recover from disturbances like disease or climate change. In Saskatchewan, the rapid conversion of native prairie to agricultural land has been the primary driver of biodiversity decline.</p>
-
-    <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.2 Habitat Fragmentation and Edge Effects</h3>
-    <p class="mb-2"><span class="glossary-term" data-term="Habitat Fragmentation" data-definition="The process where large, continuous areas of habitat are broken up into smaller, isolated patches, often by human development like roads or farming." data-example="A highway dividing a large tract of native prairie, splitting animal populations and forcing them closer to human activity.">Habitat Fragmentation</span> occurs when large, continuous habitats are divided into smaller, isolated patches by roads, fields, or urban development.</p>
-    
-    <!-- Image 3: Fragmentation Diagram --><figure class="mb-6">
-        <img src="https://placehold.co/700x400/3B82F6/FFFFFF?text=HABITAT+FRAGMENTATION+DIAGRAM" 
-             alt="Conceptual diagram illustrating a large habitat block being fragmented by roads, showing the increase in edge habitat and isolated core patches." 
-             class="w-full rounded-lg shadow-lg">
-        <figcaption class="text-center text-sm italic text-gray-600 mt-2">Figure 3: Habitat Fragmentation. Note how roads or clearings reduce core habitat and increase the amount of vulnerable edge habitat.</figcaption>
-    </figure>
-    
-    <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
-        <li><span class="glossary-term" data-term="Edge Effects" data-definition="The changes in abiotic and biotic factors that occur at the boundary between two different habitat types, reducing the quality of the interior habitat." data-example="Increased light and wind penetrating a small forest patch after clear-cutting nearby, making it unsuitable for shade-loving species.">Edge Effects</span>: The boundary zones (edges) between fragmented habitats (e.g., between a forest patch and an agricultural field) experience different environmental conditions (more wind, sun, and predation) than the deep interior. This reduces the effective size of the habitat patch, negatively impacting species that need large, undisturbed areas.</li>
-        <li><strong>Reduced Gene Flow:</strong> Fragmentation can prevent animal populations from mixing, leading to inbreeding and loss of genetic diversity, making the population more vulnerable to extinction.</li>
-    </ul>
-
-    <!-- Case Study --><div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 my-6">
-        <p class="font-bold text-lg mb-2 text-yellow-700">Case Study: Prairie Species Under Pressure</p>
-        <ul class="list-disc list-inside ml-4 space-y-2 text-sm">
-            <li><strong>The Burrowing Owl</strong> (<em>Athene cunicularia</em>): An endangered species relying entirely on native grasslands, nesting in burrows. Its decline is a direct indicator of habitat loss and fragmentation. </li>
-            <li><strong>The Swift Fox</strong> (<em>Vulpes velox</em>): Once extirpated from Canada, this tiny fox relies on healthy, continuous short- and mixed-grass prairie. Reintroduction efforts depend heavily on managing land use and reducing human-caused mortality (like road deaths).</li>
-            <li><strong>The Greater Sage Grouse</strong> (<em>Centrocercus urophasianus</em>): Highly sensitive to habitat disturbance, especially from human infrastructure (wells, roads). The male's elaborate courtship display requires large, open tracts of undisturbed land.</li>
-        </ul>
-    </div>
-
-    <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.3 Conservation Strategies</h3>
-    <p class="mb-2">Conservation efforts in Saskatchewan generally fall into two categories:</p>
-    <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
-        <li><span class="glossary-term" data-term="In-situ Conservation" data-definition="Conservation efforts focused on protecting a species in its natural environment and keeping the ecosystem healthy." data-example="Establishing a federally protected area, like Grasslands National Park, to safeguard native prairie species.">In-situ Conservation</span> (On-Site): Protecting species in their natural habitat. This includes creating <strong>Protected Areas</strong> (National Parks, Provincial Parks, Wildlife Refuges) and implementing <strong>Stewardship Agreements</strong> with landowners to protect critical habitats on private land.</li>
-        <li><span class="glossary-term" data-term="Ex-situ Conservation" data-definition="Conservation efforts focused on protecting a species outside its natural habitat, such as in zoos or seed banks." data-example="Captive breeding programs for the endangered Swift Fox before releasing them into suitable habitats.">Ex-situ Conservation</span> (Off-Site): Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use.</li>
-    </ol>
-    <hr class="my-6 border-gray-200">
-</section>
-
-<!-- Self-Assessment Quiz --><section class="mb-8" id="section-quiz">
-    <h2 class="text-3xl font-bold text-es-green mb-4">Self-Assessment Quiz: Terrestrial Check</h2>
-
-    <div id="quiz-container" class="space-y-6">
-        <!-- Quiz questions will be dynamically inserted here by JavaScript --></div>
-    
-    <button id="check-answers" class="w-full sm:w-auto mt-6 px-6 py-3 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 shadow-md">
-        Check Answers
-    </button>
-
-    <div id="quiz-results" class="mt-4 p-4 bg-blue-100 border border-blue-400 rounded-lg hidden">
-        <p id="score-text" class="text-lg font-bold text-blue-800"></p>
-    </div>
-</section>
-
-<!-- Project Choice Menu Section --><section class="mb-8">
-    <h2 class="text-3xl font-bold text-es-green mb-4">Project Choice Menu: Terrestrial Systems</h2>
-    <p class="mb-6 text-gray-700">Choose one of the six options below to demonstrate your understanding of soil, biodiversity, and human interactions with Saskatchewan's terrestrial ecosystems.</p>
-
-    <!-- Project Grid Container --><div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        <!-- Project 1: Salinization --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 1: The Salinization Crisis: Mitigation Plan</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Soil Degradation - ES20-TE1 Focus)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Report & Model</p>
-            <p class="text-sm text-gray-700">Research a specific area in Southern Saskatchewan (e.g., Quill Lakes area) affected by salinization. Identify the hydrological cause, propose a three-part mitigation strategy (e.g., planting salt-tolerant cover crops, tile drainage), and explain the ecological benefit of your plan.</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
-        </div>
-
-        <!-- Project 2: Keystone Species --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 2: Keystone Species Trophic Cascade Model</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Biodiversity & Habitat - ES20-TE3 Focus)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Presentation & Diagram</p>
-            <p class="text-sm text-gray-700">Choose a keystone species critical to a Saskatchewan ecosystem (e.g., Bison, Prairie Dogs, Wolves in the Boreal). Model the "trophic cascade" that would occur if that species was removed or reintroduced, detailing the specific impacts on plant diversity and soil health.</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3, ES20-TE1</p>
-        </div>
-
-        <!-- Project 3: Sustainable Harvest --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 3: Sustainable Resource Harvest Protocol</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Human Reliance & TEK - ES20-TE2 Focus)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Protocol Document</p>
-            <p class="text-sm text-gray-700">Develop a sustainable harvest plan for a non-timber forest product (e.g., wild rice, Sweetgrass, or berries) in a specific Saskatchewan region. The plan must integrate principles of <strong>Traditional Ecological Knowledge (TEK) / Reciprocity</strong> and include a cost-benefit analysis.</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE2, ES20-ES1</p>
-        </div>
-
-        <!-- Project 4: Habitat Corridor --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 4: Habitat Corridor Design Challenge</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Fragmentation Mitigation - ES20-TE3 Focus)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Map & Rationale</p>
-            <p class="text-sm text-gray-700">Select two real-world, fragmented natural areas in the Aspen Parkland or Prairie region (use Google Maps coordinates). Design a functional wildlife corridor. Your rationale must explain how the corridor minimizes <strong>edge effects</strong> and promotes genetic flow for two specific target species (e.g., Moose, Swift Fox).</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3</p>
-        </div>
-        
-        <!-- Project 5: Climate Change & Carbon --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 5: Climate Change and Soil Carbon</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Systems Thinking - ES20-TE1/TE2 Link)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Research Essay</p>
-            <p class="text-sm text-gray-700">Research and analyze how predicted changes to Saskatchewan's climate (e.g., warmer winters, higher flood risk) will affect the ability of Chernozemic soils to act as a <strong>carbon sink</strong>. Discuss which land management practice (e.g., no-till farming, cover cropping) will be most essential to maintain soil carbon storage.</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
-        </div>
-
-        <!-- Project 6: Local Land-Use Analysis --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-            <p class="text-2xl font-bold text-indigo-800 mb-2">Option 6: The Local Land-Use Analysis</p>
-            <p class="text-sm font-semibold text-gray-600 mb-3">(Comprehensive - All Outcomes)</p>
-            <p class="mb-2"><strong>Deliverable:</strong> Field Study & Analysis</p>
-            <p class="text-sm text-gray-700">Investigate a specific local land-use issue (e.g., new subdivision, industrial site) in your community. Analyze the impact on soil, biodiversity, and resource use, and propose a sustainable alternative. This project synthesizes the entire unit.</p>
-            <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2, ES20-TE3</p>
-        </div>
-    </div>
-</section>
-
-</div>
-</div>
-
-<!-- JavaScript for Interactivity --><script>
-    // Global variables for search state
-    let currentMatches = [];
-    let matchIndex = -1;
-
-    // --- 1. Soil Profile Interactive Logic ---
-
-    const soilDetails = {
-        'O': { title: 'O-Horizon (Organic)', content: 'Forested areas. Primarily composed of decomposing plant material (litter and humus). Critical for nutrient recycling.' },
-        'A': { title: 'A-Horizon (Topsoil)', content: 'Highest concentration of organic matter and mineral soil. This is the most productive layer and is severely impacted by erosion.' },
-        'B': { title: 'B-Horizon (Subsoil)', content: 'A layer of accumulation where materials (clay, iron, organic matter) leach down from the A-horizon. Less fertile, but vital for structural support and deep root growth.' },
-        'C': { title: 'C-Horizon (Parent Material)', content: 'The least-weathered layer, often composed of the original geological material (glacial till or bedrock). Provides the basis for soil formation.' }
-    };
-
-    function showSoilDetail(layer) {
-        const detailBox = document.getElementById('soil-detail');
-        const titleElement = document.getElementById('detail-title');
-        const contentElement = document.getElementById('detail-content');
-        
-        const data = soilDetails[layer];
-        
-        titleElement.textContent = `${data.title} (${layer}-Horizon)`;
-        contentElement.textContent = data.content;
-        
-        detailBox.classList.remove('hidden');
-    }
-
-
-    // --- 2. Self-Assessment Quiz Logic ---
-
-    const quizData = [
-        {
-            question: "1. What soil type is characteristic of the Saskatchewan prairies?",
-            options: ["Podzol", "Chernozem", "Gleysol"],
-            answer: "Chernozem"
-        },
-        {
-            question: "2. Which primary component of soil is responsible for providing essential nutrients through decomposition?",
-            options: ["Mineral Matter", "Soil Air", "Organic Matter"],
-            answer: "Organic Matter"
-        },
-        {
-            question: "3. What is the main ecological consequence of habitat fragmentation?",
-            options: ["Increased precipitation", "Edge Effects", "Higher soil salinity"],
-            answer: "Edge Effects"
-        }
-    ];
-
-    const quizContainer = document.getElementById('quiz-container');
-    const checkButton = document.getElementById('check-answers');
-    const resultsBox = document.getElementById('quiz-results');
-    const scoreText = document.getElementById('score-text');
-
-    // Function to render the quiz
-    function renderQuiz() {
-        quizData.forEach((q, qIndex) => {
-            const qDiv = document.createElement('div');
-            qDiv.className = 'p-4 bg-white border border-gray-200 rounded-lg shadow-sm';
-            qDiv.innerHTML = `<p class="font-semibold text-es-dark mb-3">${q.question}</p>`;
-
-            q.options.forEach((option, oIndex) => {
-                const inputId = `q${qIndex}-o${oIndex}`;
-                const radioDiv = document.createElement('div');
-                radioDiv.className = 'flex items-center mb-1';
+                <p class="mb-2">Before soil can host life, it must be created. Soil begins as solid bedrock, which is slowly broken down by <strong>weathering</strong> into smaller fragments. This initial, foundational geological matter is called the <strong>parent material</strong>. The chemical composition and texture of this parent material determine the final characteristics of the soil, such as the proportions of sand, silt, and clay found in the deeper horizons.</p>
                 
-                radioDiv.innerHTML = `
-                    <input type="radio" id="${inputId}" name="question${qIndex}" value="${option}" class="text-es-green focus:ring-es-green rounded-full">
-                    <label for="${inputId}" class="ml-2 text-gray-700">${option}</label>
-                `;
-                qDiv.appendChild(radioDiv);
+                <p class="mb-2">The process of <strong>weathering</strong> involves three types of forces:</p>
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
+                    <li><strong>Physical Weathering:</strong> The mechanical breakdown of rock into smaller pieces (like sand and silt). Examples include the <strong>freeze-thaw cycle</strong>, where water enters rock cracks, freezes (expands), and pries the rock apart, or abrasion by wind and water.</li>
+                    <li><strong>Chemical Weathering:</strong> The alteration of a rock's chemical structure. Examples include <strong>hydrolysis</strong> (reaction with water) or <strong>oxidation</strong> (reaction with oxygen), which dissolve or chemically change the minerals, often releasing essential nutrients into the soil solution.</li>
+                    <li><strong>Biological Weathering:</strong> The breakdown of rock by living organisms. Examples include plant roots growing into cracks and exerting pressure, or lichens and mosses secreting organic acids that chemically dissolve the rock surface.</li>
+                </ul>
+
+                <p class="mb-4">It is important to differentiate two key processes. <strong>Decomposition</strong> is the biological process where organic matter (dead leaves, animal waste) is broken down by fungi, bacteria, and insects, releasing nutrients and creating <strong>humus</strong>. <strong>Deposition</strong>, conversely, is the geological process where eroded inorganic material (like clay or silt carried by wind or water) is laid down or settled in a new location, often forming the <strong>parent material</strong> of future soil layers. Both contribute to the soil system but operate on very different timescales and material types.</p>
+                
+                <p class="mb-2">Soil is not just dirt; it's a dynamic, living system made up of four equally important components:</p>
+                
+                <ul class="list-none space-y-3 mb-4 ml-4">
+                    <li>
+                        <strong>Mineral Matter (≈45%):</strong> These are the particles (sand, silt, and clay) created from the slow process of <strong>weathering</strong> bedrock over millennia. Sand particles are the largest, allowing water to drain quickly. Clay particles are the smallest and stickiest, retaining water and nutrients but often making drainage difficult. The specific mix of these particles determines the <span class="glossary-term" data-term="Soil Texture" data-definition="The proportion of sand, silt, and clay in the soil, which determines how well it retains water and nutrients." data-example="A farmer checks the soil texture to decide irrigation needs for canola crops.">soil texture</span>.
+                    </li>
+                    <li>
+                        <strong>Organic Matter (≈5%):</strong> This is the decaying remains of plants, animals, and microbes, known as <strong>humus</strong> in its stable form. This small component is crucial for soil fertility, structure (it acts like a glue to bind mineral particles together), and is the engine for nutrient recycling. High organic matter gives fertile prairie soils their rich, dark color and helps them hold twice their weight in water.
+                    </li>
+                    <li>
+                        <strong>Soil Water (≈25%):</strong> Water is held in the tiny pore spaces between the mineral and organic components. This water is vital because it dissolves <strong>nutrients</strong> (making the ions available for plant absorption) and facilitates the chemical reactions necessary for life, soil formation, and decomposition. Without it, the flow of nutrients stops.
+                    </li>
+                    <li>
+                        <strong>Soil Air (≈25%):</strong> When soil is not saturated with water, the remaining pore spaces are filled with air. This air is essential because it provides <strong>oxygen</strong> for the roots of plants and for the billions of microorganisms and decomposers living beneath the surface. Without soil air, anaerobic (oxygen-free) conditions take over, killing beneficial organisms and harming plant growth.
+                    </li>
+                </ul>
+                
+                <!-- START NEW HORIZONS CONTENT --><h4 class="text-lg font-medium text-es-dark mt-6 mb-2">Soil Horizons and Soil Profiles</h4>
+                <p class="mb-4">As soil forms over time, it naturally separates into distinct layers called <strong>soil horizons</strong>. A vertical cross-section of these layers, from the surface down to the bedrock, is known as the <strong>soil profile</strong>. Each horizon has a unique colour, texture, and composition due to the movement of water and materials through the profile, a process called <strong>leaching</strong>.</p>
+                
+                <ul class="list-disc list-inside ml-4 space-y-2 mb-4">
+                    <li><strong>O-Horizon (Organic):</strong> This is the uppermost layer, composed entirely of organic material. It's often called <strong>topsoil</strong> along with the A-Horizon. The 'O' stands for organic: it contains forest litter, decomposing leaves, and <strong>humus</strong>. This layer is rich in nutrients and holds water exceptionally well, making it vital for all plant life. In the Boreal Forest, this layer is often very deep (peat).</li>
+                    <li><strong>A-Horizon (Topsoil/Mineral):</strong> A mix of mineral matter and decayed organic matter (humus) that gives it a dark colour. This is the layer where plant roots are most concentrated and is the primary zone of agricultural production.</li>
+                    <li><strong>E-Horizon (Eluviated):</strong> A light-coloured layer found below the A-Horizon, primarily in older, forested soils (like Podzols). 'E' stands for eluviated, meaning materials (clay, iron oxides, organic acids) have been extensively <strong>leached</strong> out and carried downward by water.</li>
+                    <li><strong>B-Horizon (Subsoil):</strong> Known as the zone of <strong>accumulation</strong> (or illuviation). Materials leached from the E or A horizons are deposited here. It is denser, lower in organic matter, and often reddish or yellowish due to the accumulation of clay and iron compounds.</li>
+                    <li><strong>C-Horizon (Parent Material):</strong> The layer directly beneath the soil profile, consisting of the unconsolidated material (like glacial till or river deposits) that the soil formed from. It is largely unaffected by biological activity.</li>
+                    <li><strong>R-Horizon (Bedrock):</strong> The lowest layer, consisting of the unweathered, solid <strong>bedrock</strong> that underlies the soil profile.</li>
+                </ul>
+
+                <figure class="mb-6">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E22AQF2fwOU5vPj8w/feedshare-shrink_800/B4EZmGq.yiIMAg-/0/1758901039876?e=2147483647&v=beta&t=OJuFH08ivmBdK0S3YOpYBm0i5soGSpXgsKpw3Pich08" 
+                         alt="Diagram illustrating a typical soil profile with distinct O, A, E, B, C, and R layers." 
+                         class="w-full rounded-lg shadow-lg">
+                    <figcaption class="text-center text-sm italic text-gray-600 mt-2">Figure 2: The Six Major Soil Horizons. The presence and thickness of the O, A, and E horizons are critical for determining soil health and suitability for agriculture.</figcaption>
+                </figure>
+                <!-- END NEW HORIZONS CONTENT --><h3 class="text-xl font-semibold text-es-dark mt-6 mb-3">Saskatchewan Biome Soil Characteristics Comparison</h3>
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full divide-y divide-gray-300 rounded-lg shadow-md">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-es-dark">Ecoregion</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-es-dark">Dominant Soil Type</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-es-dark">Organic Matter / Fertility</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-es-dark">Drainage & pH</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Grasslands</strong></td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Chernozemic (Dark Brown/Brown)</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">High in humus; very fertile due to deep root decomposition.</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Good drainage; <strong>Neutral to Slightly Alkaline pH</strong> (prone to salinization).</td>
+                            </tr>
+                            <tr>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Aspen Parkland</strong></td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Chernozemic (Black)</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Highest organic matter content; extremely fertile and dark.</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Moderate drainage; <strong>Neutral pH</strong> (best for agriculture).</td>
+                            </tr>
+                            <tr>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Mid-Boreal Upland</strong></td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Podzolic or Luvisolic</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Moderate organic matter; lower fertility than prairies.</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Good drainage due to elevation; <strong>Slightly Acidic pH</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Boreal Forest (Lowland)</strong></td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Gleysolic and Organic (Peat)</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Very high Organic Matter, but decomposition is slow (peat).</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Poor drainage (waterlogged); <strong>Acidic pH</strong> (low fertility).</td>
+                            </tr>
+                            <tr>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Athabasca Plain</strong></td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Brunisolic and Cryosolic</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Very low organic matter; extremely low fertility.</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Excessively well-drained (sandy); <strong>Neutral to Slightly Acidic pH</strong>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END NEW TABLE -->
+                
+                <!-- CAREER PROFILE: AGRONOMIST --><div class="bg-cyan-50 p-5 rounded-xl border-l-4 border-cyan-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-cyan-800">Career Profile: Agronomist</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">The science of soil management and crop production.</p>
+                    
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm">
+                        <li>
+                            <strong>Role Overview:</strong> Agronomists are scientists who specialize in improving soil health, maximizing crop yields, and managing the environmental impact of agriculture. They advise farmers on crop rotation, pest management, and the efficient use of water and fertilizer.
+                        </li>
+                        <li>
+                            <strong>Education & Skills:</strong> A university degree (B.Sc. or M.Sc.) in Agronomy, Soil Science, or Environmental Science is required. Critical skills include soil testing, data analysis, chemistry, and strong communication for consulting with farmers.
+                        </li>
+                        <li>
+                            <strong>Saskatchewan Opportunities:</strong> Given Saskatchewan's massive agricultural sector (cereals, oilseeds, pulses), Agronomists are highly in demand by independent consulting firms, fertilizer and seed companies, and government agencies (e.g., Saskatchewan Ministry of Agriculture).
+                        </li>
+                        <li>
+                            <strong>Link to ES20-TE1:</strong> This career directly applies knowledge of <strong>nutrient cycles</strong>, preventing <strong>salinization</strong>, minimizing <strong>erosion</strong>, and utilizing <strong>sustainable practices</strong> to ensure the long-term health of our Chernozemic soils.
+                        </li>
+                    </ul>
+                </div>
+                <!-- END CAREER PROFILE --><h4 class="text-lg font-medium text-es-dark mt-4 mb-2">1.2 Soil Nutrient and Biogeochemical Cycling</h4>
+                <p class="mb-2">Soil acts as the primary reservoir or medium for the cycling of the planet's most critical elements, all of which are interconnected with the atmosphere and hydrosphere:</p>
+                <ul class="list-disc list-inside ml-4 space-y-2 mb-4">
+                    <li><strong>Carbon Cycle:</strong> Soil is the largest terrestrial carbon reservoir. Plant decomposition and microbial activity release carbon to the atmosphere as CO<span class="sub">2</span>, while living plants pull CO<span class="sub">2</span> from the <strong>atmosphere</strong> and transfer it to the soil via roots and detritus.</li>
+                    <li><strong>Nitrogen Cycle:</strong> Nitrogen (N<span class="sub">2</span>) gas, which makes up 78% of the <strong>atmosphere</strong>, is unusable by plants until soil bacteria convert it (through <strong>nitrogen fixation</strong>) into usable forms like nitrates. This process highlights the vital biotic link between the soil and the air.</li>
+                    <li><strong>Water (Hydrologic) Cycle:</strong> Soil and vegetation play a critical role in controlling the movement of water. Soil absorbs water via <strong>infiltration</strong>, storing it for plants and recharging <strong>groundwater</strong> reserves. Plants release water vapor back to the <strong>atmosphere</strong> through <strong>transpiration</strong>, influencing regional precipitation patterns.</li>
+                    <li><strong>Phosphorus Cycle:</strong> This cycle is unique because it has <strong>no significant atmospheric phase</strong>. Phosphorus is mainly found in <strong>rocks and sediments</strong>. Soil releases phosphorus through <strong>weathering</strong>, and plants absorb it as phosphate ions. Since it is easily bound to soil particles, the phosphorus cycle is often the slowest cycle, and human actions (like using mined fertilizers or causing erosion) heavily impact its availability in ecosystems.</li>
+                </ul>
+    
+                <h4 class="text-lg font-medium text-es-dark mt-6 mb-2">1.3 Major Threats to Soil Integrity in Saskatchewan</h4>
+                <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
+                    <li><span class="glossary-term" data-term="Erosion" data-definition="The process by which wind or water wears away and carries the vital topsoil layer, often accelerated when protective plant cover is removed." data-example="Strong prairie winds blowing soil off a field that was not protected by crop residue.">Erosion</span>: The removal of topsoil by wind and water, accelerated when protective plant cover (like native grasses or crop residue) is removed. The fertile A-horizon is lost first.</li>
+                    <li><span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">Salinization</span>: The buildup of salts on the soil surface, primarily in low-lying areas. This occurs when high water tables bring dissolved salts to the surface, where the water evaporates, leaving the salts behind. Salinization significantly reduces crop yields.</li>
+                    <li><strong>Organic Matter Depletion:</strong> Continuous cropping without sufficient cover crops or manure slowly depletes the organic matter, reducing the soil’s ability to retain water and nutrients, and making it more susceptible to compaction.</li>
+                </ol>
+                <hr class="my-6 border-gray-200">
+            </section>
+
+            <!-- Section 2: Plants (ES20-TE2) --><section class="mb-8" id="section-plants">
+                <h2 class="text-3xl font-bold text-es-green mb-4">Section 2: The Producers: Plants, Ecosystem Services, and Human Reliance (ES20-TE2)</h2>
+
+                <p class="mb-4">Plants are the primary producers in almost all terrestrial ecosystems. They capture solar energy through photosynthesis, forming the energy base for the entire food web. <strong>Curriculum Outcome ES20-TE2</strong> asks us to examine the critical role plants play, including the ways in which humans use them for economic and cultural benefit.</p>
+
+                <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.1 Ecosystem Services Provided by Plants</h4>
+                <p class="mb-2">The value of native plants extends far beyond what we harvest:</p>
+                <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
+                    <li><strong>Soil Stabilization:</strong> Native prairie grasses (e.g., <em>Stipa</em> and <em>Bouteloua</em>) have massive root systems that hold the soil together, dramatically reducing wind and water erosion.</li>
+                    <li><strong>Water Regulation:</strong> Deep roots improve the soil's infiltration rate, allowing rainwater to soak in rather than running off, which recharges groundwater supplies.</li>
+                    <li><span class="glossary-term" data-term="Carbon Sinks" data-definition="Natural or artificial reservoirs (like forests or oceans) that absorb and store more carbon than they release." data-example="The vast Boreal Forests of Northern Saskatchewan actively removing CO2 from the atmosphere.">Carbon Sequestration</span>: Forests and grasslands act as vital <span class="glossary-term" data-term="Carbon Sinks" data-definition="Natural or artificial reservoirs (like forests or oceans) that absorb and store more carbon than they release." data-example="The vast Boreal Forests of Northern Saskatchewan actively removing CO2 from the atmosphere.">carbon sinks</span>, pulling CO<span class="sub">2</span> out of the atmosphere and storing the carbon in plant biomass and soil organic matter, mitigating climate change. </li>
+                </ul>
+
+                <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.2 Human Reliance on Terrestrial Plant Resources</h4>
+                <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
+                    <li><strong>Food and Fiber (Agriculture):</strong> Saskatchewan’s key crops (wheat, canola, pulse crops) feed the world. Managing these crops requires careful balancing of input (synthetic fertilizers, pesticides, water) and output (yield). This intensive management can sometimes conflict with ecosystem health, necessitating the shift toward sustainable and precision agriculture practices.</li>
+                    <li><strong>Timber and Forestry:</strong> The Northern Boreal Forest is a critical source of lumber and pulp. Sustainable forestry involves managing harvest rates, ensuring adequate regeneration, and protecting old-growth areas that provide unique habitat and store maximum carbon. Clear-cutting, while efficient, can lead to immediate habitat loss and temporary increases in erosion.</li>
+                    <li><strong>Medicines and Traditional Uses:</strong> Many plants native to our province have significant medicinal and cultural value, particularly within Indigenous communities. For instance, Sweetgrass (<em>Hierochloe odorata</em>) is used in ceremonies and relies on careful, traditional harvesting techniques that ensure the plant’s continued health (an example of sustainable harvest).</li>
+                </ol>
+
+                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">2.3 Spotlight: Traditional Ecological Knowledge (TEK) and Indigenous Land Stewardship</h3>
+                <p class="mb-2">Indigenous worldviews often emphasize the concept of <span class="glossary-term" data-term="Reciprocity" data-definition="An Indigenous worldview concept describing a balanced, mutual relationship where humans give back to the land in exchange for what they take." data-example="Practicing sustainable harvesting of medicinal plants to ensure the plants thrive for future generations.">reciprocity</span>—a relationship where humans take only what they need and actively give back to the land, viewing themselves as part of the ecosystem, not separate from it.</p>
+                <p class="mb-2"><span class="glossary-term" data-term="Traditional Ecological Knowledge (TEK)" data-definition="The long-standing body of traditional knowledge developed by Indigenous peoples about the environment and its relationships." data-example="The use of cultural burning practices to maintain the health and diversity of local parklands.">Traditional Ecological Knowledge (TEK)</span> is the cumulative body of knowledge, practice, and belief, evolving by adaptive processes and handed down through generations, relating to the relationship of living beings (including humans) with their environment. TEK often includes practices such as:</p>
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
+                    <li><strong>Cultural Burning:</strong> Historically used in some regions to clear old brush, reduce dangerous fuel loads, and stimulate the growth of valuable forage plants, promoting ecosystem health and resilience.</li>
+                    <li><strong>Seasonal Rotation:</strong> Moving camps and harvesting areas to allow ecosystems time to recover, ensuring resources are available for future generations.</li>
+                </ul>
+                <p>These practices embody a deep understanding of local ecology that is increasingly being integrated into modern environmental management plans across Canada.</p>
+                <hr class="my-6 border-gray-200">
+            </section>
+
+            <!-- Section 3: Biodiversity (ES20-TE3) --><section class="mb-8" id="section-biodiversity">
+                <h2 class="text-3xl font-bold text-es-green mb-4">Section 3: Biodiversity, Habitat Fragmentation, and Conservation (ES20-TE3)</h2>
+
+                <h3 class="text-xl font-semibold text-es-brown mb-2">3.1 The Need for Intact Habitat and Measuring Biodiversity</h3>
+                <p class="mb-4"><strong>Curriculum Outcome ES20-TE3</strong> focuses on recognizing the need for intact habitat to support animal populations and overall biodiversity. <strong>Biodiversity</strong> is the variety of life at three levels: genetic diversity, species diversity, and ecosystem diversity. A high level of biodiversity increases the resilience of an ecosystem—its ability to recover from disturbances like disease or climate change. In Saskatchewan, the rapid conversion of native prairie to agricultural land has been the primary driver of biodiversity decline.</p>
+
+                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.2 Habitat Fragmentation and Edge Effects</h3>
+                <p class="mb-2"><span class="glossary-term" data-term="Habitat Fragmentation" data-definition="The process where large, continuous areas of habitat are broken up into smaller, isolated patches, often by human development like roads or farming." data-example="A highway dividing a large tract of native prairie, splitting animal populations and forcing them closer to human activity.">Habitat Fragmentation</span> occurs when large, continuous habitats are divided into smaller, isolated patches by roads, fields, or urban development.</p>
+                
+                <!-- Image 3: Fragmentation Diagram --><figure class="mb-6">
+                    <img src="https://placehold.co/700x400/3B82F6/FFFFFF?text=HABITAT+FRAGMENTATION+DIAGRAM" 
+                         alt="Conceptual diagram illustrating a large habitat block being fragmented by roads, showing the increase in edge habitat and isolated core patches." 
+                         class="w-full rounded-lg shadow-lg">
+                    <figcaption class="text-center text-sm italic text-gray-600 mt-2">Figure 4: Habitat Fragmentation. Note how roads or clearings reduce core habitat and increase the amount of vulnerable edge habitat.</figcaption>
+                </figure>
+                
+                <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
+                    <li><span class="glossary-term" data-term="Edge Effects" data-definition="The changes in abiotic and biotic factors that occur at the boundary between two different habitat types, reducing the quality of the interior habitat." data-example="Increased light and wind penetrating a small forest patch after clear-cutting nearby, making it unsuitable for shade-loving species.">Edge Effects</span>: The boundary zones (edges) between fragmented habitats (e.g., between a forest patch and an agricultural field) experience different environmental conditions (more wind, sun, and predation) than the deep interior. This reduces the effective size of the habitat patch, negatively impacting species that need large, undisturbed areas.</li>
+                    <li><strong>Reduced Gene Flow:</strong> Fragmentation can prevent animal populations from mixing, leading to inbreeding and loss of genetic diversity, making the population more vulnerable to extinction.</li>
+                </ul>
+
+                <!-- Case Study --><div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 my-6">
+                    <p class="font-bold text-lg mb-2 text-yellow-700">Case Study: Prairie Species Under Pressure</p>
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm">
+                        <li><strong>The Burrowing Owl</strong> (<em>Athene cunicularia</em>): An endangered species relying entirely on native grasslands, nesting in burrows. Its decline is a direct indicator of habitat loss and fragmentation. </li>
+                        <li><strong>The Swift Fox</strong> (<em>Vulpes velox</em>): Once extirpated from Canada, this tiny fox relies on healthy, continuous short- and mixed-grass prairie. Reintroduction efforts depend heavily on managing land use and reducing human-caused mortality (like road deaths).</li>
+                        <li><strong>The Greater Sage Grouse</strong> (<em>Centrocercus urophasianus</em>): Highly sensitive to habitat disturbance, especially from human infrastructure (wells, roads). The male's elaborate courtship display requires large, open tracts of undisturbed land.</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.3 Conservation Strategies</h3>
+                <p class="mb-2">Conservation efforts in Saskatchewan generally fall into two categories:</p>
+                <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
+                    <li><span class="glossary-term" data-term="In-situ Conservation" data-definition="Conservation efforts focused on protecting a species in its natural environment and keeping the ecosystem healthy." data-example="Establishing a federally protected area, like Grasslands National Park, to safeguard native prairie species.">In-situ Conservation</span> (On-Site): Protecting species in their natural habitat. This includes creating <strong>Protected Areas</strong> (National Parks, Provincial Parks, Wildlife Refuges) and implementing <strong>Stewardship Agreements</strong> with landowners to protect critical habitats on private land.</li>
+                    <li><span class="glossary-term" data-term="Ex-situ Conservation" data-definition="Conservation efforts focused on protecting a species outside its natural habitat, such as in zoos or seed banks." data-example="Captive breeding programs for the endangered Swift Fox before releasing them into suitable habitats.">Ex-situ Conservation</span> (Off-Site): Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use.</li>
+                </ol>
+                <hr class="my-6 border-gray-200">
+            </section>
+
+            <!-- Self-Assessment Quiz --><section class="mb-8" id="section-quiz">
+                <h2 class="text-3xl font-bold text-es-green mb-4">Self-Assessment Quiz: Terrestrial Check</h2>
+
+                <div id="quiz-container" class="space-y-6">
+                    <!-- Quiz questions will be dynamically inserted here by JavaScript --></div>
+                
+                <button id="check-answers" class="w-full sm:w-auto mt-6 px-6 py-3 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 shadow-md">
+                    Check Answers
+                </button>
+
+                <div id="quiz-results" class="mt-4 p-4 bg-blue-100 border border-blue-400 rounded-lg hidden">
+                    <p id="score-text" class="text-lg font-bold text-blue-800"></p>
+                </div>
+            </section>
+
+            <!-- Project Choice Menu Section --><section class="mb-8">
+                <h2 class="text-3xl font-bold text-es-green mb-4">Project Choice Menu: Terrestrial Systems</h2>
+                <p class="mb-6 text-gray-700">Choose one of the six options below to demonstrate your understanding of soil, biodiversity, and human interactions with Saskatchewan's terrestrial ecosystems.</p>
+
+                <!-- Project Grid Container --><div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Project 1: Salinization --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 1: The Salinization Crisis: Mitigation Plan</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Soil Degradation - ES20-TE1 Focus)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Report & Model</p>
+                        <p class="text-sm text-gray-700">Research a specific area in Southern Saskatchewan (e.g., Quill Lakes area) affected by salinization. Identify the hydrological cause, propose a three-part mitigation strategy (e.g., planting salt-tolerant cover crops, tile drainage), and explain the ecological benefit of your plan.</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
+                    </div>
+
+                    <!-- Project 2: Keystone Species --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 2: Keystone Species Trophic Cascade Model</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Biodiversity & Habitat - ES20-TE3 Focus)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Presentation & Diagram</p>
+                        <p class="text-sm text-gray-700">Choose a keystone species critical to a Saskatchewan ecosystem (e.g., Bison, Prairie Dogs, Wolves in the Boreal). Model the "trophic cascade" that would occur if that species was removed or reintroduced, detailing the specific impacts on plant diversity and soil health.</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3, ES20-TE1</p>
+                    </div>
+
+                    <!-- Project 3: Sustainable Harvest --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 3: Sustainable Resource Harvest Protocol</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Human Reliance & TEK - ES20-TE2 Focus)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Protocol Document</p>
+                        <p class="text-sm text-gray-700">Develop a sustainable harvest plan for a non-timber forest product (e.g., wild rice, Sweetgrass, or berries) in a specific Saskatchewan region. The plan must integrate principles of <strong>Traditional Ecological Knowledge (TEK) / Reciprocity</strong> and include a cost-benefit analysis.</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE2, ES20-ES1</p>
+                    </div>
+
+                    <!-- Project 4: Habitat Corridor --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 4: Habitat Corridor Design Challenge</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Fragmentation Mitigation - ES20-TE3 Focus)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Map & Rationale</p>
+                        <p class="text-sm text-gray-700">Select two real-world, fragmented natural areas in the Aspen Parkland or Prairie region (use Google Maps coordinates). Design a functional wildlife corridor. Your rationale must explain how the corridor minimizes <strong>edge effects</strong> and promotes genetic flow for two specific target species (e.g., Moose, Swift Fox).</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3</p>
+                    </div>
+                    
+                    <!-- Project 5: Climate Change & Carbon --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 5: Climate Change and Soil Carbon</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Systems Thinking - ES20-TE1/TE2 Link)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Research Essay</p>
+                        <p class="text-sm text-gray-700">Research and analyze how predicted changes to Saskatchewan's climate (e.g., warmer winters, higher flood risk) will affect the ability of Chernozemic soils to act as a <strong>carbon sink</strong>. Discuss which land management practice (e.g., no-till farming, cover cropping) will be most essential to maintain soil carbon storage.</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
+                    </div>
+
+                    <!-- Project 6: Local Land-Use Analysis --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
+                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 6: The Local Land-Use Analysis</p>
+                        <p class="text-sm font-semibold text-gray-600 mb-3">(Comprehensive - All Outcomes)</p>
+                        <p class="mb-2"><strong>Deliverable:</strong> Field Study & Analysis</p>
+                        <p class="text-sm text-gray-700">Investigate a specific local land-use issue (e.g., new subdivision, industrial site) in your community. Analyze the impact on soil, biodiversity, and resource use, and propose a sustainable alternative. This project synthesizes the entire unit.</p>
+                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2, ES20-TE3</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity --><script>
+        // Global variables for search state
+        let currentMatches = [];
+        let matchIndex = -1;
+
+        // --- 1. Soil Profile Interactive Logic ---
+
+        const soilDetails = {
+            'O': { title: 'O-Horizon (Organic)', content: 'Forested areas. Primarily composed of decomposing plant material (litter and humus). Critical for nutrient recycling.' },
+            'A': { title: 'A-Horizon (Topsoil)', content: 'Highest concentration of organic matter and mineral soil. This is the most productive layer and is severely impacted by erosion.' },
+            'B': { title: 'B-Horizon (Subsoil)', content: 'A layer of accumulation where materials (clay, iron, organic matter) leach down from the A-horizon. Less fertile, but vital for structural support and deep root growth.' },
+            'C': { title: 'C-Horizon (Parent Material)', content: 'The least-weathered layer, often composed of the original geological material (glacial till or bedrock). Provides the basis for soil formation.' }
+        };
+
+        function showSoilDetail(layer) {
+            const detailBox = document.getElementById('soil-detail');
+            const titleElement = document.getElementById('detail-title');
+            const contentElement = document.getElementById('detail-content');
+            
+            const data = soilDetails[layer];
+            
+            titleElement.textContent = `${data.title} (${layer}-Horizon)`;
+            contentElement.textContent = data.content;
+            
+            detailBox.classList.remove('hidden');
+        }
+
+
+        // --- 2. Self-Assessment Quiz Logic ---
+
+        const quizData = [
+            {
+                question: "1. What soil type is characteristic of the Saskatchewan prairies?",
+                options: ["Podzol", "Chernozem", "Gleysol"],
+                answer: "Chernozem"
+            },
+            {
+                question: "2. Which primary component of soil is responsible for providing essential nutrients through decomposition?",
+                options: ["Mineral Matter", "Soil Air", "Organic Matter"],
+                answer: "Organic Matter"
+            },
+            {
+                question: "3. What is the main ecological consequence of habitat fragmentation?",
+                options: ["Increased precipitation", "Edge Effects", "Higher soil salinity"],
+                answer: "Edge Effects"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const checkButton = document.getElementById('check-answers');
+        const resultsBox = document.getElementById('quiz-results');
+        const scoreText = document.getElementById('score-text');
+
+        // Function to render the quiz
+        function renderQuiz() {
+            quizData.forEach((q, qIndex) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'p-4 bg-white border border-gray-200 rounded-lg shadow-sm';
+                qDiv.innerHTML = `<p class="font-semibold text-es-dark mb-3">${q.question}</p>`;
+
+                q.options.forEach((option, oIndex) => {
+                    const inputId = `q${qIndex}-o${oIndex}`;
+                    const radioDiv = document.createElement('div');
+                    radioDiv.className = 'flex items-center mb-1';
+                    
+                    radioDiv.innerHTML = `
+                        <input type="radio" id="${inputId}" name="question${qIndex}" value="${option}" class="text-es-green focus:ring-es-green rounded-full">
+                        <label for="${inputId}" class="ml-2 text-gray-700">${option}</label>
+                    `;
+                    qDiv.appendChild(radioDiv);
+                });
+
+                const feedbackDiv = document.createElement('div');
+                feedbackDiv.id = `feedback-${qIndex}`;
+                feedbackDiv.className = 'mt-2 text-sm font-medium';
+                qDiv.appendChild(feedbackDiv);
+                
+                quizContainer.appendChild(qDiv);
+            });
+        }
+
+        // Function to check answers
+        function checkAnswers() {
+            let score = 0;
+            const totalQuestions = quizData.length;
+
+            quizData.forEach((q, qIndex) => {
+                const selectedOption = document.querySelector(`input[name="question${qIndex}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+                
+                // Reset feedback styles
+                feedbackDiv.textContent = '';
+                feedbackDiv.className = 'mt-2 text-sm font-medium';
+
+                if (selectedOption) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        feedbackDiv.textContent = 'Correct! That aligns with ES20-TE1/TE2/TE3.';
+                        feedbackDiv.classList.add('text-green-600');
+                    } else {
+                        feedbackDiv.textContent = `Incorrect. The correct answer was: ${q.answer}.`;
+                        feedbackDiv.classList.add('text-red-600');
+                    }
+                } else {
+                    feedbackDiv.textContent = 'Please select an answer.';
+                    feedbackDiv.classList.add('text-yellow-600');
+                }
             });
 
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.id = `feedback-${qIndex}`;
-            feedbackDiv.className = 'mt-2 text-sm font-medium';
-            qDiv.appendChild(feedbackDiv);
-            
-            quizContainer.appendChild(qDiv);
-        });
-    }
+            // Display overall results
+            const percentage = (score / totalQuestions) * 100;
+            scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%). Review the sections for any missed questions!`;
+            resultsBox.classList.remove('hidden');
+            resultsBox.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
 
-    // Function to check answers
-    function checkAnswers() {
-        let score = 0;
-        const totalQuestions = quizData.length;
-
-        quizData.forEach((q, qIndex) => {
-            const selectedOption = document.querySelector(`input[name="question${qIndex}"]:checked`);
-            const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
-            
-            // Reset feedback styles
-            feedbackDiv.textContent = '';
-            feedbackDiv.className = 'mt-2 text-sm font-medium';
-
-            if (selectedOption) {
-                if (selectedOption.value === q.answer) {
-                    score++;
-                    feedbackDiv.textContent = 'Correct! That aligns with ES20-TE1/TE2/TE3.';
-                    feedbackDiv.classList.add('text-green-600');
-                } else {
-                    feedbackDiv.textContent = `Incorrect. The correct answer was: ${q.answer}.`;
-                    feedbackDiv.classList.add('text-red-600');
-                }
-            } else {
-                feedbackDiv.textContent = 'Please select an answer.';
-                feedbackDiv.classList.add('text-yellow-600');
-            }
-        });
-
-        // Display overall results
-        const percentage = (score / totalQuestions) * 100;
-        scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%). Review the sections for any missed questions!`;
-        resultsBox.classList.remove('hidden');
-        resultsBox.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
-
-    }
-    
-    // --- 3. Glossary Interactivity Logic ---
-
-    const tooltip = document.getElementById('glossary-tooltip');
-    const overlay = document.getElementById('glossary-overlay');
-    const tooltipTerm = document.getElementById('tooltip-term');
-    const tooltipDefinition = document.getElementById('tooltip-definition');
-    const tooltipExample = document.getElementById('tooltip-example');
-
-    function showGlossary(event) {
-        // Prevent text selection when clicking
-        event.preventDefault(); 
-        event.stopPropagation();
-
-        const termElement = event.currentTarget;
+        }
         
-        // Get data attributes
-        const term = termElement.getAttribute('data-term');
-        const definition = termElement.getAttribute('data-definition');
-        const example = termElement.getAttribute('data-example');
+        // --- 3. Glossary Interactivity Logic ---
 
-        // Populate the tooltip
-        tooltipTerm.textContent = term;
-        tooltipDefinition.textContent = definition;
-        tooltipExample.textContent = example;
+        const tooltip = document.getElementById('glossary-tooltip');
+        const overlay = document.getElementById('glossary-overlay');
+        const tooltipTerm = document.getElementById('tooltip-term');
+        const tooltipDefinition = document.getElementById('tooltip-definition');
+        const tooltipExample = document.getElementById('tooltip-example');
 
-        // Display the tooltip and overlay
-        tooltip.classList.remove('hidden');
-        overlay.classList.add('block'); // Use 'block' to show overlay
-        overlay.classList.remove('hidden');
+        function showGlossary(event) {
+            // Prevent text selection when clicking
+            event.preventDefault(); 
+            event.stopPropagation();
 
-        // Accessibility: Focus the close button
-        tooltip.querySelector('button').focus();
-    }
+            const termElement = event.currentTarget;
+            
+            // Get data attributes
+            const term = termElement.getAttribute('data-term');
+            const definition = termElement.getAttribute('data-definition');
+            const example = termElement.getAttribute('data-example');
 
-    function hideGlossary() {
-        tooltip.classList.add('hidden');
-        overlay.classList.add('hidden');
-    }
+            // Populate the tooltip
+            tooltipTerm.textContent = term;
+            tooltipDefinition.textContent = definition;
+            tooltipExample.textContent = example;
 
-    function setupGlossaryListeners() {
-        document.querySelectorAll('.glossary-term').forEach(termElement => {
-            termElement.addEventListener('click', showGlossary);
-        });
-    }
+            // Display the tooltip and overlay
+            tooltip.classList.remove('hidden');
+            overlay.classList.add('block'); // Use 'block' to show overlay
+            overlay.classList.remove('hidden');
+
+            // Accessibility: Focus the close button
+            tooltip.querySelector('button').focus();
+        }
+
+        function hideGlossary() {
+            tooltip.classList.add('hidden');
+            overlay.classList.add('hidden');
+        }
+
+        function setupGlossaryListeners() {
+            document.querySelectorAll('.glossary-term').forEach(termElement => {
+                termElement.addEventListener('click', showGlossary);
+            });
+        }
 
 
-    // --- 4. Document Search Logic ---
+        // --- 4. Document Search Logic ---
 
-    // Function to remove all previous highlights
-    function clearHighlights() {
-        const highlights = document.querySelectorAll('span.highlight');
-        highlights.forEach(span => {
-            // Use outerHTML to replace the span with its content, then normalize
-            span.outerHTML = span.textContent;
-        });
-        // Re-normalize the document to merge adjacent text nodes created by unhighlighting
-        document.querySelector('.textbook-card').normalize();
-    }
+        // Function to remove all previous highlights
+        function clearHighlights() {
+            const highlights = document.querySelectorAll('span.highlight');
+            highlights.forEach(span => {
+                // Use outerHTML to replace the span with its content, then normalize
+                span.outerHTML = span.textContent;
+            });
+            // Re-normalize the document to merge adjacent text nodes created by unhighlighting
+            document.querySelector('.textbook-card').normalize();
+        }
 
-    function searchDocument() {
-        clearHighlights();
-        currentMatches = [];
-        matchIndex = -1;
+        function searchDocument() {
+            clearHighlights();
+            currentMatches = []; // Use the globally declared variable
+            matchIndex = -1; // Use the globally declared variable
 
-        const searchTermInput = document.getElementById('document-search');
-        const searchTerm = searchTermInput.value.trim();
-        const root = document.querySelector('.textbook-card');
+            const searchTermInput = document.getElementById('document-search');
+            const searchTerm = searchTermInput.value.trim();
+            const root = document.querySelector('.textbook-card');
 
-        // Disable navigation buttons initially
-        document.getElementById('next-match').disabled = true;
-        document.getElementById('prev-match').disabled = true;
+            // Disable navigation buttons initially
+            document.getElementById('next-match').disabled = true;
+            document.getElementById('prev-match').disabled = true;
 
-        if (!searchTerm) return;
-        
-        // Escape special regex characters
-        const escapedTerm = searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        const regex = new RegExp('(' + escapedTerm + ')', 'gi');
+            if (!searchTerm) return;
+            
+            // Escape special regex characters
+            const escapedTerm = searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+            const regex = new RegExp('(' + escapedTerm + ')', 'gi');
 
-        // Recursive function to walk the DOM and replace text nodes
-        function highlightText(node) {
-            if (node.nodeType === 3) { // Text node
-                // Skip nodes inside sensitive elements (glossary terms, strong tags, scripts)
-                if (node.parentElement.classList.contains('glossary-term') || node.parentElement.tagName === 'STRONG') {
-                    return;
-                }
-                
-                const match = node.nodeValue.match(regex);
-                if (match) {
-                    const parts = node.nodeValue.split(regex);
-                    const fragment = document.createDocumentFragment();
-
-                    parts.forEach((part, i) => {
-                        if (i % 2 === 1) { // Matched term
-                            const span = document.createElement('span');
-                            span.className = 'highlight bg-yellow-300 rounded px-0.5 transition-all duration-300 border-yellow-500';
-                            span.textContent = part;
-                            fragment.appendChild(span);
-                            currentMatches.push(span); // Store the element reference
-                        } else { // Unmatched text
-                            fragment.appendChild(document.createTextNode(part));
-                        }
-                    });
+            // Recursive function to walk the DOM and replace text nodes
+            function highlightText(node) {
+                if (node.nodeType === 3) { // Text node
+                    // Skip nodes inside sensitive elements (glossary terms, strong tags, scripts)
+                    if (node.parentElement.classList.contains('glossary-term') || node.parentElement.tagName === 'STRONG') {
+                        return;
+                    }
                     
-                    node.parentNode.replaceChild(fragment, node);
+                    const match = node.nodeValue.match(regex);
+                    if (match) {
+                        const parts = node.nodeValue.split(regex);
+                        const fragment = document.createDocumentFragment();
+
+                        parts.forEach((part, i) => {
+                            if (i % 2 === 1) { // Matched term
+                                const span = document.createElement('span');
+                                span.className = 'highlight bg-yellow-300 rounded px-0.5 transition-all duration-300 border-yellow-500';
+                                span.textContent = part;
+                                fragment.appendChild(span);
+                                currentMatches.push(span); // Store the element reference
+                            } else { // Unmatched text
+                                fragment.appendChild(document.createTextNode(part));
+                            }
+                        });
+                        
+                        node.parentNode.replaceChild(fragment, node);
+                    }
+                } else if (node.nodeType === 1 && node.childNodes && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'BUTTON' && node.tagName !== 'INPUT') { // Element node
+                    // Iterate backwards to safely handle node replacements
+                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
+                        highlightText(node.childNodes[i]);
+                    }
                 }
-            } else if (node.nodeType === 1 && node.childNodes && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'BUTTON' && node.tagName !== 'INPUT') { // Element node
-                // Iterate backwards to safely handle node replacements
-                for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                    highlightText(node.childNodes[i]);
+            }
+            
+            highlightText(root); // Start highlighting
+
+            if (currentMatches.length > 0) {
+                matchIndex = 0;
+                navigateToMatch(0);
+                if (currentMatches.length > 1) {
+                    document.getElementById('next-match').disabled = false;
+                    document.getElementById('prev-match').disabled = false;
                 }
             }
         }
-        
-        highlightText(root); // Start highlighting
 
-        if (currentMatches.length > 0) {
-            matchIndex = 0;
-            navigateToMatch(0);
-            if (currentMatches.length > 1) {
-                document.getElementById('next-match').disabled = false;
-                document.getElementById('prev-match').disabled = false;
+        function navigateToMatch(index) {
+            if (currentMatches.length === 0) return;
+
+            // Loop index if it goes out of bounds
+            if (index >= currentMatches.length) {
+                index = 0; // Loop back to start
+            } else if (index < 0) {
+                index = currentMatches.length - 1; // Loop back to end
             }
+            
+            matchIndex = index;
+
+            // Remove active styling from all matches
+            currentMatches.forEach(h => h.classList.remove('border-2', 'border-red-500', 'ring-2', 'ring-red-500'));
+            
+            // Apply active styling to the current match
+            const activeMatch = currentMatches[matchIndex];
+            activeMatch.classList.add('border-2', 'border-red-500', 'ring-2', 'ring-red-500');
+            
+            // Scroll to the active match
+            activeMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-    }
 
-    function navigateToMatch(index) {
-        if (currentMatches.length === 0) return;
-
-        // Loop index if it goes out of bounds
-        if (index >= currentMatches.length) {
-            index = 0; // Loop back to start
-        } else if (index < 0) {
-            index = currentMatches.length - 1; // Loop back to end
+        function navigateNext() {
+            matchIndex++;
+            navigateToMatch(matchIndex);
         }
-        
-        matchIndex = index;
 
-        // Remove active styling from all matches
-        currentMatches.forEach(h => h.classList.remove('border-2', 'border-red-500', 'ring-2', 'ring-red-500'));
-        
-        // Apply active styling to the current match
-        const activeMatch = currentMatches[matchIndex];
-        activeMatch.classList.add('border-2', 'border-red-500', 'ring-2', 'ring-red-500');
-        
-        // Scroll to the active match
-        activeMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+        function navigatePrev() {
+            matchIndex--;
+            navigateToMatch(matchIndex);
+        }
 
-    function navigateNext() {
-        matchIndex++;
-        navigateToMatch(matchIndex);
-    }
+        // Event listener setup
+        window.onload = function() {
+            renderQuiz();
+            checkButton.addEventListener('click', checkAnswers);
+            setupGlossaryListeners(); // Initialize glossary listeners
 
-    function navigatePrev() {
-        matchIndex--;
-        navigateToMatch(matchIndex);
-    }
-
-    // Event listener setup
-    window.onload = function() {
-        renderQuiz();
-        checkButton.addEventListener('click', checkAnswers);
-        setupGlossaryListeners(); // Initialize glossary listeners
-
-        // Attach event listener for Enter key in the search box
-        document.getElementById('document-search').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchDocument();
-            }
-        });
-    };
-</script>
+            // Attach event listener for Enter key in the search box
+            document.getElementById('document-search').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchDocument();
+                }
+            });
+        };
+    </script>
 </body>
 </html>
-
