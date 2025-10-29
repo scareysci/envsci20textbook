@@ -99,23 +99,15 @@
 </head>
 <body class="bg-[#f8f8f8]">
 
-    <!-- FIXED HEADER WITH HOME BUTTON AND SEARCH --><header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
+    <!-- FIXED HEADER WITH HOME BUTTON --><header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
         <div class="max-w-4xl mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap gap-2">
             <!-- Home Button --><a href="index.html" class="px-3 py-1 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 text-sm w-full sm:w-auto text-center">
                 Home (ES20 Textbook)
             </a>
             
-            <!-- Search Feature --><div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
-                <input type="text" id="document-search" placeholder="Search chapter..." class="p-1 rounded-lg text-sm text-es-dark flex-grow min-w-40 sm:min-w-64">
-                <button onclick="searchDocument()" class="px-2 py-1 bg-es-blue text-white rounded-lg hover:bg-blue-600 transition duration-150 text-sm">
-                    Search
-                </button>
-                <button id="next-match" onclick="navigateNext()" class="px-2 py-1 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-150 text-sm" disabled>
-                    &darr;
-                </button>
-                <button id="prev-match" onclick="navigatePrev()" class="px-2 py-1 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-150 text-sm" disabled>
-                    &uarr;
-                </button>
+            <!-- Removed Search Feature to fix SyntaxError -->
+            <div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
+                <span class="text-sm text-gray-300 py-1">In-Document Search (Disabled)</span>
             </div>
         </div>
     </header>
@@ -237,25 +229,25 @@
                 <p class="mb-4">Soil is often called the "skin of the Earth" because it is a thin, fragile layer that connects the abiotic (geosphere, atmosphere, hydrosphere) world with the biotic (biosphere) world. Soil formation is incredibly slow—it can take over 500 years to form just one inch of topsoil, making it an effectively non-renewable resource in the human timescale.</p>
 
                 <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">1.1 Soil Composition and Structure</h4>
-                <p class="mb-2">Before soil can host life, it must be created. Soil begins as solid bedrock, which is slowly broken down by <strong>weathering</strong> into smaller fragments. This initial, foundational geological matter is called the <strong>parent material</strong>. The chemical composition and texture of this parent material determine the final characteristics of the soil, such as the proportions of sand, silt, and clay found in the deeper horizons.</p>
+                <p class="mb-2">Before soil can host life, it must be created. Soil begins as solid <span class="glossary-term" data-term="Bedrock" data-definition="The solid, unweathered rock layer beneath the soil and unconsolidated material (parent material)." data-example="The granite bedrock of the Canadian Shield that underlies the thin soils of the Athabasca Plain in far northern Saskatchewan.">bedrock</span>, which is slowly broken down by <span class="glossary-term" data-term="Weathering" data-definition="The process by which rocks and minerals are broken down into smaller pieces (sediments) through physical, chemical, or biological means." data-example="Water freezing in rock cracks during a Saskatchewan winter causes the rock to fracture (physical weathering).">weathering</span> into smaller fragments. This initial, foundational geological matter is called the <span class="glossary-term" data-term="Parent Material" data-definition="The underlying geological base (often bedrock or unconsolidated sediment like glacial till) from which soil is formed." data-example="In much of Saskatchewan, the parent material is glacial till, deposited by melting ice sheets.">parent material</span>. The chemical composition and texture of this <span class="glossary-term" data-term="Parent Material" data-definition="The underlying geological base (often bedrock or unconsolidated sediment like glacial till) from which soil is formed." data-example="In much of Saskatchewan, the parent material is glacial till, deposited by melting ice sheets.">parent material</span> determine the final characteristics of the soil, such as the proportions of sand, silt, and clay found in the deeper horizons.</p>
                 
                 <p class="mb-2">The process of <strong>weathering</strong> involves three types of forces:</p>
                 <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
                     <li><strong>Physical Weathering:</strong> The mechanical breakdown of rock into smaller pieces (like sand and silt). Examples include the <strong>freeze-thaw cycle</strong>, where water enters rock cracks, freezes (expands), and pries the rock apart, or abrasion by wind and water.</li>
-                    <li><strong>Chemical Weathering:</strong> The alteration of a rock's chemical structure. Examples include <strong>hydrolysis</strong> (reaction with water) or <strong>oxidation</strong> (reaction with oxygen), which dissolve or chemically change the minerals, often releasing essential nutrients into the soil solution.</li>
+                    <li><strong>Chemical <span class="glossary-term" data-term="Weathering" data-definition="The process by which rocks and minerals are broken down into smaller pieces (sediments) through physical, chemical, or biological means." data-example="Water freezing in rock cracks during a Saskatchewan winter causes the rock to fracture (physical weathering).">Weathering</span>:</strong> The alteration of a rock's chemical structure. Examples include <strong>hydrolysis</strong> (reaction with water) or <strong>oxidation</strong> (reaction with oxygen), which dissolve or chemically change the minerals, often releasing essential nutrients into the soil solution.</li>
                     <li><strong>Biological Weathering:</strong> The breakdown of rock by living organisms. Examples include plant roots growing into cracks and exerting pressure, or lichens and mosses secreting organic acids that chemically dissolve the rock surface.</li>
                 </ul>
 
-                <p class="mb-4">It is important to differentiate two key processes. <strong>Decomposition</strong> is the biological process where organic matter (dead leaves, animal waste) is broken down by fungi, bacteria, and insects, releasing nutrients and creating <strong>humus</strong>. <strong>Deposition</strong>, conversely, is the geological process where eroded inorganic material (like clay or silt carried by wind or water) is laid down or settled in a new location, often forming the <strong>parent material</strong> of future soil layers. Both contribute to the soil system but operate on very different timescales and material types.</p>
+                <p class="mb-4">It is important to differentiate two key processes. <strong>Decomposition</strong> is the biological process where organic matter (dead leaves, animal waste) is broken down by fungi, bacteria, and insects, releasing nutrients and creating <span class="glossary-term" data-term="Humus" data-definition="Stable, dark, decayed organic matter in soil that is crucial for retaining moisture and nutrients." data-example="The rich, dark color of Chernozemic prairie soil comes directly from its high humus content.">humus</span>. <strong>Deposition</strong>, conversely, is the geological process where eroded inorganic material (like clay or silt carried by wind or water) is laid down or settled in a new location, often forming the <span class="glossary-term" data-term="Parent Material" data-definition="The underlying geological base (often bedrock or unconsolidated sediment like glacial till) from which soil is formed." data-example="In much of Saskatchewan, the parent material is glacial till, deposited by melting ice sheets.">parent material</span> of future soil layers. Both contribute to the soil system but operate on very different timescales and material types.</p>
                 
                 <p class="mb-2">Soil is not just dirt; it's a dynamic, living system made up of four equally important components:</p>
                 
                 <ul class="list-none space-y-3 mb-4 ml-4">
                     <li>
-                        <strong>Mineral Matter (≈45%):</strong> These are the particles (sand, silt, and clay) created from the slow process of <strong>weathering</strong> bedrock over millennia. Sand particles are the largest, allowing water to drain quickly. Clay particles are the smallest and stickiest, retaining water and nutrients but often making drainage difficult. The specific mix of these particles determines the <span class="glossary-term" data-term="Soil Texture" data-definition="The proportion of sand, silt, and clay in the soil, which determines how well it retains water and nutrients." data-example="A farmer checks the soil texture to decide irrigation needs for canola crops.">soil texture</span>.
+                        <strong>Mineral Matter (≈45%):</strong> These are the particles (sand, silt, and clay) created from the slow process of <strong>weathering</strong> <span class="glossary-term" data-term="Bedrock" data-definition="The solid, unweathered rock layer beneath the soil and unconsolidated material (parent material)." data-example="The granite bedrock of the Canadian Shield that underlies the thin soils of the Athabasca Plain in far northern Saskatchewan.">bedrock</span> over millennia. Sand particles are the largest, allowing water to drain quickly. Clay particles are the smallest and stickiest, retaining water and nutrients but often making drainage difficult. The specific mix of these particles determines the <span class="glossary-term" data-term="Soil Texture" data-definition="The proportion of sand, silt, and clay in the soil, which determines how well it retains water and nutrients." data-example="A farmer checks the soil texture to decide irrigation needs for canola crops.">soil texture</span>.
                     </li>
                     <li>
-                        <strong>Organic Matter (≈5%):</strong> This is the decaying remains of plants, animals, and microbes, known as <strong>humus</strong> in its stable form. This small component is crucial for soil fertility, structure (it acts like a glue to bind mineral particles together), and is the engine for nutrient recycling. High organic matter gives fertile prairie soils their rich, dark color and helps them hold twice their weight in water.
+                        <strong>Organic Matter (≈5%):</strong> This is the decaying remains of plants, animals, and microbes, known as <span class="glossary-term" data-term="Humus" data-definition="Stable, dark, decayed organic matter in soil that is crucial for retaining moisture and nutrients." data-example="The rich, dark color of Chernozemic prairie soil comes directly from its high humus content.">humus</span> in its stable form. This small component is crucial for soil fertility, structure (it acts like a glue to bind mineral particles together), and is the engine for nutrient recycling. High organic matter gives fertile prairie soils their rich, dark color and helps them hold twice their weight in water.
                     </li>
                     <li>
                         <strong>Soil Water (≈25%):</strong> Water is held in the tiny pore spaces between the mineral and organic components. This water is vital because it dissolves <strong>nutrients</strong> (making the ions available for plant absorption) and facilitates the chemical reactions necessary for life, soil formation, and decomposition. Without it, the flow of nutrients stops.
@@ -266,15 +258,15 @@
                 </ul>
                 
                 <!-- START NEW HORIZONS CONTENT --><h4 class="text-lg font-medium text-es-dark mt-6 mb-2">Soil Horizons and Soil Profiles</h4>
-                <p class="mb-4">As soil forms over time, it naturally separates into distinct layers called <strong>soil horizons</strong>. A vertical cross-section of these layers, from the surface down to the bedrock, is known as the <strong>soil profile</strong>. Each horizon has a unique colour, texture, and composition due to the movement of water and materials through the profile, a process called <strong>leaching</strong>.</p>
+                <p class="mb-4">As soil forms over time, it naturally separates into distinct layers called <strong>soil horizons</strong>. A vertical cross-section of these layers, from the surface down to the <span class="glossary-term" data-term="Bedrock" data-definition="The solid, unweathered rock layer beneath the soil and unconsolidated material (parent material)." data-example="The granite bedrock of the Canadian Shield that underlies the thin soils of the Athabasca Plain in far northern Saskatchewan.">bedrock</span>, is known as the <strong>soil profile</strong>. Each horizon has a unique colour, texture, and composition due to the movement of water and materials through the profile, a process called <span class="glossary-term" data-term="Leaching" data-definition="The process by which water moving down through soil dissolves and carries away minerals, nutrients, or pollutants from upper horizons to lower horizons." data-example="Water dissolving salts from the surface and depositing them deeper in the soil column.">leaching</span>.</p>
                 
                 <ul class="list-disc list-inside ml-4 space-y-2 mb-4">
-                    <li><strong>O-Horizon (Organic):</strong> This is the uppermost layer, composed entirely of organic material. It's often called <strong>topsoil</strong> along with the A-Horizon. The 'O' stands for organic: it contains forest litter, decomposing leaves, and <strong>humus</strong>. This layer is rich in nutrients and holds water exceptionally well, making it vital for all plant life. In the Boreal Forest, this layer is often very deep (peat).</li>
-                    <li><strong>A-Horizon (Topsoil/Mineral):</strong> A mix of mineral matter and decayed organic matter (humus) that gives it a dark colour. This is the layer where plant roots are most concentrated and is the primary zone of agricultural production.</li>
+                    <li><strong>O-Horizon (Organic):</strong> This is the uppermost layer, composed entirely of organic material. It's often called <span class="glossary-term" data-term="Topsoil" data-definition="The nutrient-rich upper layer of soil (O and A horizons) where most biological activity and plant roots are found. This is the most agriculturally productive layer." data-example="The loss of the dark, rich topsoil layer during the 1930s Dust Bowl due to poor farming practices and drought.">topsoil</span> along with the A-Horizon. The 'O' stands for organic: it contains forest litter, decomposing leaves, and <strong>humus</strong>. This layer is rich in nutrients and holds water exceptionally well, making it vital for all plant life. In the Boreal Forest, this layer is often very deep (peat).</li>
+                    <li><strong>A-Horizon (Topsoil/Mineral):</strong> A mix of mineral matter and decayed organic matter (<span class="glossary-term" data-term="Humus" data-definition="Stable, dark, decayed organic matter in soil that is crucial for retaining moisture and nutrients." data-example="The rich, dark color of Chernozemic prairie soil comes directly from its high humus content.">humus</span>) that gives it a dark colour. This is the layer where plant roots are most concentrated and is the primary zone of agricultural production.</li>
                     <li><strong>E-Horizon (Eluviated):</strong> A light-coloured layer found below the A-Horizon, primarily in older, forested soils (like Podzols). 'E' stands for eluviated, meaning materials (clay, iron oxides, organic acids) have been extensively <strong>leached</strong> out and carried downward by water.</li>
-                    <li><strong>B-Horizon (Subsoil):</strong> Known as the zone of <strong>accumulation</strong> (or illuviation). Materials leached from the E or A horizons are deposited here. It is denser, lower in organic matter, and often reddish or yellowish due to the accumulation of clay and iron compounds.</li>
+                    <li><strong>B-Horizon (Subsoil):</strong> Known as the zone of <strong>accumulation</strong> (or illuviation). Materials <span class="glossary-term" data-term="Leaching" data-definition="The process by which water moving down through soil dissolves and carries away minerals, nutrients, or pollutants from upper horizons to lower horizons." data-example="Water dissolving salts from the surface and depositing them deeper in the soil column.">leached</span> from the E or A horizons are deposited here. It is denser, lower in organic matter, and often reddish or yellowish due to the accumulation of clay and iron compounds.</li>
                     <li><strong>C-Horizon (Parent Material):</strong> The layer directly beneath the soil profile, consisting of the unconsolidated material (like glacial till or river deposits) that the soil formed from. It is largely unaffected by biological activity.</li>
-                    <li><strong>R-Horizon (Bedrock):</strong> The lowest layer, consisting of the unweathered, solid <strong>bedrock</strong> that underlies the soil profile.</li>
+                    <li><strong>R-Horizon (Bedrock):</strong> The lowest layer, consisting of the unweathered, solid <span class="glossary-term" data-term="Bedrock" data-definition="The solid, unweathered rock layer beneath the soil and unconsolidated material (parent material)." data-example="The granite bedrock of the Canadian Shield that underlies the thin soils of the Athabasca Plain in far northern Saskatchewan.">bedrock</span> that underlies the soil profile.</li>
                 </ul>
 
                 <figure class="mb-6">
@@ -298,8 +290,8 @@
                             <tr>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Grasslands</strong></td>
                                 <td class="px-3 py-4 text-sm text-gray-700">Chernozemic (Dark Brown/Brown)</td>
-                                <td class="px-3 py-4 text-sm text-gray-700">High in humus; very fertile due to deep root decomposition.</td>
-                                <td class="px-3 py-4 text-sm text-gray-700">Good drainage; <strong>Neutral to Slightly Alkaline pH</strong> (prone to salinization).</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">High in <span class="glossary-term" data-term="Humus" data-definition="Stable, dark, decayed organic matter in soil that is crucial for retaining moisture and nutrients." data-example="The rich, dark color of Chernozemic prairie soil comes directly from its high humus content.">humus</span>; very fertile due to deep root decomposition.</td>
+                                <td class="px-3 py-4 text-sm text-gray-700">Good drainage; <strong>Neutral to Slightly Alkaline pH</strong> (prone to <span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">salinization</span>).</td>
                             </tr>
                             <tr>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-es-brown"><strong>Aspen Parkland</strong></td>
@@ -342,33 +334,90 @@
                             <strong>Education & Skills:</strong> A university degree (B.Sc. or M.Sc.) in Agronomy, Soil Science, or Environmental Science is required. Critical skills include soil testing, data analysis, chemistry, and strong communication for consulting with farmers.
                         </li>
                         <li>
-                            <strong>Saskatchewan Opportunities:</strong> Given Saskatchewan's massive agricultural sector (cereals, oilseeds, pulses), Agronomists are highly in demand by independent consulting firms, fertilizer and seed companies, and government agencies (e.g., Saskatchewan Ministry of Agriculture).
-                        </li>
-                        <li>
                             <strong>Link to ES20-TE1:</strong> This career directly applies knowledge of <strong>nutrient cycles</strong>, preventing <strong>salinization</strong>, minimizing <strong>erosion</strong>, and utilizing <strong>sustainable practices</strong> to ensure the long-term health of our Chernozemic soils.
                         </li>
                     </ul>
                 </div>
-                <!-- END CAREER PROFILE --><h4 class="text-lg font-medium text-es-dark mt-4 mb-2">1.2 Soil Nutrient and Biogeochemical Cycling</h4>
+                <!-- END CAREER PROFILE -->
+                
+                <!-- NEW VIDEO EMBED FOR 1.2 --><h3 class="text-xl font-semibold text-es-dark mt-6 mb-3">Review: Nitrogen and Phosphorus Cycles</h3>
+                <div class="video-container">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/leHy-Y_8nRs" 
+                        title="The Nitrogen and Phosphorus Cycles: A Review" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <!-- END NEW VIDEO EMBED --><h4 class="text-lg font-medium text-es-dark mt-4 mb-2">1.2 Soil Nutrient and Biogeochemical Cycling</h4>
                 <p class="mb-2">Soil acts as the primary reservoir or medium for the cycling of the planet's most critical elements, all of which are interconnected with the atmosphere and hydrosphere:</p>
                 <ul class="list-disc list-inside ml-4 space-y-2 mb-4">
                     <li><strong>Carbon Cycle:</strong> Soil is the largest terrestrial carbon reservoir. Plant decomposition and microbial activity release carbon to the atmosphere as CO<span class="sub">2</span>, while living plants pull CO<span class="sub">2</span> from the <strong>atmosphere</strong> and transfer it to the soil via roots and detritus.</li>
                     <li><strong>Nitrogen Cycle:</strong> Nitrogen (N<span class="sub">2</span>) gas, which makes up 78% of the <strong>atmosphere</strong>, is unusable by plants until soil bacteria convert it (through <strong>nitrogen fixation</strong>) into usable forms like nitrates. This process highlights the vital biotic link between the soil and the air.</li>
                     <li><strong>Water (Hydrologic) Cycle:</strong> Soil and vegetation play a critical role in controlling the movement of water. Soil absorbs water via <strong>infiltration</strong>, storing it for plants and recharging <strong>groundwater</strong> reserves. Plants release water vapor back to the <strong>atmosphere</strong> through <strong>transpiration</strong>, influencing regional precipitation patterns.</li>
-                    <li><strong>Phosphorus Cycle:</strong> This cycle is unique because it has <strong>no significant atmospheric phase</strong>. Phosphorus is mainly found in <strong>rocks and sediments</strong>. Soil releases phosphorus through <strong>weathering</strong>, and plants absorb it as phosphate ions. Since it is easily bound to soil particles, the phosphorus cycle is often the slowest cycle, and human actions (like using mined fertilizers or causing erosion) heavily impact its availability in ecosystems.</li>
+                    <li><strong>Phosphorus Cycle:</strong> This cycle is unique because it has <strong>no significant atmospheric phase</strong>. Phosphorus is mainly found in <strong>rocks and sediments</strong>. Soil releases phosphorus through <span class="glossary-term" data-term="Weathering" data-definition="The process by which rocks and minerals are broken down into smaller pieces (sediments) through physical, chemical, or biological means." data-example="Water freezing in rock cracks during a Saskatchewan winter causes the rock to fracture (physical weathering).">weathering</span>, and plants absorb it as phosphate ions. Since it is easily bound to soil particles, the phosphorus cycle is often the slowest cycle, and human actions (like using mined fertilizers or causing erosion) heavily impact its availability in ecosystems.</li>
                 </ul>
     
-                <h4 class="text-lg font-medium text-es-dark mt-6 mb-2">1.3 Major Threats to Soil Integrity in Saskatchewan</h4>
+                <!-- NEW SECTION: AGRICULTURE AND CYCLES --><h4 class="text-lg font-medium text-es-dark mt-6 mb-3">The Role of Agriculture in Biogeochemical Cycles</h4>
+                <p class="mb-4">Agricultural practices are essentially human-managed attempts to optimize these natural cycles to maximize food production. While modern farming has increased yields dramatically, it often creates imbalances, either enhancing a cycle (by adding nutrients) or inhibiting it (by interrupting natural processes).</p>
+
+                <ul class="list-disc list-inside ml-4 space-y-4 mb-4">
+                    <li>
+                        <strong>Fertilization (Nitrogen and Phosphorus Cycles):</strong>
+                        <p class="ml-4 mt-1 text-sm text-gray-700">The application of synthetic fertilizers is the most direct human alteration of the Nitrogen and Phosphorus cycles. While fertilizers instantly enhance nutrient availability for crop growth, <strong>excessive application</strong> often leads to nutrient runoff. This excess nitrogen and phosphorus then enters aquatic systems (rivers, lakes), driving <span class="glossary-term" data-term="Eutrophication" data-definition="Excessive richness of nutrients in a lake or other body of water, frequently due to runoff from the land, which causes a dense growth of plant life and death of animal life from lack of oxygen." data-example="Algal blooms occurring in Lake Winnipeg due to excessive nutrient runoff from surrounding agricultural land.">eutrophication</span> (algal blooms) and creating <strong>dead zones</strong>.</p>
+                    </li>
+                    <li>
+                        <strong>Irrigation (Water Cycle):</strong>
+                        <p class="ml-4 mt-1 text-sm text-gray-700">In dry regions like the Grasslands, irrigation moves water from surface sources (rivers, reservoirs) or groundwater to the fields. This enhances the Water Cycle locally by increasing <strong>infiltration</strong> and <strong>transpiration</strong>. However, over-irrigation can lead to severe environmental inhibition, causing two major problems: <strong>groundwater depletion</strong> (where water is removed faster than it can be naturally recharged) and <span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">salinization</span> (by raising the water table and drawing dissolved salts to the surface).</p>
+                    </li>
+                    <li>
+                        <strong>Crop Rotation (Nitrogen and Carbon Cycles):</strong>
+                        <p class="ml-4 mt-1 text-sm text-gray-700">Crop rotation—planting different crops sequentially on the same land—is a powerful tool for sustainable agriculture. Planting legume crops (like peas, lentils, or clover) actively <strong>enhances</strong> the Nitrogen Cycle. These plants host nitrogen-fixing bacteria, naturally enriching the soil with nitrogen, reducing the need for synthetic fertilizers. This also indirectly enhances the Carbon Cycle by improving soil structure and organic matter retention.</p>
+                    </li>
+                    <li>
+                        <strong>Crop Selection (Carbon and Water Cycles):</strong>
+                        <p class="ml-4 mt-1 text-sm text-gray-700">The choice of crop directly influences ecosystem services. Deep-rooted perennial crops (which live for multiple years) stabilize the soil better and sequester <strong>more carbon</strong> than annual crops (which must be replanted every year). Selecting drought-resistant crops in arid regions (like Palliser's Triangle) helps <strong>inhibit</strong> over-extraction from the Water Cycle by reducing the need for supplemental irrigation, making the practice more sustainable.</p>
+                    </li>
+                </ul>
+                <!-- END NEW SECTION --><h4 class="text-lg font-medium text-es-dark mt-6 mb-2">1.3 Major Threats to Soil Integrity in Saskatchewan</h4>
                 <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
-                    <li><span class="glossary-term" data-term="Erosion" data-definition="The process by which wind or water wears away and carries the vital topsoil layer, often accelerated when protective plant cover is removed." data-example="Strong prairie winds blowing soil off a field that was not protected by crop residue.">Erosion</span>: The removal of topsoil by wind and water, accelerated when protective plant cover (like native grasses or crop residue) is removed. The fertile A-horizon is lost first.</li>
-                    <li><span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">Salinization</span>: The buildup of salts on the soil surface, primarily in low-lying areas. This occurs when high water tables bring dissolved salts to the surface, where the water evaporates, leaving the salts behind. Salinization significantly reduces crop yields.</li>
-                    <li><strong>Organic Matter Depletion:</strong> Continuous cropping without sufficient cover crops or manure slowly depletes the organic matter, reducing the soil’s ability to retain water and nutrients, and making it more susceptible to compaction.</li>
+                    <li><span class="glossary-term" data-term="Erosion" data-definition="The process by which wind or water wears away and carries the vital topsoil layer, often accelerated when protective plant cover is removed." data-example="Strong prairie winds blowing soil off a field that was not protected by crop residue.">Erosion</span>: The removal of <span class="glossary-term" data-term="Topsoil" data-definition="The nutrient-rich upper layer of soil (O and A horizons) where most biological activity and plant roots are found. This is the most agriculturally productive layer." data-example="The loss of the dark, rich topsoil layer during the 1930s Dust Bowl due to poor farming practices and drought.">topsoil</span> by wind and water, accelerated when protective plant cover (like native grasses or crop residue) is removed. The fertile A-horizon is lost first.
+                        
+                        <div class="bg-gray-50 p-4 mt-3 border-l-4 border-gray-300 rounded-lg">
+                            <p class="font-semibold text-es-brown mb-1">Case Study: The 1930s Dust Bowl (The Dirty Thirties)</p>
+                            <p class="text-sm text-gray-700">The Dust Bowl is the most severe example of wind <span class="glossary-term" data-term="Erosion" data-definition="The process by which wind or water wears away and carries the vital topsoil layer, often accelerated when protective plant cover is removed." data-example="Strong prairie winds blowing soil off a field that was not protected by crop residue.">erosion</span> in Canadian history, primarily impacting the Grasslands region of Saskatchewan. Farmers, following practices suitable for wetter climates, removed the native prairie grass cover and tilled the soil deeply (fallowing), leaving the land completely exposed. When a prolonged drought hit in the 1930s, strong winds lifted massive amounts of light, unprotected <span class="glossary-term" data-term="Topsoil" data-definition="The nutrient-rich upper layer of soil (O and A horizons) where most biological activity and plant roots are found. This is the most agriculturally productive layer." data-example="The loss of the dark, rich topsoil layer during the 1930s Dust Bowl due to poor farming practices and drought.">topsoil</span>, creating black blizzards that carried dust for hundreds of kilometers. This event demonstrated the crucial protective role of deep-rooted native plants and led to the adoption of modern conservation techniques like <strong>shelterbelts</strong> and <strong>no-till farming</strong>.</p>
+                        </div>
+                    </li>
+                    <li><span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">Salinization</span>: The buildup of salts on the soil surface, primarily in low-lying areas. This occurs when high water tables bring dissolved salts to the surface, where the water evaporates, leaving the salts behind. <span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">Salinization</span> significantly reduces crop yields.
+
+                        <div class="bg-gray-50 p-4 mt-3 border-l-4 border-gray-300 rounded-lg">
+                            <p class="font-semibold text-es-brown mb-1">Case Study: Dryland Salinization in the Prairies</p>
+                            <p class="text-sm text-gray-700">The practice of summer fallowing (leaving fields bare for a year) was common in the Prairies to conserve moisture. However, without plants drawing up water, the water table rises close to the surface. As this water evaporates, it leaves behind dissolved mineral salts (like sodium, magnesium, and calcium) that were originally deep underground. This creates white, unproductive salt patches, often seen in the low-lying areas of Saskatchewan fields. The solution involves planting deep-rooted, perennial salt-tolerant crops like <strong>alfalfa</strong> or <strong>tall wheatgrass</strong> to actively lower the water table and draw the salts out of the root zone.</p>
+                        </div>
+                    </li>
+                    <li><strong>Organic Matter Depletion:</strong> Continuous cropping without sufficient cover crops or manure slowly depletes the organic matter, reducing the soil’s ability to retain water and nutrients, and making it more susceptible to compaction.
+
+                        <div class="bg-gray-50 p-4 mt-3 border-l-4 border-gray-300 rounded-lg">
+                            <p class="font-semibold text-es-brown mb-1">Case Study: The Long-Term Loss of Prairie Humus</p>
+                            <p class="text-sm text-gray-700">The deep, black <strong>Chernozemic soils</strong> of the Aspen Parkland and Grasslands were famed for their high initial organic matter content (up to 10%). However, after decades of intensive farming—especially relying on annual monocultures (like wheat)—soil organic matter has declined by 30% to 50% in many areas. This loss means the soil acts less like a sponge, leading to reduced water infiltration, increased compaction, and a greater reliance on synthetic fertilizers to maintain yields. Agronomists now stress the importance of practices like <strong>intercropping</strong>, <strong>cover cropping</strong>, and reintroducing <strong>perennial forages</strong> to slowly rebuild that vital organic carbon and protect the soil for future generations.</p>
+                        </div>
+                    </li>
+                    <li><span class="glossary-term" data-term="Desertification" data-definition="The process by which fertile land becomes desert, typically as a result of drought, deforestation, or inappropriate agriculture." data-example="The movement of sand dunes due to the removal of stabilizing vegetation and subsequent wind erosion in the Great Sand Hills.">Desertification</span>: The process by which fertile land becomes desert, typically as a result of drought, deforestation, or inappropriate agriculture. While true deserts are rare in Saskatchewan, this process refers to the <strong>expansion of arid conditions</strong> into semi-arid areas, leading to severe land degradation.
+
+                        <div class="bg-gray-50 p-4 mt-3 border-l-4 border-gray-300 rounded-lg">
+                            <p class="font-semibold text-es-brown mb-1">Case Study: The Great Sand Hills, Southwest Saskatchewan</p>
+                            <p class="text-sm text-gray-700">The Great Sand Hills, located near Leader, SK, are the largest active dune fields in the province. These dunes formed from ancient glacial meltwater deposits but were largely stabilized by native short- and mixed-grass prairie species over thousands of years. Early European settlement and overgrazing removed this stabilizing plant cover, particularly during periods of drought. This resulted in the active, uninhibited movement of sand, mimicking <span class="glossary-term" data-term="Desertification" data-definition="The process by which fertile land becomes desert, typically as a result of drought, deforestation, or inappropriate agriculture." data-example="The movement of sand dunes due to the removal of stabilizing vegetation and subsequent wind erosion in the Great Sand Hills.">desertification</span>. Today, this area is protected to allow native grasses to continue their work of stabilization, preventing the spread of active dunes into surrounding agricultural areas.</p>
+                        </div>
+                    </li>
                 </ol>
                 <hr class="my-6 border-gray-200">
             </section>
 
             <!-- Section 2: Plants (ES20-TE2) --><section class="mb-8" id="section-plants">
-                <h2 class="text-3xl font-bold text-es-green mb-4">Section 2: The Producers: Plants, Ecosystem Services, and Human Reliance (ES20-TE2)</h2>
+                <h2 class="text-3xl font-bold text-es-green mb-4">Section 2: The Producers: Plants, Ecosystems Services, and Human Reliance (ES20-TE2)</h2>
 
                 <p class="mb-4">Plants are the primary producers in almost all terrestrial ecosystems. They capture solar energy through photosynthesis, forming the energy base for the entire food web. <strong>Curriculum Outcome ES20-TE2</strong> asks us to examine the critical role plants play, including the ways in which humans use them for economic and cultural benefit.</p>
 
@@ -432,7 +481,7 @@
                 <p class="mb-2">Conservation efforts in Saskatchewan generally fall into two categories:</p>
                 <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
                     <li><span class="glossary-term" data-term="In-situ Conservation" data-definition="Conservation efforts focused on protecting a species in its natural environment and keeping the ecosystem healthy." data-example="Establishing a federally protected area, like Grasslands National Park, to safeguard native prairie species.">In-situ Conservation</span> (On-Site): Protecting species in their natural habitat. This includes creating <strong>Protected Areas</strong> (National Parks, Provincial Parks, Wildlife Refuges) and implementing <strong>Stewardship Agreements</strong> with landowners to protect critical habitats on private land.</li>
-                    <li><span class="glossary-term" data-term="Ex-situ Conservation" data-definition="Conservation efforts focused on protecting a species outside its natural habitat, such as in zoos or seed banks." data-example="Captive breeding programs for the endangered Swift Fox before releasing them into suitable habitats.">Ex-situ Conservation</span> (Off-Site): Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use.</li>
+                    <li><span class="glossary-term" data-term="Ex-situ Conservation" data-definition="Conservation efforts focused on protecting a species outside its natural habitat, such as in zoos or seed banks." data-example="Captive breeding programs for the endangered Swift Fox before releasing them into suitable habitats.">Ex-situ Conservation</span> (Off-Site): Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use;</li>
                 </ol>
                 <hr class="my-6 border-gray-200">
             </section>
@@ -462,7 +511,7 @@
                         <p class="text-2xl font-bold text-indigo-800 mb-2">Option 1: The Salinization Crisis: Mitigation Plan</p>
                         <p class="text-sm font-semibold text-gray-600 mb-3">(Soil Degradation - ES20-TE1 Focus)</p>
                         <p class="mb-2"><strong>Deliverable:</strong> Report & Model</p>
-                        <p class="text-sm text-gray-700">Research a specific area in Southern Saskatchewan (e.g., Quill Lakes area) affected by salinization. Identify the hydrological cause, propose a three-part mitigation strategy (e.g., planting salt-tolerant cover crops, tile drainage), and explain the ecological benefit of your plan.</p>
+                        <p class="text-sm text-gray-700">Research a specific area in Southern Saskatchewan (e.g., Quill Lakes area) affected by <span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">salinization</span>. Identify the hydrological cause, propose a three-part mitigation strategy (e.g., planting salt-tolerant cover crops, tile drainage), and explain the ecological benefit of your plan.</p>
                         <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
                     </div>
 
@@ -512,7 +561,7 @@
     </div>
 
     <!-- JavaScript for Interactivity --><script>
-        // Global variables for search state
+        // Global variables for search state (kept for future re-implementation)
         let currentMatches = [];
         let matchIndex = -1;
 
@@ -674,131 +723,22 @@
         }
 
 
-        // --- 4. Document Search Logic ---
+        // --- 4. Document Search Logic (Removed to fix error) ---
+        // Placeholder for future search implementation
+        function searchDocument() {}
+        function navigateToMatch() {}
+        function navigateNext() {}
+        function navigatePrev() {}
+        // --- End Search Logic Placeholder ---
 
-        // Function to remove all previous highlights
-        function clearHighlights() {
-            const highlights = document.querySelectorAll('span.highlight');
-            highlights.forEach(span => {
-                // Use outerHTML to replace the span with its content, then normalize
-                span.outerHTML = span.textContent;
-            });
-            // Re-normalize the document to merge adjacent text nodes created by unhighlighting
-            document.querySelector('.textbook-card').normalize();
-        }
-
-        function searchDocument() {
-            clearHighlights();
-            currentMatches = []; // Use the globally declared variable
-            matchIndex = -1; // Use the globally declared variable
-
-            const searchTermInput = document.getElementById('document-search');
-            const searchTerm = searchTermInput.value.trim();
-            const root = document.querySelector('.textbook-card');
-
-            // Disable navigation buttons initially
-            document.getElementById('next-match').disabled = true;
-            document.getElementById('prev-match').disabled = true;
-
-            if (!searchTerm) return;
-            
-            // Escape special regex characters
-            const escapedTerm = searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-            const regex = new RegExp('(' + escapedTerm + ')', 'gi');
-
-            // Recursive function to walk the DOM and replace text nodes
-            function highlightText(node) {
-                if (node.nodeType === 3) { // Text node
-                    // Skip nodes inside sensitive elements (glossary terms, strong tags, scripts)
-                    if (node.parentElement.classList.contains('glossary-term') || node.parentElement.tagName === 'STRONG') {
-                        return;
-                    }
-                    
-                    const match = node.nodeValue.match(regex);
-                    if (match) {
-                        const parts = node.nodeValue.split(regex);
-                        const fragment = document.createDocumentFragment();
-
-                        parts.forEach((part, i) => {
-                            if (i % 2 === 1) { // Matched term
-                                const span = document.createElement('span');
-                                span.className = 'highlight bg-yellow-300 rounded px-0.5 transition-all duration-300 border-yellow-500';
-                                span.textContent = part;
-                                fragment.appendChild(span);
-                                currentMatches.push(span); // Store the element reference
-                            } else { // Unmatched text
-                                fragment.appendChild(document.createTextNode(part));
-                            }
-                        });
-                        
-                        node.parentNode.replaceChild(fragment, node);
-                    }
-                } else if (node.nodeType === 1 && node.childNodes && node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE' && node.tagName !== 'BUTTON' && node.tagName !== 'INPUT') { // Element node
-                    // Iterate backwards to safely handle node replacements
-                    for (let i = node.childNodes.length - 1; i >= 0; i--) {
-                        highlightText(node.childNodes[i]);
-                    }
-                }
-            }
-            
-            highlightText(root); // Start highlighting
-
-            if (currentMatches.length > 0) {
-                matchIndex = 0;
-                navigateToMatch(0);
-                if (currentMatches.length > 1) {
-                    document.getElementById('next-match').disabled = false;
-                    document.getElementById('prev-match').disabled = false;
-                }
-            }
-        }
-
-        function navigateToMatch(index) {
-            if (currentMatches.length === 0) return;
-
-            // Loop index if it goes out of bounds
-            if (index >= currentMatches.length) {
-                index = 0; // Loop back to start
-            } else if (index < 0) {
-                index = currentMatches.length - 1; // Loop back to end
-            }
-            
-            matchIndex = index;
-
-            // Remove active styling from all matches
-            currentMatches.forEach(h => h.classList.remove('border-2', 'border-red-500', 'ring-2', 'ring-red-500'));
-            
-            // Apply active styling to the current match
-            const activeMatch = currentMatches[matchIndex];
-            activeMatch.classList.add('border-2', 'border-red-500', 'ring-2', 'ring-red-500');
-            
-            // Scroll to the active match
-            activeMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function navigateNext() {
-            matchIndex++;
-            navigateToMatch(matchIndex);
-        }
-
-        function navigatePrev() {
-            matchIndex--;
-            navigateToMatch(matchIndex);
-        }
 
         // Event listener setup
         window.onload = function() {
             renderQuiz();
             checkButton.addEventListener('click', checkAnswers);
             setupGlossaryListeners(); // Initialize glossary listeners
-
-            // Attach event listener for Enter key in the search box
-            document.getElementById('document-search').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchDocument();
-                }
-            });
         };
     </script>
 </body>
 </html>
+
