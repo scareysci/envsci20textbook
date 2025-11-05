@@ -37,7 +37,7 @@
         <div class="mb-10 p-4 border-b border-stone-200">
             <form id="searchForm" class="flex flex-col sm:flex-row gap-3">
                 <input type="text" id="searchInput" placeholder="Search a term like 'Evaporation' or 'Salinity'..." 
-                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-500/50 focus:border-amber-500 transition duration-150 shadow-inner">
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-500/50 focus:border-amber-500 transition duration-150 shadow-inner">
                 <button type="submit" class="px-6 py-3 bg-stone-700 text-white font-bold rounded-xl shadow-lg hover:bg-stone-800 transition duration-300 transform hover:scale-[1.01]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -78,10 +78,22 @@
         <div>
             <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
             <div class="grid grid-cols-1 gap-4">
-                <!-- Chapter 4: Introduction to Terrestrial Ecosystems -->
+                <!-- Chapter 4: Introduction to Terrestrial Ecosystems and Soil -->
                 <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
                     <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
-                    Introduction to Terrestrial Ecosystems
+                    Introduction to Terrestrial Ecosystems and Soil
+                </a>
+                
+                <!-- Chapter 5: Exploring Producers -->
+                <a href="tepart2.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 5</span>
+                    Exploring Producers
+                </a>
+                
+                <!-- Chapter 6: Biodiversity -->
+                <a href="tepart3.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 6</span>
+                    Biodiversity
                 </a>
 
                 <!-- Placeholder for future chapters -->
@@ -133,17 +145,37 @@
                     htmlContent: `
                         <h3 id="temperature" class="text-xl font-semibold mt-4">Temperature and Dissolved Oxygen</h3>
                         <p>**Temperature** significantly influences the metabolism and reproductive cycles of aquatic organisms. Colder water usually holds more **dissolved oxygen**.</p>
-                        <p>Other important abiotic factors include **pH**, **light penetration**, and **nutrient concentration** (nitrates and phosphates). Light penetration determines the photic zone.</p>
+                        <p>Other important abiotic factors include **pH**, **light penetration**, and **nutrient concentration** (nitrates and phosphates). Light-penetration determines the photic zone.</p>
                     `
                 },
                 {
-                    title: 'Introduction to Terrestrial Ecosystems',
+                    title: 'Introduction to Terrestrial Ecosystems and Soil',
                     url: 'tepart1.html',
                     htmlContent: `
                         <h3 id="biomes" class="text-xl font-semibold mt-4">Defining Terrestrial Biomes</h3>
                         <p>Terrestrial ecosystems are organized into **biomes**, primarily determined by temperature and rainfall. Examples include forests, grasslands, and deserts.</p>
                         <h3 id="soil_factors" class="text-xl font-semibold mt-4">Key Soil Factors</h3>
                         <p>**Soil composition**, pH, and nutrient content are critical **abiotic factors** influencing plant life in these environments.</p>
+                    `
+                },
+                {
+                    title: 'Exploring Producers',
+                    url: 'tepart2.html',
+                    htmlContent: `
+                        <h3 id="autotrophs" class="text-xl font-semibold mt-4">Autotrophs and Photosynthesis</h3>
+                        <p>Producers, also known as **autotrophs**, form the base of the food web. Most producers use **photosynthesis** to convert light energy into chemical energy.</p>
+                        <h3 id="chemosynthesis" class="text-xl font-semibold mt-4">Chemosynthesis</h3>
+                        <p>In environments without light, some producers use **chemosynthesis** to create food from inorganic chemicals.</p>
+                    `
+                },
+                {
+                    title: 'Biodiversity',
+                    url: 'tepart3.html',
+                    htmlContent: `
+                        <h3 id="three_levels" class="text-xl font-semibold mt-4">Three Levels of Diversity</h3>
+                        <p>**Biodiversity** is the variety of life in an area. It is measured at three levels: **genetic diversity**, **species richness**, and ecosystem diversity. Higher diversity leads to more stable ecosystems.</p>
+                        <h3 id="hotspots" class="text-xl font-semibold mt-4">Biodiversity Hotspots</h3>
+                        <p>A **biodiversity hotspot** is a region with a high concentration of endemic species that are experiencing rapid habitat loss. These areas are critical for global conservation efforts.</p>
                     `
                 }
             ];
@@ -201,7 +233,6 @@
                         // Use a border for a cleaner look
                         resultItem.className = 'p-3 bg-white border border-lime-200 rounded-lg shadow-sm hover:bg-lime-50 transition duration-150';
 
-                        let linkUrl = page.url;
                         let linkText = page.title;
                         
                         // Construct the final functional URL
@@ -213,7 +244,7 @@
                             linkText = `${page.title}: ${closestHeading.textContent}`;
                         }
 
-                        // Updated the search result link to be fully functional, removing the dummy 'onclick'
+                        // Updated the search result link to be fully functional
                         resultItem.innerHTML = `
                             <a href="${finalLinkUrl}" 
                                 class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150"
@@ -235,3 +266,4 @@
     </script>
 </body>
 </html>
+
