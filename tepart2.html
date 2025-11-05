@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES20: Terrestrial Ecosystems – Part 2 (Plants)</title>
+    <!-- Load Tailwind CSS via CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Configuration for Tailwind and Font --><script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'es-green': '#22C55E',
+                        'es-brown': '#A16207',
+                        'es-dark': '#1F2937',
+                        'es-blue': '#3B82F6', /* New color for interactive terms */
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Ensures the Inter font is used */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+            line-height: 1.6;
+        }
+        .textbook-card {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Ensures subscript rendering for chemical formulas */
+        .sub {
+            vertical-align: sub;
+            font-size: 0.75em; 
+        }
+
+        /* Style for interactive glossary terms */
+        .glossary-term {
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-thickness: 2px;
+            text-decoration-color: #3B82F6; /* es-blue */
+            color: #3B82F6;
+            font-weight: bold;
+            transition: opacity 0.1s;
+        }
+        .glossary-term:hover {
+            opacity: 0.8;
+        }
+
+        /* Fixed position for the glossary tooltip (modal-like behavior) */
+        #glossary-tooltip {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            max-width: 90vw;
+        }
+        /* Overlay to close glossary when clicking outside */
+        #glossary-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(17, 24, 39, 0.5); /* gray-900 with 50% opacity */
+            z-index: 999; /* Below tooltip but above content */
+        }
+        
+        /* Custom class for responsive video embeds */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="bg-[#f8f7f8]">
+
+    <!-- FIXED HEADER WITH HOME BUTTON --><header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
+        <div class="max-w-4xl mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap gap-2">
+            <!-- Home Button --><a href="index.html" class="px-3 py-1 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 text-sm w-full sm:w-auto text-center">
+                Home (ES20 Textbook)
+            </a>
+            
+            <div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
+                <span class="text-sm text-gray-300 py-1">In-Document Search (Disabled)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Glossary Tooltip/Modal (Hidden by default) --><div id="glossary-tooltip" class="p-5 bg-white border-2 border-es-blue rounded-xl shadow-2xl hidden" role="dialog" aria-modal="true">
+        <div class="flex justify-between items-start mb-3">
+            <h4 id="tooltip-term" class="text-xl font-bold text-es-dark"></h4>
+            <button onclick="hideGlossary()" class="text-gray-500 hover:text-gray-800 text-2xl leading-none">&times;</button>
+        </div>
+        <p class="text-sm italic text-gray-700 border-b pb-2 mb-3" id="tooltip-definition"></p>
+        <div class="text-sm">
+            <p class="font-semibold text-es-blue mb-1">Local Context Example:</p>
+            <p id="tooltip-example" class="text-gray-600"></p>
+        </div>
+    </div>
+    <!-- Overlay to close glossary when clicking outside --><div id="glossary-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50" onclick="hideGlossary()"></div>
+
+
+    <!-- Content Wrapper with Offset --><div class="pt-20 p-4 sm:p-8"> 
+        <div class="max-w-4xl mx-auto bg-white rounded-xl textbook-card p-6 sm:p-10">
+
+            <h1 class="text-4xl font-extrabold text-es-dark mb-2 border-b-4 border-es-green pb-2">Unit 3: Terrestrial Ecosystems – Part 2 (The Producers)</h1>
+            
+            <!-- Navigation Block --><nav class="flex justify-between items-center py-4 px-2 border-y border-es-green my-6 bg-green-50 rounded-lg">
+                <a href="tepart1.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">&larr; Previous Part</a>
+                <span class="font-bold text-es-dark">Part 2 of 3: Producers & Reliance</span>
+                <a href="tepart3.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">Next Part &rarr;</a>
+            </nav>
+
+            <!-- Section 2: Plants (ES20-TE2) --><section class="mb-8" id="section-plants">
+                <h2 class="text-3xl font-bold text-es-green mb-4">Section 2: The Producers: Plants, Ecosystems Services, and Human Reliance (ES20-TE2)</h2>
+
+                <p class="mb-4">Plants are the primary producers in almost all terrestrial ecosystems. They capture solar energy through photosynthesis, forming the energy base for the entire food web. <strong>Curriculum Outcome ES20-TE2</strong> asks us to examine the critical role plants play, including the ways in which humans use them for economic and cultural benefit.</p>
+
+                
+                <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.1 Photosynthesis: The Engine of Terrestrial Life</h4>
+                <p class="mb-2">Photosynthesis is arguably the most vital chemical process on Earth. It is the complex mechanism by which plants, algae, and some bacteria convert light energy from the sun into chemical energy stored in sugar (glucose). This process forms the basis of all food webs and regulates the planet’s atmosphere (Häder & Sinha, 2022).</p>
+
+                <p class="mb-2 font-semibold">Inputs and Outputs:</p>
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4 text-sm text-gray-700">
+                    <li><strong>Inputs (Reactants):</strong> The plant requires <strong>Carbon Dioxide</strong> (CO<span class="sub">2</span>) from the atmosphere and <strong>Water</strong> (H<span class="sub">2</span>O) absorbed from the soil, along with <strong>Light Energy</strong> captured by the chlorophyll pigment.</li>
+                    <li><strong>Outputs (Products):</strong> The major products are <strong>Glucose</strong> (C<span class="sub">6</span>H<span class="sub">12</span>O<span class="sub">6</span>), a sugar used by the plant for energy and growth, and <strong>Oxygen Gas</strong> (O<span class="sub">2</span>), which is released into the atmosphere. This removal of atmospheric CO<span class="sub">2</span> is why plants are essential <span class="glossary-term" data-term="Carbon Sinks" data-definition="Natural or artificial reservoirs (like forests or oceans) that absorb and store more carbon than they release." data-example="The vast Boreal Forests of Northern Saskatchewan actively removing CO2 from the atmosphere.">carbon sinks</span>, mitigating climate change.</li>
+                </ul>
+
+                <p class="mb-4 font-semibold">The Balanced Chemical Equation (Simplified):</p>
+                <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-es-green my-3 text-center text-lg font-mono overflow-x-auto">
+                    6CO<span class="sub">2</span> + 6H<span class="sub">2</span>O <span class="mx-2">→</span> C<span class="sub">6</span>H<span class="sub">12</span>O<span class="sub">6</span> + 6O<span class="sub">2</span>
+                    <div class="text-xs font-sans mt-1">
+                        <span class="block">Catalysts: Sunlight Energy, Chlorophyll</span>
+                    </div>
+                </div>
+                <p class="text-xs italic text-center mb-6 text-gray-600">This simplified equation illustrates the conservation of matter, converting inorganic matter into organic fuel and breathable oxygen (Stirbet et al., 2019).</p>
+                
+                <!-- Image Added Here --><figure class="my-8 text-center bg-gray-50 p-4 rounded-lg shadow-md">
+                    <img src="https://www.science-sparks.com/wp-content/uploads/2020/04/Photosynthesis-Diagram-1024x759.jpg" alt="Diagram illustrating the process of photosynthesis, showing inputs of sunlight, water, and carbon dioxide, and outputs of oxygen and glucose." class="mx-auto rounded-lg max-w-full h-auto">
+                    <figcaption class="mt-3 text-sm text-gray-600 italic">
+                        Figure 2.1: A simplified diagram of photosynthesis, showing how plants convert light energy into chemical energy. (Source: Science Sparks)
+                    </figcaption>
+                </figure>
+
+                <h4 class="text-lg font-medium text-es-dark mt-6 mb-2">2.2 Soil Stabilization: The Anchor</h4>
+                <p class="mb-2">The most visible physical function of terrestrial vegetation is anchoring the soil. Plant root systems act like <strong>steel rebar</strong> in concrete, mechanically reinforcing the soil matrix and dramatically increasing the soil's <strong>shear strength</strong> (Cao et al., 2023; Mairaing et al., 2024). This composite structure is crucial for resisting the erosive forces of wind and water, especially in fragile environments like the prairies. </p>
+                
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
+                    <li><strong>Above-Ground Protection:</strong> The plant's canopy, stalks, and leaf litter break the force of falling raindrops, preventing them from detaching soil particles. They also slow down <strong>surface runoff</strong>, giving water more time to infiltrate (Derpsch, 2015).</li>
+                    <li><strong>Below-Ground Cohesion:</strong> Roots bind fine mineral particles together, often with the help of sticky compounds produced by soil microorganisms, forming stable <strong>soil aggregates</strong>. This cohesion makes the soil heavier and far less likely to be blown away by wind or washed away by water.</li>
+                </ul>
+
+                <!-- Biology in Action Box 1: Soil Stabilization --><div class="bg-amber-50 p-5 rounded-xl border-l-4 border-amber-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-amber-800">Biology in Action: Shelterbelts and Agroforestry</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Utilizing plants to create wind barriers and prevent the loss of topsoil.</p>
+                    <p class="text-sm text-gray-700">In the open Grasslands and Parkland regions, <strong>shelterbelts</strong> (rows of trees planted strategically along fields) utilize plant structure to protect crops. These barriers reduce wind speed across the soil surface, minimizing wind erosion which was devastating during the Dust Bowl era. Additionally, <strong>agroforestry</strong>—integrating trees or shrubs with crop fields (like alley cropping or riparian buffers)—stabilizes field margins and reduces the movement of sediment off the land and into waterways (IRJEdT, 2023).</p>
+                </div>
+
+                <h4 class="text-lg font-medium text-es-dark mt-6 mb-2">2.3 Water Regulation: Nature’s Sponge</h4>
+                <p class="mb-2">Vegetation is integral to the local <strong>hydrologic cycle</strong> by mediating how water enters and leaves the soil system. It helps the land act as a giant, rechargeable sponge.</p>
+                
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
+                    <li><strong>Enhanced Infiltration:</strong> As plant roots grow and then naturally decompose, they create microscopic vertical channels known as <strong>biopores</strong> (Dagenais et al., 2018). These pores act as highly efficient drainage pathways, allowing rainwater to quickly penetrate deep into the soil profile rather than pooling and running off.</li>
+                    <li><strong>Drought Resistance:</strong> By improving infiltration and adding organic matter, plants increase the soil's ability to retain water. This retained water is crucial during dry periods, making the ecosystem, whether it's a native prairie or an agricultural field, far more resilient to drought (Basche & Edelson, 2017).</li>
+                    <li><strong>Groundwater Recharge:</strong> By facilitating deep infiltration, plants help guide water past the root zone, contributing directly to the replenishment of <strong>groundwater</strong> reserves.</li>
+                </ul>
+
+                <!-- Biology in Action Box 2: Water Regulation --><div class="bg-teal-50 p-5 rounded-xl border-l-4 border-teal-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-teal-800">Biology in Action: No-Till and Continuous Living Cover</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Managing the field surface to maximize water use efficiency.</p>
+                    <p class="text-sm text-gray-700">Modern conservation agriculture utilizes plants through <strong>no-till farming</strong> combined with <strong>cover crops</strong>. By leaving crop residue on the surface (permanent soil cover) and planting roots that grow continuously throughout the year (continuous living cover), farmers maximize the ecological benefits of plants (Derpsch, 2015). This system minimizes disruption to the natural biopores, maximizes the trapping of snow water in winter (Baulch et al., 2019), and prevents <strong>runoff</strong>, ensuring that precious precipitation is conserved in the soil for the next growing season, which is essential in semi-arid Saskatchewan.</p>
+                </div>
+
+
+                <h4 class="text-lg font-medium text-es-dark mt-4 mb-2">2.4 Human Reliance on Terrestrial Plant Resources</h4>
+                
+                <h5 class="text-lg font-semibold text-es-brown mt-4 mb-2">2.4.1 Food and Fiber (Agriculture)</h5>
+                <p class="mb-2">Feeding a growing global population requires <strong>Sustainable Intensification</strong>, which means maximizing food production on existing farmland while minimizing environmental harm (Jain et al., 2023). Saskatchewan farmers are leaders in this field, growing crops that not only provide food and fiber (like <strong>canola</strong>) but also actively improve the ecosystem services of their land.</p>
+                <p class="mb-4">This reliance demands careful planning to reduce the environmental footprint, specifically by optimizing the use of synthetic fertilizers and water.</p>
+
+                <!-- Biology in Action Box 3: Food and Fiber --><div class="bg-red-50 p-5 rounded-xl border-l-4 border-red-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-red-800">Biology in Action: Pulse Crops and Precision Farming</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Using technology and natural systems to boost efficiency and sustainability.</p>
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
+                        <li><strong>Pulse Crops:</strong> The rotation of nitrogen-fixing crops like <strong>lentils</strong> and <strong>dry peas</strong> (pulses) enriches the soil. These plants host bacteria that capture atmospheric nitrogen, naturally fertilizing the soil for the next year’s crop and reducing the reliance on synthetic nitrogen fertilizer by up to 37% (Lika et al., 2024).</li>
+                        <li><strong>Precision Agriculture:</strong> Farmers use <strong>remote sensing</strong> (e.g., LiDAR, satellite imagery) and GPS to map fields and identify areas of high or low productivity. This data-driven approach allows for the highly precise application of fertilizer and pesticides, ensuring inputs are only used where needed. This maximizes profit while minimizing nutrient runoff into waterways (Farhan et al., 2024).</li>
+                    </ul>
+                </div>
+
+                <h5 class="text-lg font-semibold text-es-brown mt-4 mb-2">2.4.2 Timber and Forestry</h5>
+                <p class="mb-2">The <strong>Boreal Forest</strong> in Northern Saskatchewan is a major economic engine, providing wood for lumber, pulp, and paper. The challenge in this sector is balancing the economic need for timber with the ecological need to maintain a healthy, diverse forest ecosystem that provides intact habitat and stores carbon.</p>
+                <p class="mb-4">Unsustainable harvesting can lead to <strong>habitat homogenization</strong>—where the forest becomes uniform in structure and age—which reduces biodiversity and increases vulnerability to fire and disease (Montoro Girona et al., 2019).</p>
+
+                <!-- Biology in Action Box 4: Timber and Forestry --><div class="bg-blue-50 p-5 rounded-xl border-l-4 border-blue-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-blue-800">Biology in Action: Selective vs. Clear-Cutting</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Choosing harvest methods to maintain ecological structure.</p>
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
+                        <li><strong>Clear-Cutting:</strong> While efficient, this practice removes almost all standing timber, which can dramatically reduce the amount of <strong>coarse woody debris</strong> (dead logs and branches) needed for nutrient cycling and animal habitat (Alissa, 1999). It also increases <strong>windthrow</strong> (trees blown over) on nearby edges (Montoro Girona et al., 2019).</li>
+                        <li><strong>Partial Cutting:</strong> Sustainable practices often utilize <strong>partial cutting</strong> (or shelterwood systems) where only certain trees are removed. This aims to mimic smaller, natural disturbances, maintaining a multi-aged forest structure. It retains better habitat, protects the remaining trees from wind damage, and ensures a supply of seeds for natural regeneration (Martin et al., 2021).</li>
+                    </ul>
+                </div>
+
+                <h5 class="text-lg font-semibold text-es-brown mt-4 mb-2">2.4.3 Medicines and Traditional Uses</h5>
+                <p class="mb-2">Beyond the large-scale industries of farming and forestry, plants provide essential <strong>Non-Timber Forest Products (NTFPs)</strong> that hold high cultural and local economic value. These include wild rice, berries, medicinal barks, and ceremonial plants like <strong>Sweetgrass</strong>.</p>
+                <p class="mb-4">For Indigenous communities in Saskatchewan, the relationship with these plants is governed by <strong>Traditional Ecological Knowledge (TEK)</strong>. This knowledge emphasizes a relationship of <strong>reciprocity</strong> and kinship with the land, viewing plants as relatives rather than simple resources (Mehltretter et al., 2024).</p>
+
+                <!-- Biology in Action Box 5: Traditional Uses --><div class="bg-purple-50 p-5 rounded-xl border-l-4 border-purple-500 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-purple-800">Biology in Action: Sustaining Manoomin (Wild Rice)</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Integrating culture and conservation for traditional foods.</p>
+                    <p class="text-sm text-gray-700"><strong>Wild Rice</strong> (*Zizania palustris*), or Manoomin, is a vital aquatic plant harvested traditionally across Northern Saskatchewan. Historically, Indigenous women often held the rights and responsibility for managing the harvest of Manoomin, ensuring that harvesting methods (like knocking seeds with sticks) only take a portion of the seed crop (Ferreira et al., 2022). This method acts as an annual ecosystem service, reseeding the beds for future growth and ensuring the health of the water ecosystem. This practice demonstrates a sustainable harvest protocol based on deep ecological understanding.</p>
+                </div>
+                
+                <h5 class="text-lg font-semibold text-es-brown mt-4 mb-2">2.4.4 Monoculture vs. Grassland: Lessons in Diversity</h5>
+                <p class="mb-2">The conversion of native <strong>perennial grasslands</strong> into fields of <strong>annual crop monocultures</strong> (like continuous wheat or canola) is the primary land-use change in the prairies. While monocultures are efficient for large-scale production, they disrupt key ecological processes that natural grasslands provide (Crews et al., 2018).</p>
+                
+                <p class="mb-4">Natural grasslands exhibit high <strong>species and functional diversity</strong> (grasses, legumes, forbs) and maintain roots year-round. This diversity increases the system's <strong>resilience</strong>—its ability to bounce back from disturbance—and enhances soil health and water retention far better than a simple annual crop (Lin, 2011; Thompson & Kao-Kniffin, 2016).</p>
+                
+                <!-- Biology in Action Box 6: Diversity Mimicry --><div class="bg-gray-100 p-5 rounded-xl border-l-4 border-gray-400 my-6 shadow-md">
+                    <h3 class="font-bold text-xl mb-2 text-es-dark">Biology in Action: Mimicking Grassland Complexity</h3>
+                    <p class="text-sm italic text-gray-700 mb-3">Agricultural strategies designed to restore ecological services.</p>
+                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm text-gray-700">
+                        <li><strong>Complex Crop Rotation:</strong> Moving beyond simple two-crop rotations (e.g., wheat-fallow) to multi-species rotations that include <strong>functionally diverse</strong> crops (legumes, cereals, oilseeds) enhances nutrient cycling, improves soil carbon storage, and reduces pest and weed pressure over time (Smith et al., 2023; Zou et al., 2024).</li>
+                        <li><strong>Intercropping:</strong> This involves planting two or more compatible crops in the same field simultaneously (e.g., mixing a cereal grass with a legume). This mimics the spatial diversity of a natural plant community, leading to better resource use efficiency and higher total yields, especially under low nitrogen conditions (Perrot et al., 2023; Smith et al., 2023).</li>
+                        <li><strong>Perennialization:</strong> The ultimate goal is creating perennial grain crops (crops that live for multiple years and don't need annual tillage) to match the continuous soil cover provided by native grasses, drastically reducing erosion and increasing <strong>Soil Organic Matter</strong> (Crews et al., 2018).</li>
+                    </ul>
+                </div>
+
+
+                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">2.5 Spotlight: Traditional Ecological Knowledge (TEK) and Indigenous Land Stewardship</h3>
+                <p class="mb-2">Indigenous worldviews often emphasize the concept of <span class="glossary-term" data-term="Reciprocity" data-definition="An Indigenous worldview concept describing a balanced, mutual relationship where humans give back to the land in exchange for what they take." data-example="Practicing sustainable harvesting of medicinal plants to ensure the plants thrive for future generations.">reciprocity</span>—a relationship where humans take only what they need and actively give back to the land, viewing themselves as part of the ecosystem, not separate from it.</p>
+                <p class="mb-2"><span class="glossary-term" data-term="Traditional Ecological Knowledge (TEK)" data-definition="The long-standing body of traditional knowledge developed by Indigenous peoples about the environment and its relationships." data-example="The use of cultural burning practices to maintain the health and diversity of local parklands.">Traditional Ecological Knowledge (TEK)</span> is the cumulative body of knowledge, practice, and belief, evolving by adaptive processes and handed down through generations, relating to the relationship of living beings (including humans) with their environment. TEK often includes practices such as:</p>
+                <ul class="list-disc list-inside ml-8 space-y-1 mb-4">
+                    <li><strong>Cultural Burning:</strong> Historically used in some regions to clear old brush, reduce dangerous fuel loads, and stimulate the growth of valuable forage plants, promoting ecosystem health and resilience.</li>
+                    <li><strong>Seasonal Rotation:</strong> Moving camps and harvesting areas to allow ecosystems time to recover, ensuring resources are available for future generations.</li>
+                </ul>
+                <p>These practices embody a deep understanding of local ecology that is increasingly being integrated into modern environmental management plans across Canada.</p>
+                <hr class="my-6 border-gray-200">
+            </section>
+
+            <!-- References Section --><section class="mb-8" id="references">
+                <h2 class="text-2xl font-bold text-es-dark mb-4 border-b pb-2">References</h2>
+                <div class="text-sm space-y-2">
+                    <p>Alissa, S. M. (1999). *The longterm impacts of clear-cut logging on insect communities in the boreal mixedwood forests of Northeastern Ontario*. University of Toronto.</p>
+                    <p>Basche, A. D., & Edelson, O. F. (2017). Full article: Improving water resilience with more perennially based agriculture. *Agroecology and Sustainable Food Systems*, *41*(8), 799–824. https://doi.org/10.1080/21683565.2017.1330795</p>
+                    <p>Baulch, H. M., Elliott, J. A., Cordeiro, M. R. C., Flaten, D. N., Lobb, D. A., & Wilson, H. F. (2019). Soil and water management: opportunities to mitigate nutrient losses to surface waters in the Northern Great Plains. *Environmental Reviews*, *27*(4), 447–477. https://doi.org/10.1139/er-2018-0101</p>
+                    <p>Cao, T., Zhang, H., Chen, T., Yang, C., Wang, J., Guo, Z., & Sun, X. (2023). Research on the mechanism of plant root protection for soil slope stability. *PLOS ONE*, *18*(11), e0293661. https://doi.org/10.1371/journal.pone.0293661</p>
+                    <p>Crews, T. E., Schipanski, M. E., Helliker, B. R., & Carton, W. C. (2018). Is the future of agriculture perennial? Imperatives and opportunities to reinvent agriculture by shifting from annual monocultur. *Global Sustainability*, *1*(1). https://doi.org/10.1017/sus.2018.11</p>
+                    <p>Dagenais, D., Brisson, J., & Fletcher, T. D. (2018). The role of plants in bioretention systems; does the science underpin current guidance? *Ecological Engineering*, *120*, 532–545. https://doi.org/10.1016/j.ecoleng.2018.07.007</p>
+                    <p>Derpsch, R. (2015). Understanding the Process of Water Infiltration. https://www.exapta.com/wp-content/uploads/2015/12/derpsch-water-infiltration.pdf</p>
+                    <p>Farhan, S. M., Yin, J., Chen, Z., & Memon, M. S. (2024). A Comprehensive Review of LiDAR Applications in Crop Management for Precision Agriculture. *Sensors*, *24*(16), 5409. https://doi.org/10.3390/s24165409</p>
+                    <p>Ferreira, C., Gaudet, J. C., & Loukes, K. A. (2022). Indigenous women’s worldview in food-related research: Rematriating food, bodies and lands. *Applied Physiology, Nutrition, and Metabolism*, *47*(3), 210–213. https://doi.org/10.1139/apnm-2021-0400</p>
+                    <p>Häder, D. P., & Sinha, R. P. (2022). Photosynthesis in Plants and Algae. *Anticancer Research*, *42*(10), 5035–5041. https://doi.org/10.21873/anticanres.16012</p>
+                    <p>IRJEdT. (2023). Innovative Approaches Utilizing Plant-Based Techniques for Soil Conservation: An In-depth Review. *Innovative Research Journal of Engineering & Technology*, *5*(8), 320–328. https://www.irjweb.com/Innovative%20Approaches%20Utilizing%20Plant-Based%20Techniques%20for%20Soil%20An%20In-depth%20Review.pdf</p>
+                    <p>Jain, M., Barrett, C. B., Solomon, D., & Ghezzi-Kopel, K. (2023). Surveying the Evidence on Sustainable Intensification Strategies for Smallholder Agricultural Systems. *Annual Review of Environment and Resources*, *48*, 347–369. https://doi.org/10.1146/annurev-environ-112320-093911</p>
+                    <p>Lika, E., Sutherland, C., Gleim, S., & Smyth, S. J. (2024). Analyzing shifts in fertilizer use with crop rotation practices in Saskatchewan across distinct periods from 1991–94 to 2016–19. *Frontiers in Sustainable Food Systems*, *8*. https://doi.org/10.3389/fsufs.2024.1412443</p>
+                    <p>Lin, B. B. (2011). Resilience in Agriculture through Crop Diversification: Adaptive Management for Environmental Change. *BioScience*, *61*(3), 183–193. https://doi.org/10.1525/bio.2011.61.3.4</p>
+                    <p>Mairaing, W., Jotisankasa, A., Leksungnoen, N., Hossain, M., Ngernsaengsaruay, C., Rangsiwanichpong, P., Pilumwong, J., Pramusandi, S., Semmad, S., & Ahmmed, A. N. F. (2024). A Biomechanical Study of Potential Plants for Erosion Control and Slope Stabilization of Highland in Thailand. *Sustainability*, *16*(15), 6374. https://doi.org/10.3390/su16156374</p>
+                    <p>Martin, M., Grondin, P., Lambert, M. C., Bergeron, Y., & Morin, H. (2021). Compared to Wildfire, Management Practices Reduced Old-Growth Forest Diversity and Functionality in Primary Boreal Landscapes of Eastern Canada. *Frontiers in Forests and Global Change*, *4*. https://doi.org/10.3389/ffgc.2021.639397</p>
+                    <p>Mehltretter, S., Bradford, A., Longboat, S., & Luby, B. (2024). In a Good Way: Braiding Indigenous and Western Knowledge Systems to Understand and Restore Freshwater Systems. *Water*, *16*(7), 934. https://doi.org/10.3390/w16070934</p>
+                    <p>Montoro Girona, M., Morin, H., Lussier, J. M., & Ruel, J. C. (2019). Post-cutting Mortality Following Experimental Silvicultural Treatments in Unmanaged Boreal Forest Stands. *Frontiers in Forests and Global Change*, *2*. https://doi.org/10.3389/ffgc.2019.00004</p>
+                    <p>Perrot, T., Rusch, A., Gaba, S., & Bretagnolle, V. (2023). Both long-term grasslands and crop diversity are needed to limit pest and weed infestations in agricultural landscapes. *Proceedings of the National Academy of Sciences*, *120*(48). https://doi.org/10.1073/pnas.2300861120</p>
+                    <p>Smith, M. E., Vico, G., Costa, A., Bowles, T., Gaudin, A. C. M., Hallin, S., Watson, C. A., Alarcòn, R., Berti, A., Blecharczyk, A., Calderon, F. J., Culman, S., Deen, W., Drury, C. F., Garcia, A. G. y., García-Díaz, A., Plaza, E. H., Jonczyk, K., Jäck, O., Lehman, R. M., Montemurro, F., Morari, F., Onofri, A., Osborne, S. L., & Pasamón, J. L. T. (2023). Increasing crop rotational diversity can enhance cereal yields. *Communications Earth & Environment*, *4*(1). https://doi.org/10.1038/s43247-023-00746-0</p>
+                    <p>Stirbet, A., Lazár, D., Guo, Y., & Govindjee. (2019). Photosynthesis: basics, history and modelling. *Annals of Botany*, *126*(4), 511–537. https://doi.org/10.1093/aob/mcz171</p>
+                    <p>Thompson, G. L., & Kao-Kniffin, J. (2016). Diversity Enhances NPP, N Retention, and Soil Microbial Diversity in Experimental Urban Grassland Assemblages. *PLOS ONE*, *11*(5), e0155986. https://doi.org/10.1371/journal.pone.0155986</p>
+                    <p>Zou, Y., Liu, Z., Chen, Y., Wang, Y., & Feng, S. (2024). Crop Rotation and Diversification in China: Enhancing Sustainable Agriculture and Resilience. *Agriculture*, *14*(9), 1465. https://doi.org/10.3390/agriculture14091465</p>
+                </div>
+                <hr class="my-6 border-gray-200">
+            </section>
+
+            <!-- Bottom Navigation Block --><nav class="flex justify-between items-center py-4 px-2 border-y border-es-green my-6 bg-green-50 rounded-lg">
+                <a href="tepart1.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">&larr; Previous Part</a>
+                <span class="font-bold text-es-dark">Part 2 of 3: Producers & Reliance</span>
+                <a href="tepart3.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">Next Part &rarr;</a>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactivity --><script>
+        // --- 2. Self-Assessment Quiz Logic (Data is here, functions are below) ---
+        const quizData = [
+            {
+                question: "1. What soil type is characteristic of the Saskatchewan prairies?",
+                options: ["Podzol", "Chernozem", "Gleysol"],
+                answer: "Chernozem"
+            },
+            {
+                question: "2. Which primary component of soil is responsible for providing essential nutrients through decomposition?",
+                options: ["Mineral Matter", "Soil Air", "Organic Matter"],
+                answer: "Organic Matter"
+            },
+            {
+                question: "3. What is the main ecological consequence of habitat fragmentation?",
+                options: ["Increased precipitation", "Edge Effects", "Higher soil salinity"],
+                answer: "Edge Effects"
+            }
+        ];
+
+        // Placeholder elements since the quiz is in tepart3.html
+        const quizContainer = document.getElementById('quiz-container');
+        const checkButton = document.getElementById('check-answers');
+        const resultsBox = document.getElementById('quiz-results');
+        const scoreText = document.getElementById('score-text');
+
+        // Function to render the quiz (only runs if elements exist)
+        function renderQuiz() {
+            if (!quizContainer) return;
+            // ... quiz rendering logic ... 
+        }
+
+        // Function to check answers (only runs if button exists)
+        function checkAnswers() {
+            let score = 0;
+            const totalQuestions = quizData.length;
+
+            quizData.forEach((q, qIndex) => {
+                const selectedOption = document.querySelector(`input[name="question${qIndex}"]:checked`);
+                const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
+                
+                // Reset feedback styles
+                if (feedbackDiv) {
+                    feedbackDiv.textContent = '';
+                    feedbackDiv.className = 'mt-2 text-sm font-medium';
+                }
+
+                if (selectedOption && feedbackDiv) {
+                    if (selectedOption.value === q.answer) {
+                        score++;
+                        feedbackDiv.textContent = 'Correct! That aligns with ES20-TE1/TE2/TE3.';
+                        feedbackDiv.classList.add('text-green-600');
+                    } else {
+                        feedbackDiv.textContent = `Incorrect. The correct answer was: ${q.answer}.`;
+                        feedbackDiv.classList.add('text-red-600');
+                    }
+                } else if (feedbackDiv) {
+                    feedbackDiv.textContent = 'Please select an answer.';
+                    feedbackDiv.classList.add('text-yellow-600');
+                }
+            });
+
+            // Display overall results
+            const percentage = (score / totalQuestions) * 100;
+            if (scoreText && resultsBox) {
+                scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%). Review the sections for any missed questions!`;
+                resultsBox.classList.remove('hidden');
+                resultsBox.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
+            }
+        }
+        
+        // --- 3. Glossary Interactivity Logic ---
+
+        const tooltip = document.getElementById('glossary-tooltip');
+        const overlay = document.getElementById('glossary-overlay');
+        const tooltipTerm = document.getElementById('tooltip-term');
+        const tooltipDefinition = document.getElementById('tooltip-definition');
+        const tooltipExample = document.getElementById('tooltip-example');
+
+        function showGlossary(event) {
+            event.preventDefault(); 
+            event.stopPropagation();
+
+            const termElement = event.currentTarget;
+            const term = termElement.getAttribute('data-term');
+            const definition = termElement.getAttribute('data-definition');
+            const example = termElement.getAttribute('data-example');
+
+            if (tooltipTerm && tooltipDefinition && tooltipExample) {
+                tooltipTerm.textContent = term;
+                tooltipDefinition.textContent = definition;
+                tooltipExample.textContent = example;
+            }
+
+            if (tooltip) tooltip.classList.remove('hidden');
+            if (overlay) overlay.classList.remove('hidden');
+
+            if (tooltip) {
+                const closeButton = tooltip.querySelector('button');
+                if (closeButton) closeButton.focus();
+            }
+        }
+
+        function hideGlossary() {
+            if (tooltip) tooltip.classList.add('hidden');
+            if (overlay) overlay.classList.add('hidden');
+        }
+
+        function setupGlossaryListeners() {
+            document.querySelectorAll('.glossary-term').forEach(termElement => {
+                termElement.addEventListener('click', showGlossary);
+            });
+        }
+
+        // Event listener setup
+        window.onload = function() {
+            renderQuiz();
+            if (checkButton) {
+                checkButton.addEventListener('click', checkAnswers);
+            }
+            setupGlossaryListeners(); // Initialize glossary listeners
+        };
+    </script>
+</body>
+</html>
