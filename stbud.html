@@ -4,302 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Environmental Studies Study Buddy</title>
-    <!-- Load Tailwind CSS from CDN -->
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom scrollbar styling for a cleaner look */
-        #chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        #chat-messages::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1; /* slate-300 */
-            border-radius: 3px;
-        }
-        #chat-messages::-webkit-scrollbar-track {
-            background-color: #f8fafc; /* slate-50 */
-        }
-        /* Customizing the font for a modern feel */
+        /* Custom styles for chat bubbles and layout */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9; /* slate-100 */
+            background-color: #f3f4f6;
         }
-        /* Style for the textarea to allow vertical scrolling when text overflows */
+        #chat-container {
+            max-width: 800px;
+            height: 90vh;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        #chat-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #ffffff;
+            scroll-behavior: smooth;
+        }
+        .message-bubble {
+            max-width: 85%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+        /* Custom scrollbar for webkit browsers */
+        #chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        #chat-messages::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 10px;
+        }
+        /* Custom styles for the responsive textarea input */
         #user-input {
-            min-height: 44px; /* Matches height of one row */
+            min-height: 48px;
+            max-height: 120px; /* Max height for about 5 lines */
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-10">
+<body>
 
-    <div class="w-full max-w-2xl bg-white shadow-xl rounded-xl flex flex-col h-[80vh] min-h-[500px]">
-        
+    <div id="chat-container">
         <!-- Header -->
-        <header class="p-4 bg-indigo-600 rounded-t-xl text-white flex items-center justify-between shadow-md">
+        <header class="p-4 bg-indigo-600 text-white flex justify-between items-center shadow-md">
             <h1 class="text-xl font-bold">Environmental Studies Study Buddy</h1>
-            <button id="reset-button" class="text-sm bg-indigo-700 hover:bg-indigo-800 px-3 py-1 rounded-full transition duration-150 shadow-inner">New Study Session</button>
+            <button id="new-chat-button" class="text-sm bg-indigo-500 hover:bg-indigo-700 transition duration-150 py-1.5 px-3 rounded-full font-medium">
+                New Study Session
+            </button>
         </header>
 
-        <!-- Chat History Area -->
-        <main id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Initial welcome message -->
-            <div class="flex justify-start">
-                <div class="bg-indigo-100 text-indigo-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm">
-                    <p class="font-semibold">Assistant</p>
-                    <p>Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!</p>
-                </div>
-            </div>
-            
-            <!-- Dynamic messages will be appended here -->
-            <div id="loader-area" class="hidden flex justify-start">
-                <div class="bg-gray-200 text-gray-700 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm flex items-center space-x-2">
-                    <div class="w-3 h-3 bg-gray-500 rounded-full animate-bounce delay-100"></div>
-                    <div class="w-3 h-3 bg-gray-500 rounded-full animate-bounce delay-200"></div>
-                    <div class="w-3 h-3 bg-gray-500 rounded-full animate-bounce delay-300"></div>
-                </div>
-            </div>
-            
-        </main>
+        <!-- Message Area -->
+        <main id="chat-messages"></main>
 
-        <!-- Input and Send Area (Changed to textarea for wrapping text) -->
+        <!-- Status Bar and Input -->
+        <div id="status-bar" class="p-2 text-center text-sm font-medium bg-gray-100 text-gray-600 hidden">
+            Assistant is thinking...
+        </div>
+
+        <!-- Input and Send Area (Now using a textarea for wrapping text) -->
         <footer class="p-4 border-t border-gray-200 flex space-x-3 bg-white rounded-b-xl">
-            <!-- Textarea allows multi-line input and wrapping -->
             <textarea id="user-input" placeholder="Type your message..." rows="1" 
                 class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none resize-none overflow-y-auto" 
                 autocomplete="off"></textarea>
-            
             <button id="send-button" class="bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 shadow-lg disabled:opacity-50" disabled>
                 Send
             </button>
         </footer>
-        
-        <!-- API Status/Error Message Area -->
-        <div id="status-message" class="p-2 text-center text-sm text-red-600 hidden"></div>
     </div>
 
     <script>
-        // --- CLIENT-SIDE VARIABLES ---
-        let threadId = null;
-        let isProcessing = false;
-        const MAX_TEXTAREA_ROWS = 5; // Limits how tall the input box can grow
+        // --- CONFIGURATION ---
+        // IMPORTANT: These values are now safely handled by the Vercel Serverless Function (api/chat.js).
+        // They remain empty here, as the client does NOT need the secret key.
+        const API_KEY = ""; 
+        const ASSISTANT_ID = ""; // Only needed for context, but not used in client logic.
 
-        // DOM Elements
+        // --- DOM Elements ---
         const chatMessages = document.getElementById('chat-messages');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
-        const resetButton = document.getElementById('reset-button');
-        const loaderArea = document.getElementById('loader-area');
-        const statusMessage = document.getElementById('status-message');
-
-        // --- Utility Functions ---
+        const newChatButton = document.getElementById('new-chat-button');
+        const statusBar = document.getElementById('status-bar');
         
-        function displayStatus(message, isError = true) {
-            statusMessage.textContent = message;
-            statusMessage.className = `p-2 text-center text-sm ${isError ? 'text-red-600' : 'text-green-600'} block`;
+        // --- State Management ---
+        let threadId = null;
+        let isSending = false;
+        
+        // --- API & UI Helpers ---
+
+        // Helper function to display temporary status messages (like "Copied")
+        function displayStatus(message, isError = false) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `fixed bottom-24 right-4 p-3 rounded-lg shadow-xl text-white transition-opacity duration-300 z-50 ${isError ? 'bg-red-500' : 'bg-green-500'}`;
+            statusDiv.textContent = message;
+            document.body.appendChild(statusDiv);
+            
             setTimeout(() => {
-                statusMessage.className = 'p-2 text-center text-sm text-red-600 hidden';
-            }, 5000);
+                statusDiv.remove();
+            }, 3000);
         }
 
-        // New function to handle copying text securely in an iframe environment
         function copyMessageToClipboard(content) {
-            // This method is used for wider compatibility in iframe environments
+            // Use document.execCommand('copy') for compatibility in iframe/sandbox environments
             const tempElement = document.createElement('textarea');
             tempElement.value = content;
             document.body.appendChild(tempElement);
             tempElement.select();
             document.execCommand('copy');
             document.body.removeChild(tempElement);
-            displayStatus("Copied to clipboard!", false);
+            displayStatus("Copied to clipboard!");
+        }
+
+        // Handles the auto-sizing of the textarea for multi-line prompts
+        function adjustTextareaHeight() {
+            userInput.style.height = 'auto'; // Reset height
+            userInput.style.height = userInput.scrollHeight + 'px';
+            // Enable/Disable send button based on content
+            sendButton.disabled = isSending || userInput.value.trim() === "";
         }
 
         function appendMessage(content, role) {
-            const messageContainer = document.createElement('div');
-            messageContainer.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
-
+            const messageDiv = document.createElement('div');
             const bubble = document.createElement('div');
             
-            // Create element for message content
-            const contentElement = document.createElement('p');
-            contentElement.textContent = content; // This holds the main text
-            contentElement.className = 'whitespace-pre-wrap';
-
+            // Set styles based on role
             if (role === 'user') {
-                bubble.className = 'bg-indigo-500 text-white p-3 rounded-xl rounded-br-none max-w-[80%] shadow-md';
-                bubble.appendChild(contentElement);
+                messageDiv.className = 'flex justify-end';
+                bubble.className = 'message-bubble bg-indigo-600 text-white';
             } else {
-                // Assistant Message Setup
-                bubble.className = 'bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm';
+                messageDiv.className = 'flex justify-start';
+                bubble.className = 'message-bubble bg-gray-200 text-gray-800';
+            }
+
+            // Header for assistant messages
+            const header = document.createElement('div');
+            header.className = 'font-semibold mb-1 text-sm';
+            header.textContent = role === 'assistant' ? 'Assistant' : 'You';
+            bubble.appendChild(header);
+
+            const contentElement = document.createElement('p');
+            contentElement.innerHTML = content.replace(/\n/g, '<br>'); // Preserve line breaks for cleaner output
+
+            if (role === 'assistant') {
+                const actionRow = document.createElement('div');
+                actionRow.className = 'flex justify-end items-center mt-2';
                 
-                const header = document.createElement('p');
-                header.className = 'font-semibold text-indigo-700 mb-1';
-                header.textContent = 'Assistant';
-                
-                // Flex container for the message text and the copy button
-                const messageRow = document.createElement('div');
-                messageRow.className = 'flex items-start justify-between space-x-2';
-                
-                // Wrap content text so it takes up maximum width
-                const textWrapper = document.createElement('div');
-                textWrapper.className = 'flex-grow';
-                textWrapper.appendChild(contentElement);
-                
-                // Copy Button
+                // Copy Button HTML (Inline SVG Icon)
                 const copyButton = document.createElement('button');
-                copyButton.className = 'text-indigo-700 hover:text-indigo-900 transition-colors p-1 rounded flex-shrink-0';
-                copyButton.title = "Copy to Clipboard";
+                copyButton.className = 'text-indigo-700 hover:text-indigo-900 transition-colors p-1 rounded';
                 copyButton.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" />
+                        <path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 1 1 0 01-1-1 1 1 0 100-2 3 3 0 00-3 3h-1.5a1 1 0 000 2H11a3 3 0 00-3-3zM10 9a1 1 0 000 2v3a1 1 0 102 0v-3a1 1 0 00-2 0z" />
                     </svg>
                 `;
-                // Add event listener to the copy button
                 copyButton.onclick = () => copyMessageToClipboard(content);
                 
-                bubble.appendChild(header); 
-                messageRow.appendChild(textWrapper);
-                messageRow.appendChild(copyButton);
-                bubble.appendChild(messageRow);
-            }
+                bubble.appendChild(contentElement);
+                bubble.appendChild(actionRow);
+                actionRow.appendChild(copyButton);
 
-            messageContainer.appendChild(bubble);
-            chatMessages.appendChild(messageContainer);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function setLoading(loading) {
-            isProcessing = loading;
-            userInput.disabled = loading;
-            sendButton.disabled = loading || userInput.value.trim() === '';
-            
-            if (loading) {
-                loaderArea.classList.remove('hidden');
-                chatMessages.scrollTop = chatMessages.scrollHeight;
             } else {
-                loaderArea.classList.add('hidden');
-                autoResizeTextarea(); // Ensure textarea resets/resizes after processing
+                bubble.appendChild(contentElement);
             }
-        }
-        
-        // Function to automatically expand the textarea vertically
-        function autoResizeTextarea() {
-            // Reset height to auto to recalculate needed height
-            userInput.style.height = 'auto';
-            
-            // Calculate height based on scroll height
-            const calculatedHeight = userInput.scrollHeight;
-            
-            // Calculate height limit in pixels (e.g., 5 rows * lineHeight)
-            const lineHeight = parseFloat(getComputedStyle(userInput).lineHeight);
-            const maxHeight = MAX_TEXTAREA_ROWS * lineHeight + parseFloat(getComputedStyle(userInput).paddingTop) + parseFloat(getComputedStyle(userInput).paddingBottom);
 
-            // Apply calculated height, but cap it at maxHeight
-            userInput.style.height = `${Math.min(calculatedHeight, maxHeight)}px`;
+            messageDiv.appendChild(bubble);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to bottom
         }
 
-        // --- Core Function: Calls the Vercel Serverless Function ---
+        function toggleLoading(isLoading) {
+            isSending = isLoading;
+            sendButton.disabled = isLoading || userInput.value.trim() === "";
+            newChatButton.disabled = isLoading;
+            statusBar.style.display = isLoading ? 'block' : 'none';
+        }
 
-        async function handleSendMessage() {
+        // --- Core Logic ---
+
+        async function sendMessage() {
             const message = userInput.value.trim();
-            if (!message || isProcessing) return;
+            if (!message || isSending) return;
 
-            setLoading(true);
-            userInput.value = '';
+            toggleLoading(true);
+            
+            // 1. Display user message
             appendMessage(message, 'user');
+            userInput.value = '';
+            adjustTextareaHeight();
 
             try {
-                // The client sends the user message and the current thread ID
+                // 2. Call Vercel Serverless Function (secure proxy)
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        message: message, 
-                        threadId: threadId 
-                    })
+                    body: JSON.stringify({ message, threadId })
                 });
 
                 if (!response.ok) {
-                    // Attempt to parse JSON error response for better message
-                    let errorBody;
-                    try {
-                        errorBody = await response.json();
-                    } catch {
-                        throw new Error(`Server Error: ${response.status} - Could not connect to the Assistant.`);
-                    }
-                    throw new Error(errorBody.error || `Server Error: ${response.status} - Could not connect to the Assistant.`);
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
                 }
-                
+
                 const data = await response.json();
-                
-                if (data.error) {
-                    throw new Error(data.error);
-                }
 
-                // Update the client-side thread ID for the next request
-                threadId = data.threadId;
-
-                // Display the final message from the Assistant
+                // 3. Update thread ID and display assistant message
+                threadId = data.threadId; // Store the new or existing thread ID
                 appendMessage(data.assistantMessage, 'assistant');
 
             } catch (error) {
-                console.error("Chat process failed:", error);
-                displayStatus(error.message || "An unexpected error occurred during chat processing. Check the Vercel logs.");
-                // Retain message in input if error occurred
-                userInput.value = message;
+                console.error('Chat Error:', error);
+                appendMessage(`[System Error: Could not connect to the Study Buddy. Please check the Vercel logs or try starting a new session. Details: ${error.message}]`, 'assistant');
+                displayStatus('Failed to get response!', true);
             } finally {
-                setLoading(false);
+                toggleLoading(false);
+                userInput.focus();
             }
         }
 
-        function handleResetChat() {
-            if (isProcessing) {
-                displayStatus("Please wait for the current response to finish before starting a new session.", false);
-                return;
-            }
-            // Reset the client-side threadId. Server will create a new one.
-            threadId = null;
-            chatMessages.innerHTML = `
-                <div class="flex justify-start">
-                    <div class="bg-indigo-100 text-indigo-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm">
-                        <p class="font-semibold">Assistant</p>
-                        <p>Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!</p>
-                    </div>
-                </div>
-            `;
-            userInput.value = '';
-            autoResizeTextarea(); // Reset textarea size
-            displayStatus("New study session started. New thread will be created on first message.", false);
+        function startNewSession() {
+            // Clear the old conversation and reset the thread ID
+            chatMessages.innerHTML = '';
+            threadId = null; 
+            appendWelcomeMessage();
         }
 
-        // --- Initialization and Event Listeners ---
+        function appendWelcomeMessage() {
+            const welcomeMessage = "Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!";
+            appendMessage(welcomeMessage, 'assistant');
+        }
+
+        // --- Event Listeners and Initialization ---
+
         function init() {
-            // 1. Textarea auto-resize logic
-            userInput.addEventListener('input', () => {
-                autoResizeTextarea(); // Adjust height on input
-                sendButton.disabled = isProcessing || userInput.value.trim() === '';
-            });
+            // Set up button handlers
+            sendButton.addEventListener('click', sendMessage);
+            newChatButton.addEventListener('click', startNewSession);
 
-            // 2. Button and Enter key events
-            sendButton.addEventListener('click', handleSendMessage);
+            // Handle Enter keypress
             userInput.addEventListener('keypress', (e) => {
-                // Check for 'Enter' key and ensure Shift is NOT pressed (to allow Shift+Enter for new lines)
-                if (e.key === 'Enter' && !e.shiftKey && !sendButton.disabled) {
-                    e.preventDefault(); // Prevent default new line behavior
-                    handleSendMessage();
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevents adding a new line
+                    sendMessage();
                 }
             });
-            resetButton.addEventListener('click', handleResetChat);
+
+            // Handle auto-height and button state for the textarea
+            userInput.addEventListener('input', adjustTextareaHeight);
+
+            // Start the first session
+            startNewSession();
             
-            // Initial state check
-            sendButton.disabled = userInput.value.trim() === ''; 
-            autoResizeTextarea(); // Set initial height
+            // Auto-focus on the input field for immediate typing
+            userInput.focus(); 
         }
 
         window.onload = init;
-
     </script>
 </body>
-</html>
-</body>
-
 </html>
