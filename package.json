@@ -1,0 +1,10 @@
+{
+  "name": "environmental-study-buddy-api",
+  "version": "1.0.0",
+  "description": "Backend for OpenAI Assistant on Vercel",
+  "main": "api/chat.js",
+  "type": "module",
+  "dependencies": {
+    "openai": "^4.20.1"
+  }
+}
