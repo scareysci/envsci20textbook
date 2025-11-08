@@ -23,6 +23,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #f1f5f9; /* slate-100 */
         }
+        /* Style for the textarea to allow vertical scrolling when text overflows */
+        #user-input {
+            min-height: 44px; /* Matches height of one row */
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-10">
@@ -41,7 +45,7 @@
             <div class="flex justify-start">
                 <div class="bg-indigo-100 text-indigo-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm">
                     <p class="font-semibold">Assistant</p>
-                    <p>Hello! I'm ready to help you with your environmental studies questions.</p>
+                    <p>Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!</p>
                 </div>
             </div>
             
@@ -56,9 +60,13 @@
             
         </main>
 
-        <!-- Input and Send Area -->
+        <!-- Input and Send Area (Changed to textarea for wrapping text) -->
         <footer class="p-4 border-t border-gray-200 flex space-x-3 bg-white rounded-b-xl">
-            <input type="text" id="user-input" placeholder="Type your message..." class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none" autocomplete="off">
+            <!-- Textarea allows multi-line input and wrapping -->
+            <textarea id="user-input" placeholder="Type your message..." rows="1" 
+                class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 outline-none resize-none overflow-y-auto" 
+                autocomplete="off"></textarea>
+            
             <button id="send-button" class="bg-indigo-600 text-white p-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-150 shadow-lg disabled:opacity-50" disabled>
                 Send
             </button>
@@ -70,9 +78,9 @@
 
     <script>
         // --- CLIENT-SIDE VARIABLES ---
-        // threadId is the only state variable needed here.
         let threadId = null;
         let isProcessing = false;
+        const MAX_TEXTAREA_ROWS = 5; // Limits how tall the input box can grow
 
         // DOM Elements
         const chatMessages = document.getElementById('chat-messages');
@@ -82,7 +90,8 @@
         const loaderArea = document.getElementById('loader-area');
         const statusMessage = document.getElementById('status-message');
 
-        // --- Utility Functions (Same as before) ---
+        // --- Utility Functions ---
+        
         function displayStatus(message, isError = true) {
             statusMessage.textContent = message;
             statusMessage.className = `p-2 text-center text-sm ${isError ? 'text-red-600' : 'text-green-600'} block`;
@@ -91,25 +100,67 @@
             }, 5000);
         }
 
+        // New function to handle copying text securely in an iframe environment
+        function copyMessageToClipboard(content) {
+            // This method is used for wider compatibility in iframe environments
+            const tempElement = document.createElement('textarea');
+            tempElement.value = content;
+            document.body.appendChild(tempElement);
+            tempElement.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempElement);
+            displayStatus("Copied to clipboard!", false);
+        }
+
         function appendMessage(content, role) {
             const messageContainer = document.createElement('div');
             messageContainer.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'}`;
 
             const bubble = document.createElement('div');
             
+            // Create element for message content
+            const contentElement = document.createElement('p');
+            contentElement.textContent = content; // This holds the main text
+            contentElement.className = 'whitespace-pre-wrap';
+
             if (role === 'user') {
-                bubble.className = 'bg-indigo-500 text-white p-3 rounded-xl rounded-br-none max-w-[80%] shadow-md whitespace-pre-wrap';
+                bubble.className = 'bg-indigo-500 text-white p-3 rounded-xl rounded-br-none max-w-[80%] shadow-md';
+                bubble.appendChild(contentElement);
             } else {
-                bubble.className = 'bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm whitespace-pre-wrap';
+                // Assistant Message Setup
+                bubble.className = 'bg-indigo-100 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm';
+                
                 const header = document.createElement('p');
                 header.className = 'font-semibold text-indigo-700 mb-1';
                 header.textContent = 'Assistant';
-                bubble.appendChild(header);
+                
+                // Flex container for the message text and the copy button
+                const messageRow = document.createElement('div');
+                messageRow.className = 'flex items-start justify-between space-x-2';
+                
+                // Wrap content text so it takes up maximum width
+                const textWrapper = document.createElement('div');
+                textWrapper.className = 'flex-grow';
+                textWrapper.appendChild(contentElement);
+                
+                // Copy Button
+                const copyButton = document.createElement('button');
+                copyButton.className = 'text-indigo-700 hover:text-indigo-900 transition-colors p-1 rounded flex-shrink-0';
+                copyButton.title = "Copy to Clipboard";
+                copyButton.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                `;
+                // Add event listener to the copy button
+                copyButton.onclick = () => copyMessageToClipboard(content);
+                
+                bubble.appendChild(header); 
+                messageRow.appendChild(textWrapper);
+                messageRow.appendChild(copyButton);
+                bubble.appendChild(messageRow);
             }
-
-            const contentElement = document.createElement('p');
-            contentElement.textContent = content;
-            bubble.appendChild(contentElement);
 
             messageContainer.appendChild(bubble);
             chatMessages.appendChild(messageContainer);
@@ -126,10 +177,27 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             } else {
                 loaderArea.classList.add('hidden');
+                autoResizeTextarea(); // Ensure textarea resets/resizes after processing
             }
         }
+        
+        // Function to automatically expand the textarea vertically
+        function autoResizeTextarea() {
+            // Reset height to auto to recalculate needed height
+            userInput.style.height = 'auto';
+            
+            // Calculate height based on scroll height
+            const calculatedHeight = userInput.scrollHeight;
+            
+            // Calculate height limit in pixels (e.g., 5 rows * lineHeight)
+            const lineHeight = parseFloat(getComputedStyle(userInput).lineHeight);
+            const maxHeight = MAX_TEXTAREA_ROWS * lineHeight + parseFloat(getComputedStyle(userInput).paddingTop) + parseFloat(getComputedStyle(userInput).paddingBottom);
 
-        // --- NEW Core Function: Calls the Serverless Function ---
+            // Apply calculated height, but cap it at maxHeight
+            userInput.style.height = `${Math.min(calculatedHeight, maxHeight)}px`;
+        }
+
+        // --- Core Function: Calls the Vercel Serverless Function ---
 
         async function handleSendMessage() {
             const message = userInput.value.trim();
@@ -151,7 +219,14 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Server Error: ${response.status} - Could not connect to the Assistant.`);
+                    // Attempt to parse JSON error response for better message
+                    let errorBody;
+                    try {
+                        errorBody = await response.json();
+                    } catch {
+                        throw new Error(`Server Error: ${response.status} - Could not connect to the Assistant.`);
+                    }
+                    throw new Error(errorBody.error || `Server Error: ${response.status} - Could not connect to the Assistant.`);
                 }
                 
                 const data = await response.json();
@@ -169,7 +244,7 @@
             } catch (error) {
                 console.error("Chat process failed:", error);
                 displayStatus(error.message || "An unexpected error occurred during chat processing. Check the Vercel logs.");
-                // Give user option to retry
+                // Retain message in input if error occurred
                 userInput.value = message;
             } finally {
                 setLoading(false);
@@ -187,30 +262,44 @@
                 <div class="flex justify-start">
                     <div class="bg-indigo-100 text-indigo-800 p-3 rounded-xl rounded-tl-none max-w-[80%] shadow-sm">
                         <p class="font-semibold">Assistant</p>
-                        <p>A new study session has started! I'm ready to help you with your environmental studies questions.</p>
+                        <p>Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!</p>
                     </div>
                 </div>
             `;
+            userInput.value = '';
+            autoResizeTextarea(); // Reset textarea size
             displayStatus("New study session started. New thread will be created on first message.", false);
         }
 
-        // --- Initialization and Event Listeners (Same as before) ---
+        // --- Initialization and Event Listeners ---
         function init() {
+            // 1. Textarea auto-resize logic
             userInput.addEventListener('input', () => {
+                autoResizeTextarea(); // Adjust height on input
                 sendButton.disabled = isProcessing || userInput.value.trim() === '';
             });
+
+            // 2. Button and Enter key events
             sendButton.addEventListener('click', handleSendMessage);
             userInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !sendButton.disabled) {
+                // Check for 'Enter' key and ensure Shift is NOT pressed (to allow Shift+Enter for new lines)
+                if (e.key === 'Enter' && !e.shiftKey && !sendButton.disabled) {
+                    e.preventDefault(); // Prevent default new line behavior
                     handleSendMessage();
                 }
             });
             resetButton.addEventListener('click', handleResetChat);
+            
+            // Initial state check
             sendButton.disabled = userInput.value.trim() === ''; 
+            autoResizeTextarea(); // Set initial height
         }
 
         window.onload = init;
 
     </script>
 </body>
+</html>
+</body>
+
 </html>
