@@ -29,7 +29,7 @@
     </style>
 </head>
 <body class="p-4 bg-stone-100 full-center-container">
-    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-xl w-full text-center">
+    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-4xl w-full text-center"> <!-- Increased max-w for columns -->
         <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Environmental Science 20</h1>
         <p class="text-stone-500 mb-8">Course Textbook & Chapter Index</p>
         
@@ -51,60 +51,75 @@
             </div>
         </div>
 
-        <!-- Chapter Index -->
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 1: Aquatic Ecosystems</h2>
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Chapter 1: Hydrologic Cycle - NOW a working link -->
-                <a href="part1.html" class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg hover:bg-amber-700">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 1</span>
-                    Hydrologic Cycle
-                </a>
-                
-                <!-- Chapter 2: Types of Aquatic Ecosystems - NOW a working link -->
-                <a href="part2.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 2</span>
-                    Types of Aquatic Ecosystems
-                </a>
-
-                <!-- Chapter 3: Abiotic Factors - NOW a working link -->
-                <a href="part3.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 3</span>
-                    Abiotic Factors of Aquatic Ecosystems
-                </a>
-            </div>
+        <!-- NEW: Study Buddy Button -->
+        <div class="mb-10">
+            <a href="https://envsci20textbook.vercel.app/stbud.html"
+               class="inline-block w-full py-4 text-xl font-extrabold text-white bg-indigo-600 rounded-xl shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider"
+               target="_blank">
+                Environmental Science Study Buddy
+            </a>
         </div>
 
-        <div>
-            <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
-            <div class="grid grid-cols-1 gap-4">
-                <!-- Chapter 4: Introduction to Terrestrial Ecosystems and Soil -->
-                <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
-                    Introduction to Terrestrial Ecosystems and Soil
-                </a>
-                
-                <!-- Chapter 5: Exploring Producers -->
-                <a href="tepart2.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 5</span>
-                    Exploring Producers
-                </a>
-                
-                <!-- Chapter 6: Biodiversity -->
-                <a href="tepart3.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
-                    <span class="text-xs font-light opacity-80 block mb-1">Chapter 6</span>
-                    Biodiversity
-                </a>
+        <!-- Two-Column Chapter Index Wrapper -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
 
-                <!-- Placeholder for future chapters -->
-                <div class="p-4 bg-gray-200 text-gray-600 font-medium rounded-xl border border-gray-300 shadow-inner italic">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    More chapters coming soon...
+            <!-- Column 1: Unit 1 -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 1: Aquatic Ecosystems</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <!-- Chapter 1: Hydrologic Cycle -->
+                    <a href="part1.html" class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg hover:bg-amber-700">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 1</span>
+                        Hydrologic Cycle
+                    </a>
+                    
+                    <!-- Chapter 2: Types of Aquatic Ecosystems -->
+                    <a href="part2.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 2</span>
+                        Types of Aquatic Ecosystems
+                    </a>
+
+                    <!-- Chapter 3: Abiotic Factors -->
+                    <a href="part3.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 3</span>
+                        Abiotic Factors of Aquatic Ecosystems
+                    </a>
                 </div>
             </div>
-        </div>
+
+            <!-- Column 2: Unit 2 -->
+            <div>
+                <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
+                <div class="grid grid-cols-1 gap-4">
+                    <!-- Chapter 4: Introduction to Terrestrial Ecosystems and Soil -->
+                    <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
+                        Introduction to Terrestrial Ecosystems and Soil
+                    </a>
+                    
+                    <!-- Chapter 5: Exploring Producers -->
+                    <a href="tepart2.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 5</span>
+                        Exploring Producers
+                    </a>
+                    
+                    <!-- Chapter 6: Biodiversity -->
+                    <a href="tepart3.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                        <span class="text-xs font-light opacity-80 block mb-1">Chapter 6</span>
+                        Biodiversity
+                    </a>
+
+                    <!-- Placeholder for future chapters -->
+                    <div class="p-4 bg-gray-200 text-gray-600 font-medium rounded-xl border border-gray-300 shadow-inner italic">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        More chapters coming soon...
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- End of Two-Column Wrapper -->
         
     </div>
     
@@ -116,7 +131,6 @@
             const resultsDiv = document.getElementById('results');
 
             // --- MOCK CONTENT DATA ---
-            // URLs updated to reflect the actual file paths for working links.
             const textbookData = [
                 {
                     title: 'Hydrologic Cycle',
@@ -195,32 +209,21 @@
                 const parser = new DOMParser();
 
                 textbookData.forEach(page => {
-                    // Temporarily parse the mock HTML content to simulate a fetched document
                     const tempDoc = parser.parseFromString(page.htmlContent, 'text/html');
-                    
-                    // Use document.body.innerText for reliable text content extraction
                     const pageContent = (tempDoc.body.innerText || '').toLowerCase();
                     const searchTermIndex = pageContent.indexOf(searchTerm);
 
                     if (searchTermIndex !== -1) {
                         foundResults = true;
-                        
-                        // 1. Get all elements with IDs in the body of the parsed content
                         const allElementsWithId = tempDoc.body.querySelectorAll('[id]');
-                        
-                        // 2. Find the closest preceding element
                         let closestHeading = null;
                         let closestHeadingIndex = -1;
 
                         allElementsWithId.forEach(element => {
-                            // Find where the heading's text appears in the overall page content
                             const elementText = element.textContent.toLowerCase().trim();
                             if (elementText.length > 0) {
-                                // Find the index of the heading text within the overall page text
                                 const elementIndex = pageContent.indexOf(elementText.substring(0, 30)); 
-
                                 if (elementIndex !== -1 && elementIndex < searchTermIndex && elementIndex > closestHeadingIndex) {
-                                    // Check if the element is actually a heading (H1-H6)
                                     if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
                                         closestHeading = element;
                                         closestHeadingIndex = elementIndex;
@@ -230,21 +233,14 @@
                         });
 
                         const resultItem = document.createElement('div');
-                        // Use a border for a cleaner look
                         resultItem.className = 'p-3 bg-white border border-lime-200 rounded-lg shadow-sm hover:bg-lime-50 transition duration-150';
-
                         let linkText = page.title;
-                        
-                        // Construct the final functional URL
-                        const finalLinkUrl = closestHeading 
-                            ? `${page.url}#${closestHeading.id}` 
-                            : page.url;
+                        const finalLinkUrl = closestHeading ? `${page.url}#${closestHeading.id}` : page.url;
 
                         if (closestHeading) {
                             linkText = `${page.title}: ${closestHeading.textContent}`;
                         }
 
-                        // Updated the search result link to be fully functional
                         resultItem.innerHTML = `
                             <a href="${finalLinkUrl}" 
                                 class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150"
@@ -266,4 +262,5 @@
     </script>
 </body>
 </html>
+
 
