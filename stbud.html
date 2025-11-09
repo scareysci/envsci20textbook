@@ -58,13 +58,19 @@
             margin-bottom: 5px;
             line-height: 1.3;
         }
-        /* New style for Markdown lists */
+        /* NEW STYLING FOR BULLET POINTS */
         .ai-bubble ul {
-            margin-left: 20px;
-            list-style: disc;
             margin-top: 5px;
             margin-bottom: 5px;
+            padding-left: 20px; /* Standard indentation */
+            list-style: disc;
         }
+        .ai-bubble ul li {
+            margin-bottom: 4px;
+            padding-left: 5px; /* Pushes text away from the bullet */
+        }
+        /* END NEW STYLING */
+        
         /* Style for external links inside the bubble */
         .ai-bubble a {
             color: #4f46e5; /* Indigo-600 */
@@ -167,37 +173,37 @@
             // 3. Convert Bold Text (**text**) to <strong>
             htmlText = htmlText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-            // --- FIX ADDED HERE: Convert Italic Text (*text*) to <em> ---
-            // This regex specifically ignores asterisks preceded by another asterisk or space
-            // to prevent issues with lists and bold text.
+            // 4. Convert Italic Text (*text*) to <em> 
             htmlText = htmlText.replace(/(?<!\*)\*(.*?)\*(?!\*)/g, '<em>$1</em>');
-            // -----------------------------------------------------------------
-
-            // 4. Convert Unordered Lists (- item) to <ul> and <li>
-            const listRegex = /^(-[^\n]+)/gm;
+            
+            // 5. Convert Unordered Lists (- item) to <ul> and <li>
+            // Simplified regex for list wrapping
+            const listRegex = /^-([^\n]+)/gm;
             if (htmlText.match(listRegex)) {
-                let listContent = '';
-                htmlText = htmlText.replace(listRegex, (match) => {
-                    return `<li>${match.substring(2).trim()}</li>`;
-                });
-                // Wrap adjacent <li>s in <ul>
-                htmlText = htmlText.replace(/(<\/li>)(<br>)?\s*<li/g, '</li><li');
-                htmlText = htmlText.replace(/(^|\n)(<li>.*?<\/li>)/gs, (match, p1, p2) => {
-                    return `<ul>${p2}</ul>`;
-                });
-                // Clean up any extra HTML tags created during replacement process
-                htmlText = htmlText.replace(/<\/ul>(\s*<br>\s*)?<ul>/g, '');
-            }
+                let tempHtml = '\n' + htmlText + '\n';
+                
+                // Convert list items to <li> tags
+                tempHtml = tempHtml.replace(/(\n)- (.*)/g, '\n<li>$2</li>');
+                
+                // Wrap consecutive <li> tags in <ul> tags
+                tempHtml = tempHtml.replace(/(\n(<li>.*<\/li>)+)/g, '\n<ul>$1</ul>\n');
 
-            // 5. Convert remaining single newlines to <br> for line breaks
+                // Remove the extra newline characters introduced by the process
+                htmlText = tempHtml.trim();
+                htmlText = htmlText.replace(/(\n| )*<ul>/g, '<ul>').replace(/<\/ul>(\n| )*/g, '</ul>');
+                htmlText = htmlText.replace(/<\/li>\n<li>/g, '</li><li>');
+                htmlText = htmlText.replace(/<br>/g, ''); // Remove <br> tags near lists
+            }
+            
+            // 6. Convert remaining single newlines to <br> for line breaks
             htmlText = htmlText.replace(/(?<!(<\/h[1-6]>|<\/li>|<\/ul>)\s*)(\n)/g, '<br>');
             
             // Final cleanup of redundant <br> tags near list/header elements
             htmlText = htmlText.replace(/<br>\s*<h3>/g, '<h3>');
             htmlText = htmlText.replace(/<\/h3><br>/g, '</h3>');
             htmlText = htmlText.replace(/<br>\s*<ul>/g, '<ul>');
-            htmlText = htmlText.replace(/<\/li><br>/g, '</li>');
-            
+            htmlText = htmlText.replace(/<\/ul>\s*<br>/g, '</ul>');
+
 
             return htmlText;
         }
@@ -268,7 +274,7 @@
 
         // --- Core Logic ---
 
-        // NEW: Handles the silent initial call to the assistant
+        // Handles the silent initial call to the assistant
         async function sendInitialPrompt() {
             // Set loading state
             toggleLoading(true);
