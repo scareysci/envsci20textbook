@@ -50,6 +50,21 @@
             min-height: 48px;
             max-height: 120px; /* Max height for about 5 lines */
         }
+        /* New style to make headers look clean inside the bubble */
+        .ai-bubble h3 {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700; /* font-bold */
+            margin-top: 10px;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        /* New style for Markdown lists */
+        .ai-bubble ul {
+            margin-left: 20px;
+            list-style: disc;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -85,7 +100,6 @@
     <script>
         // --- CONFIGURATION ---
         // IMPORTANT: These values are now safely handled by the Vercel Serverless Function (api/chat.js).
-        // They remain empty here, as the client does NOT need the secret key.
         const API_KEY = ""; 
         const ASSISTANT_ID = ""; // Only needed for context, but not used in client logic.
 
@@ -133,6 +147,50 @@
             sendButton.disabled = isSending || userInput.value.trim() === "";
         }
 
+        // === NEW MARKDOWN CONVERSION LOGIC ===
+        function convertMarkdownToHtml(markdownText) {
+            let htmlText = markdownText;
+
+            // 1. Convert Headers (###, ##) to HTML <h3>/<h2>
+            // We'll focus on the H3 (###) that the Assistant is using for steps.
+            htmlText = htmlText.replace(/###\s*(.*)/g, '<h3>$1</h3>'); 
+            htmlText = htmlText.replace(/##\s*(.*)/g, '<h2>$1</h2>'); 
+
+            // 2. Convert Bold Text (**text**) to <strong>
+            htmlText = htmlText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // 3. Convert Unordered Lists (- item) to <ul> and <li>
+            // This is complex and requires handling block-level elements.
+            // A simpler regex approach: wrap all lines starting with `- ` into <li>
+            const listRegex = /^(-[^\n]+)/gm;
+            if (htmlText.match(listRegex)) {
+                let listContent = '';
+                htmlText = htmlText.replace(listRegex, (match) => {
+                    return `<li>${match.substring(2).trim()}</li>`;
+                });
+                // Find blocks of adjacent <li>s and wrap them in <ul>
+                htmlText = htmlText.replace(/(<\/li>)(<br>)?\s*<li/g, '</li><li');
+                htmlText = htmlText.replace(/(^|\n)(<li>.*?<\/li>)/gs, (match, p1, p2) => {
+                    return `<ul>${p2}</ul>`;
+                });
+                // Clean up any extra HTML tags created during replacement process
+                htmlText = htmlText.replace(/<\/ul>(\s*<br>\s*)?<ul>/g, '');
+            }
+
+            // 4. Convert remaining single newlines to <br> for line breaks
+            // This needs to be the last text-manipulation step
+            htmlText = htmlText.replace(/(?<!(<\/h[1-6]>|<\/li>|<\/ul>)\s*)(\n)/g, '<br>');
+            
+            // Final cleanup of redundant <br> tags near list/header elements
+            htmlText = htmlText.replace(/<br>\s*<h3>/g, '<h3>');
+            htmlText = htmlText.replace(/<\/h3><br>/g, '</h3>');
+            htmlText = htmlText.replace(/<br>\s*<ul>/g, '<ul>');
+            htmlText = htmlText.replace(/<\/li><br>/g, '</li>');
+            
+
+            return htmlText;
+        }
+
         function appendMessage(content, role) {
             const messageDiv = document.createElement('div');
             const bubble = document.createElement('div');
@@ -143,17 +201,26 @@
                 bubble.className = 'message-bubble bg-indigo-600 text-white';
             } else {
                 messageDiv.className = 'flex justify-start';
-                bubble.className = 'message-bubble bg-gray-200 text-gray-800';
+                bubble.className = 'message-bubble bg-gray-200 text-gray-800 ai-bubble'; // Added ai-bubble for custom styles
             }
 
-            // Header for assistant messages
+            const contentContainer = document.createElement('div');
+            
+            // --- APPLY MARKDOWN CONVERSION HERE ---
+            if (role === 'assistant') {
+                 contentContainer.innerHTML = convertMarkdownToHtml(content);
+            } else {
+                 contentContainer.innerHTML = content.replace(/\n/g, '<br>'); // Simple user text formatting
+            }
+            // ------------------------------------
+
             const header = document.createElement('div');
             header.className = 'font-semibold mb-1 text-sm';
             header.textContent = role === 'assistant' ? 'Assistant' : 'You';
+            
             bubble.appendChild(header);
+            bubble.appendChild(contentContainer);
 
-            const contentElement = document.createElement('p');
-            contentElement.innerHTML = content.replace(/\n/g, '<br>'); // Preserve line breaks for cleaner output
 
             if (role === 'assistant') {
                 const actionRow = document.createElement('div');
@@ -170,12 +237,10 @@
                 `;
                 copyButton.onclick = () => copyMessageToClipboard(content);
                 
-                bubble.appendChild(contentElement);
+                // Ensure the copy button is outside the main content but inside the bubble
                 bubble.appendChild(actionRow);
                 actionRow.appendChild(copyButton);
 
-            } else {
-                bubble.appendChild(contentElement);
             }
 
             messageDiv.appendChild(bubble);
@@ -205,7 +270,8 @@
 
             try {
                 // 2. Call Vercel Serverless Function (secure proxy)
-                const response = await fetch('/api/chat', {
+                // Note: Assuming your Vercel endpoint is /api/chat based on your code structure.
+                const response = await fetch('/api/chat', { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message, threadId })
@@ -224,7 +290,7 @@
 
             } catch (error) {
                 console.error('Chat Error:', error);
-                appendMessage(`[System Error: Could not connect to the Study Buddy. Please check the Vercel logs or try starting a new session. Details: ${error.message}]`, 'assistant');
+                appendMessage(`[System Error: Could not connect to the Study Buddy. Please check your Vercel logs. Details: ${error.message}]`, 'assistant');
                 displayStatus('Failed to get response!', true);
             } finally {
                 toggleLoading(false);
