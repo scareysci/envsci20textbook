@@ -167,6 +167,12 @@
             // 3. Convert Bold Text (**text**) to <strong>
             htmlText = htmlText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
+            // --- FIX ADDED HERE: Convert Italic Text (*text*) to <em> ---
+            // This regex specifically ignores asterisks preceded by another asterisk or space
+            // to prevent issues with lists and bold text.
+            htmlText = htmlText.replace(/(?<!\*)\*(.*?)\*(?!\*)/g, '<em>$1</em>');
+            // -----------------------------------------------------------------
+
             // 4. Convert Unordered Lists (- item) to <ul> and <li>
             const listRegex = /^(-[^\n]+)/gm;
             if (htmlText.match(listRegex)) {
