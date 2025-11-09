@@ -152,7 +152,7 @@
             sendButton.disabled = isSending || userInput.value.trim() === "";
         }
 
-        // === NEW MARKDOWN CONVERSION LOGIC ===
+        // === MARKDOWN CONVERSION LOGIC ===
         function convertMarkdownToHtml(markdownText) {
             let htmlText = markdownText;
 
@@ -262,6 +262,51 @@
 
         // --- Core Logic ---
 
+        // NEW: Handles the silent initial call to the assistant
+        async function sendInitialPrompt() {
+            // Set loading state
+            toggleLoading(true);
+            
+            // Display a temporary "Loading" message
+            appendMessage("Welcome! Loading Study Buddy's persona and course resources...", 'assistant');
+            
+            try {
+                // Send a generic, silent message to trigger the Assistant's detailed instructions
+                const response = await fetch('/api/chat', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    // The actual prompt the Assistant sees. You MUST update your Assistant's
+                    // instructions to start the conversation with the detailed welcome 
+                    // when it receives a simple message like this.
+                    body: JSON.stringify({ message: 'Start conversation with detailed introduction', threadId: null })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // 1. Clear the temporary message
+                chatMessages.innerHTML = '';
+                
+                // 2. Update thread ID and display the Assistant's official welcome
+                threadId = data.threadId; 
+                appendMessage(data.assistantMessage, 'assistant');
+
+            } catch (error) {
+                console.error('Initial Load Error:', error);
+                chatMessages.innerHTML = ''; // Clear the initial loading message
+                appendMessage(`[System Error: Failed to initialize Study Buddy. Please try clicking 'New Study Session' or contact Mr. Carey.]`, 'assistant');
+                displayStatus('Failed to load!', true);
+            } finally {
+                toggleLoading(false);
+                userInput.focus();
+            }
+        }
+
+
         async function sendMessage() {
             const message = userInput.value.trim();
             if (!message || isSending) return;
@@ -275,7 +320,6 @@
 
             try {
                 // 2. Call Vercel Serverless Function (secure proxy)
-                // Note: Assuming your Vercel endpoint is /api/chat based on your code structure.
                 const response = await fetch('/api/chat', { 
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -307,12 +351,13 @@
             // Clear the old conversation and reset the thread ID
             chatMessages.innerHTML = '';
             threadId = null; 
-            appendWelcomeMessage();
+            // Call the initial prompt function to start the session immediately
+            sendInitialPrompt(); 
         }
 
+        // --- This function is now empty as the AI will provide the welcome on the first prompt ---
         function appendWelcomeMessage() {
-            const welcomeMessage = "Welcome to Study Buddy, Mr. Carey's tireless assistant to help you with Enviornmental Science 24/7!";
-            appendMessage(welcomeMessage, 'assistant');
+            // No action needed now, the AI provides the welcome after the first user input.
         }
 
         // --- Event Listeners and Initialization ---
@@ -333,7 +378,7 @@
             // Handle auto-height and button state for the textarea
             userInput.addEventListener('input', adjustTextareaHeight);
 
-            // Start the first session
+            // Start the first session by sending the silent prompt
             startNewSession();
             
             // Auto-focus on the input field for immediate typing
