@@ -65,6 +65,11 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
+        /* Style for external links inside the bubble */
+        .ai-bubble a {
+            color: #4f46e5; /* Indigo-600 */
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -151,24 +156,25 @@
         function convertMarkdownToHtml(markdownText) {
             let htmlText = markdownText;
 
-            // 1. Convert Headers (###, ##) to HTML <h3>/<h2>
-            // We'll focus on the H3 (###) that the Assistant is using for steps.
+            // 1. Convert Links: [Text](URL) -> <a href="URL" target="_blank">Text</a>
+            // The target="_blank" ensures the link opens in a new tab, which is crucial when embedded in Canvas/iframe.
+            htmlText = htmlText.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+            // 2. Convert Headers (###, ##) to HTML <h3>/<h2>
             htmlText = htmlText.replace(/###\s*(.*)/g, '<h3>$1</h3>'); 
             htmlText = htmlText.replace(/##\s*(.*)/g, '<h2>$1</h2>'); 
 
-            // 2. Convert Bold Text (**text**) to <strong>
+            // 3. Convert Bold Text (**text**) to <strong>
             htmlText = htmlText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-            // 3. Convert Unordered Lists (- item) to <ul> and <li>
-            // This is complex and requires handling block-level elements.
-            // A simpler regex approach: wrap all lines starting with `- ` into <li>
+            // 4. Convert Unordered Lists (- item) to <ul> and <li>
             const listRegex = /^(-[^\n]+)/gm;
             if (htmlText.match(listRegex)) {
                 let listContent = '';
                 htmlText = htmlText.replace(listRegex, (match) => {
                     return `<li>${match.substring(2).trim()}</li>`;
                 });
-                // Find blocks of adjacent <li>s and wrap them in <ul>
+                // Wrap adjacent <li>s in <ul>
                 htmlText = htmlText.replace(/(<\/li>)(<br>)?\s*<li/g, '</li><li');
                 htmlText = htmlText.replace(/(^|\n)(<li>.*?<\/li>)/gs, (match, p1, p2) => {
                     return `<ul>${p2}</ul>`;
@@ -177,8 +183,7 @@
                 htmlText = htmlText.replace(/<\/ul>(\s*<br>\s*)?<ul>/g, '');
             }
 
-            // 4. Convert remaining single newlines to <br> for line breaks
-            // This needs to be the last text-manipulation step
+            // 5. Convert remaining single newlines to <br> for line breaks
             htmlText = htmlText.replace(/(?<!(<\/h[1-6]>|<\/li>|<\/ul>)\s*)(\n)/g, '<br>');
             
             // Final cleanup of redundant <br> tags near list/header elements
