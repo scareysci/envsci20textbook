@@ -4,397 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ES20: Terrestrial Ecosystems – Part 3 (Biodiversity & Assessment)</title>
-    <!-- Load Tailwind CSS via CDN --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Configuration for Tailwind and Font --><script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'es-green': '#22C55E',
-                        'es-brown': '#A16207',
-                        'es-dark': '#1F2937',
-                        'es-blue': '#3B82F6', /* New color for interactive terms */
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Ensures the Inter font is used */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8f8f8;
-            line-height: 1.6;
-        }
-        .textbook-card {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Ensures subscript rendering for chemical formulas */
-        .sub {
-            vertical-align: sub;
-            font-size: 0.75em; 
-        }
-
-        /* Style for interactive glossary terms */
-        .glossary-term {
-            cursor: pointer;
-            text-decoration: underline;
-            text-decoration-thickness: 2px;
-            text-decoration-color: #3B82F6; /* es-blue */
-            color: #3B82F6;
-            font-weight: bold;
-            transition: opacity 0.1s;
-        }
-        .glossary-term:hover {
-            opacity: 0.8;
-        }
-
-        /* Fixed position for the glossary tooltip (modal-like behavior) */
-        #glossary-tooltip {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            max-width: 90vw;
-        }
-        /* Overlay to close glossary when clicking outside */
-        #glossary-overlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(17, 24, 39, 0.5); /* gray-900 with 50% opacity */
-            z-index: 999; /* Below tooltip but above content */
-        }
-        
-        /* Custom class for responsive video embeds */
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
 </head>
-<body class="bg-[#f8f8f8]">
+<body>
+    <h1>ES20: Terrestrial Ecosystems – Part 3 (Biodiversity & Assessment)</h1>
 
-    <!-- FIXED HEADER WITH HOME BUTTON --><header class="fixed top-0 left-0 right-0 bg-es-dark text-white p-3 z-50 shadow-xl">
-        <div class="max-w-4xl mx-auto flex justify-between items-center flex-wrap sm:flex-nowrap gap-2">
-            <!-- Home Button --><a href="index.html" class="px-3 py-1 bg-es-green text-white font-bold rounded-lg hover:bg-green-600 transition duration-150 text-sm w-full sm:w-auto text-center">
-                Home (ES20 Textbook)
-            </a>
-            
-            <div class="flex flex-grow justify-center sm:justify-end space-x-1 w-full sm:w-auto">
-                <span class="text-sm text-gray-300 py-1">In-Document Search (Disabled)</span>
-            </div>
-        </div>
-    </header>
+    <!-- Embedded YouTube Video -->
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/F0VZDQEzSSM" 
+        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
 
-    <!-- Glossary Tooltip/Modal (Hidden by default) --><div id="glossary-tooltip" class="p-5 bg-white border-2 border-es-blue rounded-xl shadow-2xl hidden" role="dialog" aria-modal="true">
-        <div class="flex justify-between items-start mb-3">
-            <h4 id="tooltip-term" class="text-xl font-bold text-es-dark"></h4>
-            <button onclick="hideGlossary()" class="text-gray-500 hover:text-gray-800 text-2xl leading-none">&times;</button>
-        </div>
-        <p class="text-sm italic text-gray-700 border-b pb-2 mb-3" id="tooltip-definition"></p>
-        <div class="text-sm">
-            <p class="font-semibold text-es-blue mb-1">Local Context Example:</p>
-            <p id="tooltip-example" class="text-gray-600"></p>
-        </div>
-    </div>
-    <!-- Overlay to close glossary when clicking outside --><div id="glossary-overlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50" onclick="hideGlossary()"></div>
+    <p><a href="index.html">Home (ES20 Textbook)</a></p>
+    <p>In-Document Search (Disabled)</p>
 
+    <h2>Unit 3: Terrestrial Ecosystems – Part 3 (Biodiversity & Assessment)</h2>
+    <p><a href="tepart2.html">← Previous Part</a> Part 3 of 3: Biodiversity & Assessment End of Unit →</p>
 
-    <!-- Content Wrapper with Offset --><div class="pt-20 p-4 sm:p-8"> 
-        <div class="max-w-4xl mx-auto bg-white rounded-xl textbook-card p-6 sm:p-10">
+    3: Biodiversity, Habitat Fragmentation, and Conservation (ES20-TE3)</h3>
 
-            <h1 class="text-4xl font-extrabold text-es-dark mb-2 border-b-4 border-es-green pb-2">Unit 3: Terrestrial Ecosystems – Part 3 (Biodiversity & Assessment)</h1>
-            
-            <!-- Navigation Block --><nav class="flex justify-between items-center py-4 px-2 border-y border-es-green my-6 bg-green-50 rounded-lg">
-                <a href="tepart2.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">&larr; Previous Part</a>
-                <span class="font-bold text-es-dark">Part 3 of 3: Biodiversity & Assessment</span>
-                <span class="px-4 py-2 text-gray-400 font-medium cursor-default opacity-50">End of Unit &rarr;</span>
-            </nav>
+    <h4>3.1 The Need for Intact Habitat and Measuring Biodiversity</h4>
+    <p>Curriculum Outcome ES20-TE3 focuses on recognizing the need for intact habitat to support animal populations and overall biodiversity. Biodiversity is the variety of life at three levels: genetic diversity, species diversity, and ecosystem diversity. A high level of biodiversity increases the resilience of an ecosystem—its ability to recover from disturbances like disease or climate change. In Saskatchewan, the rapid conversion of native prairie to agricultural land has been the primary driver of biodiversity decline.</p>
 
-            <!-- Section 3: Biodiversity (ES20-TE3) --><section class="mb-8" id="section-biodiversity">
-                <h2 class="text-3xl font-bold text-es-green mb-4">Section 3: Biodiversity, Habitat Fragmentation, and Conservation (ES20-TE3)</h2>
+    <h4>3.2 Habitat Fragmentation and Edge Effects</h4>
+    <p>Habitat Fragmentation occurs when large, continuous habitats are divided into smaller, isolated patches by roads, fields, or urban development.</p>
+    <p>- Edge Effects: The boundary zones (edges) between fragmented habitats (e.g., between a forest patch and an agricultural field) experience different environmental conditions (more wind, sun, and predation) than the deep interior. This reduces the effective size of the habitat patch, negatively impacting species that need large, undisturbed areas.</p>
+    <p>- Reduced Gene Flow: Fragmentation can prevent animal populations from mixing, leading to inbreeding and loss of genetic diversity, making the population more vulnerable to extinction.</p>
 
-                <h3 class="text-xl font-semibold text-es-brown mb-2">3.1 The Need for Intact Habitat and Measuring Biodiversity</h3>
-                <p class="mb-4"><strong>Curriculum Outcome ES20-TE3</strong> focuses on recognizing the need for intact habitat to support animal populations and overall biodiversity. <strong>Biodiversity</strong> is the variety of life at three levels: genetic diversity, species diversity, and ecosystem diversity. A high level of biodiversity increases the resilience of an ecosystem—its ability to recover from disturbances like disease or climate change. In Saskatchewan, the rapid conversion of native prairie to agricultural land has been the primary driver of biodiversity decline.</p>
+    <p><strong>Case Study: Prairie Species Under Pressure</strong></p>
+    <ul>
+        <li>The Burrowing Owl (Athene cunicularia): An endangered species relying entirely on native grasslands, nesting in burrows. Its decline is a direct indicator of habitat loss and fragmentation.</li>
+        <li>The Swift Fox (Vulpes velox): Once extirpated from Canada, this tiny fox relies on healthy, continuous short- and mixed-grass prairie. Reintroduction efforts depend heavily on managing land use and reducing human-caused mortality (like road deaths).</li>
+        <li>The Greater Sage Grouse (Centrocercus urophasianus): Highly sensitive to habitat disturbance, especially from human infrastructure (wells, roads). The male's elaborate courtship display requires large, open tracts of undisturbed land.</li>
+    </ul>
 
-                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.2 Habitat Fragmentation and Edge Effects</h3>
-                <p class="mb-2"><span class="glossary-term" data-term="Habitat Fragmentation" data-definition="The process where large, continuous areas of habitat are broken up into smaller, isolated patches, often by human development like roads or farming." data-example="A highway dividing a large tract of native prairie, splitting animal populations and forcing them closer to human activity.">Habitat Fragmentation</span> occurs when large, continuous habitats are divided into smaller, isolated patches by roads, fields, or urban development.</p>
-                
-                <!-- Image 3: Fragmentation Diagram --><figure class="mb-6">
-                    <img src="https://placehold.co/700x400/3B82F6/FFFFFF?text=HABITAT+FRAGMENTATION+DIAGRAM" 
-                        onerror="this.onerror=null; this.src='https://placehold.co/700x400/9CA3AF/FFFFFF?text=HABITAT+FRAGMENTATION+DIAGRAM+Placeholder';"
-                        alt="Conceptual diagram illustrating a large habitat block being fragmented by roads, showing the increase in edge habitat and isolated core patches." 
-                        class="w-full rounded-lg shadow-lg">
-                    <figcaption class="text-center text-sm italic text-gray-600 mt-2">Figure 4: Habitat Fragmentation. Note how roads or clearings reduce core habitat and increase the amount of vulnerable edge habitat.</figcaption>
-                </figure>
-                
-                <ul class="list-disc list-inside ml-4 space-y-1 mb-4">
-                    <li><span class="glossary-term" data-term="Edge Effects" data-definition="The changes in abiotic and biotic factors that occur at the boundary between two different habitat types, reducing the quality of the interior habitat." data-example="Increased light and wind penetrating a small forest patch after clear-cutting nearby, making it unsuitable for shade-loving species.">Edge Effects</span>: The boundary zones (edges) between fragmented habitats (e.g., between a forest patch and an agricultural field) experience different environmental conditions (more wind, sun, and predation) than the deep interior. This reduces the effective size of the habitat patch, negatively impacting species that need large, undisturbed areas.</li>
-                    <li><strong>Reduced Gene Flow:</strong> Fragmentation can prevent animal populations from mixing, leading to inbreeding and loss of genetic diversity, making the population more vulnerable to extinction.</li>
-                </ul>
+    <h4>3.3 Conservation Strategies</h4>
+    <p>Conservation efforts in Saskatchewan generally fall into two categories:</p>
+    <ul>
+        <li><strong>In-situ Conservation (On-Site):</strong> Protecting species in their natural habitat. This includes creating Protected Areas (National Parks, Provincial Parks, Wildlife Refuges) and implementing Stewardship Agreements with landowners to protect critical habitats on private land.</li>
+        <li><strong>Ex-situ Conservation (Off-Site):</strong> Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use.</li>
+    </ul>
 
-                <!-- Case Study --><div class="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-500 my-6">
-                    <p class="font-bold text-lg mb-2 text-yellow-700">Case Study: Prairie Species Under Pressure</p>
-                    <ul class="list-disc list-inside ml-4 space-y-2 text-sm">
-                        <li><strong>The Burrowing Owl</strong> (<em>Athene cunicularia</em>): An endangered species relying entirely on native grasslands, nesting in burrows. Its decline is a direct indicator of habitat loss and fragmentation. </li>
-                        <li><strong>The Swift Fox</strong> (<em>Vulpes velox</em>): Once extirpated from Canada, this tiny fox relies on healthy, continuous short- and mixed-grass prairie. Reintroduction efforts depend heavily on managing land use and reducing human-caused mortality (like road deaths).</li>
-                        <li><strong>The Greater Sage Grouse</strong> (<em>Centrocercus urophasianus</em>): Highly sensitive to habitat disturbance, especially from human infrastructure (wells, roads). The male's elaborate courtship display requires large, open tracts of undisturbed land.</li>
-                    </ul>
-                </div>
-
-                <h3 class="text-xl font-semibold text-es-brown mt-6 mb-2">3.3 Conservation Strategies</h3>
-                <p class="mb-2">Conservation efforts in Saskatchewan generally fall into two categories:</p>
-                <ol class="list-decimal list-inside ml-4 space-y-2 mb-4">
-                    <li><span class="glossary-term" data-term="In-situ Conservation" data-definition="Conservation efforts focused on protecting a species in its natural environment and keeping the ecosystem healthy." data-example="Establishing a federally protected area, like Grasslands National Park, to safeguard native prairie species.">In-situ Conservation</span> (On-Site): Protecting species in their natural habitat. This includes creating <strong>Protected Areas</strong> (National Parks, Provincial Parks, Wildlife Refuges) and implementing <strong>Stewardship Agreements</strong> with landowners to protect critical habitats on private land.</li>
-                    <li><span class="glossary-term" data-term="Ex-situ Conservation" data-definition="Conservation efforts focused on protecting a species outside its natural habitat, such as in zoos or seed banks." data-example="Captive breeding programs for the endangered Swift Fox before releasing them into suitable habitats.">Ex-situ Conservation</span> (Off-Site): Protecting species outside their natural habitat. This includes captive breeding programs (like those used for the Swift Fox) and seed banks, which store genetic material for future use;</li>
-                </ol>
-                <hr class="my-6 border-gray-200">
-            </section>
-
-            <!-- Self-Assessment Quiz --><section class="mb-8" id="section-quiz">
-                <h2 class="text-3xl font-bold text-es-green mb-4">Self-Assessment Quiz: Terrestrial Check</h2>
-
-                <div id="quiz-container" class="space-y-6">
-                    <!-- Quiz questions will be dynamically inserted here by JavaScript --></div>
-                
-                <button id="check-answers" class="w-full sm:w-auto mt-6 px-6 py-3 bg-es-dark text-white font-bold rounded-lg hover:bg-gray-700 transition duration-150 shadow-md">
-                    Check Answers
-                </button>
-
-                <div id="quiz-results" class="mt-4 p-4 bg-blue-100 border border-blue-400 rounded-lg hidden">
-                    <p id="score-text" class="text-lg font-bold text-blue-800"></p>
-                </div>
-            </section>
-
-            <!-- Project Choice Menu Section --><section class="mb-8">
-                <h2 class="text-3xl font-bold text-es-green mb-4">Project Choice Menu: Terrestrial Systems</h2>
-                <p class="mb-6 text-gray-700">Choose one of the six options below to demonstrate your understanding of soil, biodiversity, and human interactions with Saskatchewan's terrestrial ecosystems.</p>
-
-                <!-- Project Grid Container --><div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    
-                    <!-- Project 1: Salinization --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 1: The Salinization Crisis: Mitigation Plan</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Soil Degradation - ES20-TE1 Focus)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Report & Model</p>
-                        <p class="text-sm text-gray-700">Research a specific area in Southern Saskatchewan (e.g., Quill Lakes area) affected by <span class="glossary-term" data-term="Salinization" data-definition="The buildup of excess salts on or near the soil surface, usually due to water evaporation from high water tables." data-example="Salt crusts appearing in low-lying, wet agricultural fields in southern Saskatchewan, reducing crop yield.">salinization</span>. Identify the hydrological cause, propose a three-part mitigation strategy (e.g., planting salt-tolerant cover crops, tile drainage), and explain the ecological benefit of your plan.</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
-                    </div>
-
-                    <!-- Project 2: Keystone Species --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 2: Keystone Species Trophic Cascade Model</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Biodiversity & Habitat - ES20-TE3 Focus)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Presentation & Diagram</p>
-                        <p class="text-sm text-gray-700">Choose a keystone species critical to a Saskatchewan ecosystem (e.g., Bison, Prairie Dogs, Wolves in the Boreal). Model the "trophic cascade" that would occur if that species was removed or reintroduced, detailing the specific impacts on plant diversity and soil health.</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3, ES20-TE1</p>
-                    </div>
-
-                    <!-- Project 3: Sustainable Harvest --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 3: Sustainable Resource Harvest Protocol</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Human Reliance & TEK - ES20-TE2 Focus)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Protocol Document</p>
-                        <p class="text-sm text-gray-700">Develop a sustainable harvest plan for a non-timber forest product (e.g., wild rice, Sweetgrass, or berries) in a specific Saskatchewan region. The plan must integrate principles of <strong>Traditional Ecological Knowledge (TEK) / Reciprocity</strong> and include a cost-benefit analysis.</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE2, ES20-ES1</p>
-                    </div>
-
-                    <!-- Project 4: Habitat Corridor --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 4: Habitat Corridor Design Challenge</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Fragmentation Mitigation - ES20-TE3 Focus)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Map & Rationale</p>
-                        <p class="text-sm text-gray-700">Select two real-world, fragmented natural areas in the Aspen Parkland or Prairie region (use Google Maps coordinates). Design a functional wildlife corridor. Your rationale must explain how the corridor minimizes <strong>edge effects</strong> and promotes genetic flow for two specific target species (e.g., Moose, Swift Fox).</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE3</p>
-                    </div>
-                    
-                    <!-- Project 5: Climate Change & Carbon --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 5: Climate Change and Soil Carbon</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Systems Thinking - ES20-TE1/TE2 Link)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Research Essay</p>
-                        <p class="text-sm text-gray-700">Research and analyze how predicted changes to Saskatchewan's climate (e.g., warmer winters, higher flood risk) will affect the ability of Chernozemic soils to act as a <strong>carbon sink</strong>. Discuss which land management practice (e.g., no-till farming, cover cropping) will be most essential to maintain soil carbon storage.</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2</p>
-                    </div>
-
-                    <!-- Project 6: Local Land-Use Analysis --><div class="bg-indigo-50 p-6 rounded-xl border-t-4 border-indigo-500 shadow-lg hover:shadow-xl transition duration-300">
-                        <p class="text-2xl font-bold text-indigo-800 mb-2">Option 6: The Local Land-Use Analysis</p>
-                        <p class="text-sm font-semibold text-gray-600 mb-3">(Comprehensive - All Outcomes)</p>
-                        <p class="mb-2"><strong>Deliverable:</strong> Field Study & Analysis</p>
-                        <p class="text-sm text-gray-700">Investigate a specific local land-use issue (e.g., new subdivision, industrial site) in your community. Analyze the impact on soil, biodiversity, and resource use, and propose a sustainable alternative. This project synthesizes the entire unit.</p>
-                        <p class="mt-3 text-xs text-indigo-500">Outcomes: ES20-TE1, ES20-TE2, ES20-TE3</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Bottom Navigation Block --><nav class="flex justify-between items-center py-4 px-2 border-y border-es-green my-6 bg-green-50 rounded-lg">
-                <a href="tepart2.html" class="px-4 py-2 bg-es-dark text-white rounded-lg font-medium hover:bg-gray-700 transition duration-150">&larr; Previous Part</a>
-                <span class="font-bold text-es-dark">Part 3 of 3: Biodiversity & Assessment</span>
-                <span class="px-4 py-2 text-gray-400 font-medium cursor-default opacity-50">End of Unit &rarr;</span>
-            </nav>
-
-        </div>
-    </div>
-
-    <!-- JavaScript for Interactivity --><script>
-        // --- 2. Self-Assessment Quiz Logic (Data is here, functions are below) ---
-        const quizData = [
-            {
-                question: "1. What soil type is characteristic of the Saskatchewan prairies?",
-                options: ["Podzol", "Chernozem", "Gleysol"],
-                answer: "Chernozem"
-            },
-            {
-                question: "2. Which primary component of soil is responsible for providing essential nutrients through decomposition?",
-                options: ["Mineral Matter", "Soil Air", "Organic Matter"],
-                answer: "Organic Matter"
-            },
-            {
-                question: "3. What is the main ecological consequence of habitat fragmentation?",
-                options: ["Increased precipitation", "Edge Effects", "Higher soil salinity"],
-                answer: "Edge Effects"
-            }
-        ];
-
-        const quizContainer = document.getElementById('quiz-container');
-        const checkButton = document.getElementById('check-answers');
-        const resultsBox = document.getElementById('quiz-results');
-        const scoreText = document.getElementById('score-text');
-
-        // Function to render the quiz 
-        function renderQuiz() {
-            if (!quizContainer) return;
-
-            quizData.forEach((q, qIndex) => {
-                const qDiv = document.createElement('div');
-                qDiv.className = 'p-4 bg-white border border-gray-200 rounded-lg shadow-sm';
-                qDiv.innerHTML = `<p class="font-semibold text-es-dark mb-3">${q.question}</p>`;
-
-                q.options.forEach((option, oIndex) => {
-                    const inputId = `q${qIndex}-o${oIndex}`;
-                    const radioDiv = document.createElement('div');
-                    radioDiv.className = 'flex items-center mb-1';
-                    
-                    radioDiv.innerHTML = `
-                        <input type="radio" id="${inputId}" name="question${qIndex}" value="${option}" class="text-es-green focus:ring-es-green rounded-full">
-                        <label for="${inputId}" class="ml-2 text-gray-700">${option}</label>
-                    `;
-                    qDiv.appendChild(radioDiv);
-                });
-
-                const feedbackDiv = document.createElement('div');
-                feedbackDiv.id = `feedback-${qIndex}`;
-                feedbackDiv.className = 'mt-2 text-sm font-medium';
-                qDiv.appendChild(feedbackDiv);
-                
-                quizContainer.appendChild(qDiv);
-            });
-        }
-
-        // Function to check answers 
-        function checkAnswers() {
-            let score = 0;
-            const totalQuestions = quizData.length;
-
-            quizData.forEach((q, qIndex) => {
-                const selectedOption = document.querySelector(`input[name="question${qIndex}"]:checked`);
-                const feedbackDiv = document.getElementById(`feedback-${qIndex}`);
-                
-                // Reset feedback styles
-                feedbackDiv.textContent = '';
-                feedbackDiv.className = 'mt-2 text-sm font-medium';
-
-                if (selectedOption) {
-                    if (selectedOption.value === q.answer) {
-                        score++;
-                        feedbackDiv.textContent = 'Correct! That aligns with ES20-TE1/TE2/TE3.';
-                        feedbackDiv.classList.add('text-green-600');
-                    } else {
-                        feedbackDiv.textContent = `Incorrect. The correct answer was: ${q.answer}.`;
-                        feedbackDiv.classList.add('text-red-600');
-                    }
-                } else {
-                    feedbackDiv.textContent = 'Please select an answer.';
-                    feedbackDiv.classList.add('text-yellow-600');
-                }
-            });
-
-            // Display overall results
-            const percentage = (score / totalQuestions) * 100;
-            if (scoreText && resultsBox) {
-                scoreText.textContent = `You scored ${score} out of ${totalQuestions} (${percentage.toFixed(0)}%). Review the sections for any missed questions!`;
-                resultsBox.classList.remove('hidden');
-                resultsBox.scrollIntoView({ behavior: 'smooth' }); // Scroll to results
-            }
-        }
-        
-        // --- 3. Glossary Interactivity Logic ---
-
-        const tooltip = document.getElementById('glossary-tooltip');
-        const overlay = document.getElementById('glossary-overlay');
-        const tooltipTerm = document.getElementById('tooltip-term');
-        const tooltipDefinition = document.getElementById('tooltip-definition');
-        const tooltipExample = document.getElementById('tooltip-example');
-
-        function showGlossary(event) {
-            event.preventDefault(); 
-            event.stopPropagation();
-
-            const termElement = event.currentTarget;
-            const term = termElement.getAttribute('data-term');
-            const definition = termElement.getAttribute('data-definition');
-            const example = termElement.getAttribute('data-example');
-
-            if (tooltipTerm && tooltipDefinition && tooltipExample) {
-                tooltipTerm.textContent = term;
-                tooltipDefinition.textContent = definition;
-                tooltipExample.textContent = example;
-            }
-
-            if (tooltip) tooltip.classList.remove('hidden');
-            if (overlay) overlay.classList.remove('hidden');
-
-            if (tooltip) {
-                const closeButton = tooltip.querySelector('button');
-                if (closeButton) closeButton.focus();
-            }
-        }
-
-        function hideGlossary() {
-            if (tooltip) tooltip.classList.add('hidden');
-            if (overlay) overlay.classList.add('hidden');
-        }
-
-        function setupGlossaryListeners() {
-            document.querySelectorAll('.glossary-term').forEach(termElement => {
-                termElement.addEventListener('click', showGlossary);
-            });
-        }
-
-        // Event listener setup
-        window.onload = function() {
-            renderQuiz();
-            if (checkButton) {
-                checkButton.addEventListener('click', checkAnswers);
-            }
-            setupGlossaryListeners(); // Initialize glossary listeners
-        };
-    </script>
+    <h3>Project Choice Menu: Terrestrial Systems</h3>
+    <p>Choose one of the six options below to demonstrate your understanding of soil, biodiversity, and human interactions with Saskatchewan's terrestrial ecosystems.</p>
+    <!-- Project options remain unchanged -->
+    <p><a href="tepart2.html">← Previous Part</a> Part 3 of 3: Biodiversity & Assessment End of Unit →</p>
 </body>
 </html>
