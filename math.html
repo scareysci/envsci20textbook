@@ -61,6 +61,7 @@
         const Minus = (props) => <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line></IconBase>;
         const XIcon = (props) => <IconBase {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></IconBase>;
         const Divide = (props) => <IconBase {...props}><circle cx="12" cy="6" r="2"></circle><line x1="5" y1="12" x2="19" y2="12"></line><circle cx="12" cy="18" r="2"></circle></IconBase>;
+        const Check = (props) => <IconBase {...props}><polyline points="20 6 9 17 4 12"></polyline></IconBase>;
 
         // --- Components ---
 
@@ -96,11 +97,22 @@
         // --- Worksheet Generator ---
 
         const WorksheetGenerator = ({ onBack }) => {
-            const [operation, setOperation] = useState('add');
+            const [selectedOps, setSelectedOps] = useState(['add']);
             const [targetNumber, setTargetNumber] = useState('mixed');
             const [problemCount, setProblemCount] = useState(20);
             const [problems, setProblems] = useState([]);
             const [sheetId, setSheetId] = useState(1);
+
+            const toggleOp = (opId) => {
+                setSelectedOps(prev => {
+                    if (prev.includes(opId)) {
+                        // Prevent unselecting the last operation
+                        if (prev.length === 1) return prev;
+                        return prev.filter(p => p !== opId);
+                    }
+                    return [...prev, opId];
+                });
+            };
 
             // Helper to get symbol
             const getSymbol = (op) => {
@@ -116,57 +128,60 @@
             const generateProblems = () => {
                 const newProblems = [];
                 for (let i = 0; i < problemCount; i++) {
-                let num1, num2;
-                let displayNum1, displayNum2;
+                    // Pick random operation from selected
+                    const currentOp = selectedOps[Math.floor(Math.random() * selectedOps.length)];
 
-                // Base numbers (0-9 for standard single digit logic)
-                const base1 = Math.floor(Math.random() * 10);
-                const base2 = Math.floor(Math.random() * 10);
-                
-                let val1 = base1;
-                let val2 = base2;
+                    let num1, num2;
+                    let displayNum1, displayNum2;
 
-                // Handle Fixed Target
-                if (targetNumber !== 'mixed' && targetNumber !== 'doubles') {
-                    const target = parseInt(targetNumber);
-                    // For sub/div, target is usually the second number (subtract 5, divide by 5)
-                    val2 = target; 
-                    // Randomize the other number
-                    val1 = Math.floor(Math.random() * 10); 
+                    // Base numbers (0-9 for standard single digit logic)
+                    const base1 = Math.floor(Math.random() * 10);
+                    const base2 = Math.floor(Math.random() * 10);
                     
-                    // Ensure Div by 0 is handled if target is 0 (though we filter 0 out for div selector)
-                    if (operation === 'div' && val2 === 0) val2 = 1; 
-                }
+                    let val1 = base1;
+                    let val2 = base2;
 
-                // Handle Doubles
-                if (targetNumber === 'doubles') {
-                    val2 = val1;
-                }
+                    // Handle Fixed Target
+                    if (targetNumber !== 'mixed' && targetNumber !== 'doubles') {
+                        const target = parseInt(targetNumber);
+                        // For sub/div, target is usually the second number (subtract 5, divide by 5)
+                        val2 = target; 
+                        // Randomize the other number
+                        val1 = Math.floor(Math.random() * 10); 
+                        
+                        // Ensure Div by 0 is handled if target is 0
+                        if (currentOp === 'div' && val2 === 0) val2 = 1; 
+                    }
 
-                // Logic per operation to ensure clean integers
-                if (operation === 'add') {
-                    displayNum1 = val1;
-                    displayNum2 = val2;
-                } 
-                else if (operation === 'sub') {
-                    // Inverse of addition: (a + b) - b = a
-                    displayNum1 = val1 + val2;
-                    displayNum2 = val2;
-                } 
-                else if (operation === 'mul') {
-                    displayNum1 = val1;
-                    displayNum2 = val2;
-                } 
-                else if (operation === 'div') {
-                    // Inverse of multiplication: (a * b) / b = a
-                    // Ensure divisor is not 0
-                    const divisor = val2 === 0 ? 1 : val2; 
-                    const quotient = val1;
-                    displayNum1 = quotient * divisor;
-                    displayNum2 = divisor;
-                }
+                    // Handle Doubles
+                    if (targetNumber === 'doubles') {
+                        val2 = val1;
+                    }
 
-                newProblems.push({ id: i, num1: displayNum1, num2: displayNum2 });
+                    // Logic per operation to ensure clean integers
+                    if (currentOp === 'add') {
+                        displayNum1 = val1;
+                        displayNum2 = val2;
+                    } 
+                    else if (currentOp === 'sub') {
+                        // Inverse of addition: (a + b) - b = a
+                        displayNum1 = val1 + val2;
+                        displayNum2 = val2;
+                    } 
+                    else if (currentOp === 'mul') {
+                        displayNum1 = val1;
+                        displayNum2 = val2;
+                    } 
+                    else if (currentOp === 'div') {
+                        // Inverse of multiplication: (a * b) / b = a
+                        // Ensure divisor is not 0
+                        const divisor = val2 === 0 ? 1 : val2; 
+                        const quotient = val1;
+                        displayNum1 = quotient * divisor;
+                        displayNum2 = divisor;
+                    }
+
+                    newProblems.push({ id: i, num1: displayNum1, num2: displayNum2, op: currentOp });
                 }
                 setProblems(newProblems);
                 setSheetId(prev => prev + 1);
@@ -174,10 +189,22 @@
 
             useEffect(() => {
                 generateProblems();
-            }, [operation, targetNumber, problemCount]);
+            }, [selectedOps, targetNumber, problemCount]);
 
             const handlePrint = () => {
                 window.print();
+            };
+
+            const getTitle = () => {
+                if (selectedOps.length === 1) {
+                     switch(selectedOps[0]) {
+                        case 'add': return 'Addition Practice';
+                        case 'sub': return 'Subtraction Practice';
+                        case 'mul': return 'Multiplication Practice';
+                        case 'div': return 'Division Practice';
+                     }
+                }
+                return 'Mixed Operations Practice';
             };
 
             return (
@@ -195,22 +222,26 @@
 
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                         <div className="bg-indigo-50 p-4 rounded-xl">
-                        <label className="block text-sm font-semibold text-indigo-900 mb-2">Operation</label>
+                        <label className="block text-sm font-semibold text-indigo-900 mb-2">Operations (Select Multiple)</label>
                         <div className="grid grid-cols-2 gap-2">
                             {[
                             { id: 'add', icon: Plus, label: 'Add' },
                             { id: 'sub', icon: Minus, label: 'Sub' },
                             { id: 'mul', icon: XIcon, label: 'Mul' },
                             { id: 'div', icon: Divide, label: 'Div' }
-                            ].map((op) => (
-                            <button
-                                key={op.id}
-                                onClick={() => { setOperation(op.id); if(op.id === 'div' && targetNumber === '0') setTargetNumber('mixed'); }}
-                                className={`flex items-center justify-center gap-1 p-2 rounded-lg text-sm font-bold transition-all ${operation === op.id ? 'bg-indigo-500 text-white shadow-md' : 'bg-white text-indigo-600 hover:bg-indigo-100'}`}
-                            >
-                                <op.icon size={14} /> {op.label}
-                            </button>
-                            ))}
+                            ].map((op) => {
+                                const isSelected = selectedOps.includes(op.id);
+                                return (
+                                    <button
+                                        key={op.id}
+                                        onClick={() => toggleOp(op.id)}
+                                        className={`flex items-center justify-center gap-1 p-2 rounded-lg text-sm font-bold transition-all relative ${isSelected ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-300 ring-offset-1' : 'bg-white text-indigo-400 hover:bg-indigo-50 border border-indigo-100'}`}
+                                    >
+                                        <op.icon size={14} /> {op.label}
+                                        {isSelected && <div className="absolute top-1 right-1 w-2 h-2 bg-emerald-400 rounded-full"></div>}
+                                    </button>
+                                );
+                            })}
                         </div>
                         </div>
 
@@ -224,13 +255,15 @@
                             <option value="mixed">Mixed Practice</option>
                             <option value="doubles">Doubles Facts</option>
                             {[...Array(10)].map((_, i) => (
-                            // Hide 0 for division to prevent divide by zero issues in UI selector
-                            (operation === 'div' && i === 0) ? null : 
+                            // Hide 0 for division ONLY if division is the ONLY selected op. 
+                            // If mixed, 0 is fine for add/sub/mul
+                            (selectedOps.length === 1 && selectedOps[0] === 'div' && i === 0) ? null : 
                             <option key={i} value={i}>
-                                {operation === 'add' ? `Adding ${i}s` : 
-                                operation === 'sub' ? `Subtracting ${i}s` :
-                                operation === 'mul' ? `Multiplying ${i}s` :
-                                `Dividing by ${i}s`}
+                                {selectedOps.length > 1 ? `Fact Family: ${i}` : 
+                                 selectedOps[0] === 'add' ? `Adding ${i}s` : 
+                                 selectedOps[0] === 'sub' ? `Subtracting ${i}s` :
+                                 selectedOps[0] === 'mul' ? `Multiplying ${i}s` :
+                                 `Dividing by ${i}s`}
                             </option>
                             ))}
                         </select>
@@ -269,7 +302,7 @@
                     <div className="flex justify-between items-end border-b-4 border-slate-800 pb-4 mb-8">
                         <div>
                         <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight">
-                            {operation === 'add' ? 'Addition' : operation === 'sub' ? 'Subtraction' : operation === 'mul' ? 'Multiplication' : 'Division'} Practice
+                            {getTitle()}
                         </h1>
                         <p className="text-slate-500 mt-2 font-medium">
                             {targetNumber === 'mixed' ? 'Mixed Facts' : 
@@ -295,7 +328,7 @@
                         <div key={prob.id} className="flex flex-col items-end text-3xl font-mono leading-none break-inside-avoid">
                             <span className="mr-2">{prob.num1}</span>
                             <div className="flex justify-between w-full">
-                            <span>{getSymbol(operation)}</span>
+                            <span>{getSymbol(prob.op)}</span>
                             <span className="mr-2">{prob.num2}</span>
                             </div>
                             <div className="w-full border-b-4 border-slate-800 mt-2 mb-4"></div>
@@ -307,7 +340,7 @@
                     <div className="mt-24 pt-8 border-t border-slate-200 flex justify-between text-slate-400 text-sm print:fixed print:bottom-4 print:left-8 print:right-8 print:mt-0">
                         <span>Score: _______ / {problemCount}</span>
                         <span>Created with Sunny Day Math</span>
-                        <span>Sheet ID: {sheetId}-{operation.toUpperCase()}-{new Date().getFullYear()}</span>
+                        <span>Sheet ID: {sheetId}-{new Date().getFullYear()}</span>
                     </div>
 
                     </div>
@@ -320,7 +353,7 @@
 
         const Game = ({ onBack }) => {
             const [gameState, setGameState] = useState('start'); // start, playing, end
-            const [operation, setOperation] = useState('add');
+            const [selectedOps, setSelectedOps] = useState(['add']);
             const [score, setScore] = useState(0);
             const [question, setQuestion] = useState(null);
             const [timeLeft, setTimeLeft] = useState(60);
@@ -329,12 +362,22 @@
             
             const timerRef = useRef(null);
 
+            const toggleOp = (opId) => {
+                setSelectedOps(prev => {
+                    if (prev.includes(opId)) {
+                        if (prev.length === 1) return prev;
+                        return prev.filter(p => p !== opId);
+                    }
+                    return [...prev, opId];
+                });
+            };
+
             const startGame = () => {
                 setScore(0);
                 setTimeLeft(60);
                 setGameState('playing');
                 setStreak(0);
-                generateQuestion(operation); // Pass current operation
+                generateQuestion(); 
                 
                 if (timerRef.current) clearInterval(timerRef.current);
                 timerRef.current = setInterval(() => {
@@ -353,7 +396,10 @@
                 setGameState('end');
             };
 
-            const generateQuestion = (currentOp) => {
+            const generateQuestion = () => {
+                // Pick random op
+                const currentOp = selectedOps[Math.floor(Math.random() * selectedOps.length)];
+
                 // Generate base numbers
                 const base1 = Math.floor(Math.random() * 10); // 0-9
                 const base2 = Math.floor(Math.random() * 10); // 0-9
@@ -410,7 +456,7 @@
                 setScore(prev => prev + points);
                 setStreak(prev => prev + 1);
                 setMessage('CORRECT!');
-                generateQuestion(operation);
+                generateQuestion();
                 } else {
                 setStreak(0);
                 setMessage('Try Again!');
@@ -439,25 +485,26 @@
                     <p className="text-blue-100 text-lg mb-6">60 seconds on the clock!</p>
                     
                     <div className="bg-white/10 rounded-xl p-4 mb-8">
-                        <p className="text-sm font-bold uppercase tracking-wider text-blue-200 mb-3">Choose Your Challenge</p>
+                        <p className="text-sm font-bold uppercase tracking-wider text-blue-200 mb-3">Select Operations</p>
                         <div className="grid grid-cols-4 gap-2">
                         {[
                             { id: 'add', icon: Plus },
                             { id: 'sub', icon: Minus },
                             { id: 'mul', icon: XIcon },
                             { id: 'div', icon: Divide }
-                        ].map((op) => (
-                            <button
-                            key={op.id}
-                            onClick={() => setOperation(op.id)}
-                            className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all ${operation === op.id ? 'bg-yellow-400 text-yellow-900 shadow-lg scale-105' : 'bg-white/20 text-white hover:bg-white/30'}`}
-                            >
-                            <op.icon size={24} strokeWidth={3} />
-                            </button>
-                        ))}
-                        </div>
-                        <div className="mt-3 text-sm font-medium text-yellow-200">
-                        Current: {operation === 'add' ? 'Addition' : operation === 'sub' ? 'Subtraction' : operation === 'mul' ? 'Multiplication' : 'Division'}
+                        ].map((op) => {
+                            const isSelected = selectedOps.includes(op.id);
+                            return (
+                                <button
+                                key={op.id}
+                                onClick={() => toggleOp(op.id)}
+                                className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all relative ${isSelected ? 'bg-yellow-400 text-yellow-900 shadow-lg scale-105' : 'bg-white/20 text-white hover:bg-white/30'}`}
+                                >
+                                <op.icon size={24} strokeWidth={3} />
+                                {isSelected && <div className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></div>}
+                                </button>
+                            );
+                        })}
                         </div>
                     </div>
 
@@ -567,7 +614,7 @@
                         <Printer size={32} className="text-emerald-600" />
                         </div>
                         <h3 className="text-2xl font-bold text-slate-800 mb-2">Worksheet Factory</h3>
-                        <p className="text-slate-500 mb-6">Generate unlimited PDF-ready worksheets. Supports Add, Sub, Mul, and Div.</p>
+                        <p className="text-slate-500 mb-6">Generate unlimited PDF-ready worksheets. Supports mixed operations (e.g. × and ÷ together).</p>
                         <span className="text-emerald-600 font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform">
                         Open Generator <span className="text-xl">→</span>
                         </span>
