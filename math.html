@@ -338,19 +338,20 @@
             const generateQuestion = (currentLevel) => {
                 const currentOp = selectedOps[Math.floor(Math.random() * selectedOps.length)];
                 
-                // DDA Logic: Calculate ranges based on level
-                // Level 1: 0-5
-                // Level 2: 0-10
-                // Level 3: 0-20
-                // Level 4: 0-50...
-                // Multipliers/Divisors scale slower
-                
-                let max = 5;
-                if (currentLevel === 2) max = 10;
-                if (currentLevel === 3) max = 20;
-                if (currentLevel >= 4) max = 10 + (currentLevel * 10);
+                // DDA Logic: Scale difficulty faster
+                let max;
+                if (currentLevel === 1) max = 10;       // 0-10
+                else if (currentLevel === 2) max = 20;  // 0-20
+                else if (currentLevel === 3) max = 50;  // 0-50
+                else if (currentLevel === 4) max = 100; // 0-100
+                else max = 100 + ((currentLevel - 4) * 50); // Level 5+: 150, 200...
 
-                let mulMax = 2 + currentLevel; // L1: 3, L2: 4, L5: 7
+                // Multiplication/Division Scaling
+                let mulMax;
+                if (currentLevel === 1) mulMax = 5;      // 0-5
+                else if (currentLevel === 2) mulMax = 10; // 0-10
+                else if (currentLevel === 3) mulMax = 12; // 0-12 (Standard Facts)
+                else mulMax = 12 + (currentLevel - 3);    // Slow growth: 13, 14...
                 
                 let n1, n2, correctAns, symbol;
 
