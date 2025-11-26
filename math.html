@@ -1,0 +1,550 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Star, Printer, RefreshCw, Play, Home, Trophy, Settings, Plus, Minus, X, Divide } from 'lucide-react';
+
+// --- Components ---
+
+const Button = ({ children, onClick, variant = 'primary', className = '', size = 'md', disabled = false }) => {
+  const baseStyle = "font-bold rounded-xl transition-all transform active:scale-95 shadow-sm flex items-center justify-center gap-2";
+  
+  const variants = {
+    primary: "bg-indigo-500 hover:bg-indigo-600 text-white shadow-indigo-200",
+    secondary: "bg-white hover:bg-gray-50 text-indigo-500 border-2 border-indigo-100",
+    success: "bg-emerald-500 hover:bg-emerald-600 text-white shadow-emerald-200",
+    warning: "bg-amber-400 hover:bg-amber-500 text-white shadow-amber-200",
+    danger: "bg-rose-500 hover:bg-rose-600 text-white shadow-rose-200",
+    ghost: "bg-transparent hover:bg-indigo-50 text-indigo-600 shadow-none"
+  };
+
+  const sizes = {
+    sm: "px-3 py-1.5 text-sm",
+    md: "px-6 py-3 text-base",
+    lg: "px-8 py-4 text-lg"
+  };
+
+  return (
+    <button 
+      onClick={onClick} 
+      disabled={disabled}
+      className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {children}
+    </button>
+  );
+};
+
+// --- Worksheet Generator ---
+
+const WorksheetGenerator = ({ onBack }) => {
+  const [operation, setOperation] = useState('add');
+  const [targetNumber, setTargetNumber] = useState('mixed');
+  const [problemCount, setProblemCount] = useState(20);
+  const [problems, setProblems] = useState([]);
+  const [sheetId, setSheetId] = useState(1);
+
+  // Helper to get symbol
+  const getSymbol = (op) => {
+    switch(op) {
+      case 'add': return '+';
+      case 'sub': return '−';
+      case 'mul': return '×';
+      case 'div': return '÷';
+      default: return '+';
+    }
+  };
+
+  const generateProblems = () => {
+    const newProblems = [];
+    for (let i = 0; i < problemCount; i++) {
+      let num1, num2;
+      let displayNum1, displayNum2;
+
+      // Base numbers (0-9 for standard single digit logic)
+      const base1 = Math.floor(Math.random() * 10);
+      const base2 = Math.floor(Math.random() * 10);
+      
+      let val1 = base1;
+      let val2 = base2;
+
+      // Handle Fixed Target
+      if (targetNumber !== 'mixed' && targetNumber !== 'doubles') {
+        const target = parseInt(targetNumber);
+        // For sub/div, target is usually the second number (subtract 5, divide by 5)
+        val2 = target; 
+        // Randomize the other number
+        val1 = Math.floor(Math.random() * 10); 
+        
+        // Ensure Div by 0 is handled if target is 0 (though we filter 0 out for div selector)
+        if (operation === 'div' && val2 === 0) val2 = 1; 
+      }
+
+      // Handle Doubles
+      if (targetNumber === 'doubles') {
+        val2 = val1;
+      }
+
+      // Logic per operation to ensure clean integers
+      if (operation === 'add') {
+        displayNum1 = val1;
+        displayNum2 = val2;
+      } 
+      else if (operation === 'sub') {
+        // Inverse of addition: (a + b) - b = a
+        displayNum1 = val1 + val2;
+        displayNum2 = val2;
+      } 
+      else if (operation === 'mul') {
+        displayNum1 = val1;
+        displayNum2 = val2;
+      } 
+      else if (operation === 'div') {
+        // Inverse of multiplication: (a * b) / b = a
+        // Ensure divisor is not 0
+        const divisor = val2 === 0 ? 1 : val2; 
+        const quotient = val1;
+        displayNum1 = quotient * divisor;
+        displayNum2 = divisor;
+      }
+
+      newProblems.push({ id: i, num1: displayNum1, num2: displayNum2 });
+    }
+    setProblems(newProblems);
+    setSheetId(prev => prev + 1);
+  };
+
+  useEffect(() => {
+    generateProblems();
+  }, [operation, targetNumber, problemCount]);
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      {/* No-Print Controls Area */}
+      <div className="bg-white border-b border-indigo-100 p-6 print:hidden shadow-sm z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
+              <Settings className="text-indigo-500" />
+              Worksheet Factory
+            </h2>
+            <Button variant="secondary" onClick={onBack} size="sm">Back to Home</Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-indigo-50 p-4 rounded-xl">
+              <label className="block text-sm font-semibold text-indigo-900 mb-2">Operation</label>
+              <div className="grid grid-cols-2 gap-2">
+                 {[
+                   { id: 'add', icon: Plus, label: 'Add' },
+                   { id: 'sub', icon: Minus, label: 'Sub' },
+                   { id: 'mul', icon: X, label: 'Mul' },
+                   { id: 'div', icon: Divide, label: 'Div' }
+                 ].map((op) => (
+                   <button
+                    key={op.id}
+                    onClick={() => { setOperation(op.id); if(op.id === 'div' && targetNumber === '0') setTargetNumber('mixed'); }}
+                    className={`flex items-center justify-center gap-1 p-2 rounded-lg text-sm font-bold transition-all ${operation === op.id ? 'bg-indigo-500 text-white shadow-md' : 'bg-white text-indigo-600 hover:bg-indigo-100'}`}
+                   >
+                     <op.icon size={14} /> {op.label}
+                   </button>
+                 ))}
+              </div>
+            </div>
+
+            <div className="bg-indigo-50 p-4 rounded-xl">
+              <label className="block text-sm font-semibold text-indigo-900 mb-2">Focus Number</label>
+              <select 
+                value={targetNumber} 
+                onChange={(e) => setTargetNumber(e.target.value)}
+                className="w-full p-2 rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="mixed">Mixed Practice</option>
+                <option value="doubles">Doubles Facts</option>
+                {[...Array(10)].map((_, i) => (
+                  // Hide 0 for division to prevent divide by zero issues in UI selector
+                  (operation === 'div' && i === 0) ? null : 
+                  <option key={i} value={i}>
+                    {operation === 'add' ? `Adding ${i}s` : 
+                     operation === 'sub' ? `Subtracting ${i}s` :
+                     operation === 'mul' ? `Multiplying ${i}s` :
+                     `Dividing by ${i}s`}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="bg-indigo-50 p-4 rounded-xl">
+              <label className="block text-sm font-semibold text-indigo-900 mb-2">Problem Count</label>
+              <select 
+                value={problemCount} 
+                onChange={(e) => setProblemCount(Number(e.target.value))}
+                className="w-full p-2 rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value={12}>12 (Large Text)</option>
+                <option value={20}>20 (Standard)</option>
+                <option value={30}>30 (Compact)</option>
+              </select>
+            </div>
+
+            <div className="flex flex-col gap-2 justify-end">
+               <Button onClick={generateProblems} variant="primary" className="w-full h-10">
+                 <RefreshCw size={18} /> New Sheet
+               </Button>
+               <Button onClick={handlePrint} variant="success" className="w-full h-10">
+                 <Printer size={18} /> Print
+               </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Printable Sheet Area */}
+      <div className="flex-1 overflow-auto bg-slate-100 p-8 print:p-0 print:bg-white print:overflow-visible">
+        <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none p-12 min-h-[11in] print:min-h-0 rounded-xl print:rounded-none">
+          
+          {/* Sheet Header */}
+          <div className="flex justify-between items-end border-b-4 border-slate-800 pb-4 mb-8">
+            <div>
+              <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight">
+                {operation === 'add' ? 'Addition' : operation === 'sub' ? 'Subtraction' : operation === 'mul' ? 'Multiplication' : 'Division'} Practice
+              </h1>
+              <p className="text-slate-500 mt-2 font-medium">
+                {targetNumber === 'mixed' ? 'Mixed Facts' : 
+                 targetNumber === 'doubles' ? 'Doubles Facts' : 
+                 `Fact Family: ${targetNumber}`}
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="mb-2">
+                <span className="text-xl font-bold text-slate-400 mr-2">Name:</span>
+                <div className="inline-block w-64 border-b-2 border-slate-300"></div>
+              </div>
+              <div>
+                <span className="text-xl font-bold text-slate-400 mr-2">Date:</span>
+                <div className="inline-block w-40 border-b-2 border-slate-300"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Problems Grid */}
+          <div className={`grid gap-x-12 gap-y-16 ${problemCount === 12 ? 'grid-cols-3' : problemCount === 30 ? 'grid-cols-5' : 'grid-cols-4'}`}>
+            {problems.map((prob) => (
+              <div key={prob.id} className="flex flex-col items-end text-3xl font-mono leading-none break-inside-avoid">
+                <span className="mr-2">{prob.num1}</span>
+                <div className="flex justify-between w-full">
+                  <span>{getSymbol(operation)}</span>
+                  <span className="mr-2">{prob.num2}</span>
+                </div>
+                <div className="w-full border-b-4 border-slate-800 mt-2 mb-4"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Sheet Footer */}
+          <div className="mt-24 pt-8 border-t border-slate-200 flex justify-between text-slate-400 text-sm print:fixed print:bottom-4 print:left-8 print:right-8 print:mt-0">
+            <span>Score: _______ / {problemCount}</span>
+            <span>Created with Sunny Day Math</span>
+            <span>Sheet ID: {sheetId}-{operation.toUpperCase()}-{new Date().getFullYear()}</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Interactive Game ---
+
+const Game = ({ onBack }) => {
+  const [gameState, setGameState] = useState('start'); // start, playing, end
+  const [operation, setOperation] = useState('add');
+  const [score, setScore] = useState(0);
+  const [question, setQuestion] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [message, setMessage] = useState('');
+  const [streak, setStreak] = useState(0);
+  
+  const timerRef = useRef(null);
+
+  const startGame = () => {
+    setScore(0);
+    setTimeLeft(60);
+    setGameState('playing');
+    setStreak(0);
+    generateQuestion(operation); // Pass current operation
+    
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          endGame();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const endGame = () => {
+    clearInterval(timerRef.current);
+    setGameState('end');
+  };
+
+  const generateQuestion = (currentOp) => {
+    // Generate base numbers
+    const base1 = Math.floor(Math.random() * 10); // 0-9
+    const base2 = Math.floor(Math.random() * 10); // 0-9
+
+    let n1, n2, correctAns, symbol;
+
+    if (currentOp === 'add') {
+        n1 = base1;
+        n2 = base2;
+        correctAns = n1 + n2;
+        symbol = '+';
+    } else if (currentOp === 'sub') {
+        n2 = base2;
+        correctAns = base1; // The answer is one of the base numbers
+        n1 = base2 + correctAns; // Ensure n1 - n2 = correctAns
+        symbol = '−';
+    } else if (currentOp === 'mul') {
+        n1 = base1;
+        n2 = base2;
+        correctAns = n1 * n2;
+        symbol = '×';
+    } else if (currentOp === 'div') {
+        const divisor = base2 === 0 ? 1 : base2;
+        const quotient = base1;
+        n2 = divisor;
+        correctAns = quotient;
+        n1 = quotient * divisor; // Ensure n1 / n2 = correctAns
+        symbol = '÷';
+    }
+
+    // Generate distractions close to the answer
+    let distractions = new Set();
+    while (distractions.size < 3) {
+      // Create offset. For division/subtraction we want small integer offsets
+      const offset = Math.floor(Math.random() * 5) - 2; 
+      const val = correctAns + offset;
+      if (val >= 0 && val !== correctAns) {
+        distractions.add(val);
+      } else if (val === correctAns) {
+        // Fallback
+        distractions.add(correctAns + 3); 
+      }
+    }
+
+    const options = [...distractions, correctAns].sort(() => Math.random() - 0.5);
+
+    setQuestion({ n1, n2, symbol, correctAns, options });
+    setMessage('');
+  };
+
+  const handleAnswer = (ans) => {
+    if (ans === question.correctAns) {
+      const points = 10 + (streak * 2);
+      setScore(prev => prev + points);
+      setStreak(prev => prev + 1);
+      setMessage('CORRECT!');
+      generateQuestion(operation);
+    } else {
+      setStreak(0);
+      setMessage('Try Again!');
+      setScore(prev => Math.max(0, prev - 5));
+    }
+  };
+
+  useEffect(() => {
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full bg-gradient-to-b from-blue-400 to-indigo-600 p-4 text-white">
+      <div className="absolute top-4 left-4">
+        <Button onClick={onBack} variant="secondary" size="sm" className="!bg-white/10 !text-white !border-white/20 hover:!bg-white/20">
+          <Home size={16} /> Exit
+        </Button>
+      </div>
+
+      {gameState === 'start' && (
+        <div className="text-center bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/20 max-w-md w-full">
+          <div className="mb-6 flex justify-center">
+            <Trophy size={64} className="text-yellow-300" />
+          </div>
+          <h1 className="text-4xl font-extrabold mb-2">Math Sprint</h1>
+          <p className="text-blue-100 text-lg mb-6">60 seconds on the clock!</p>
+          
+          <div className="bg-white/10 rounded-xl p-4 mb-8">
+            <p className="text-sm font-bold uppercase tracking-wider text-blue-200 mb-3">Choose Your Challenge</p>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                   { id: 'add', icon: Plus },
+                   { id: 'sub', icon: Minus },
+                   { id: 'mul', icon: X },
+                   { id: 'div', icon: Divide }
+              ].map((op) => (
+                <button
+                  key={op.id}
+                  onClick={() => setOperation(op.id)}
+                  className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all ${operation === op.id ? 'bg-yellow-400 text-yellow-900 shadow-lg scale-105' : 'bg-white/20 text-white hover:bg-white/30'}`}
+                >
+                  <op.icon size={24} strokeWidth={3} />
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 text-sm font-medium text-yellow-200">
+               Current: {operation === 'add' ? 'Addition' : operation === 'sub' ? 'Subtraction' : operation === 'mul' ? 'Multiplication' : 'Division'}
+            </div>
+          </div>
+
+          <Button onClick={startGame} variant="warning" size="lg" className="w-full text-xl shadow-lg hover:shadow-xl transform transition-transform hover:-translate-y-1">
+            <Play size={24} fill="currentColor" /> Start Sprint
+          </Button>
+        </div>
+      )}
+
+      {gameState === 'playing' && question && (
+        <div className="w-full max-w-lg">
+           <div className="flex justify-between items-center mb-8 px-4">
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider text-blue-200 font-bold">Time</p>
+                <p className={`text-3xl font-black ${timeLeft < 10 ? 'text-rose-300 animate-pulse' : 'text-white'}`}>{timeLeft}</p>
+              </div>
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider text-blue-200 font-bold">Streak</p>
+                <div className="flex text-yellow-300 h-8">
+                  {[...Array(Math.min(streak, 5))].map((_, i) => (
+                    <Star key={i} size={20} fill="currentColor" />
+                  ))}
+                </div>
+              </div>
+              <div className="text-center">
+                <p className="text-xs uppercase tracking-wider text-blue-200 font-bold">Score</p>
+                <p className="text-3xl font-black text-white">{score}</p>
+              </div>
+           </div>
+
+           <div className="bg-white rounded-3xl p-8 shadow-2xl text-center mb-6 relative overflow-hidden">
+             {/* Problem */}
+             <div className="text-7xl md:text-8xl font-black text-slate-800 mb-8 tracking-tighter flex justify-center items-center gap-4">
+               <span>{question.n1}</span>
+               <span className="text-indigo-500">{question.symbol}</span>
+               <span>{question.n2}</span>
+             </div>
+             
+             {/* Options */}
+             <div className="grid grid-cols-2 gap-4">
+               {question.options.map((opt, idx) => (
+                 <button
+                   key={idx}
+                   onClick={() => handleAnswer(opt)}
+                   className="h-24 text-4xl font-bold rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 shadow-md border-b-4 border-indigo-200 active:border-b-0 active:mt-1"
+                 >
+                   {opt}
+                 </button>
+               ))}
+             </div>
+
+             {/* Feedback Overlay */}
+             {message && (
+               <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-${message === 'CORRECT!' ? 'emerald' : 'rose'}-500 to-transparent opacity-50`}></div>
+             )}
+           </div>
+        </div>
+      )}
+
+      {gameState === 'end' && (
+        <div className="text-center bg-white rounded-3xl p-12 shadow-2xl max-w-md w-full animate-fade-in-up">
+          <div className="mb-6 inline-block p-4 rounded-full bg-yellow-100">
+            <Trophy size={48} className="text-yellow-500" />
+          </div>
+          <h2 className="text-3xl font-bold text-slate-800 mb-2">Time's Up!</h2>
+          <p className="text-slate-500 mb-6">Great job practicing your facts!</p>
+          
+          <div className="bg-slate-50 rounded-xl p-6 mb-8">
+            <p className="text-sm uppercase text-slate-400 font-bold tracking-wider">Final Score</p>
+            <p className="text-6xl font-black text-indigo-600">{score}</p>
+          </div>
+
+          <div className="space-y-3">
+            <Button onClick={startGame} variant="primary" className="w-full h-14 text-lg">
+              <RefreshCw size={20} /> Play Again
+            </Button>
+            <Button onClick={onBack} variant="secondary" className="w-full h-14 text-lg">
+              Back to Menu
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// --- Main Menu ---
+
+const Menu = ({ setMode }) => (
+  <div className="h-full flex flex-col items-center justify-center bg-slate-50 p-4">
+    <div className="text-center mb-12">
+      <div className="inline-flex items-center justify-center p-4 bg-indigo-100 rounded-full mb-6">
+         <Star size={40} className="text-indigo-600" fill="currentColor" />
+      </div>
+      <h1 className="text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">Sunny Day Math</h1>
+      <p className="text-xl text-slate-500 max-w-md mx-auto">
+        Your all-in-one kit for math mastery. Print worksheets or play games!
+      </p>
+    </div>
+
+    <div className="grid md:grid-cols-2 gap-8 max-w-4xl w-full">
+      <button 
+        onClick={() => setMode('worksheet')}
+        className="group relative bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 text-left border-2 border-transparent hover:border-indigo-100"
+      >
+        <div className="absolute top-8 right-8 bg-emerald-100 p-3 rounded-2xl group-hover:bg-emerald-200 transition-colors">
+          <Printer size={32} className="text-emerald-600" />
+        </div>
+        <h3 className="text-2xl font-bold text-slate-800 mb-2">Worksheet Factory</h3>
+        <p className="text-slate-500 mb-6">Generate unlimited PDF-ready worksheets. Supports Add, Sub, Mul, and Div.</p>
+        <span className="text-emerald-600 font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+          Open Generator <span className="text-xl">→</span>
+        </span>
+      </button>
+
+      <button 
+        onClick={() => setMode('game')}
+        className="group relative bg-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-2 text-left border-2 border-transparent hover:border-indigo-100"
+      >
+        <div className="absolute top-8 right-8 bg-amber-100 p-3 rounded-2xl group-hover:bg-amber-200 transition-colors">
+          <Play size={32} className="text-amber-600" fill="currentColor" />
+        </div>
+        <h3 className="text-2xl font-bold text-slate-800 mb-2">Math Sprint Game</h3>
+        <p className="text-slate-500 mb-6">A fast-paced interactive game to build fact fluency and speed.</p>
+        <span className="text-amber-600 font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform">
+          Play Now <span className="text-xl">→</span>
+        </span>
+      </button>
+    </div>
+    
+    <div className="mt-16 text-slate-400 text-sm font-medium">
+      Designed for Teachers & Parents • Printable Friendly
+    </div>
+  </div>
+);
+
+// --- App Container ---
+
+const App = () => {
+  const [mode, setMode] = useState('home');
+
+  return (
+    <div className="h-screen w-full font-sans text-slate-900 bg-slate-50 overflow-hidden">
+      {mode === 'home' && <Menu setMode={setMode} />}
+      {mode === 'worksheet' && <WorksheetGenerator onBack={() => setMode('home')} />}
+      {mode === 'game' && <Game onBack={() => setMode('home')} />}
+    </div>
+  );
+};
+
+export default App;
