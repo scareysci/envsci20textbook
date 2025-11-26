@@ -32,7 +32,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- Icons (SVG replacements for lucide-react to work standalone) ---
+        // --- Icons ---
         const IconBase = ({ size = 24, className = "", children }) => (
             <svg 
                 xmlns="http://www.w3.org/2000/svg" 
@@ -61,7 +61,6 @@
         const Minus = (props) => <IconBase {...props}><line x1="5" y1="12" x2="19" y2="12"></line></IconBase>;
         const XIcon = (props) => <IconBase {...props}><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></IconBase>;
         const Divide = (props) => <IconBase {...props}><circle cx="12" cy="6" r="2"></circle><line x1="5" y1="12" x2="19" y2="12"></line><circle cx="12" cy="18" r="2"></circle></IconBase>;
-        const Check = (props) => <IconBase {...props}><polyline points="20 6 9 17 4 12"></polyline></IconBase>;
 
         // --- Components ---
 
@@ -94,19 +93,41 @@
             );
         };
 
+        const NumberInput = ({ label, value, onChange, min = 0 }) => (
+            <div className="flex flex-col flex-1">
+                <label className="text-xs font-bold text-indigo-900 mb-1">{label}</label>
+                <input 
+                    type="number" 
+                    value={value} 
+                    min={min}
+                    onChange={(e) => onChange(Number(e.target.value))}
+                    className="w-full p-2 rounded-lg border border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-center font-mono font-bold"
+                />
+            </div>
+        );
+
+        // --- Helper: Random Range ---
+        const getRandom = (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+
         // --- Worksheet Generator ---
 
         const WorksheetGenerator = ({ onBack }) => {
             const [selectedOps, setSelectedOps] = useState(['add']);
             const [targetNumber, setTargetNumber] = useState('mixed');
             const [problemCount, setProblemCount] = useState(20);
+            
+            // Range State
+            const [minVal, setMinVal] = useState(0);
+            const [maxVal, setMaxVal] = useState(9);
+
             const [problems, setProblems] = useState([]);
             const [sheetId, setSheetId] = useState(1);
 
             const toggleOp = (opId) => {
                 setSelectedOps(prev => {
                     if (prev.includes(opId)) {
-                        // Prevent unselecting the last operation
                         if (prev.length === 1) return prev;
                         return prev.filter(p => p !== opId);
                     }
@@ -114,7 +135,6 @@
                 });
             };
 
-            // Helper to get symbol
             const getSymbol = (op) => {
                 switch(op) {
                 case 'add': return '+';
@@ -128,15 +148,14 @@
             const generateProblems = () => {
                 const newProblems = [];
                 for (let i = 0; i < problemCount; i++) {
-                    // Pick random operation from selected
                     const currentOp = selectedOps[Math.floor(Math.random() * selectedOps.length)];
 
                     let num1, num2;
                     let displayNum1, displayNum2;
 
-                    // Base numbers (0-9 for standard single digit logic)
-                    const base1 = Math.floor(Math.random() * 10);
-                    const base2 = Math.floor(Math.random() * 10);
+                    // Use User Defined Range
+                    const base1 = getRandom(minVal, maxVal);
+                    const base2 = getRandom(minVal, maxVal);
                     
                     let val1 = base1;
                     let val2 = base2;
@@ -144,12 +163,9 @@
                     // Handle Fixed Target
                     if (targetNumber !== 'mixed' && targetNumber !== 'doubles') {
                         const target = parseInt(targetNumber);
-                        // For sub/div, target is usually the second number (subtract 5, divide by 5)
                         val2 = target; 
-                        // Randomize the other number
-                        val1 = Math.floor(Math.random() * 10); 
+                        val1 = getRandom(minVal, maxVal);
                         
-                        // Ensure Div by 0 is handled if target is 0
                         if (currentOp === 'div' && val2 === 0) val2 = 1; 
                     }
 
@@ -158,13 +174,12 @@
                         val2 = val1;
                     }
 
-                    // Logic per operation to ensure clean integers
+                    // Logic per operation
                     if (currentOp === 'add') {
                         displayNum1 = val1;
                         displayNum2 = val2;
                     } 
                     else if (currentOp === 'sub') {
-                        // Inverse of addition: (a + b) - b = a
                         displayNum1 = val1 + val2;
                         displayNum2 = val2;
                     } 
@@ -173,8 +188,6 @@
                         displayNum2 = val2;
                     } 
                     else if (currentOp === 'div') {
-                        // Inverse of multiplication: (a * b) / b = a
-                        // Ensure divisor is not 0
                         const divisor = val2 === 0 ? 1 : val2; 
                         const quotient = val1;
                         displayNum1 = quotient * divisor;
@@ -189,11 +202,9 @@
 
             useEffect(() => {
                 generateProblems();
-            }, [selectedOps, targetNumber, problemCount]);
+            }, [selectedOps, targetNumber, problemCount, minVal, maxVal]);
 
-            const handlePrint = () => {
-                window.print();
-            };
+            const handlePrint = () => window.print();
 
             const getTitle = () => {
                 if (selectedOps.length === 1) {
@@ -209,9 +220,8 @@
 
             return (
                 <div className="flex flex-col h-full bg-slate-50">
-                {/* No-Print Controls Area */}
                 <div className="bg-white border-b border-indigo-100 p-6 print:hidden shadow-sm z-10">
-                    <div className="max-w-5xl mx-auto">
+                    <div className="max-w-6xl mx-auto">
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-bold text-slate-800 flex items-center gap-2">
                         <Settings className="text-indigo-500" />
@@ -220,94 +230,79 @@
                         <Button variant="secondary" onClick={onBack} size="sm">Back to Home</Button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                        <div className="bg-indigo-50 p-4 rounded-xl">
-                        <label className="block text-sm font-semibold text-indigo-900 mb-2">Operations (Select Multiple)</label>
-                        <div className="grid grid-cols-2 gap-2">
-                            {[
-                            { id: 'add', icon: Plus, label: 'Add' },
-                            { id: 'sub', icon: Minus, label: 'Sub' },
-                            { id: 'mul', icon: XIcon, label: 'Mul' },
-                            { id: 'div', icon: Divide, label: 'Div' }
-                            ].map((op) => {
-                                const isSelected = selectedOps.includes(op.id);
-                                return (
-                                    <button
-                                        key={op.id}
-                                        onClick={() => toggleOp(op.id)}
-                                        className={`flex items-center justify-center gap-1 p-2 rounded-lg text-sm font-bold transition-all relative ${isSelected ? 'bg-indigo-600 text-white shadow-md ring-2 ring-indigo-300 ring-offset-1' : 'bg-white text-indigo-400 hover:bg-indigo-50 border border-indigo-100'}`}
-                                    >
-                                        <op.icon size={14} /> {op.label}
-                                        {isSelected && <div className="absolute top-1 right-1 w-2 h-2 bg-emerald-400 rounded-full"></div>}
-                                    </button>
-                                );
-                            })}
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
+                        <div className="bg-indigo-50 p-4 rounded-xl col-span-1 md:col-span-2">
+                            <label className="block text-sm font-semibold text-indigo-900 mb-2">Operations</label>
+                            <div className="grid grid-cols-4 gap-2">
+                                {[
+                                { id: 'add', icon: Plus },
+                                { id: 'sub', icon: Minus },
+                                { id: 'mul', icon: XIcon },
+                                { id: 'div', icon: Divide }
+                                ].map((op) => {
+                                    const isSelected = selectedOps.includes(op.id);
+                                    return (
+                                        <button
+                                            key={op.id}
+                                            onClick={() => toggleOp(op.id)}
+                                            className={`flex items-center justify-center p-2 rounded-lg transition-all relative ${isSelected ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-indigo-400 border border-indigo-100'}`}
+                                        >
+                                            <op.icon size={20} />
+                                            {isSelected && <div className="absolute top-0 right-0 w-2 h-2 bg-emerald-400 rounded-full"></div>}
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         </div>
 
                         <div className="bg-indigo-50 p-4 rounded-xl">
-                        <label className="block text-sm font-semibold text-indigo-900 mb-2">Focus Number</label>
-                        <select 
-                            value={targetNumber} 
-                            onChange={(e) => setTargetNumber(e.target.value)}
-                            className="w-full p-2 rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        >
-                            <option value="mixed">Mixed Practice</option>
-                            <option value="doubles">Doubles Facts</option>
-                            {[...Array(10)].map((_, i) => (
-                            // Hide 0 for division ONLY if division is the ONLY selected op. 
-                            // If mixed, 0 is fine for add/sub/mul
-                            (selectedOps.length === 1 && selectedOps[0] === 'div' && i === 0) ? null : 
-                            <option key={i} value={i}>
-                                {selectedOps.length > 1 ? `Fact Family: ${i}` : 
-                                 selectedOps[0] === 'add' ? `Adding ${i}s` : 
-                                 selectedOps[0] === 'sub' ? `Subtracting ${i}s` :
-                                 selectedOps[0] === 'mul' ? `Multiplying ${i}s` :
-                                 `Dividing by ${i}s`}
-                            </option>
-                            ))}
-                        </select>
+                            <label className="block text-sm font-semibold text-indigo-900 mb-2">Range</label>
+                            <div className="flex gap-2">
+                                <NumberInput label="Min" value={minVal} onChange={setMinVal} />
+                                <NumberInput label="Max" value={maxVal} onChange={setMaxVal} />
+                            </div>
+                        </div>
+
+                        <div className="bg-indigo-50 p-4 rounded-xl">
+                            <label className="block text-sm font-semibold text-indigo-900 mb-2">Focus</label>
+                            <select 
+                                value={targetNumber} 
+                                onChange={(e) => setTargetNumber(e.target.value)}
+                                className="w-full p-2 rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500"
+                            >
+                                <option value="mixed">Mixed</option>
+                                <option value="doubles">Doubles</option>
+                                {[...Array(12)].map((_, i) => (
+                                (selectedOps.length === 1 && selectedOps[0] === 'div' && i === 0) ? null : 
+                                <option key={i} value={i}>
+                                    {`Fact: ${i}`}
+                                </option>
+                                ))}
+                            </select>
                         </div>
                         
-                        <div className="bg-indigo-50 p-4 rounded-xl">
-                        <label className="block text-sm font-semibold text-indigo-900 mb-2">Problem Count</label>
-                        <select 
-                            value={problemCount} 
-                            onChange={(e) => setProblemCount(Number(e.target.value))}
-                            className="w-full p-2 rounded-lg border-indigo-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        >
-                            <option value={12}>12 (Large Text)</option>
-                            <option value={20}>20 (Standard)</option>
-                            <option value={30}>30 (Compact)</option>
-                        </select>
-                        </div>
-
                         <div className="flex flex-col gap-2 justify-end">
-                        <Button onClick={generateProblems} variant="primary" className="w-full h-10">
-                            <RefreshCw size={18} /> New Sheet
-                        </Button>
-                        <Button onClick={handlePrint} variant="success" className="w-full h-10">
-                            <Printer size={18} /> Print
-                        </Button>
+                            <Button onClick={generateProblems} variant="primary" className="w-full h-10">
+                                <RefreshCw size={18} /> New
+                            </Button>
+                            <Button onClick={handlePrint} variant="success" className="w-full h-10">
+                                <Printer size={18} /> Print
+                            </Button>
                         </div>
                     </div>
                     </div>
                 </div>
 
-                {/* Printable Sheet Area */}
                 <div className="flex-1 overflow-auto bg-slate-100 p-8 print:p-0 print:bg-white print:overflow-visible">
                     <div className="max-w-4xl mx-auto bg-white shadow-xl print:shadow-none p-12 min-h-[11in] print:min-h-0 rounded-xl print:rounded-none">
                     
-                    {/* Sheet Header */}
                     <div className="flex justify-between items-end border-b-4 border-slate-800 pb-4 mb-8">
                         <div>
                         <h1 className="text-4xl font-extrabold text-slate-800 tracking-tight">
                             {getTitle()}
                         </h1>
                         <p className="text-slate-500 mt-2 font-medium">
-                            {targetNumber === 'mixed' ? 'Mixed Facts' : 
-                            targetNumber === 'doubles' ? 'Doubles Facts' : 
-                            `Fact Family: ${targetNumber}`}
+                            Range: {minVal}-{maxVal} • {targetNumber === 'mixed' ? 'Mixed' : targetNumber === 'doubles' ? 'Doubles' : `Fact: ${targetNumber}`}
                         </p>
                         </div>
                         <div className="text-right">
@@ -322,7 +317,6 @@
                         </div>
                     </div>
 
-                    {/* Problems Grid */}
                     <div className={`grid gap-x-12 gap-y-16 ${problemCount === 12 ? 'grid-cols-3' : problemCount === 30 ? 'grid-cols-5' : 'grid-cols-4'}`}>
                         {problems.map((prob) => (
                         <div key={prob.id} className="flex flex-col items-end text-3xl font-mono leading-none break-inside-avoid">
@@ -336,11 +330,9 @@
                         ))}
                     </div>
 
-                    {/* Sheet Footer */}
                     <div className="mt-24 pt-8 border-t border-slate-200 flex justify-between text-slate-400 text-sm print:fixed print:bottom-4 print:left-8 print:right-8 print:mt-0">
                         <span>Score: _______ / {problemCount}</span>
-                        <span>Created with Sunny Day Math</span>
-                        <span>Sheet ID: {sheetId}-{new Date().getFullYear()}</span>
+                        <span>Sunny Day Math • {sheetId}-{new Date().getFullYear()}</span>
                     </div>
 
                     </div>
@@ -352,8 +344,10 @@
         // --- Interactive Game ---
 
         const Game = ({ onBack }) => {
-            const [gameState, setGameState] = useState('start'); // start, playing, end
+            const [gameState, setGameState] = useState('start');
             const [selectedOps, setSelectedOps] = useState(['add']);
+            const [minVal, setMinVal] = useState(0);
+            const [maxVal, setMaxVal] = useState(10);
             const [score, setScore] = useState(0);
             const [question, setQuestion] = useState(null);
             const [timeLeft, setTimeLeft] = useState(60);
@@ -397,12 +391,10 @@
             };
 
             const generateQuestion = () => {
-                // Pick random op
                 const currentOp = selectedOps[Math.floor(Math.random() * selectedOps.length)];
 
-                // Generate base numbers
-                const base1 = Math.floor(Math.random() * 10); // 0-9
-                const base2 = Math.floor(Math.random() * 10); // 0-9
+                const base1 = getRandom(minVal, maxVal);
+                const base2 = getRandom(minVal, maxVal);
 
                 let n1, n2, correctAns, symbol;
 
@@ -413,8 +405,8 @@
                     symbol = '+';
                 } else if (currentOp === 'sub') {
                     n2 = base2;
-                    correctAns = base1; // The answer is one of the base numbers
-                    n1 = base2 + correctAns; // Ensure n1 - n2 = correctAns
+                    correctAns = base1; 
+                    n1 = base2 + correctAns; 
                     symbol = '−';
                 } else if (currentOp === 'mul') {
                     n1 = base1;
@@ -426,22 +418,22 @@
                     const quotient = base1;
                     n2 = divisor;
                     correctAns = quotient;
-                    n1 = quotient * divisor; // Ensure n1 / n2 = correctAns
+                    n1 = quotient * divisor; 
                     symbol = '÷';
                 }
 
-                // Generate distractions close to the answer
+                // Smart Distractions based on answer size
                 let distractions = new Set();
+                const range = Math.max(5, Math.floor(correctAns * 0.2)); // Dynamic range for wrong answers
+                
                 while (distractions.size < 3) {
-                // Create offset. For division/subtraction we want small integer offsets
-                const offset = Math.floor(Math.random() * 5) - 2; 
-                const val = correctAns + offset;
-                if (val >= 0 && val !== correctAns) {
-                    distractions.add(val);
-                } else if (val === correctAns) {
-                    // Fallback
-                    distractions.add(correctAns + 3); 
-                }
+                    const offset = Math.floor(Math.random() * (range * 2)) - range; 
+                    const val = correctAns + offset;
+                    if (val >= 0 && val !== correctAns) {
+                        distractions.add(val);
+                    } else if (val === correctAns) {
+                        distractions.add(correctAns + (range + 1)); 
+                    }
                 }
 
                 const options = [...distractions, correctAns].sort(() => Math.random() - 0.5);
@@ -452,15 +444,15 @@
 
             const handleAnswer = (ans) => {
                 if (ans === question.correctAns) {
-                const points = 10 + (streak * 2);
-                setScore(prev => prev + points);
-                setStreak(prev => prev + 1);
-                setMessage('CORRECT!');
-                generateQuestion();
+                    const points = 10 + (streak * 2);
+                    setScore(prev => prev + points);
+                    setStreak(prev => prev + 1);
+                    setMessage('CORRECT!');
+                    generateQuestion();
                 } else {
-                setStreak(0);
-                setMessage('Try Again!');
-                setScore(prev => Math.max(0, prev - 5));
+                    setStreak(0);
+                    setMessage('Try Again!');
+                    setScore(prev => Math.max(0, prev - 5));
                 }
             };
 
@@ -478,39 +470,57 @@
 
                 {gameState === 'start' && (
                     <div className="text-center bg-white/10 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/20 max-w-md w-full animate-fade-in-up">
-                    <div className="mb-6 flex justify-center">
-                        <Trophy size={64} className="text-yellow-300" />
-                    </div>
-                    <h1 className="text-4xl font-extrabold mb-2">Math Sprint</h1>
-                    <p className="text-blue-100 text-lg mb-6">60 seconds on the clock!</p>
-                    
-                    <div className="bg-white/10 rounded-xl p-4 mb-8">
-                        <p className="text-sm font-bold uppercase tracking-wider text-blue-200 mb-3">Select Operations</p>
-                        <div className="grid grid-cols-4 gap-2">
-                        {[
-                            { id: 'add', icon: Plus },
-                            { id: 'sub', icon: Minus },
-                            { id: 'mul', icon: XIcon },
-                            { id: 'div', icon: Divide }
-                        ].map((op) => {
-                            const isSelected = selectedOps.includes(op.id);
-                            return (
-                                <button
-                                key={op.id}
-                                onClick={() => toggleOp(op.id)}
-                                className={`flex flex-col items-center justify-center p-3 rounded-lg transition-all relative ${isSelected ? 'bg-yellow-400 text-yellow-900 shadow-lg scale-105' : 'bg-white/20 text-white hover:bg-white/30'}`}
-                                >
-                                <op.icon size={24} strokeWidth={3} />
-                                {isSelected && <div className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></div>}
-                                </button>
-                            );
-                        })}
+                        <div className="mb-6 flex justify-center">
+                            <Trophy size={64} className="text-yellow-300" />
                         </div>
-                    </div>
+                        <h1 className="text-4xl font-extrabold mb-2">Math Sprint</h1>
+                        <p className="text-blue-100 text-lg mb-6">60 seconds on the clock!</p>
+                        
+                        <div className="bg-white/10 rounded-xl p-4 mb-6 text-left">
+                            <p className="text-sm font-bold uppercase tracking-wider text-blue-200 mb-3 text-center">Settings</p>
+                            
+                            <div className="mb-4">
+                                <p className="text-xs text-blue-200 mb-2 font-bold">Operations</p>
+                                <div className="grid grid-cols-4 gap-2">
+                                {[
+                                    { id: 'add', icon: Plus },
+                                    { id: 'sub', icon: Minus },
+                                    { id: 'mul', icon: XIcon },
+                                    { id: 'div', icon: Divide }
+                                ].map((op) => {
+                                    const isSelected = selectedOps.includes(op.id);
+                                    return (
+                                        <button
+                                        key={op.id}
+                                        onClick={() => toggleOp(op.id)}
+                                        className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all relative ${isSelected ? 'bg-yellow-400 text-yellow-900 shadow-lg' : 'bg-white/20 text-white hover:bg-white/30'}`}
+                                        >
+                                        <op.icon size={20} strokeWidth={3} />
+                                        {isSelected && <div className="absolute top-1 right-1 w-2 h-2 bg-indigo-600 rounded-full"></div>}
+                                        </button>
+                                    );
+                                })}
+                                </div>
+                            </div>
 
-                    <Button onClick={startGame} variant="warning" size="lg" className="w-full text-xl shadow-lg hover:shadow-xl transform transition-transform hover:-translate-y-1">
-                        <Play size={24} fill="currentColor" /> Start Sprint
-                    </Button>
+                            <div>
+                                <p className="text-xs text-blue-200 mb-2 font-bold">Number Range</p>
+                                <div className="flex gap-4">
+                                    <div className="flex-1">
+                                        <label className="text-xs text-blue-300">Min</label>
+                                        <input type="number" value={minVal} onChange={(e) => setMinVal(Number(e.target.value))} className="w-full p-2 rounded bg-black/20 border border-white/20 text-center font-bold" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <label className="text-xs text-blue-300">Max</label>
+                                        <input type="number" value={maxVal} onChange={(e) => setMaxVal(Number(e.target.value))} className="w-full p-2 rounded bg-black/20 border border-white/20 text-center font-bold" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <Button onClick={startGame} variant="warning" size="lg" className="w-full text-xl shadow-lg hover:shadow-xl transform transition-transform hover:-translate-y-1">
+                            <Play size={24} fill="currentColor" /> Start Sprint
+                        </Button>
                     </div>
                 )}
 
@@ -536,27 +546,24 @@
                     </div>
 
                     <div className="bg-white rounded-3xl p-8 shadow-2xl text-center mb-6 relative overflow-hidden animate-fade-in-up">
-                        {/* Problem */}
-                        <div className="text-7xl md:text-8xl font-black text-slate-800 mb-8 tracking-tighter flex justify-center items-center gap-4">
+                        <div className="text-6xl md:text-8xl font-black text-slate-800 mb-8 tracking-tighter flex justify-center items-center gap-4 flex-wrap">
                         <span>{question.n1}</span>
                         <span className="text-indigo-500">{question.symbol}</span>
                         <span>{question.n2}</span>
                         </div>
                         
-                        {/* Options */}
                         <div className="grid grid-cols-2 gap-4">
                         {question.options.map((opt, idx) => (
                             <button
                             key={idx}
                             onClick={() => handleAnswer(opt)}
-                            className="h-24 text-4xl font-bold rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 shadow-md border-b-4 border-indigo-200 active:border-b-0 active:mt-1"
+                            className="h-24 text-2xl md:text-4xl font-bold rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-500 hover:text-white transition-all transform active:scale-95 shadow-md border-b-4 border-indigo-200 active:border-b-0 active:mt-1 flex items-center justify-center"
                             >
                             {opt}
                             </button>
                         ))}
                         </div>
 
-                        {/* Feedback Overlay */}
                         {message && (
                         <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-${message === 'CORRECT!' ? 'emerald' : 'rose'}-500 to-transparent opacity-50`}></div>
                         )}
@@ -591,8 +598,6 @@
             );
         };
 
-        // --- Main Menu ---
-
         const Menu = ({ setMode }) => (
             <div className="h-full min-h-screen flex flex-col items-center justify-center bg-slate-50 p-4">
                 <div className="text-center mb-12 animate-fade-in-up">
@@ -614,7 +619,7 @@
                         <Printer size={32} className="text-emerald-600" />
                         </div>
                         <h3 className="text-2xl font-bold text-slate-800 mb-2">Worksheet Factory</h3>
-                        <p className="text-slate-500 mb-6">Generate unlimited PDF-ready worksheets. Supports mixed operations (e.g. × and ÷ together).</p>
+                        <p className="text-slate-500 mb-6">Generate unlimited PDF-ready worksheets. Supports custom ranges (e.g., 0–100).</p>
                         <span className="text-emerald-600 font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform">
                         Open Generator <span className="text-xl">→</span>
                         </span>
@@ -628,7 +633,7 @@
                         <Play size={32} className="text-amber-600" fill="currentColor" />
                         </div>
                         <h3 className="text-2xl font-bold text-slate-800 mb-2">Math Sprint Game</h3>
-                        <p className="text-slate-500 mb-6">A fast-paced interactive game to build fact fluency and speed.</p>
+                        <p className="text-slate-500 mb-6">A fast-paced interactive game. Now with adjustable difficulty ranges.</p>
                         <span className="text-amber-600 font-bold flex items-center gap-2 group-hover:translate-x-2 transition-transform">
                         Play Now <span className="text-xl">→</span>
                         </span>
@@ -640,8 +645,6 @@
                 </div>
             </div>
         );
-
-        // --- App Container ---
 
         const App = () => {
             const [mode, setMode] = useState('home');
