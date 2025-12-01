@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES20 Review Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4 select-none">
+
+    <!-- App Container -->
+    <div id="app" class="w-full max-w-2xl">
+        <!-- Content injected by JS -->
+    </div>
+
+    <script>
+        // --- ICONS (SVG Strings) ---
+        const icons = {
+            trophy: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>`,
+            play: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>`,
+            check: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-500"><polyline points="20 6 9 17 4 12"/></svg>`,
+            x: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+            arrowRight: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+            refresh: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>`,
+            activity: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-400"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+            upload: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`,
+            book: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`
+        };
+
+        // --- DATA BANK (Terrestrial Ecosystems) ---
+        const QUESTION_BANK = [
+          { id: 1, topic: "Biomes & Soil", question: "Which two abiotic factors are the primary determinants of a terrestrial biome?", options: ["Latitude and Soil Texture", "Temperature and Precipitation", "Elevation and Wind Speed", "Human Population Density and Geology"], correct: 1, explanation: "Temperature and precipitation dictate the growing season and moisture availability." },
+          { id: 2, topic: "Biomes & Soil", question: "The Boreal Forest (Lowland) biome is characterized by vast areas of poor drainage and peatlands, indicating a high storage of which element?", options: ["Sulfur", "Carbon", "Phosphorus", "Nitrogen"], correct: 1, explanation: "Peatlands sequester massive amounts of carbon in undecayed organic matter." },
+          { id: 3, topic: "Biomes & Soil", question: "The Athabasca Plain region, part of the Canadian Shield, is primarily characterized by which type of soil?", options: ["Highly fertile Black Chernozemic", "Waterlogged Gleysolic", "Thin, nutrient-poor Brunisolic/Cryosol", "Deep, well-developed Podzol"], correct: 2, explanation: "The Canadian Shield has thin, sandy, acidic soils over bedrock." },
+          { id: 4, topic: "Biomes & Soil", question: "Which Saskatchewan ecoregion is defined as a transitional band between fescue grasslands and deciduous Aspen groves, possessing the highest organic matter content?", options: ["Grasslands", "Athabasca Plain", "Boreal Forest (Lowland)", "Aspen Parkland"], correct: 3, explanation: "The Aspen Parkland has rich Black Chernozemic soils due to the accumulation of organic matter." },
+          { id: 5, topic: "Biomes & Soil", question: "Palliser's Triangle is geographically significant because it encompasses the region prone to drought, receiving less than how much annual rainfall?", options: ["Less than 50 mm", "Less than 150 mm", "Less than 350 mm", "Less than 1000 mm"], correct: 2, explanation: "This semi-arid region is the driest part of the Canadian Prairies." },
+          { id: 6, topic: "Biomes & Soil", question: "The historical impact of Palliser's report led to which major environmental challenge decades later?", options: ["Widespread deforestation in the Boreal region", "The devastating Dust Bowl era", "Increased salinization in the Athabasca Plain", "Groundwater depletion in the Mid-Boreal Upland"], correct: 1, explanation: "Ignoring warnings about the region's aridity led to farming practices that caused the Dust Bowl." },
+          { id: 7, topic: "Biomes & Soil", question: "The dominant soil type of the Southern Plains of Saskatchewan is the Dark Brown/Brown Chernozemic soil, known for its:", options: ["Highly acidic pH and poor drainage", "High pH (Alkaline) and very low humus content", "High humus content and neutral to slightly alkaline pH", "Extensive leaching and a thick E-Horizon"], correct: 2, explanation: "Chernozemic soils are fertile with a neutral to slightly alkaline pH." },
+          { id: 8, topic: "Biomes & Soil", question: "In which biome is the long-term loss of Humus due to continuous monocropping a major concern for agricultural sustainability?", options: ["Mid-Boreal Upland", "Grasslands and Aspen Parkland", "Boreal Forest (Lowland)", "Athabasca Plain"], correct: 1, explanation: "Intensive agriculture in these regions depletes soil organic matter over time." },
+          { id: 9, topic: "Biomes & Soil", question: "Soil is considered an 'effectively non-renewable resource' because:", options: ["Its minerals can never be replaced once mined", "It takes over 500 years to form just one inch of topsoil", "It is entirely composed of organic matter which is rapidly decomposed", "It has no significant role in the water cycle"], correct: 1, explanation: "The rate of soil formation is far slower than the rate of potential loss through erosion." },
+          { id: 10, topic: "Biomes & Soil", question: "Which component of soil is crucial because it acts as a glue to bind mineral particles together, improving fertility and water retention?", options: ["Mineral Matter", "Soil Air", "Soil Water", "Organic Matter (Humus)"], correct: 3, explanation: "Humus improves soil structure (tilth) and water-holding capacity." },
+          { id: 11, topic: "Biomes & Soil", question: "The process by which water enters rock cracks, freezes, and pries the rock apart is an example of:", options: ["Biological Weathering", "Chemical Weathering", "Physical Weathering", "Decomposition"], correct: 2, explanation: "Physical weathering breaks down rock without changing its chemical composition." },
+          { id: 12, topic: "Biomes & Soil", question: "The movement of water down through soil, dissolving and carrying away minerals from the upper horizons is called:", options: ["Infiltration", "Transpiration", "Deposition", "Leaching"], correct: 3, explanation: "Leaching removes nutrients from the topsoil, moving them deeper into the profile." },
+          { id: 13, topic: "Biomes & Soil", question: "The most fertile soil type in Saskatchewan, found in the Aspen Parkland, is the:", options: ["Podzolic soil", "Black Chernozemic soil", "Organic/Gleysolic soil", "Brunisolic soil"], correct: 1, explanation: "Black Chernozemic soil has the highest organic matter content." },
+          { id: 14, topic: "Biomes & Soil", question: "Clay particles are the smallest and stickiest of the mineral components. What critical function do they perform in the soil?", options: ["They allow water to drain quickly", "They secrete organic acids for biological weathering", "They retain water and nutrients", "They provide oxygen for plant roots"], correct: 2, explanation: "Clay has a high surface area and negative charge, holding onto water and nutrient ions." },
+          { id: 15, topic: "Biomes & Soil", question: "The Nitrogen Cycle highlights the vital biotic link between the soil and the air through the process of:", options: ["Transpiration", "Oxidation", "Nitrogen fixation", "Leaching"], correct: 2, explanation: "Bacteria convert atmospheric Nitrogen (N2) into forms plants can use." },
+          { id: 16, topic: "Biomes & Soil", question: "The buildup of salts on the soil surface, primarily in low-lying areas, which reduces crop yields, is called:", options: ["Leaching", "Eutrophication", "Desertification", "Salinization"], correct: 3, explanation: "Salinization draws salts to the surface as water evaporates." },
+          { id: 17, topic: "Biomes & Soil", question: "The suggested solution to counter dryland salinization involves planting deep-rooted, perennial salt-tolerant crops such as:", options: ["Wheat and Canola", "Aspen and Pine", "Alfalfa or tall wheatgrass", "Lichen and Moss"], correct: 2, explanation: "Deep roots lower the water table, preventing salts from rising to the surface." },
+          { id: 18, topic: "Biodiversity & Producers", question: "What two reactants (inputs) are required by plants, along with light energy, to perform photosynthesis?", options: ["Oxygen and Glucose", "Nitrogen and Water", "Carbon Dioxide and Water", "Sulfur and Carbon"], correct: 2, explanation: "CO2 + H2O + Energy -> Glucose + Oxygen." },
+          { id: 19, topic: "Biodiversity & Producers", question: "Plants are described as essential carbon sinks because they perform which process that regulates the atmosphere?", options: ["Water regulation through biopores", "Nitrogen fixation in their roots", "Decomposition of organic matter", "Removal of atmospheric CO2 through photosynthesis"], correct: 3, explanation: "They capture Carbon Dioxide and store it as biomass." },
+          { id: 20, topic: "Biodiversity & Producers", question: "The function of plant roots described as acting like 'steel rebar in concrete' refers to their ability to increase the soil's:", options: ["Water retention", "Shear strength", "Alkalinity", "Rate of leaching"], correct: 1, explanation: "Roots physically bind soil particles, preventing erosion." },
+          { id: 21, topic: "Biodiversity & Producers", question: "Which crops, like lentils and dry peas, are crucial in crop rotation because they host nitrogen-fixing bacteria?", options: ["Cereal grains", "Oilseeds", "Pulse crops", "Cover crops"], correct: 2, explanation: "Pulses are legumes that naturally add nitrogen to the soil." },
+          { id: 22, topic: "Biodiversity & Producers", question: "Using remote sensing (e.g., LiDAR, satellite imagery) and GPS for the precise application of fertilizer and pesticides is known as:", options: ["Tillage farming", "Monoculture farming", "Precision agriculture", "Agroforestry"], correct: 2, explanation: "Precision Ag uses technology to apply inputs exactly where needed." },
+          { id: 23, topic: "Biodiversity & Producers", question: "The Indigenous worldview concept emphasizing a balanced, mutual relationship where humans give back to the land is known as:", options: ["In-situ Conservation", "Reciprocity", "Cultural Burning", "Functional Diversity"], correct: 1, explanation: "Reciprocity involves a two-way relationship of respect and care." },
+          { id: 24, topic: "Biodiversity & Producers", question: "Biodiversity is the variety of life measured at which three levels?", options: ["Climate, Geology, and Ecosystem", "Genetic, Species, and Ecosystem", "Water, Air, and Soil", "Producer, Consumer, and Decomposer"], correct: 1, explanation: "Genetic (genes), Species (populations), and Ecosystem (habitats) diversity." },
+          { id: 25, topic: "Biodiversity & Producers", question: "What is the primary cause of biodiversity decline in Saskatchewan?", options: ["Increased predation from Swift Fox", "Conversion of native prairie to agricultural land", "Over-harvesting of Boreal timber", "The long-term effects of the Dust Bowl"], correct: 1, explanation: "Habitat loss due to agriculture is the leading driver of decline." },
+          { id: 26, topic: "Biodiversity & Producers", question: "Edge Effects are the changes at the boundary between two habitat types that negatively impact species by increasing:", options: ["Groundwater recharge and infiltration", "The pH and salinity levels", "Wind, sun, and predation", "The availability of coarse woody debris"], correct: 2, explanation: "Edges are more exposed to elements and predators than the protected interior." },
+          { id: 27, topic: "Biodiversity & Producers", question: "Fragmentation prevents animal populations from mixing, which leads to inbreeding and loss of:", options: ["Species diversity", "Functional diversity", "Genetic diversity", "Ecosystem diversity"], correct: 2, explanation: "Isolated populations lose genetic variation, making them less resilient." },
+          { id: 28, topic: "Biodiversity & Producers", question: "In-situ Conservation is best exemplified by:", options: ["Captive breeding programs", "Seed banks storing genetic material", "Establishing a National Park (Protected Area)", "Intercropping"], correct: 2, explanation: "In-situ means 'in place'—protecting species where they naturally live." },
+          { id: 29, topic: "Biodiversity & Producers", question: "The endangered Burrowing Owl is a direct indicator of decline in:", options: ["Boreal Forest canopy health", "Native grasslands habitat", "Riparian buffer zones", "Perennial crop fields"], correct: 1, explanation: "Burrowing Owls rely on open native prairie." },
+          { id: 30, topic: "Biodiversity & Producers", question: "Planting a cereal grass and a legume in the same field simultaneously is an example of:", options: ["Monoculture", "Fallowing", "Intercropping", "Clear-cutting"], correct: 2, explanation: "Intercropping increases diversity and soil health compared to monocultures." }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let state = {
+            screen: 'menu', // menu, playing, results
+            mode: 'questions', // questions, time
+            amount: 10,
+            score: 0,
+            streak: 0,
+            timeLeft: 0,
+            currentQIndex: 0,
+            gameQuestions: [],
+            isAnswered: false,
+            selectedOption: null,
+            feedback: null,
+            resultsLog: [],
+            questionStartTime: 0,
+            timerInterval: null
+        };
+
+        const app = document.getElementById('app');
+
+        // --- RENDER FUNCTIONS ---
+        function render() {
+            if (state.screen === 'menu') renderMenu();
+            else if (state.screen === 'playing') renderGame();
+            else if (state.screen === 'results') renderResults();
+        }
+
+        function renderMenu() {
+            const isQMode = state.mode === 'questions';
+            app.innerHTML = `
+                <div class="bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-8 text-center fade-in">
+                    <div class="inline-block p-4 rounded-full bg-emerald-500/20 mb-4">
+                        ${icons.trophy}
+                    </div>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-2">
+                        Eco-Science 20
+                    </h1>
+                    <p class="text-slate-400 mb-6">Terrestrial Ecosystems Review</p>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-3 p-1 bg-slate-900 rounded-lg">
+                            <button onclick="setMode('questions')" class="py-2 px-4 rounded-md text-sm font-medium transition-all ${isQMode ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-400 hover:text-white'}">Precision Run</button>
+                            <button onclick="setMode('time')" class="py-2 px-4 rounded-md text-sm font-medium transition-all ${!isQMode ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-400 hover:text-white'}">Time Attack</button>
+                        </div>
+
+                        <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-700/50">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-slate-300 font-medium">${isQMode ? 'Number of Questions' : 'Time Limit'}</span>
+                                <span class="text-emerald-400 font-bold text-xl">${state.amount} ${isQMode ? '' : 's'}</span>
+                            </div>
+                            <input type="range" min="${isQMode ? 5 : 30}" max="${isQMode ? 30 : 180}" step="${isQMode ? 5 : 15}" 
+                                value="${state.amount}" oninput="setAmount(this.value)"
+                                class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                        </div>
+
+                        <button onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 transform hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+                            ${icons.play} Start Review
+                        </button>
+
+                        <a href="index.html" class="block w-full py-3 mt-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold rounded-xl transition-all flex items-center justify-center gap-2">
+                            ${icons.book} Return to Textbook
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGame() {
+            if (state.gameQuestions.length === 0) return;
+            const q = state.gameQuestions[state.currentQIndex];
+            
+            // HUD
+            let hudContent = '';
+            if (state.mode === 'time') {
+                const timeColor = state.timeLeft < 10 ? 'text-red-500 pulse' : 'text-white';
+                hudContent = `<div class="text-2xl font-bold font-mono ${timeColor}">${state.timeLeft}s</div>`;
+            } else {
+                hudContent = `<div class="text-slate-400 font-mono">${state.currentQIndex + 1} / ${state.amount}</div>`;
+            }
+
+            // Options
+            let optionsHtml = q.options.map((opt, idx) => {
+                let bgClass = "bg-slate-800 hover:bg-slate-700 border-slate-700";
+                let icon = "";
+                
+                if (state.isAnswered) {
+                    if (idx === q.correct) {
+                        bgClass = "bg-emerald-500/20 border-emerald-500 text-emerald-300";
+                        icon = icons.check;
+                    } else if (idx === state.selectedOption) {
+                        bgClass = "bg-red-500/20 border-red-500 text-red-300";
+                        icon = icons.x;
+                    } else {
+                        bgClass = "opacity-50 grayscale";
+                    }
+                }
+
+                return `
+                <button ${state.isAnswered ? 'disabled' : ''} onclick="handleAnswer(${idx})" 
+                    class="p-4 rounded-xl border-2 text-left transition-all relative overflow-hidden group w-full mb-3 flex justify-between items-center ${bgClass}">
+                    <span class="font-medium text-lg">${opt}</span>
+                    <span>${icon}</span>
+                </button>`;
+            }).join('');
+
+            // Feedback Area
+            let feedbackHtml = '';
+            if (!state.isAnswered) {
+                feedbackHtml = `<div class="text-slate-500 italic text-sm pulse mt-4 text-center">Select an option...</div>`;
+            } else {
+                let msg = state.feedback === 'correct' ? 'Excellent!' : state.feedback === 'spam' ? 'Too Fast! No Guessing!' : 'Incorrect.';
+                let color = state.feedback === 'correct' ? 'text-emerald-400' : state.feedback === 'spam' ? 'text-amber-500' : 'text-red-400';
+                
+                feedbackHtml = `
+                <div class="fade-in mt-4">
+                    <div class="mb-4 text-center font-bold ${color}">${msg}</div>
+                    <div class="bg-slate-800/50 p-3 rounded-lg text-sm text-slate-300 mb-4 border-l-4 border-cyan-500">
+                        <span class="font-bold text-cyan-400 block mb-1">Feedback</span>
+                        ${q.explanation}
+                    </div>
+                    <button onclick="nextQuestion()" class="w-full py-3 bg-white text-slate-900 font-bold rounded-lg hover:bg-slate-200 transition-colors flex items-center justify-center gap-2">
+                        Next Question ${icons.arrowRight}
+                    </button>
+                </div>`;
+            }
+
+            app.innerHTML = `
+                <div class="relative w-full">
+                    <!-- HUD -->
+                    <div class="flex justify-between items-center bg-slate-900/80 backdrop-blur-sm p-4 rounded-t-xl border-b border-slate-800 mb-4">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase">Score</span>
+                                <div class="text-2xl font-bold font-mono text-cyan-400">${state.score}</div>
+                            </div>
+                            <div class="h-8 w-px bg-slate-700"></div>
+                            <div>
+                                <span class="text-xs text-slate-400 uppercase">Streak</span>
+                                <div class="flex gap-1 items-center">
+                                    <span class="text-amber-400 font-bold">x${state.streak}</span>
+                                </div>
+                            </div>
+                        </div>
+                        ${hudContent}
+                    </div>
+
+                    <!-- Question Card -->
+                    <div class="flex justify-center mb-6">
+                        <span class="bg-slate-800 text-slate-300 px-4 py-1 rounded-full text-sm font-medium border border-slate-700 shadow-sm">
+                            ${q.topic}
+                        </span>
+                    </div>
+
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 leading-tight">
+                        ${q.question}
+                    </h2>
+
+                    <div class="w-full">
+                        ${optionsHtml}
+                    </div>
+                    
+                    ${feedbackHtml}
+                </div>
+            `;
+        }
+
+        function renderResults() {
+            // Calculate Stats
+            const topics = {};
+            let correctCount = 0;
+            state.resultsLog.forEach(r => {
+                if(!topics[r.topic]) topics[r.topic] = { total: 0, correct: 0 };
+                topics[r.topic].total++;
+                if(r.correct) {
+                    topics[r.topic].correct++;
+                    correctCount++;
+                }
+            });
+            const accuracy = Math.round((correctCount / state.resultsLog.length) * 100) || 0;
+            const rating = state.score > 2000 ? "Expert" : state.score > 1000 ? "Advanced" : "Learner";
+
+            const analysisHtml = Object.keys(topics).map(t => {
+                const data = topics[t];
+                const pct = (data.correct / data.total) * 100;
+                let color = pct >= 80 ? 'bg-emerald-500' : pct >= 50 ? 'bg-amber-500' : 'bg-red-500';
+                let status = pct >= 80 ? 'Mastered' : pct >= 50 ? 'Review' : 'Study Needed';
+                let statusColor = pct >= 80 ? 'text-emerald-400' : pct >= 50 ? 'text-amber-400' : 'text-red-400';
+
+                return `
+                <div class="mb-4">
+                    <div class="flex justify-between items-end mb-1">
+                        <span class="font-medium text-slate-200">${t}</span>
+                        <span class="text-xs font-bold px-2 py-0.5 rounded ${statusColor} bg-slate-800">${status}</span>
+                    </div>
+                    <div class="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+                        <div class="h-full ${color}" style="width: ${pct}%"></div>
+                    </div>
+                </div>`;
+            }).join('');
+
+            app.innerHTML = `
+                <div class="w-full bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 p-6 fade-in">
+                    <div class="text-center mb-8">
+                        <h2 class="text-4xl font-bold mb-2">Review Complete</h2>
+                        <p class="text-slate-400">Final Results</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                            <div class="text-xs text-slate-400 uppercase mb-1">Score</div>
+                            <div class="text-2xl font-mono font-bold text-cyan-400">${state.score}</div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                            <div class="text-xs text-slate-400 uppercase mb-1">Accuracy</div>
+                            <div class="text-2xl font-mono font-bold ${accuracy > 70 ? 'text-emerald-400' : 'text-amber-400'}">${accuracy}%</div>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                            <div class="text-xs text-slate-400 uppercase mb-1">Rating</div>
+                            <div class="font-bold text-lg text-purple-400">${rating}</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 rounded-xl border border-slate-800 p-4 mb-8">
+                        <div class="flex items-center gap-2 mb-4 border-b border-slate-800 pb-2">
+                            ${icons.activity} <h3 class="font-bold">Topic Analysis</h3>
+                        </div>
+                        ${analysisHtml}
+                    </div>
+
+                    <button onclick="resetGame()" class="w-full py-4 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl border border-slate-600 transition-all flex items-center justify-center gap-2">
+                        ${icons.refresh} Return to Menu
+                    </button>
+                </div>
+            `;
+        }
+
+        // --- LOGIC ---
+        function setMode(m) {
+            state.mode = m;
+            state.amount = m === 'questions' ? 10 : 60;
+            renderMenu();
+        }
+
+        function setAmount(val) {
+            state.amount = parseInt(val);
+            renderMenu(); // Re-render to update text
+        }
+
+        function startGame() {
+            // Shuffle and slice
+            let shuffled = [...QUESTION_BANK].sort(() => 0.5 - Math.random());
+            if (state.mode === 'questions') {
+                state.gameQuestions = shuffled.slice(0, state.amount);
+            } else {
+                state.gameQuestions = shuffled; // All questions for time attack
+                state.timeLeft = state.amount;
+            }
+
+            // Reset Game State
+            state.score = 0;
+            state.streak = 0;
+            state.currentQIndex = 0;
+            state.resultsLog = [];
+            state.isAnswered = false;
+            state.feedback = null;
+            state.screen = 'playing';
+            state.questionStartTime = Date.now();
+
+            // Start Timer if needed
+            if (state.mode === 'time') {
+                if (state.timerInterval) clearInterval(state.timerInterval);
+                state.timerInterval = setInterval(() => {
+                    if (!state.isAnswered) {
+                        state.timeLeft--;
+                        renderGame(); // Update HUD
+                        if (state.timeLeft <= 0) endGame();
+                    }
+                }, 1000);
+            }
+
+            render();
+        }
+
+        function handleAnswer(idx) {
+            if (state.isAnswered) return;
+            
+            const now = Date.now();
+            const timeTaken = (now - state.questionStartTime) / 1000;
+            const q = state.gameQuestions[state.currentQIndex];
+            const isCorrect = idx === q.correct;
+            const isSpam = !isCorrect && timeTaken < 1.0;
+
+            state.isAnswered = true;
+            state.selectedOption = idx;
+
+            let points = 0;
+            if (isSpam) {
+                points = -50;
+                state.streak = 0;
+                state.feedback = 'spam';
+            } else if (isCorrect) {
+                const speedBonus = Math.max(0, Math.floor(50 * (1 - timeTaken / 10)));
+                const streakBonus = Math.min(state.streak * 10, 50);
+                points = 100 + speedBonus + streakBonus;
+                state.streak++;
+                state.feedback = 'correct';
+            } else {
+                state.streak = 0;
+                state.feedback = 'wrong';
+            }
+            state.score += points;
+
+            state.resultsLog.push({ topic: q.topic, correct: isCorrect });
+            renderGame();
+        }
+
+        function nextQuestion() {
+            if (state.currentQIndex < state.gameQuestions.length - 1) {
+                state.currentQIndex++;
+                state.isAnswered = false;
+                state.selectedOption = null;
+                state.feedback = null;
+                state.questionStartTime = Date.now();
+                renderGame();
+            } else {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            if (state.timerInterval) clearInterval(state.timerInterval);
+            state.screen = 'results';
+            render();
+        }
+
+        function resetGame() {
+            state.screen = 'menu';
+            render();
+        }
+
+        // Init
+        render();
+
+    </script>
+</body>
+</html>
