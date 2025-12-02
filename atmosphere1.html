@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ES20: Atmosphere, Climate, and Human Stewardship</title>
+    <style>
+        :root {
+            --primary-color: #00563B; /* Saskatchewan Flag Green */
+            --secondary-color: #F2A900; /* Saskatchewan Flag Gold */
+            --text-color: #2c3e50;
+            --bg-color: #fdfdfd;
+            --box-bg: #fff;
+            --prior-learning-bg: #e1f5fe;
+            --prior-learning-border: #0288d1;
+            --sidebar-bg: #fff3e0;
+            --sidebar-border: #ef6c00;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        /* Headers */
+        h1, h2, h3, h4 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: var(--primary-color);
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            border-bottom: 5px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-top: 50px;
+            border-left: 8px solid var(--secondary-color);
+            padding-left: 20px;
+            background: linear-gradient(to right, #f9f9f9, #fff);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            margin-top: 30px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Narrative Box */
+        .narrative-box {
+            background-color: #e8f5e9;
+            border-left: 6px solid var(--primary-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            position: relative;
+        }
+
+        .narrative-title {
+            font-weight: 800;
+            font-style: normal;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        /* Prior Learning Box */
+        .prior-learning {
+            background-color: var(--prior-learning-bg);
+            border: 2px solid var(--prior-learning-border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .prior-learning h4 {
+            color: var(--prior-learning-border);
+            margin-top: 0;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid rgba(2, 136, 209, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Exploring Further Sidebars */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            border: 2px solid var(--sidebar-border);
+            padding: 20px;
+            margin: 20px 0 20px 25px;
+            border-radius: 10px;
+            float: right;
+            width: 38%;
+            font-size: 0.95rem;
+            box-shadow: 4px 4px 0px rgba(239, 108, 0, 0.2);
+        }
+
+        .sidebar h4 {
+            margin-top: 0;
+            color: #d84315;
+            text-transform: uppercase;
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        /* Clearfix for floats */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Key Terms */
+        strong {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Review Section */
+        .review-section {
+            background-color: #f4f6f7;
+            padding: 40px;
+            margin-top: 60px;
+            border-top: 6px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        .review-summary {
+            background-color: #fff;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+        }
+
+        .question-category {
+            font-family: 'Arial', sans-serif;
+            font-weight: 900;
+            color: #0277bd;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #b3e5fc;
+            display: inline-block;
+        }
+
+        /* Appendix Section */
+        .appendix {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px dashed #bdc3c7;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                float: none;
+                width: 100%;
+                margin-left: 0;
+                margin-bottom: 20px;
+            }
+            .container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <h4>Environmental Science 20 &bull; Unit 3</h4>
+        <h1>Atmosphere, Climate, and Human Stewardship</h1>
+        <p><em>Curriculum Outcomes: ES20-AH1, ES20-AH2, ES20-HP1</em></p>
+    </header>
+
+    <section id="opener">
+        <h2>I. Unit Opener: Contextual Reading</h2>
+        
+        <div class="narrative-box">
+            <span class="narrative-title">The Haze on the Horizon: A Saskatchewan Summer</span>
+            <p>For the Moroz family in Prince Albert, the summer of 2023 began with the promise of camping trips to Waskesiu and long evenings in the backyard. But by mid-July, the vibrant blue of the "Land of Living Skies" had turned a sickly, opaque orange. A thick, acrid haze settled over the North Saskatchewan River valley, erasing the horizon.</p>
+            <p>"It smells like a campfire that won't go out," 10-year-old Leo said, pressing his nose against the living room window. Outside, the streetlights flickered on at 4:00 PM, tricked by the premature darkness.</p>
+            <p>His mother, Sarah, checked the app on her phone. The <strong>Air Quality Health Index (AQHI)</strong> was reading a "10+"—Very High Risk. "No soccer practice today, Leo," she sighed, closing the blinds. The particulate matter from massive forest fires burning hundreds of kilometers north in the Boreal Shield was drifting south, trapped by a stagnant high-pressure weather system. For Leo, who managed mild asthma, the invisible particles in that haze were more than just an annoyance; they were a physical danger.</p>
+            <p>As Sarah turned on their HEPA air purifier, a thought crossed her mind: <em>Is this just a bad summer, or is this our new normal?</em> This unit explores the systems that created the Moroz family's predicament—from the chemistry of the air we breathe to the global climate trends shaping our local weather, and the technologies we are developing here in Saskatchewan to steward our future.</p>
+        </div>
+    </section>
+
+    <section id="section1" class="clearfix">
+        <h2>II. Section 1: The Air We Breathe (ES20-AH1)</h2>
+        <p>The atmosphere is not merely empty space; it is a dynamic ocean of gases that protects and sustains life on Earth. While its composition has remained relatively stable for millennia, human activity—specifically the burning of fossil fuels and industrial processes—is altering this delicate balance.</p>
+
+        <div class="prior-learning">
+            <h4>Science 10 Review: The Atmosphere & Reactions</h4>
+            <p>Recall from Science 10 that our atmosphere is stratified into layers based on temperature trends. We live in the <strong>troposphere</strong> (0-12 km), the dense lower layer where all weather occurs. Above that lies the <strong>stratosphere</strong>, home to the ozone layer which shields us from UV radiation.</p>
+            <p>You also learned about <strong>combustion reactions</strong>. Ideally, burning a hydrocarbon produces only carbon dioxide and water: <br><em>Hydrocarbon + O<sub>2</sub> &rarr; CO<sub>2</sub> + H<sub>2</sub>O + Energy</em>.</p>
+            <p>However, in the real world, oxygen is often limited. This leads to <strong>incomplete combustion</strong>, releasing harmful byproducts like carbon monoxide (CO) and solid carbon (soot).</p>
+        </div>
+
+        <h3>B. Outdoor Air Quality</h3>
+        <p>Air pollution is generally categorized into two types. <strong>Primary pollutants</strong> are emitted directly from a source, such as soot from a diesel truck or sulfur dioxide from a volcano. <strong>Secondary pollutants</strong> form when primary pollutants react chemically in the atmosphere. The most common example is ground-level ozone (smog), created when sunlight triggers reactions between nitrogen oxides and volatile organic compounds.</p>
+        
+        <p>In Saskatchewan, our air quality challenges are uniquely tied to our geography and economy:</p>
+        <ul>
+            <li><strong>Wildfire Smoke:</strong> As seen in the opening story, fires in the northern Boreal forest release massive amounts of <strong>Particulate Matter 2.5 (PM2.5)</strong>. These microscopic particles are less than 2.5 microns in diameter—about 3% the width of a human hair. Unlike larger dust particles, PM2.5 can bypass the body's natural defenses (nose hair and mucus) and travel deep into the lungs and bloodstream.</li>
+            <li><strong>Agriculture:</strong> During seeding and harvest, the air in rural Saskatchewan often carries dust (PM10). Additionally, livestock operations can release ammonia and methane, which contribute to local air quality issues.</li>
+            <li><strong>Industry & Sour Gas:</strong> In Southeast Saskatchewan's oilfields, a major concern is "Sour Gas"—natural gas containing <strong>Hydrogen Sulfide (H<sub>2</sub>S)</strong>. H<sub>2</sub>S is highly toxic; at low concentrations, it smells like rotten eggs, but at high concentrations, it deadens the sense of smell and can be instantly fatal. </li>
+        </ul>
+
+        <div class="sidebar">
+            <h4>Exploring Further: The Inversion Effect</h4>
+            <p>Why does smog sometimes "sit" over a city or valley for days? This phenomenon is often caused by a <strong>temperature inversion</strong>.</p>
+            <p>Normally, air gets colder as you go higher. Warm air near the ground rises, dispersing pollutants into the upper atmosphere. However, during calm winter nights in places like the Qu'Appelle Valley, the ground cools rapidly, creating a layer of cold, dense air trapped beneath a layer of warmer air above.</p>
+            <p>This "lid" prevents vertical mixing, trapping vehicle exhaust and chimney smoke near the ground, causing air quality to plummet until the wind picks up.</p>
+        </div>
+
+        <h3>C. Indoor Air Quality: The Silent Hazard</h3>
+        <p>While we often focus on outdoor smog, the air <em>inside</em> our homes can be up to five times more polluted. In Saskatchewan, the most significant indoor threat is geological.</p>
+        
+        <p><strong>Radon</strong> is a colorless, odorless, radioactive gas produced by the natural decay of uranium in soil and rock. Because Saskatchewan's geology is uranium-rich, our potential for radon exposure is among the highest in the world. Radon enters homes through the "stack effect": warm air rising inside the house creates a vacuum at the lowest level, sucking soil gases in through cracks in the foundation, sump pump pits, and gaps around pipes.</p>
+        <p>Long-term exposure to radon is the second leading cause of lung cancer in Canada. Health Canada estimates that approximately <strong>16% of Saskatchewan homes</strong> exceed the safety guideline of 200 Becquerels per cubic metre (Bq/m³). The only way to detect it is through a long-term test kit, usually placed in the basement for 90 days during winter.</p>
+
+        <h3>D. Regulations and Mitigation</h3>
+        <p>To protect public health, the provincial government enforces the <em>Saskatchewan Environmental Management and Protection Act</em>. This legislation limits the volume of pollutants facilities can emit. Industries use sophisticated technologies to meet these standards:</p>
+        <ul>
+            <li><strong>Electrostatic Precipitators:</strong> These massive devices are used in industrial smokestacks, such as those at coal-fired power plants. They work like "static cling" on an industrial scale. As exhaust gas passes through, high-voltage wires impart a negative charge to dust particles. These charged particles are then attracted to positively charged collection plates, removing up to 99% of particulate matter before it leaves the stack.</li>
+            <li><strong>Scrubbers:</strong> To combat acid rain, "wet scrubbers" spray a slurry of limestone and water through exhaust gases. The limestone reacts with sulfur dioxide (SO<sub>2</sub>) to form synthetic gypsum (calcium sulfate), which can be recycled into drywall.</li>
+        </ul>
+    </section>
+
+    <section id="section2" class="clearfix">
+        <h2>III. Section 2: Analyzing a Changing Climate (ES20-AH2)</h2>
+        <p>While "weather" describes the state of the atmosphere at a specific time and place (e.g., a rainy Tuesday in Saskatoon), <strong>climate</strong> refers to the long-term averages of weather patterns over decades or centuries. Understanding climate requires analyzing data that spans far beyond human history.</p>
+
+        <div class="prior-learning">
+            <h4>Science 10 Review: The Greenhouse Effect</h4>
+            <p>The Earth remains habitable due to the <strong>Greenhouse Effect</strong>. The sun sends high-energy shortwave radiation to Earth, which passes easily through the atmosphere. The Earth absorbs this energy and re-radiates it as lower-energy longwave (infrared) heat.</p>
+            <p>Greenhouse gases (GHGs) like Carbon Dioxide (CO<sub>2</sub>), Methane (CH<sub>4</sub>), and Water Vapor act like a blanket: they let the shortwave energy in but trap the longwave heat trying to escape. This natural process is good—without it, Earth would be a frozen rock. The problem is the <strong>Anthropogenic Greenhouse Effect</strong>: humans are adding too many "blankets," causing the planet to overheat.</p>
+        </div>
+
+        <h3>B. Geoscience Data: How Do We Know?</h3>
+        <p>Since reliable thermometer records only go back about 150 years, scientists rely on <strong>proxy data</strong>—preserved physical characteristics of the environment—to reconstruct past climates.</p>
+        <ul>
+            <li><strong>Ice Cores:</strong> In Antarctica and Greenland, snow has fallen for hundreds of thousands of years without melting, compressing into distinct layers of ice. By drilling deep cores, scientists can analyze tiny air bubbles trapped in the ice. these bubbles are literal samples of the atmosphere from 800,000 years ago, allowing us to measure exact CO<sub>2</sub> levels from the past.</li>
+            <li><strong>Dendrochronology (Tree Rings):</strong> Trees in temperate climates grow a new ring every year. In warm, wet years, the ring is wide; in cold, dry years, it is narrow. By analyzing old-growth trees in Northern Saskatchewan, researchers can create a "barcode" of climate history, revealing patterns of drought and plenty that date back centuries.</li>
+        </ul>
+
+        <h3>C. Impacts on Saskatchewan</h3>
+        <p>Climate models predict significant shifts for our province, which will require adaptation:</p>
+        <ul>
+            <li><strong>Shifting Hardiness Zones:</strong> As average temperatures rise, the growing season is lengthening. While this may allow farmers to grow crops like corn and soybeans further north, it also disrupts established ecosystems.</li>
+            <li><strong>Water Security:</strong> The North and South Saskatchewan Rivers differ from other prairie waterways—they are fed largely by glacial melt from the Rocky Mountains. This glacial water is a crucial "savings account" that keeps the rivers flowing during hot, dry summers. As glaciers shrink, this late-summer flow is at risk, threatening irrigation and drinking water for cities like Saskatoon and Regina.</li>
+            <li><strong>Pests and Invasive Species:</strong> The <strong>Mountain Pine Beetle</strong> is a devastating pest that kills pine trees. Historically, Saskatchewan's bitter winters (specifically, extended periods below -40°C) killed the beetle larvae, keeping them out of the province. Warmer winters have allowed the beetle to survive and spread eastward from Alberta, threatening the Jack Pine forests of the Canadian Shield.</li>
+        </ul>
+    </section>
+
+    <section id="section3" class="clearfix">
+        <h2>IV. Section 3: Population, Pollution, and Solutions (ES20-HP1)</h2>
+        <p>As the global human population grows, so does our consumption of resources and production of waste. Sustainable living requires a fundamental shift in how we manage our materials.</p>
+
+        <div class="prior-learning">
+            <h4>Science 10 Review: Carrying Capacity</h4>
+            <p>Recall the concept of <strong>Carrying Capacity</strong>—the maximum population size that an environment can sustain indefinitely. In nature, populations that exceed their carrying capacity usually crash due to starvation or disease. Humans have used technology (agriculture, medicine) to artificially raise Earth's carrying capacity, but this comes at an environmental cost.</p>
+        </div>
+
+        <h3>B. The Waste Problem: Linear vs. Circular</h3>
+        <p>Our current economy is largely <strong>linear</strong>: we extract resources, make products, and dispose of them ("Take-Make-Waste"). A <strong>circular economy</strong> aims to keep resources in use for as long as possible through recycling and reusing.</p>
+        <p>In Saskatchewan, managing waste is complicated by our low population density. Transporting recyclables from remote rural communities to processing centers is often expensive and carbon-intensive. Modern landfills are sophisticated engineering projects designed to protect the environment. They are lined with thick clay and plastic to catch <strong>leachate</strong>—a toxic "garbage juice" formed when rainwater filters through waste. Pipes are also installed to capture methane gas produced by decomposing organic matter, which can sometimes be burned to generate electricity.</p>
+
+        <h3>C. Water and Resource Management</h3>
+        <p>Urban centers produce massive amounts of wastewater. If released untreated, human waste adds excess nitrogen and phosphorus to rivers. This causes <strong>eutrophication</strong>: an explosion of algae growth that depletes oxygen in the water, killing fish.</p>
+        
+        <p>The City of Saskatoon uses an advanced process called <strong>Biological Nutrient Removal (BNR)</strong>. Instead of using harsh chemicals, the treatment plant uses bacteria to clean the water.
+        <br>1. In oxygen-rich zones, <em>Nitrosomonas</em> and <em>Nitrobacter</em> bacteria convert ammonia (from urine) into nitrate.
+        <br>2. The water is then moved to an oxygen-starved (anoxic) zone. Here, different bacteria (<em>Pseudomonas</em>) are forced to strip the oxygen atoms off the nitrate molecules to survive.
+        <br>3. This process converts the nitrate into harmless nitrogen gas, which bubbles out into the atmosphere, leaving the water clean enough to return to the river.</p>
+
+        <h3>D. Mitigation Technologies: Carbon Capture</h3>
+        <p>Saskatchewan is a world leader in <strong>Carbon Capture and Storage (CCS)</strong>. The <strong>Boundary Dam</strong> project near Estevan was the world's first commercial-scale CCS facility attached to a coal-fired power plant.</p>
+        <p>The process works by diverting exhaust smoke into a tower filled with an amine solution. The amine binds to the CO<sub>2</sub> molecules, separating them from the rest of the exhaust. The captured CO<sub>2</sub> is then compressed into a liquid-like state and pumped 3.4 kilometers deep underground into the <strong>Aquistore</strong> injection site. There, it is trapped in a layer of porous rock (the Deadwood formation) beneath a cap of impermeable shale, preventing it from contributing to climate change.</p>
+
+        <div class="sidebar">
+            <h4>Exploring Further: Alternative Energy</h4>
+            <p>While CCS manages fossil fuel emissions, Saskatchewan also has immense potential for renewable energy. The <strong>Cowessess First Nation</strong>, located east of Regina, has developed a groundbreaking hybrid energy project.</p>
+            <p>Their facility combines an 800kW wind turbine with over 2,000 solar panels and a battery storage system. This "hybrid" approach solves the intermittency problem: the batteries store excess power when the sun shines or wind blows, releasing it when it's calm and dark. This project demonstrates how Indigenous leadership and technology can create sustainable, sovereign power solutions.</p>
+        </div>
+    </section>
+
+    <section class="review-section">
+        <h2>V. Chapter Review & Assessment</h2>
+
+        <div class="review-summary">
+            <h3>Summary of Key Terms</h3>
+            <ul>
+                <li><strong>AQHI:</strong> Air Quality Health Index (1-10+ scale) measuring health risk from pollution.</li>
+                <li><strong>Radon:</strong> Radioactive gas found in basements; enters via stack effect; #2 cause of lung cancer.</li>
+                <li><strong>Proxy Data:</strong> Indirect evidence (ice cores, tree rings) used to infer past climate conditions.</li>
+                <li><strong>Albedo:</strong> The reflectivity of a surface. (Ice = High Albedo; Water = Low Albedo).</li>
+                <li><strong>Leachate:</strong> Liquid pollution draining from a landfill that must be contained.</li>
+                <li><strong>BNR:</strong> Biological Nutrient Removal; using bacteria to clean wastewater.</li>
+                <li><strong>CCS:</strong> Carbon Capture and Storage technology.</li>
+            </ul>
+        </div>
+        
+        <div class="question-block">
+            <span class="question-category">1. Knowledge (Recall & Define)</span>
+            <ol>
+                <li>Define <strong>Particulate Matter 2.5</strong> and explain why it is more dangerous to human health than larger dust particles.</li>
+                <li>What is the difference between a <strong>primary pollutant</strong> and a <strong>secondary pollutant</strong>? Give an example of each found in Saskatchewan.</li>
+                <li>Identify the main geological source of Radon gas in Saskatchewan homes and the mechanism by which it enters a building.</li>
+                <li>Describe the role of the <strong>stratosphere</strong> versus the <strong>troposphere</strong>.</li>
+            </ol>
+        </div>
+
+        <div class="question-block">
+            <span class="question-category">2. Application (Apply & Analyze)</span>
+            <ol>
+                <li><strong>Data Analysis:</strong> If a dendrochronology (tree ring) sample shows five consecutive very narrow rings from the year 1930 to 1935, what can you infer about the climate conditions in Saskatchewan during that period?</li>
+                <li><strong>Scenario:</strong> The AQHI in your community is currently at 7. You are coaching a youth soccer team. Based on the AQHI guidelines, what action should you take regarding tonight's practice?</li>
+                <li><strong>Diagram:</strong> Sketch a diagram showing how the albedo effect creates a positive feedback loop in the Arctic. Label the "melting ice," "dark water," and "heat absorption."</li>
+            </ol>
+        </div>
+
+        <div class="question-block">
+            <span class="question-category">3. Synthesis (Create & Evaluate)</span>
+            <ol>
+                <li><strong>Policy Debate:</strong> "The Saskatchewan government is considering stricter regulations on agricultural stubble burning to reduce PM2.5." Write a short position paper discussing the environmental benefits for air quality versus the economic challenges this might pose for farmers.</li>
+                <li><strong>Design Challenge:</strong> You are designing a waste management plan for a remote northern mining camp that is accessible only by winter road. How will you handle sewage and food waste year-round to prevent attracting wildlife and polluting local water?</li>
+                <li><strong>Critical Thinking:</strong> Compare and contrast the linear economy and the circular economy. Choose one household item (e.g., a toaster) and describe its lifecycle in a linear system versus a circular system.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="appendix">
+        <h2>VI. Appendices & Teacher Resources</h2>
+
+        <h3>Lab Activity 1: "Mining" for Data</h3>
+        <p><strong>Objective:</strong> To simulate how ice cores record atmospheric history.</p>
+        <p><strong>Procedure:</strong> Over the course of a week, freeze successive layers of water in a clear graduated cylinder. In each layer, add different "proxies": a drop of red food coloring (volcanic eruption), a pinch of ash (forest fire), or a layer of bubbly soda water (high CO<sub>2</sub> concentration). Have students "drill" a core using a clear straw and analyze the timeline of the "atmosphere" based on the depth of the layers.</p>
+
+        <h3>Appendix A: Indigenous Ways of Knowing</h3>
+        <p><strong>Traditional Ecological Knowledge (TEK)</strong> is the cumulative body of knowledge, practice, and belief evolving by adaptive processes and handed down through generations. In the context of weather and climate:</p>
+        <ul>
+            <li><strong>Reading the Land:</strong> Indigenous peoples in Saskatchewan have observed weather patterns for millennia. For example, observing the height of muskrat lodges can predict the severity of spring runoff. Higher lodges suggest the animals anticipate higher water levels.</li>
+            <li><strong>Stewardship vs. Management:</strong> Western science often focuses on "managing" resources (e.g., controlling river flow). Indigenous perspectives often emphasize "stewardship" and relationship—treating the air and water as relatives to be respected rather than commodities to be used. This shift in mindset is crucial for sustainable decision-making.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Saskatchewan Environmental Studies Curriculum Resource. <br>Aligned with Outcomes ES20-AH1, ES20-AH2, ES20-HP1.</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
