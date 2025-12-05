@@ -1,0 +1,451 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Living Systems — Chapter 1: The Chemistry of Life (Biology 30, Saskatchewan)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Biology 30 Chapter 1 — The Chemistry of Life. Saskatchewan outcomes: BI30-OL1. Includes examples, diagrams, self-checks, and an adaptive quiz.">
+  <style>
+    /* ====== Base styles (accessible, high-contrast friendly) ====== */
+    :root{
+      --bg:#ffffff; --text:#111827; --muted:#374151; --accent:#1363df; --accent-2:#10b981;
+      --card:#f8fafc; --border:#e5e7eb; --warning:#b91c1c; --link:#1d4ed8;
+      --code-bg:#0b1020; --code-text:#e7eaf6;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg:#0b1321; --text:#ecf0f6; --muted:#cbd5e1; --accent:#62a0ff; --accent-2:#34d399;
+        --card:#0f1a2d; --border:#1f2937; --warning:#fecaca; --link:#93c5fd;
+        --code-bg:#0b1020; --code-text:#e7eaf6;
+      }
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; padding:0; background:var(--bg); color:var(--text);
+      font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans";
+    }
+    header, footer{padding:1rem 1.25rem; background:var(--card); border-bottom:1px solid var(--border)}
+    header a.skip{position:absolute; left:-9999px; top:-9999px}
+    header a.skip:focus{left:1rem; top:1rem; background:#fffb; color:#000; padding:.5rem .75rem; border-radius:.25rem}
+    nav{display:flex; gap:1rem; flex-wrap:wrap; align-items:center}
+    .brand{font-weight:700; letter-spacing:.02em}
+    main{max-width:900px; margin:0 auto; padding:1.25rem}
+    h1{font-size:2rem; margin:.5rem 0 1rem}
+    h2{font-size:1.6rem; margin:1.25rem 0 .75rem}
+    h3{font-size:1.25rem; margin:1rem 0 .25rem}
+    p, li{color:var(--text)}
+    .lead{font-size:1.1rem; color:var(--muted)}
+    .tag{
+      display:inline-block; padding:.15rem .5rem; border:1px solid var(--border);
+      border-radius:.375rem; font-size:.8rem; margin-right:.25rem; color:var(--muted);
+      background:linear-gradient(0deg, rgba(255,255,255,.6), rgba(255,255,255,.4));
+    }
+    .objectives, .summary, .glossary, .practice, .references, .context{
+      background:var(--card); padding:1rem; border:1px solid var(--border); border-radius:.5rem; margin:1rem 0;
+    }
+    .context small{color:var(--muted)}
+    figure{margin:1rem 0; background:var(--card); border:1px solid var(--border); border-radius:.5rem; padding:.75rem}
+    figcaption{font-size:.9rem; color:var(--muted)}
+    svg{max-width:100%; height:auto}
+    a{color:var(--link)}
+    code, pre{background:var(--code-bg); color:var(--code-text)}
+    pre{padding:1rem; border-radius:.5rem; overflow:auto}
+    details{border:1px solid var(--border); border-radius:.5rem; padding:.5rem .75rem; background:var(--card); margin:.5rem 0}
+    details summary{cursor:pointer; font-weight:600}
+    .pill{display:inline-block; padding:.2rem .5rem; border-radius:999px; background:var(--accent-2); color:#0b1321; font-size:.8rem; font-weight:600}
+    .deep-dive{border-left:4px solid var(--accent); padding-left:.75rem; margin:1rem 0}
+    .inline-note{background:#fffb; border:1px dashed var(--border); padding:.5rem .75rem; border-radius:.375rem}
+    .quiz-card{background:var(--card); border:1px solid var(--border); border-radius:.5rem; padding:.75rem; margin:.75rem 0}
+    .btn{appearance:none; border:1px solid var(--border); background:var(--card); color:var(--text);
+      padding:.5rem .75rem; border-radius:.375rem; cursor:pointer}
+    .btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+    .btn.success{background:var(--accent-2); border-color:var(--accent-2); color:#0b1321}
+    .btn.warning{background:#ef4444; border-color:#ef4444; color:#fff}
+    .grid{display:grid; grid-template-columns:1fr; gap:1rem}
+    @media(min-width:700px){ .grid.two{grid-template-columns:1fr 1fr} }
+    footer{border-top:1px solid var(--border); border-bottom:none; margin-top:2rem}
+    /* Print-friendly */
+    @media print{
+      nav, .skip, .quiz-card .btn, .adaptive-quiz, .toggle, .btn.primary{display:none !important}
+      body{color:#000}
+      a{color:#000; text-decoration:none}
+      details[open]{border:1px solid #000}
+    }
+  </style>
+</head>
+<body>
+  <header role="banner">
+    <a href="#main" class="skip">Skip to Chapter Content</a>
+    <nav aria-label="Chapter navigation">
+      <span class="brand">Living Systems (Biology 30 · Saskatchewan)</span>
+      <span class="tag" title="Outcome alignment">SK: BI30‑OL1</span>
+      <span class="tag" title="Cross‑province scope">AB: Unit C · BC: A&P12</span>
+      <a class="btn" href="./index.html">Home</a>
+      <a class="btn" href="./chapter-2-cell-structure.html">Next: Chapter 2</a>
+    </nav>
+  </header>
+
+  <main id="main" role="main">
+    <h1>Chapter 1 — The Chemistry of Life</h1>
+    <p class="lead">
+      Life depends on the structure and behavior of chemical substances. In this chapter, you will connect core chemistry ideas from Science 10 to biological macromolecules, membranes, and enzyme‑mediated reactions that power cells—directly aligning to Saskatchewan’s <strong>BI30‑OL1</strong> outcome (cell structure &amp; processes, energy transfer, and material transport).<sup><a href="#ref-sk-outcomes">[SK]</a></sup>
+    </p>
+
+    <div class="context" aria-labelledby="context-title">
+      <h2 id="context-title">Saskatchewan Context &amp; Outcome Alignment</h2>
+      <p>
+        This chapter meets <strong>BI30‑OL1</strong>: “Investigate cell structure and processes, including energy transfer and transport of materials, in unicellular and multicellular organisms…” and prepares you for Genetics (GB), Evolution (LE), and Diversity (OL2/OL3) units.<sup><a href="#ref-sk-outcomes">[SK]</a></sup>
+        For scope/depth alignment across provinces, major concepts mirror <strong>Alberta Biology 30 Unit C (Genetics &amp; Molecular Biology)</strong> foundations and <strong>BC Anatomy &amp; Physiology 12</strong> biochemistry/cell structure topics.<sup><a href="#ref-ab">[AB]</a> <a href="#ref-bc">[BC]</a></sup>
+      </p>
+      <small class="inline-note">Recall &amp; Reconnect: Science 10 (chemical reactions, bonding, energy changes) → Health Science 20 (human systems) → Environmental Science 20 (ecosystems &amp; nutrient cycles).</small>
+    </div>
+
+    <section class="objectives" aria-labelledby="obj-title">
+      <h2 id="obj-title">Learning Objectives</h2>
+      <ul>
+        <li>Explain how <strong>macromolecules</strong> (carbohydrates, lipids, proteins, nucleic acids) support cellular structure and function.<sup><a href="#ref-sk-outcomes">[SK]</a></sup></li>
+        <li>Relate <strong>enzyme catalysis</strong> and reaction rates to regulation of cellular metabolism (Science 10 bridge).<sup><a href="#ref-sk-indicator">[SK Indicators]</a></sup></li>
+        <li>Connect <strong>water chemistry</strong>, pH, and buffers to homeostasis in cells.<sup><a href="#ref-bc">[BC]</a></sup></li>
+      </ul>
+    </section>
+
+    <!-- ===================== 1.1 Recall: Chemistry Foundations ===================== -->
+    <section aria-labelledby="chem-title">
+      <h2 id="chem-title">1.1 Recall — Atoms, Ions, and Reactions</h2>
+      <p>
+        Matter is composed of atoms, which form molecules via chemical bonds. In living systems, <em>covalent bonds</em> create strong frameworks (e.g., peptide bonds in proteins), while <em>hydrogen bonds</em> provide flexible interactions (e.g., between water molecules and within DNA base pairs). Reaction rates depend on temperature, concentration, surface area, and catalysts—principles you explored in Science 10 and will now see in biological contexts.<sup><a href="#ref-sk-outcomes">[SK]</a> <a href="#ref-bc">[BC]</a></sup>
+      </p>
+      <details>
+        <summary>Deep Dive ▸ Polar vs. Nonpolar Molecules</summary>
+        <div class="deep-dive">
+          <p>
+            Water’s polarity enables solvent action, cohesion, and moderation of temperature—vital for prairie and boreal organisms. Nonpolar lipids cluster to form membranes, creating compartments that support life’s chemistry.<sup><a href="#ref-bc">[BC]</a></sup>
+          </p>
+        </div>
+      </details>
+      <div class="quiz-card" aria-label="Self-check 1">
+        <p><strong>Self‑check:</strong> Which interaction primarily stabilizes base pairing in DNA?</p>
+        <form>
+          <label><input type="radio" name="sc1"> Ionic bonds</label><br>
+          <label><input type="radio" name="sc1"> Peptide bonds</label><br>
+          <label><input type="radio" name="sc1" data-correct="true"> Hydrogen bonds</label><br>
+          <label><input type="radio" name="sc1"> Glycosidic bonds</label><br>
+          <button type="button" class="btn primary" onclick="check('sc1')">Check</button>
+          <span id="sc1-feedback" role="status" aria-live="polite"></span>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== 1.2 Biological Macromolecules ===================== -->
+    <section aria-labelledby="macro-title">
+      <h2 id="macro-title">1.2 Biological Macromolecules</h2>
+      <p>
+        Four macromolecule families underpin cell structure and metabolism: <strong>carbohydrates</strong> (energy &amp; structural polysaccharides), <strong>lipids</strong> (membranes &amp; long‑term energy), <strong>proteins</strong> (enzymes &amp; cellular machinery), and <strong>nucleic acids</strong> (information storage &amp; expression). Their structures determine function, and small variations can produce major physiological differences across Saskatchewan species and crops.<sup><a href="#ref-sk-outcomes">[SK]</a> <a href="#ref-bc">[BC]</a></sup>
+      </p>
+
+      <h3>Carbohydrates</h3>
+      <p>
+        Monosaccharides (e.g., glucose) join to form disaccharides and polysaccharides. Plants synthesize <em>starch</em> for energy storage and <em>cellulose</em> for cell wall structure. In animals, <em>glycogen</em> serves as a rapid energy reserve in liver and muscle.
+      </p>
+
+      <h3>Lipids</h3>
+      <p>
+        <em>Phospholipids</em> form bilayers that create selectively permeable membranes. Unsaturated fatty acids (with double bonds) increase membrane fluidity at lower temperatures—an adaptive advantage for organisms in the Prairie Ecozone.<sup><a href="#ref-bc">[BC]</a></sup>
+      </p>
+
+      <figure role="figure" aria-label="Phospholipid bilayer diagram">
+        <!-- Simplified phospholipid bilayer SVG -->
+        <svg width="520" height="140" viewBox="0 0 520 140" role="img" aria-labelledby="membraneTitle">
+          <title id="membraneTitle">Phospholipid bilayer</title>
+          <desc>Hydrophilic heads face outward; hydrophobic tails face inward.</desc>
+          <rect x="0" y="0" width="520" height="140" fill="#f7fbff"/>
+          <!-- top heads -->
+          <g fill="#3b82f6">
+            <circle cx="40" cy="30" r="8"/><circle cx="80" cy="30" r="8"/><circle cx="120" cy="30" r="8"/>
+            <circle cx="160" cy="30" r="8"/><circle cx="200" cy="30" r="8"/><circle cx="240" cy="30" r="8"/>
+            <circle cx="280" cy="30" r="8"/><circle cx="320" cy="30" r="8"/><circle cx="360" cy="30" r="8"/>
+            <circle cx="400" cy="30" r="8"/><circle cx="440" cy="30" r="8"/><circle cx="480" cy="30" r="8"/>
+          </g>
+          <!-- tails -->
+          <g stroke="#1f2937" stroke-width="4">
+            <line x1="40" y1="38" x2="40" y2="72"/><line x1="80" y1="38" x2="80" y2="72"/>
+            <line x1="120" y1="38" x2="120" y2="72"/><line x1="160" y1="38" x2="160" y2="72"/>
+            <line x1="200" y1="38" x2="200" y2="72"/><line x1="240" y1="38" x2="240" y2="72"/>
+            <line x1="280" y1="38" x2="280" y2="72"/><line x1="320" y1="38" x2="320" y2="72"/>
+            <line x1="360" y1="38" x2="360" y2="72"/><line x1="400" y1="38" x2="400" y2="72"/>
+            <line x1="440" y1="38" x2="440" y2="72"/><line x1="480" y1="38" x2="480" y2="72"/>
+          </g>
+          <!-- bottom heads -->
+          <g fill="#3b82f6">
+            <circle cx="40" cy="90" r="8"/><circle cx="80" cy="90" r="8"/><circle cx="120" cy="90" r="8"/>
+            <circle cx="160" cy="90" r="8"/><circle cx="200" cy="90" r="8"/><circle cx="240" cy="90" r="8"/>
+            <circle cx="280" cy="90" r="8"/><circle cx="320" cy="90" r="8"/><circle cx="360" cy="90" r="8"/>
+            <circle cx="400" cy="90" r="8"/><circle cx="440" cy="90" r="8"/><circle cx="480" cy="90" r="8"/>
+          </g>
+          <!-- channel protein (simplified) -->
+          <rect x="245" y="28" width="30" height="72" rx="6" fill="#10b981" stroke="#064e3b"/>
+        </svg>
+        <figcaption>Phospholipid bilayer with a simplified channel protein (green). Unsaturated lipids ↑ fluidity at low temperature.</figcaption>
+      </figure>
+
+      <h3>Proteins</h3>
+      <p>
+        Proteins are polymers of amino acids with complex 3D structures (primary→quaternary). They act as enzymes, transporters (e.g., aquaporins), receptors, and structural elements. Even small pH or temperature shifts can alter protein conformation and function.
+      </p>
+
+      <h3>Nucleic Acids</h3>
+      <p>
+        DNA stores genetic information; RNA participates in expression (mRNA, tRNA, rRNA). The complementary base‑pairing (A–T, C–G) and antiparallel strands enable replication and accurate information transfer—setting the stage for Unit 2: Molecular Genetics.<sup><a href="#ref-sk-gb2">[SK GB2]</a></sup>
+      </p>
+
+      <div class="quiz-card" aria-label="Self-check 2">
+        <p><strong>Self‑check:</strong> Which macromolecule most directly forms cell membranes?</p>
+        <form>
+          <label><input type="radio" name="sc2"> Starch</label><br>
+          <label><input type="radio" name="sc2" data-correct="true"> Phospholipids</label><br>
+          <label><input type="radio" name="sc2"> Cellulose</label><br>
+          <label><input type="radio" name="sc2"> Hemoglobin</label><br>
+          <button type="button" class="btn primary" onclick="check('sc2')">Check</button>
+          <span id="sc2-feedback" role="status" aria-live="polite"></span>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== 1.3 Enzymes & Metabolic Reactions ===================== -->
+    <section aria-labelledby="enz-title">
+      <h2 id="enz-title">1.3 Enzymes &amp; Metabolic Reactions</h2>
+      <p>
+        Enzymes are biological catalysts that lower activation energy and increase reaction rate without being consumed. Their activity depends on substrate concentration, temperature, pH, and inhibitors. In Saskatchewan organisms, enzyme regulation supports survival across seasonal temperature ranges and in drought‑prone environments.<sup><a href="#ref-sk-outcomes">[SK]</a> <a href="#ref-bc">[BC]</a></sup>
+      </p>
+
+      <details>
+        <summary>Explore more ▸ Factors Affecting Enzyme Action</summary>
+        <div class="deep-dive">
+          <ul>
+            <li><strong>Temperature:</strong> Increases kinetic energy up to an optimal point; excessive heat denatures protein.</li>
+            <li><strong>pH:</strong> Alters active‑site charge and shape; each enzyme has an optimal pH range.</li>
+            <li><strong>Substrate concentration:</strong> Rate rises until enzymes saturate (V<sub>max</sub>).</li>
+            <li><strong>Inhibitors:</strong> Competitive vs noncompetitive, including environmental toxins.</li>
+          </ul>
+        </div>
+      </details>
+
+      <figure>
+        <svg width="560" height="220" viewBox="0 0 560 220" role="img" aria-labelledby="graphTitle">
+          <title id="graphTitle">Conceptual enzyme rate vs. temperature</title>
+          <desc>Illustration showing rate increasing to an optimum then decreasing due to denaturation.</desc>
+          <rect x="0" y="0" width="560" height="220" fill="#f8fafc" stroke="#e5e7eb"/>
+          <!-- Axes -->
+          <line x1="50" y1="180" x2="520" y2="180" stroke="#111827"/>
+          <line x1="50" y1="180" x2="50" y2="30" stroke="#111827"/>
+          <!-- Curve -->
+          <path d="M50 170 C 150 120, 260 60, 340 50 C 380 48, 420 60, 490 170"
+                fill="none" stroke="#1363df" stroke-width="3"/>
+          <!-- Labels -->
+          <text x="265" y="210" fill="#111827" font-size="12">Temperature (°C)</text>
+          <text x="10" y="110" fill="#111827" font-size="12" transform="rotate(-90 10,110)">Reaction rate</text>
+          <text x="330" y="60" fill="#111827" font-size="12">Optimum</text>
+        </svg>
+        <figcaption>Reaction rate rises with temperature up to an optimum, then declines as enzymes denature.</figcaption>
+      </figure>
+
+      <div class="quiz-card" aria-label="Self-check 3">
+        <p><strong>Self‑check:</strong> Which change most likely reduces enzyme activity by altering the active site’s shape?</p>
+        <form>
+          <label><input type="radio" name="sc3"> More substrate below saturation</label><br>
+          <label><input type="radio" name="sc3" data-correct="true"> Large pH shift away from optimum</label><br>
+          <label><input type="radio" name="sc3"> Slight temperature increase within optimum</label><br>
+          <label><input type="radio" name="sc3"> Removal of product by diffusion</label><br>
+          <button type="button" class="btn primary" onclick="check('sc3')">Check</button>
+          <span id="sc3-feedback" role="status" aria-live="polite"></span>
+        </form>
+      </div>
+
+      <details>
+        <summary>Lab Idea ▸ Catalase Rate Investigation</summary>
+        <div class="deep-dive">
+          <p><strong>Purpose:</strong> Measure oxygen production from H<sub>2</sub>O<sub>2</sub> decomposition with catalase under varying pH.</p>
+          <p><strong>Method:</strong> Use yeast suspension or liver extract, record gas volume or bubble count vs. time at pH 5, 7, 9. Plot rate curves and analyze optimal pH.</p>
+          <p><strong>Safety:</strong> Wear goggles/gloves; handle H<sub>2</sub>O<sub>2</sub> carefully; dispose solutions per teacher guidance.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ===================== Saskatchewan Agricultural Context ===================== -->
+    <section aria-labelledby="sk-ag-title">
+      <h2 id="sk-ag-title">Saskatchewan Context: C3 vs C4 Plants</h2>
+      <p>
+        Prairie agriculture features predominantly <strong>C3 crops</strong> (e.g., wheat), while <strong>C4 crops</strong> (e.g., corn) have enzymes and leaf anatomy that reduce photorespiration in heat and high light. Differences in carbon fixation pathways and membrane fluidity adaptations influence growth and drought tolerance—connecting chemistry, enzymes, and physiology to real fields across the province.<sup><a href="#ref-sk-outcomes">[SK]</a> <a href="#ref-bc">[BC]</a></sup>
+      </p>
+      <details>
+        <summary>Compare ▸ C3 vs C4 (quick reference)</summary>
+        <div class="deep-dive">
+          <ul>
+            <li><strong>C3 (Calvin cycle in mesophyll):</strong> More photorespiration under high heat/light; common in cooler climates.</li>
+            <li><strong>C4 (Hatch–Slack pathway):</strong> CO<sub>2</sub> pre‑fixation in mesophyll; Calvin cycle in bundle sheath cells; efficient at high temp/light.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+
+    <!-- ===================== Summary & Key Terms ===================== -->
+    <section class="summary" aria-labelledby="sum-title">
+      <h2 id="sum-title">Chapter Summary</h2>
+      <ul>
+        <li>Chemistry underlies biological structure and reactions; water’s polarity and hydrogen bonding are central to life.</li>
+        <li>Macromolecules (carbohydrates, lipids, proteins, nucleic acids) enable membranes, metabolism, and information flow.</li>
+        <li>Enzymes lower activation energy and regulate reaction rates; their activity depends on temperature, pH, and inhibitors.</li>
+        <li>Local adaptations (e.g., C3 vs C4 plants) link molecular mechanisms to Saskatchewan’s agricultural and ecological contexts.</li>
+      </ul>
+    </section>
+
+    <section class="glossary" aria-labelledby="gloss-title">
+      <h2 id="gloss-title">Key Terms</h2>
+      <p><span class="pill">macromolecule</span> <span class="pill">hydrogen bond</span> <span class="pill">phospholipid</span> <span class="pill">enzyme</span> <span class="pill">activation energy</span> <span class="pill">denaturation</span> <span class="pill">buffer</span> <span class="pill">C3 plant</span> <span class="pill">C4 plant</span> <span class="pill">glycogen</span> <span class="pill">cellulose</span></p>
+    </section>
+
+    <!-- ===================== Practice & Answer Key ===================== -->
+    <section class="practice" aria-labelledby="practice-title">
+      <h2 id="practice-title">Practice Questions</h2>
+
+      <h3>Multiple Choice</h3>
+      <ol>
+        <li>Which statement best explains why membranes remain fluid in prairie winters?<br>
+          A) More saturated fatty acids ↓ fluidity<br>
+          B) More unsaturated fatty acids ↑ fluidity<br>
+          C) More cellulose ↑ fluidity<br>
+          D) More glycogen ↑ fluidity
+        </li>
+        <li>Which macromolecule pairing is correct?<br>
+          A) Protein → genetic information storage<br>
+          B) Lipid → membrane formation<br>
+          C) Cellulose → animal energy storage<br>
+          D) Starch → plant structural support
+        </li>
+        <li>Which change would <em>most likely</em> decrease catalase activity?<br>
+          A) Increasing substrate from low to moderate<br>
+          B) Slight warming within the optimum range<br>
+          C) Large pH change away from the optimum<br>
+          D) Removing product as it forms
+        </li>
+      </ol>
+
+      <h3>Short Answer</h3>
+      <ol>
+        <li>Explain how hydrogen bonding gives water its solvent and temperature‑moderating properties.</li>
+        <li>Describe how enzyme saturation leads to V<sub>max</sub> and how cells regulate pathways to avoid bottlenecks.</li>
+      </ol>
+
+      <h3>Data Analysis</h3>
+      <p>Given catalase rate data at pH 5, 7, and 9, sketch rate vs. pH and identify the optimal range. Explain plausible molecular reasons.</p>
+
+      <details>
+        <summary>Show Answer Key</summary>
+        <div>
+          <p><strong>MC Answers:</strong> 1) B · Unsaturated fatty acids increase fluidity; 2) B · Lipids form membranes; 3) C · Large pH shifts alter active‑site charge/shape.</p>
+          <p><strong>Short Answer (guidance):</strong> Hydrogen bonds cause cohesion, high specific heat, and solvent action; V<sub>max</sub> occurs when all active sites are engaged; feedback inhibition and allosteric regulation help maintain flux.</p>
+          <p><strong>Data Analysis:</strong> Peak near neutral (species‑dependent); deviations reduce activity due to ionization changes in active site residues.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ===================== Adaptive Quiz ===================== -->
+    <section class="quiz-card adaptive-quiz" aria-labelledby="adaptive-title">
+      <h2 id="adaptive-title">Adaptive Quiz — Chemistry of Life</h2>
+      <p class="lead">Difficulty adjusts based on performance. Try at least 6 questions.</p>
+      <div id="quiz"></div>
+      <button class="btn primary" id="startQuiz">Start / Reset Quiz</button>
+      <p id="quizStatus" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ===================== References & Crosswalk ===================== -->
+    <section class="references" aria-labelledby="ref-title">
+      <h2 id="ref-title">References &amp; Curriculum Crosswalk</h2>
+      <ol>
+        <li id="ref-sk-outcomes">Saskatchewan Ministry of Education — <em>Biology 30</em> outcomes &amp; indicators (BI30‑OL1, OL2, OL3, GB1–GB3, LE1–LE2, SDS1).  
+          <a href="https://curriculum.gov.sk.ca/CurriculumOutcomeContent?id=68" target="_blank" rel="noopener">curriculum.gov.sk.ca/CurriculumOutcomeContent?id=68</a> and  
+          “Using this Curriculum” guidance on outcomes/indicators:  
+          <a href="https://curriculum.gov.sk.ca/CurriculumDocument?id=68&section=363" target="_blank" rel="noopener">curriculum.gov.sk.ca/CurriculumDocument?id=68&section=363</a>.
+          <!-- cites: turn3search22, turn3search25 -->
+        </li>
+        <li id="ref-sk-indicator">Indicator examples for GB2 (molecular genetics processes, mutations, and techniques):  
+          <a href="https://curriculum.gov.sk.ca/CurriculumOutcomeContent?id=68&oc=109385" target="_blank" rel="noopener">curriculum.gov.sk.ca/CurriculumOutcomeContent?id=68&oc=109385</a>.
+          <!-- cite: turn3search24 -->
+        </li>
+        <li id="ref-ab">Alberta Education — Biology 30 program outlines &amp; unit topics (Units A–D); diploma examination specs:  
+          <a href="https://www.alberta.ca/system/files/custom_downloaded_images/edc-biology-30-info-bulletin.pdf" target="_blank" rel="noopener">alberta.ca/.../biology-30-info-bulletin.pdf</a>.
+          <!-- cites: turn2search15 -->
+        </li>
+        <li id="ref-bc">British Columbia Curriculum — Anatomy &amp; Physiology 12 big ideas and topic coverage; provincial curriculum portal:  
+          <a href="https://curriculum.gov.bc.ca/" target="_blank" rel="noopener">curriculum.gov.bc.ca</a> and  
+          Vancouver School Board A&P 12 overview:  
+          <a href="https://www.vsb.bc.ca/vln/page/11165/anatomy-and-physiology-12" target="_blank" rel="noopener">vsb.bc.ca/.../anatomy-and-physiology-12</a>.
+          <!-- cites: turn2search7, turn2search12 -->
+        </li>
+      </ol>
+      <p class="inline-note"><strong>Crosswalk:</strong> This chapter’s objectives map to SK <strong>BI30‑OL1</strong> and compare with AB Unit C foundations and BC A&amp;P 12 biochemistry/cell structure content.</p>
+    </section>
+
+    <footer role="contentinfo">
+      <p>© 2025 Living Systems (Biology 30 · Saskatchewan). Built for GitHub Pages &amp; Microsoft 365 integration. Accessibility: WCAG 2.2 AA.</p>
+    </footer>
+  </main>
+
+  <!-- ===================== Scripts ===================== -->
+  <script>
+    /* Self-check logic (radio groups with data-correct="true") */
+    function check(groupName){
+      const inputs = document.querySelectorAll(`input[name="${groupName}"]`);
+      let correct = false;
+      inputs.forEach(i => { if(i.checked && i.dataset.correct === 'true'){ correct = true; } });
+      const fb = document.getElementById(`${groupName}-feedback`);
+      fb.textContent = correct ? '✅ Correct!' : '❌ Try again. Hint: revisit the concept above.';
+      fb.style.fontWeight = '600';
+      fb.style.color = correct ? '#10b981' : '#ef4444';
+    }
+
+    /* Adaptive quiz engine (client-side, no storage) */
+    const bank = {
+      easy: [
+        {q:'Which bond holds base pairs in DNA?', a:'Hydrogen bonds', d:['Ionic bonds','Peptide bonds','Glycosidic bonds']},
+        {q:'Which macromolecule forms cell membranes?', a:'Phospholipids', d:['Starch','Cellulose','Hemoglobin']},
+        {q:'Enzymes speed reactions by lowering:', a:'Activation energy', d:['Product concentration','pH','Temperature']}
+      ],
+      medium: [
+        {q:'Unsaturated fatty acids generally make membranes:', a:'More fluid', d:['Less fluid','More rigid','Impermeable']},
+        {q:'At enzyme saturation, additional substrate:', a:'Does not increase rate', d:['Always increases rate','Denatures enzyme','Removes inhibition']},
+        {q:'Which factor can alter active site charge?', a:'pH change', d:['Substrate removal','Product diffusion','Increased volume']}
+      ],
+      hard: [
+        {q:'A frameshift mutation usually results from:', a:'Single-base insertion/deletion', d:['Silent mutation','Base substitution','Methylation only']},
+        {q:'In cold conditions, which adaptation helps membranes?', a:'More unsaturated fatty acids', d:['Long saturated tails','No cholesterol adjustments','Protein removal']},
+        {q:'Noncompetitive inhibitor effect:', a:'Lowers Vmax', d:['Raises Vmax','Raises Km only','No kinetic change']}
+      ]
+    };
+
+    let level = 'easy', score = 0, asked = 0;
+    const quizDiv = document.getElementById('quiz');
+    const status = document.getElementById('quizStatus');
+    document.getElementById('startQuiz').addEventListener('click', ()=>{ level='easy'; score=0; asked=0; nextQ(); });
+
+    function nextQ(){
+      const item = bank[level][Math.floor(Math.random()*bank[level].length)];
+      const opts = [item.a, ...item.d].sort(()=>Math.random()-0.5);
+      quizDiv.innerHTML = `<p><strong>Q${asked+1}.</strong> ${item.q}</p>` + opts.map(o=>`<button class="btn" data-opt="${o}">${o}</button>`).join(' ');
+      quizDiv.querySelectorAll('button').forEach(b=>{
+        b.onclick = ()=>{
+          asked++;
+          if(b.dataset.opt === item.a){ score++; }
+          const pct = Math.round((score/asked)*100);
+          // adjust difficulty
+          if(pct >= 75){ level = (level==='easy'?'medium':'hard'); } 
+          else if(pct < 50){ level = (level==='hard'?'medium':'easy'); }
+          status.textContent = `Score: ${score}/${asked} (${pct}%). Level: ${level}.`;
+          nextQ();
+        };
+      });
+    }
+  </script>
+</body>
+</html>
