@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Fragile Pedosphere Audio Player</title>
+    <!-- Load Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Set a pleasant default font */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Audio Player Container -->
+    <div class="w-full max-w-md bg-white p-6 rounded-xl shadow-2xl border border-gray-100">
+        
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Podcast Episode: Playback</h1>
+        <p class="text-sm text-gray-500 mb-6">"The Fragile Pedosphere and Prairie Dust Bowl"</p>
+
+        <!-- The core HTML5 Audio Element -->
+        <audio controls class="w-full h-12 rounded-lg bg-indigo-500 shadow-lg" onloadedmetadata="this.volume = 0.7;">
+            <!-- 
+                Updated src attribute to point to 'podcast.mp3' and type changed to 'audio/mpeg' (MP3).
+            -->
+            <source src="podcast.mp3" type="audio/mpeg">
+            
+            <!-- Fallback content for browsers that do not support the audio tag -->
+            Your browser does not support the audio element.
+        </audio>
+
+        <div class="mt-4 text-center">
+            <p class="text-xs text-gray-400">Controls are embedded for easy playback.</p>
+        </div>
+        
+        <!-- Return to Textbook Button -->
+        <a href="index.html" class="mt-4 inline-block w-full text-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg shadow-sm text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-150 ease-in-out">
+            Return to Textbook
+        </a>
+    </div>
+
+</body>
+</html>
