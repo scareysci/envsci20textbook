@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Environmental Science 20 Textbook</title>
+    <title>Environmental Science 20 Textbook Index</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Using the system default for 'Inter' since it's common, or falling back to sans-serif */
+        /* Using the system default for 'Inter' */
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom styles to center content on the screen */
+        /* Custom styles for centering on large screens */
         .full-center-container {
             display: flex;
             justify-content: center;
@@ -19,97 +19,130 @@
         }
         /* Smooth transitions for links/buttons */
         .chapter-link {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
         .chapter-link:hover {
-            transform: scale(1.03);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
-<body class="p-4 bg-stone-100 full-center-container">
-    <div class="bg-white rounded-xl shadow-2xl p-6 md:p-10 max-w-4xl w-full text-center"> <h1 class="text-3xl font-extrabold text-stone-900 mb-2">Environmental Science 20</h1>
-        <p class="text-stone-500 mb-8">Course Textbook & Chapter Index</p>
+<body class="p-4 bg-gray-50 full-center-container">
+    <div class="bg-white rounded-2xl shadow-2xl shadow-green-200/50 p-6 md:p-12 max-w-5xl w-full text-center border-t-8 border-green-600">
+        <!-- Header Section -->
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
+            Environmental Science 20
+        </h1>
+        <p class="text-gray-500 mb-10 text-lg">
+            Course Textbook & Chapter Index
+        </p>
         
-        <div class="mb-10 p-4 border-b border-stone-200">
+        <!-- Search Bar Section -->
+        <div class="mb-10 p-5 bg-gray-50 rounded-xl border border-gray-200 shadow-inner">
             <form id="searchForm" class="flex flex-col sm:flex-row gap-3">
-                <input type="text" id="searchInput" placeholder="Search a term like 'Evaporation' or 'Salinity'..." 
-                       class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-amber-500/50 focus:border-amber-500 transition duration-150 shadow-inner">
-                <button type="submit" class="px-6 py-3 bg-stone-700 text-white font-bold rounded-xl shadow-lg hover:bg-stone-800 transition duration-300 transform hover:scale-[1.01]">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <input type="text" id="searchInput" placeholder="Search a term like 'Salinity' or 'Biomes'..." 
+                       class="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-green-500/50 focus:border-green-500 transition duration-150 shadow-md">
+                <button type="submit" class="px-6 py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg hover:bg-green-700 transition duration-300 transform hover:scale-[1.01] flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                    Search
+                    Search Index
                 </button>
             </form>
-            <div id="messageBox" class="mt-4 text-sm font-medium text-red-600"></div>
-            <div id="results" class="mt-6 text-left space-y-2">
-                </div>
+            
+            <div id="messageBox" class="mt-4 text-sm font-semibold text-red-500 hidden"></div>
+            
+            <!-- Search Results Display -->
+            <div id="results" class="mt-6 text-left space-y-4">
+                <!-- Results will be injected here -->
+            </div>
         </div>
 
+        <!-- External Link / Call to Action -->
         <div class="mb-10">
             <a href="https://envsci20textbook.vercel.app/stbud.html"
-               class="inline-block w-full py-4 text-xl font-extrabold text-white bg-indigo-600 rounded-xl shadow-xl hover:bg-indigo-700 transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider"
+               class="inline-block w-full py-4 text-xl font-extrabold text-white bg-blue-600 rounded-xl shadow-xl hover:bg-blue-700 transition duration-300 transform hover:scale-[1.01] uppercase tracking-wider"
                target="_blank">
-                Environmental Science Study Buddy
+                Launch Environmental Science Study Buddy
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10">
+        <!-- Chapter Index -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-12">
 
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 1: Aquatic Ecosystems</h2>
+            <!-- Unit 1 -->
+            <div class="mb-0">
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 border-b-2 border-blue-200 pb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21.5l-7.7-4.4v-8.8L12 3.8l7.7 4.4v8.8L12 21.5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-6l4-2.3m-8 2.3l4 2.3" />
+                    </svg>
+                    Unit 1: Aquatic Ecosystems
+                </h2>
                 <div class="grid grid-cols-1 gap-4">
-                    <a href="part1.html" class="chapter-link p-5 bg-amber-600 text-white font-semibold rounded-xl shadow-lg hover:bg-amber-700">
+                    <a href="part1.html" class="chapter-link p-5 bg-blue-500 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-600">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 1</span>
                         Hydrologic Cycle
                     </a>
                     
-                    <a href="part2.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
+                    <a href="part2.html" class="chapter-link p-5 bg-blue-500 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-600">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 2</span>
                         Types of Aquatic Ecosystems
                     </a>
 
-                    <a href="part3.html" class="chapter-link p-5 bg-lime-700 text-white font-semibold rounded-xl shadow-lg hover:bg-lime-800">
+                    <a href="part3.html" class="chapter-link p-5 bg-blue-500 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-600">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 3</span>
                         Abiotic Factors of Aquatic Ecosystems
                     </a>
                 </div>
             </div>
 
+            <!-- Unit 2 -->
             <div>
-                <h2 class="text-2xl font-bold text-stone-700 mb-5 border-b pb-2">Unit 2: Terrestrial Ecosystems</h2>
+                <h2 class="text-2xl font-bold text-gray-700 mb-6 border-b-2 border-green-200 pb-3 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m-4-4h1m-1 4h1m4-4h1m-1 4h1m-4-4h1m-1 4h1m-4-4h1m-1 4h1m9-4h1m-1 4h1" />
+                    </svg>
+                    Unit 2: Terrestrial Ecosystems
+                </h2>
                 <div class="grid grid-cols-1 gap-4">
-                    <a href="tepart1.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <a href="tepart1.html" class="chapter-link p-5 bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:bg-green-700">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 4</span>
                         Introduction to Terrestrial Ecosystems and Soil
                     </a>
                     
-                    <a href="tepart2.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <a href="tepart2.html" class="chapter-link p-5 bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:bg-green-700">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 5</span>
                         Exploring Producers
                     </a>
                     
-                    <a href="tepart3.html" class="chapter-link p-5 bg-green-700 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800">
+                    <a href="tepart3.html" class="chapter-link p-5 bg-green-600 text-white font-semibold rounded-xl shadow-lg hover:bg-green-700">
                         <span class="text-xs font-light opacity-80 block mb-1">Chapter 6</span>
                         Biodiversity
                     </a>
 
-                    <a href="game.html" class="chapter-link p-5 bg-teal-600 text-white font-semibold rounded-xl shadow-lg hover:bg-teal-700">
+                    <a href="game.html" class="chapter-link p-5 bg-teal-500 text-white font-semibold rounded-xl shadow-lg hover:bg-teal-600">
                         <span class="text-xs font-light opacity-80 block mb-1">Game</span>
-                        Review
+                        Review Activity: Ecosystem Builder
                     </a>
 
-                    <div class="p-4 bg-gray-200 text-gray-600 font-medium rounded-xl border border-gray-300 shadow-inner italic">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <!-- NEW PODCAST LINK ADDED HERE -->
+                    <a href="tepodcast.html" class="chapter-link p-5 bg-purple-600 text-white font-semibold rounded-xl shadow-lg hover:bg-purple-700">
+                        <span class="text-xs font-light opacity-80 block mb-1">Podcast</span>
+                        Terrestrial Ecosystem - The Podcast
+                    </a>
+                    
+                    <div class="p-4 bg-gray-100 text-gray-600 font-medium rounded-xl border border-gray-300 shadow-inner italic flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        More chapters coming soon...
+                        More chapters and units coming soon...
                     </div>
                 </div>
             </div>
 
-        </div> </div>
+        </div> 
+    </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -118,132 +151,201 @@
             const messageBox = document.getElementById('messageBox');
             const resultsDiv = document.getElementById('results');
 
-            // --- MOCK CONTENT DATA ---
+            // --- MOCK CONTENT DATA (Expanded) ---
             const textbookData = [
                 {
+                    unit: 'Aquatic Ecosystems',
+                    chapter: 'Chapter 1',
                     title: 'Hydrologic Cycle',
                     url: 'part1.html', 
                     htmlContent: `
                         <h3 id="evaporation" class="text-xl font-semibold mt-4">Evaporation and Transpiration</h3>
-                        <p>Evaporation is the process where water changes from a liquid to a gas or vapor, fueled by **solar radiation**.</p>
-                        <p>Transpiration is similar but involves the loss of water from plant leaves.</p>
+                        <p>Evaporation is the process where water changes from a liquid to a gas or vapor, fueled by **solar radiation** and wind. This phase change is crucial for atmospheric moisture.</p>
+                        <p>Transpiration is similar but involves the loss of water from plant leaves, especially in forested biomes, contributing significantly to atmospheric humidity.</p>
                         <h3 id="condensation" class="text-xl font-semibold mt-4">Condensation and Precipitation</h3>
-                        <p>Water vapor cools and condenses to form clouds. When the clouds reach saturation, **precipitation** (rain, snow, hail) occurs, returning the water to the surface.</p>
+                        <p>Water vapor cools and condenses around tiny particles (condensation nuclei) to form clouds. When the clouds reach saturation, **precipitation** (rain, snow, hail, or sleet) occurs, returning the water to the surface reservoirs, which is a major source of freshwater.</p>
+                        <h3 id="infiltration" class="text-xl font-semibold mt-4">Runoff and Infiltration</h3>
+                        <p>Once water hits the ground, it either flows over the surface (**runoff**) or soaks into the ground (**infiltration**) to become groundwater. Excessive runoff can lead to erosion.</p>
                     `
                 },
                 {
+                    unit: 'Aquatic Ecosystems',
+                    chapter: 'Chapter 2',
                     title: 'Types of Aquatic Ecosystems',
                     url: 'part2.html',
                     htmlContent: `
                         <h3 id="freshwater" class="text-xl font-semibold mt-4">Freshwater Ecosystems (Lotic and Lentic)</h3>
-                        <p>Lotic systems, such as **rivers** and streams, have moving water. Lentic systems, like **lakes** and ponds, contain standing water.</p>
+                        <p>Lotic systems, such as **rivers** and streams, have unidirectional, moving water, influencing the adaptations of organisms found there. Lentic systems, like **lakes** and ponds, contain standing water and are often characterized by zones based on light penetration.</p>
                         <h3 id="marine" class="text-xl font-semibold mt-4">Marine Ecosystems (Oceans)</h3>
-                        <p>The vast ocean ecosystems are characterized by high salinity and include zones like the **coastal zone** and the open ocean. Ocean depth influences temperature.</p>
+                        <p>The vast ocean ecosystems are characterized by high **salinity** (salt content), typically around 35 parts per thousand. They include productive zones like the coastal zone (estuaries, coral reefs) and the deep, open ocean. Ocean depth and light availability are key differentiators.</p>
+                        <h3 id="estuaries" class="text-xl font-semibold mt-4">Estuaries and Wetlands</h3>
+                        <p>Estuaries are transitional areas where freshwater rivers meet the ocean, resulting in brackish water and high biodiversity. Wetlands (swamps, marshes) are crucial for water filtration and flood control.</p>
+
                     `
                 },
                 {
+                    unit: 'Aquatic Ecosystems',
+                    chapter: 'Chapter 3',
                     title: 'Abiotic Factors of Aquatic Ecosystems',
                     url: 'part3.html',
                     htmlContent: `
                         <h3 id="temperature" class="text-xl font-semibold mt-4">Temperature and Dissolved Oxygen</h3>
-                        <p>**Temperature** significantly influences the metabolism and reproductive cycles of aquatic organisms. Colder water usually holds more **dissolved oxygen**.</p>
-                        <p>Other important abiotic factors include **pH**, **light penetration**, and **nutrient concentration** (nitrates and phosphates). Light-penetration determines the photic zone.</p>
+                        <p>**Temperature** significantly influences the metabolism and reproductive cycles of aquatic organisms. Colder water usually holds more **dissolved oxygen** (DO), which is vital for fish and invertebrates. Thermal stratification in deep lakes affects DO levels.</p>
+                        <h3 id="salinity_factors" class="text-xl font-semibold mt-4">Salinity, pH, and Light</h3>
+                        <p>The **salinity** of water dictates which organisms can survive. Changes in **pH** (acidity/alkalinity) due to pollution like acid rain can stress or kill organisms. **Light penetration** determines the photic zone, where photosynthesis can occur.</p>
+                        <h3 id="nutrients" class="text-xl font-semibold mt-4">Nutrient Concentration</h3>
+                        <p>High concentrations of **nitrates** and **phosphates** (nutrients) often lead to eutrophication, causing algal blooms and ultimately reducing dissolved oxygen when the algae decompose.</p>
                     `
                 },
                 {
+                    unit: 'Terrestrial Ecosystems',
+                    chapter: 'Chapter 4',
                     title: 'Introduction to Terrestrial Ecosystems and Soil',
                     url: 'tepart1.html',
                     htmlContent: `
                         <h3 id="biomes" class="text-xl font-semibold mt-4">Defining Terrestrial Biomes</h3>
-                        <p>Terrestrial ecosystems are organized into **biomes**, primarily determined by temperature and rainfall. Examples include forests, grasslands, and deserts.</p>
+                        <p>Terrestrial ecosystems are organized into **biomes**, large regions primarily determined by climate factors like temperature and rainfall. Examples include the Taiga, Tropical Rainforests, and Savannas. Temperature and rainfall are the primary abiotic factors.</p>
                         <h3 id="soil_factors" class="text-xl font-semibold mt-4">Key Soil Factors</h3>
-                        <p>**Soil composition**, pH, and nutrient content are critical **abiotic factors** influencing plant life in these environments.</p>
+                        <p>**Soil composition** (sand, silt, clay ratio), **pH**, and **nutrient content** are critical **abiotic factors** influencing plant life. The **A-horizon** (topsoil) is the most biologically active layer.</p>
                     `
                 },
                 {
+                    unit: 'Terrestrial Ecosystems',
+                    chapter: 'Chapter 5',
                     title: 'Exploring Producers',
                     url: 'tepart2.html',
                     htmlContent: `
                         <h3 id="autotrophs" class="text-xl font-semibold mt-4">Autotrophs and Photosynthesis</h3>
-                        <p>Producers, also known as **autotrophs**, form the base of the food web. Most producers use **photosynthesis** to convert light energy into chemical energy.</p>
+                        <p>Producers, also known as **autotrophs**, form the base of every terrestrial food web. Most producers use **photosynthesis** (converting $\text{CO}_2$ and water into glucose and oxygen) to convert light energy into chemical energy, driving the entire ecosystem.</p>
                         <h3 id="chemosynthesis" class="text-xl font-semibold mt-4">Chemosynthesis</h3>
-                        <p>In environments without light, some producers use **chemosynthesis** to create food from inorganic chemicals.</p>
+                        <p>While rare in terrestrial ecosystems, some organisms use **chemosynthesis** to create food from inorganic chemicals, often found in deep-sea vents or specific soil environments.</p>
                     `
                 },
                 {
+                    unit: 'Terrestrial Ecosystems',
+                    chapter: 'Chapter 6',
                     title: 'Biodiversity',
                     url: 'tepart3.html',
                     htmlContent: `
                         <h3 id="three_levels" class="text-xl font-semibold mt-4">Three Levels of Diversity</h3>
-                        <p>**Biodiversity** is the variety of life in an area. It is measured at three levels: **genetic diversity**, **species richness**, and ecosystem diversity. Higher diversity leads to more stable ecosystems.</p>
+                        <p>**Biodiversity** is the variety of life in an area. It is measured at three levels: **genetic diversity** (variation within a species), **species richness** (number of different species), and **ecosystem diversity** (variety of habitats). Higher diversity generally leads to more stable ecosystems.</p>
                         <h3 id="hotspots" class="text-xl font-semibold mt-4">Biodiversity Hotspots</h3>
-                        <p>A **biodiversity hotspot** is a region with a high concentration of endemic species that are experiencing rapid habitat loss. These areas are critical for global conservation efforts.</p>
+                        <p>A **biodiversity hotspot** is a biogeographic region with significant levels of biodiversity that is threatened by human habitation. These areas are critical for global conservation efforts due to their high number of endemic species.</p>
                     `
                 }
             ];
 
+            const extractSnippet = (text, searchTerm, contextLength = 80) => {
+                const lowerText = text.toLowerCase();
+                const lowerSearchTerm = searchTerm.toLowerCase();
+                const index = lowerText.indexOf(lowerSearchTerm);
+
+                if (index === -1) return null;
+
+                // Calculate start and end indices for the snippet
+                let startIndex = Math.max(0, index - contextLength);
+                let endIndex = Math.min(text.length, index + lowerSearchTerm.length + contextLength);
+
+                // Adjust to stop at previous sentence end or heading, if possible, for cleaner context
+                // This is a simple approximation: look for '. ' before the start
+                const startEllipsis = startIndex > 0;
+                if (startEllipsis) {
+                    const sentenceEnd = text.lastIndexOf('.', startIndex) + 1;
+                    if (sentenceEnd > startIndex - contextLength + 10) { // Check if the sentence end is reasonably close
+                        startIndex = sentenceEnd;
+                    }
+                }
+
+                let snippet = text.substring(startIndex, endIndex).trim();
+
+                // Highlight the search term (case insensitive)
+                const regex = new RegExp(lowerSearchTerm.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'gi');
+                snippet = snippet.replace(regex, (match) => `<span class="bg-yellow-200 font-bold text-gray-900 rounded px-1">${match}</span>`);
+
+                // Add ellipses
+                if (startIndex > 0) snippet = '... ' + snippet;
+                if (endIndex < text.length) snippet = snippet + ' ...';
+
+                return snippet;
+            };
+
             searchForm.addEventListener('submit', function(event) {
                 event.preventDefault();
-                const searchTerm = searchInput.value.toLowerCase().trim();
+                const searchTerm = searchInput.value.trim();
                 resultsDiv.innerHTML = '';
                 messageBox.textContent = '';
+                messageBox.classList.add('hidden');
                 
                 if (searchTerm.length < 3) {
                     messageBox.textContent = 'Please enter a search term with at least 3 characters.';
+                    messageBox.classList.remove('hidden');
                     return;
                 }
 
-                let foundResults = false;
+                let foundResults = 0;
                 const parser = new DOMParser();
 
                 textbookData.forEach(page => {
                     const tempDoc = parser.parseFromString(page.htmlContent, 'text/html');
-                    const pageContent = (tempDoc.body.innerText || '').toLowerCase();
-                    const searchTermIndex = pageContent.indexOf(searchTerm);
+                    const rawText = tempDoc.body.textContent || '';
+                    const pageContent = rawText.toLowerCase();
 
-                    if (searchTermIndex !== -1) {
-                        foundResults = true;
-                        const allElementsWithId = tempDoc.body.querySelectorAll('[id]');
-                        let closestHeading = null;
-                        let closestHeadingIndex = -1;
+                    if (pageContent.includes(searchTerm.toLowerCase())) {
+                        foundResults++;
+                        
+                        const snippet = extractSnippet(rawText, searchTerm);
 
-                        allElementsWithId.forEach(element => {
-                            const elementText = element.textContent.toLowerCase().trim();
-                            if (elementText.length > 0) {
-                                const elementIndex = pageContent.indexOf(elementText.substring(0, 30)); 
-                                if (elementIndex !== -1 && elementIndex < searchTermIndex && elementIndex > closestHeadingIndex) {
-                                    if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(element.tagName)) {
-                                        closestHeading = element;
-                                        closestHeadingIndex = elementIndex;
-                                    }
+                        // Find closest heading (H3 is used for sections)
+                        let closestHeading = 'Chapter Introduction';
+                        let closestHeadingId = '';
+                        let closestDistance = Infinity;
+                        const searchTermIndex = pageContent.indexOf(searchTerm.toLowerCase());
+
+                        tempDoc.body.querySelectorAll('h3[id]').forEach(h3 => {
+                            const h3Index = pageContent.indexOf(h3.textContent.toLowerCase().trim().substring(0, 20));
+                            if (h3Index !== -1 && h3Index <= searchTermIndex) {
+                                const distance = searchTermIndex - h3Index;
+                                if (distance < closestDistance) {
+                                    closestDistance = distance;
+                                    closestHeading = h3.textContent;
+                                    closestHeadingId = h3.id;
                                 }
                             }
                         });
 
+                        const finalLinkUrl = closestHeadingId ? `${page.url}#${closestHeadingId}` : page.url;
+
                         const resultItem = document.createElement('div');
-                        resultItem.className = 'p-3 bg-white border border-lime-200 rounded-lg shadow-sm hover:bg-lime-50 transition duration-150';
-                        let linkText = page.title;
-                        const finalLinkUrl = closestHeading ? `${page.url}#${closestHeading.id}` : page.url;
-
-                        if (closestHeading) {
-                            linkText = `${page.title}: ${closestHeading.textContent}`;
-                        }
-
+                        resultItem.className = 'p-4 bg-white border border-green-300 rounded-lg shadow-md hover:bg-green-50 transition duration-150 flex flex-col space-y-2';
+                        
                         resultItem.innerHTML = `
                             <a href="${finalLinkUrl}" 
-                                class="font-bold text-lg text-lime-700 hover:text-lime-800 transition duration-150"
-                                title="Go to ${linkText}">
-                                ${linkText}
+                                class="font-bold text-lg text-green-700 hover:text-green-800 transition duration-150 block w-fit"
+                                title="Go to ${page.title} - ${closestHeading}">
+                                ${page.chapter}: ${page.title}
                             </a>
-                            <p class="text-sm text-gray-500 mt-1">Found in section: ${closestHeading ? closestHeading.textContent : 'Top of Chapter'}</p>
+                            <p class="text-sm text-gray-500">
+                                <span class="font-semibold text-gray-700">Section:</span> ${closestHeading}
+                            </p>
+                            <p class="text-gray-600 text-base italic border-l-4 border-yellow-400 pl-3">
+                                ${snippet}
+                            </p>
                         `;
                         
                         resultsDiv.appendChild(resultItem);
                     }
                 });
 
-                if (!foundResults) {
+                if (foundResults > 0) {
+                    messageBox.textContent = `${foundResults} result(s) found for "${searchTerm}".`;
+                    messageBox.classList.remove('text-red-500');
+                    messageBox.classList.add('text-green-700', 'font-bold');
+                    messageBox.classList.remove('hidden');
+                } else {
                     messageBox.textContent = `No matching results found for "${searchTerm}". Try 'salinity', 'evaporation', or 'biomes'.`;
+                    messageBox.classList.add('text-red-500');
+                    messageBox.classList.remove('text-green-700', 'font-bold');
+                    messageBox.classList.remove('hidden');
                 }
             });
         });
