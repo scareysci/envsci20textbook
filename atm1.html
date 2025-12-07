@@ -63,6 +63,7 @@
             margin-top: 30px;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
+            clear: both;
         }
 
         p {
@@ -231,8 +232,31 @@
             color: #7f8c8d;
         }
 
+        /* Return Button */
+        .return-btn {
+            float: right;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .return-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            .return-btn {
+                float: none;
+                display: inline-block;
+                margin-bottom: 15px;
+            }
+
             .sidebar {
                 float: none;
                 width: 100%;
@@ -253,6 +277,7 @@
 <div class="container">
 
     <header>
+        <a href="index.html" class="return-btn">Return to Textbook</a>
         <h4>Environmental Science 20 &bull; Unit 3</h4>
         <h1>Atmosphere, Climate, and Human Stewardship</h1>
         <p><em>Curriculum Outcomes: ES20-AH1, ES20-AH2, ES20-HP1</em></p>
@@ -281,7 +306,7 @@
         <p>The "air" you breathe is not just oxygen. It is actually a mixture dominated by nitrogen.</p>
         
         <figure>
-            <img src="/images/atm1_1.png" onerror="this.onerror=null;this.src='https://placehold.co/600x400?text=Figure+1.1:+Atmosphere+Composition';" alt="Composition of Earth's Atmosphere" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm1_1.png" onerror="this.onerror=null;this.src='https://placehold.co/600x400?text=Figure+1.1:+Atmosphere+Composition';" alt="Composition of Earth's Atmosphere" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 1.1: Relative composition of the Earth's atmosphere. Nitrogen and Oxygen make up 99% of the air we breathe.</figcaption>
         </figure>
 
@@ -297,7 +322,7 @@
         <p>The atmosphere is divided into five distinct layers based on temperature trends. Each layer plays a unique role in protecting the planet.</p>
         
         <figure>
-            <img src="https://placehold.co/800x500?text=Figure+1.2:+Vertical+Structure+of+Atmosphere" alt="Diagram of layers of the atmosphere showing troposphere stratosphere mesosphere thermosphere exosphere with altitude" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm1_2.jpg" onerror="this.onerror=null;this.src='https://placehold.co/800x500?text=Figure+1.2:+Vertical+Structure+of+Atmosphere';" alt="Diagram of layers of the atmosphere showing troposphere stratosphere mesosphere thermosphere exosphere with altitude" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 1.2: The vertical structure of the atmosphere. Note the "pauses" (e.g., Tropopause) where temperature trends reverse.</figcaption>
         </figure>
 
@@ -332,7 +357,7 @@
             <p>Why does smog sometimes "sit" over a city or valley for days? This phenomenon is often caused by a <strong>temperature inversion</strong>.</p>
             <p>Normally, air gets colder as you go higher. Warm air near the ground rises, dispersing pollutants into the upper atmosphere. However, during calm winter nights in places like the Qu'Appelle Valley, the ground cools rapidly, creating a layer of cold, dense air trapped beneath a layer of warmer air above.</p>
             <figure>
-                <img src="https://placehold.co/600x300?text=Figure+1.3:+Temperature+Inversion+Diagram" alt="Diagram of temperature inversion trapping pollution" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <img src="https://scareysci.github.io/envsci20textbook/images/atm1_3.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Figure+1.3:+Temperature+Inversion+Diagram';" alt="Diagram of temperature inversion trapping pollution" style="max-width: 100%; height: auto; border-radius: 4px;">
                 <figcaption>Figure 1.3: A temperature inversion traps pollutants near the ground.</figcaption>
             </figure>
             <p>This "lid" prevents vertical mixing, trapping vehicle exhaust and chimney smoke near the ground, causing air quality to plummet until the wind picks up.</p>
@@ -367,7 +392,7 @@
         <p><strong>Radon</strong> is a colorless, odorless, radioactive gas produced by the natural decay of uranium in soil and rock. Because Saskatchewan's geology is uranium-rich, our potential for radon exposure is among the highest in the world. Radon enters homes through the "stack effect": warm air rising inside the house creates a vacuum at the lowest level, sucking soil gases in through cracks in the foundation, sump pump pits, and gaps around pipes.</p>
         
         <figure>
-            <img src="https://placehold.co/600x400?text=Figure+1.4:+Radon+Entry+Points" alt="Diagram showing how radon enters a home" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm1_4.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x400?text=Figure+1.4:+Radon+Entry+Points';" alt="Diagram showing how radon enters a home" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 1.4: Common entry points for Radon gas in a home.</figcaption>
         </figure>
 
@@ -390,7 +415,7 @@
             <p>The Earth remains habitable due to the <strong>Greenhouse Effect</strong>. The sun sends high-energy shortwave radiation to Earth, which passes easily through the atmosphere. The Earth absorbs this energy and re-radiates it as lower-energy longwave (infrared) heat.</p>
             
             <figure>
-                <img src="https://placehold.co/800x400?text=Figure+2.1:+Greenhouse+Effect+Diagram" alt="Greenhouse effect diagram detailed" style="max-width: 100%; height: auto; border-radius: 4px;">
+                <img src="https://scareysci.github.io/envsci20textbook/images/atm2_1.jpg" onerror="this.onerror=null;this.src='https://placehold.co/800x400?text=Figure+2.1:+Greenhouse+Effect+Diagram';" alt="Greenhouse effect diagram detailed" style="max-width: 100%; height: auto; border-radius: 4px;">
                 <figcaption>Figure 2.1: The Greenhouse Effect. Shortwave radiation enters; longwave radiation is trapped.</figcaption>
             </figure>
             
@@ -405,7 +430,7 @@
         </ul>
         
         <figure>
-            <img src="https://placehold.co/600x300?text=Figure+2.2:+Tree+Ring+Analysis" alt="Cross section of tree trunk showing rings and climate data" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm2_2.jpg" onerror="this.onerror=null;this.src='https://placehold.co/600x300?text=Figure+2.2:+Tree+Ring+Analysis';" alt="Cross section of tree trunk showing rings and climate data" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 2.2: Dendrochronology. Variation in ring width indicates historic climate conditions.</figcaption>
         </figure>
 
@@ -440,7 +465,7 @@
         <br>3. This process converts the nitrate into harmless nitrogen gas, which bubbles out into the atmosphere, leaving the water clean enough to return to the river.</p>
         
         <figure>
-            <img src="https://placehold.co/800x400?text=Figure+3.1:+Wastewater+Treatment+Flow" alt="Wastewater treatment process flow diagram" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm3_1.jpg" onerror="this.onerror=null;this.src='https://placehold.co/800x400?text=Figure+3.1:+Wastewater+Treatment+Flow';" alt="Wastewater treatment process flow diagram" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 3.1: Flow chart of a typical wastewater treatment plant using BNR.</figcaption>
         </figure>
 
@@ -449,7 +474,7 @@
         <p>The process works by diverting exhaust smoke into a tower filled with an amine solution. The amine binds to the CO<sub>2</sub> molecules, separating them from the rest of the exhaust. The captured CO<sub>2</sub> is then compressed into a liquid-like state and pumped 3.4 kilometers deep underground into the <strong>Aquistore</strong> injection site. There, it is trapped in a layer of porous rock (the Deadwood formation) beneath a cap of impermeable shale, preventing it from contributing to climate change.</p>
         
         <figure>
-            <img src="https://placehold.co/800x400?text=Figure+3.2:+Carbon+Capture+Process" alt="Carbon capture and storage process diagram" style="max-width: 100%; height: auto; border-radius: 4px;">
+            <img src="https://scareysci.github.io/envsci20textbook/images/atm3_2.jpg" onerror="this.onerror=null;this.src='https://placehold.co/800x400?text=Figure+3.2:+Carbon+Capture+Process';" alt="Carbon capture and storage process diagram" style="max-width: 100%; height: auto; border-radius: 4px;">
             <figcaption>Figure 3.2: The CCS process: Capture, Compression, and Injection.</figcaption>
         </figure>
 
@@ -525,6 +550,9 @@
     </footer>
 
 </div>
+
+</body>
+</html>
 
 </body>
 </html>
