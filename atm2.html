@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atmosphere & Climate: The Podcast</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to ensure the page looks great */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb; /* Very light blue/grey background */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Podcast Player Card -->
+    <div class="w-full max-w-xl bg-white shadow-2xl rounded-xl p-6 md:p-10 transition duration-300 transform hover:shadow-3xl">
+        
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Atmosphere & Climate</h1>
+            <h2 class="text-xl font-medium text-gray-600">The Essential Podcast</h2>
+        </header>
+
+        <!-- Image Placeholder (Stylized Icon) -->
+        <div class="flex justify-center mb-8">
+            <div class="p-4 rounded-full bg-blue-100 shadow-inner">
+                <!-- Simple SVG Icon representing Climate/Air -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a10 10 0 0 0 0 20v-5m-1-14c-.38-.6-.6-1-.9-1-2.2-2.1-4.8 1.4-3.4 4.5l3.2-3.5zm2 14c.38.6.6 1 .9 1 2.2 2.1 4.8-1.4 3.4-4.5l-3.2 3.5z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Audio Player Element -->
+        <div class="mb-10">
+            <p class="text-sm font-semibold text-gray-500 mb-2">Listen Now:</p>
+            <!-- The standard HTML5 audio element -->
+            <audio controls class="w-full h-12 bg-gray-100 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                   src="https://scareysci.github.io/envsci20textbook/images/atmpod.mp3">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <!-- Return Button -->
+        <div class="text-center">
+            <a href="index.html" 
+               class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 shadow-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
+                </svg>
+                Return to Textbook
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
