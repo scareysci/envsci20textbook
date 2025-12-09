@@ -69,21 +69,11 @@
             color: var(--bg);
             font-weight: bold;
         }
-
-        .teacher-btn {
-            border-color: var(--alert);
-            color: var(--alert);
-        }
         
         .training-btn {
             border-color: var(--info);
             color: var(--info);
             font-weight: bold;
-        }
-
-        .teacher-btn:hover {
-            background-color: var(--alert);
-            color: white;
         }
         
         .training-btn:hover {
@@ -306,7 +296,6 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">PROTOCOL ZERO<br><span style="font-size:0.8rem">Saskatchewan Biosphere</span></div>
-        <button class="nav-btn teacher-btn" onclick="showTab('teacher')">TEACHER GUIDE</button>
         <button class="nav-btn training-btn" onclick="showTab('training')">TRAINING MODULES</button>
         <div style="height: 10px;"></div>
         <button class="nav-btn" onclick="showTab('role1')">#1 Atmospherics</button>
@@ -323,33 +312,9 @@
     <!-- Main Content -->
     <div class="main-content">
         <button class="print-btn" onclick="window.print()">PRINT CURRENT DOSSIER</button>
-
-        <!-- TEACHER GUIDE -->
-        <div id="teacher" class="dossier-container active">
-            <div class="header-classification">INSTRUCTOR EYES ONLY</div>
-            <h1>Mission Control: Teacher Guide</h1>
-            
-            <h3>The Scenario</h3>
-            <p>The year is 2045. The students are the Council of "The Sanctuary," a biosphere in Northern Saskatchewan. Outside, the climate has collapsed. Inside, systems are failing.</p>
-
-            <h3>The Analog "Mesh" System</h3>
-            <p>This simulation relies on physical document sharing. You need to set up:</p>
-            <ol>
-                <li><strong>The Central Station:</strong> A table with 9 folders, labeled #1 through #9.</li>
-                <li><strong>The Procedure:</strong> When a student task says <em>"Output to Folder #X"</em>, they must write their data on a slip of paper (or a sticky note) and physically place it in that folder.</li>
-                <li><strong>Retrieval:</strong> When a student task says <em>"Retrieve from Folder #Y"</em>, they walk to the table and copy the data found in that folder.</li>
-            </ol>
-
-            <h3>The Day 4 Event Trigger</h3>
-            <div class="mission-box">
-                <strong>EVENT: THE HEAT DOME</strong><br>
-                On Day 4, read this to the class:<br>
-                <em>"Attention Council. External sensors detect a stalled high-pressure ridge. Ambient external temperature has risen to 42°C. Internal cooling systems are straining. Internal temperature is rising by 0.5°C per hour. Adjust your calculations immediately."</em>
-            </div>
-        </div>
         
         <!-- TRAINING MODULES (NEW SECTION) -->
-        <div id="training" class="dossier-container">
+        <div id="training" class="dossier-container active">
             <div class="header-classification">PUBLIC ACCESS // TRAINING</div>
             <h1>The Archives: Biosphere Basics</h1>
             <p><strong>Note to Council:</strong> Review these modules to understand the science behind your survival.</p>
@@ -368,7 +333,7 @@
                 <h4>The Layer Ladder</h4>
                 <table class="data-table" style="width:100%">
                     <tr><th>Layer</th><th>Altitude</th><th>Function</th></tr>
-                    <tr><td>Troposphere</td><td>0-12km</td><td>Where we live. Where weather happens.</td></tr>
+                    <tr><td>Troposphere</td><td>0-12km</td><td>Where we live. Where weather happens. [Image of Layers of Atmosphere]</td></tr>
                     <tr><td>Stratosphere</td><td>12-50km</td><td>Home of the Ozone Layer (UV protection).</td></tr>
                     <tr><td>Mesosphere</td><td>50-85km</td><td>Meteors burn up here.</td></tr>
                 </table>
@@ -397,12 +362,12 @@
                     </tr>
                     <tr>
                         <td><strong>The Ozone Layer</strong></td>
-                        <td><strong></strong></td>
+                        <td><strong>[Image of Sunglasses]</strong></td>
                         <td>Protects us from UV Rays (Sunburn/Cancer). Does NOT trap heat.</td>
                     </tr>
                     <tr>
                         <td><strong>Greenhouse Gases</strong></td>
-                        <td><strong></strong></td>
+                        <td><strong>[Image of Winter Coat]</strong></td>
                         <td>Traps heat (Infrared) to keep Earth warm. Too many layers = Overheating.</td>
                     </tr>
                 </table>
@@ -413,7 +378,7 @@
                 <h4>Proxy Data: How do we know the past?</h4>
                 <p>We use "Proxies" to measure climate from before we had thermometers.</p>
                 <ul>
-                    <li><strong>Tree Rings:</strong> Wide Ring = Warm/Wet year. Narrow Ring = Cold/Dry year.</li>
+                    <li><strong>Tree Rings:</strong> Wide Ring = Warm/Wet year. Narrow Ring = Cold/Dry year. [Image of tree rings climate]</li>
                     <li><strong>Ice Cores:</strong> Tiny bubbles trapped in ancient ice contain old air. We analyze them to measure CO2 levels from 10,000 years ago.</li>
                 </ul>
             </div>
@@ -476,14 +441,14 @@
                     <strong>Days 1-3: Analysis Phase</strong>
                     <ul class="task-list">
                         <li><strong>Task A: Calculation Report.</strong> Calculate the % increase for CO2 and PM2.5 using <code>(New - Old) / Old * 100</code>. Show all steps of your math in your logbook.</li>
-                        <li><strong>Task B: The Pollutant Profile.</strong> Research "Saskatchewan Air Quality common pollutants." Write a 1-page profile on the 6 major pollutants. For each, include: Source, Health Effect, and Environmental Effect.</li>
-                        <li><strong>Task C: The Output.</strong> Write your "Current CO2 Level" and AQI Risk Level (Low/Med/High) on a slip of paper. <strong>Place this slip in Folder #1 (Atmospherics).</strong> Student #2 will need this.</li>
+                        <li><strong>Task B: The Pollutant Profile.</strong> Go to the <strong>TRAINING MODULES</strong> tab. Read Module 2. Write a 1-page profile on the 6 major pollutants. For each, include: Source, Health Effect, and Environmental Effect.</li>
+                        <li><strong>Task C: The Output.</strong> Write your "Current CO2 Level" and AQI Risk Level (Low/Med/High) on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #1 (ATMOSPHERICS).</strong> Student #2 will need this.</li>
                     </ul>
                 </div>
                 <div class="task-day">
                     <strong>Days 4-6: The Crisis Phase (Heat Dome)</strong>
                     <ul class="task-list">
-                        <li><strong>Task A: Inversion Diagram.</strong> Draw a detailed, full-page diagram of a Temperature Inversion. Label: Warm Air Layer, Cold Air Layer, Trapped Pollutants, and Ground Level. Write a paragraph explaining why this is dangerous for the Dome.</li>
+                        <li><strong>Task A: Inversion Diagram.</strong> Draw a detailed, full-page diagram of a Temperature Inversion (See Training Module 2). Label: Warm Air Layer, Cold Air Layer, Trapped Pollutants, and Ground Level. Write a paragraph explaining why this is dangerous for the Dome.</li>
                         <li><strong>Task B: Recalculation.</strong> A fire in the Ag sector adds +20% to PM2.5. Calculate the new total. Is the air safe to breathe?</li>
                     </ul>
                 </div>
@@ -542,6 +507,11 @@
                     <td>2</td>
                     <td><strong>15</strong></td>
                 </tr>
+                <tr>
+                    <td><strong>CURRENT TOTAL POPULATION</strong></td>
+                    <td>720</td>
+                    <td><strong>780</strong></td>
+                </tr>
             </table>
 
             <h3>2. Daily Protocol</h3>
@@ -549,9 +519,9 @@
                 <div class="task-day">
                     <strong>Days 1-3: Triage Phase</strong>
                     <ul class="task-list">
-                        <li><strong>Task A: Retrieve Data.</strong> Go to the Central Station. <strong>Open Folder #1 (Atmospherics)</strong> and find the Air Toxicity Index. Record it.</li>
+                        <li><strong>Task A: Retrieve Data.</strong> Go to the Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #1 (ATMOSPHERICS)</strong> to find the Air Toxicity Index. Record it.</li>
                         <li><strong>Task B: The Advisory.</strong> Write a formal "Public Health Advisory" (1 page). It must warn citizens about the link between the specific air pollutants found in Folder #1 and their respiratory symptoms.</li>
-                        <li><strong>Task C: The Output.</strong> Calculate "Workforce Capacity" (100% - % of sick population). Write this number on a slip. <strong>Place in Folder #2 (Medical).</strong> Student #7 needs this.</li>
+                        <li><strong>Task C: The Output.</strong> Calculate "Workforce Capacity" (100% - % of sick population). *Hint: Use 780 as total population.* Write this number on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #2 (MEDICAL).</strong> Student #7 needs this.</li>
                     </ul>
                 </div>
                 <div class="task-day">
@@ -601,3 +571,506 @@
                     <th>Shadow Data (2044)</th>
                     <th>LIVE DATA (2045)</th>
                 </tr>
+                <tr>
+                    <td>Total Population</td>
+                    <td>720</td>
+                    <td><strong>780</strong></td>
+                </tr>
+                <tr>
+                    <td>Births (Annual)</td>
+                    <td>40</td>
+                    <td><strong>55</strong></td>
+                </tr>
+                <tr>
+                    <td>Deaths (Annual)</td>
+                    <td>12</td>
+                    <td><strong>15</strong></td>
+                </tr>
+                <tr>
+                    <td>Immigrants (Rescued)</td>
+                    <td>5</td>
+                    <td><strong>20</strong></td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Calculation Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: The Math Worksheet.</strong> Create a "Population Ledger" showing your work for: Net Growth, Growth Rate %, and Doubling Time (Rule of 70). *Note: Net Growth accounts for the increase from 720 to 780.*</li>
+                        <li><strong>Task B: Output.</strong> Write "Current Population" and "Projected Population 2050" on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #3 (DEMOGRAPHICS).</strong> Student #8 needs this to build houses.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Carrying Capacity (K)</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Retrieve Data.</strong> Go to the Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #7 (RESOURCES)</strong> and find the "Maximum Sustainable Population" (This is 'K').</li>
+                        <li><strong>Task B: The J vs S Curve.</strong> Draw a large graph. Plot your population growth. Draw a horizontal line for 'K' (from Folder #7). Are we in Exponential (J-Curve) or Logistic (S-Curve) growth? Explain in a paragraph.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Policy Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (Population Control Policy).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Demographic Profile:</strong> Current stats and doubling time.<br>
+                        2. <strong>Carrying Capacity Analysis:</strong> Compare Population vs. Food Supply (Data from Folder #7).<br>
+                        3. <strong>The Strategy:</strong> A policy to reduce the birth rate based on the "Demographic Transition Model" (e.g., education, healthcare, incentives).<br>
+                        4. <strong>Ethical Statement:</strong> Justify your policy. Is it humane?<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 4: CARBON AUDITOR -->
+        <div id="role4" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #04</div>
+            <h1>The Carbon Auditor</h1>
+            <p><strong>Focus:</strong> ES20-AH2 (Anthropogenic Causes)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> You must calculate the Dome's Carbon Footprint. We cannot survive if we are heating our own atmosphere.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: The Greenhouse Effect</span>
+                <p><strong>Natural vs Enhanced:</strong> The Greenhouse Effect is GOOD (it keeps Earth warm enough for life). The *Enhanced* effect is BAD (humans adding too much gas, overheating the planet).</p>
+                <p><strong>GWP (Global Warming Potential):</strong> Not all gases are equal. CO2 is the baseline (1). Methane (CH4) is ~25x stronger than CO2 at trapping heat.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Source</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
+                <tr>
+                    <td>Diesel Generator</td>
+                    <td>500 hours</td>
+                    <td><strong>1,200 hours</strong></td>
+                </tr>
+                <tr>
+                    <td>Methane (Waste)</td>
+                    <td>2 tons</td>
+                    <td><strong>5 tons</strong></td>
+                </tr>
+                <tr>
+                    <td>Solar Grid Output</td>
+                    <td>80% Capacity</td>
+                    <td><strong>60% Capacity</strong> (Dusty)</td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Audit Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: The CO2e Report.</strong> Calculate the CO2 equivalent of the Methane (5 tons x 25). Create a "Carbon Inventory Table" listing all sources.</li>
+                        <li><strong>Task B: The Diagram.</strong> Go to the <strong>TRAINING MODULES</strong> tab. Read Module 3. Create a full-page, labeled diagram of the Greenhouse Effect within the Dome. Differentiate between Short-wave and Long-wave radiation.</li>
+                        <li><strong>Task C: Output.</strong> Write "Total Carbon Inventory (CO2e)" on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #4 (CARBON).</strong> Student #5 needs this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Compliance Check</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: The Audit Defense.</strong> Student #9 (Policy) will inspect Folder #4. Write a "Defense Statement" explaining why Diesel usage has spiked (Hint: Link it to Solar efficiency data).</li>
+                        <li><strong>Task B: Source Analysis.</strong> Write a report categorizing all emissions in the dome as either "Natural" or "Anthropogenic." Explain why the Anthropogenic ones are the problem.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Mitigation Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (Emissions Reduction Plan).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Current Inventory:</strong> The total tons of CO2e.<br>
+                        2. <strong>The Methane Problem:</strong> Explain why Methane is more dangerous than CO2.<br>
+                        3. <strong>Biogas Solution:</strong> Proposal for a Biogas Digester system (Research: How does it work? What are the outputs?).<br>
+                        4. <strong>Reduction Targets:</strong> Set a goal for 2050 (e.g., "Reduce emissions by 40%").<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 5: PALEOCLIMATOLOGIST -->
+        <div id="role5" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #05</div>
+            <h1>The Paleoclimatologist</h1>
+            <p><strong>Focus:</strong> ES20-AH2 (Climate Change Evidence)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> The Council argues that the heating is "just a natural cycle." You must analyze the simulated ice core data to prove this is anthropogenic.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Investigating the Past</span>
+                <p><strong>Proxy Records:</strong> Since we didn't have thermometers 10,000 years ago, we use "Proxies" - natural recorders of climate. Examples: Tree rings (thick = warm/wet), Ice Cores (trapped air bubbles), and Sediment layers.</p>
+                <p><strong>Albedo:</strong> The reflectivity of a surface. Snow has high albedo (reflects sun). Water has low albedo (absorbs sun). Melting ice creates a "Positive Feedback Loop."</p>
+            </div>
+
+            <h3>1. The Data Log (Ice Core Simulation)</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Era</th>
+                    <th>CO2 Concentration</th>
+                    <th>Avg Temp Variance</th>
+                </tr>
+                <tr>
+                    <td>10,000 Years Ago</td>
+                    <td>260 ppm</td>
+                    <td>-0.5°C</td>
+                </tr>
+                <tr>
+                    <td>1950 (Industrial)</td>
+                    <td>315 ppm</td>
+                    <td>0°C (Baseline)</td>
+                </tr>
+                <tr>
+                    <td>2045 (Current Dome)</td>
+                    <td><strong>580 ppm</strong></td>
+                    <td><strong>+3.2°C</strong></td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Timeline Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: The Graph.</strong> Create a high-quality double-line graph. X-axis = Time. Left Y-axis = CO2. Right Y-axis = Temp. Use two colors.</li>
+                        <li><strong>Task B: Correlation Statement.</strong> Write a paragraph analyzing the graph. Does temperature follow CO2? Is there a lag?</li>
+                        <li><strong>Task C: Output.</strong> Calculate a "Temperature Projection for 2050" based on the slope of your line. Write it on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #5 (PALEO).</strong> Student #7 needs this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Feedback Loops</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Feedback Diagram.</strong> Draw the Albedo Feedback Loop. Start with "Melting Ice" -> "Lower Albedo" -> "More Heat Absorbed" -> "More Melting." Explain why this loop is hard to stop.</li>
+                        <li><strong>Task B: Dendrochronology.</strong> See <strong>TRAINING MODULE 4</strong>. Research "Tree Rings Climate Change." Sketch what a tree ring from a "Drought Year" looks like vs a "Good Year."</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: The Evidence</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (The Evidence Brief).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Historical Context:</strong> Explain how we know past climate data (Proxies).<br>
+                        2. <strong>Data Evidence:</strong> Present your graph. Prove that the current warming is NOT natural.<br>
+                        3. <strong>Feedback Warnings:</strong> Explain the Albedo Effect and why the dome is in danger of a runaway heating loop.<br>
+                        4. <strong>Conclusion:</strong> Definitive statement on Anthropogenic Climate Change.<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 6: ENERGY ARCHITECT -->
+        <div id="role6" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #06</div>
+            <h1>Energy Grid Architect</h1>
+            <p><strong>Focus:</strong> ES20-AH1/AH2 (Mitigation)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> We are burning too much diesel. You must design a renewable energy mix that fits within the limited space of the Dome.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Energy Systems</span>
+                <p><strong>Baseload Power:</strong> Power that is always on (Nuclear, Coal, Hydro). You need this for the hospital.</p>
+                <p><strong>Intermittent Power:</strong> Power that changes with weather (Solar, Wind). You need batteries to store this.</p>
+                <p><strong>SMR (Small Modular Reactor):</strong> A new type of small nuclear reactor being studied in Saskatchewan. Zero carbon, but produces radioactive waste.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Source</th>
+                    <th>Reliability</th>
+                    <th>CO2 Emission</th>
+                    <th>Space Required</th>
+                </tr>
+                <tr>
+                    <td>Diesel (Current)</td>
+                    <td>High</td>
+                    <td>Very High</td>
+                    <td>Low</td>
+                </tr>
+                <tr>
+                    <td>Solar Arrays</td>
+                    <td>Medium (Day only)</td>
+                    <td>Zero</td>
+                    <td>High (Needs Zoning)</td>
+                </tr>
+                <tr>
+                    <td>SMR (Nuclear)</td>
+                    <td>Very High</td>
+                    <td>Zero</td>
+                    <td>Low</td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Assessment Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Energy Matrix.</strong> Create a matrix comparing Wind, Solar, and Nuclear (SMR) for Saskatchewan. Columns: Cost, Reliability, Environmental Impact.</li>
+                        <li><strong>Task B: Retrieve Zoning.</strong> Go to Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #8 (URBAN).</strong> Look at the map. Do you have space for Solar? Or do you need the compact SMR?</li>
+                        <li><strong>Task C: Output.</strong> Write your "Proposed Energy Mix %" (e.g., 50% Nuclear, 50% Solar) on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #6 (ENERGY).</strong> Student #4 needs this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Crisis Management</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Load Shedding Plan.</strong> The grid is failing. Create a priority list of sectors (Hospital, Ag, Housing, Admin). Who gets cut off first? Justify your ethical choice.</li>
+                        <li><strong>Task B: Efficiency Research.</strong> Research "Passive Solar Design" or "Retrofitting." Write a guide on how to renovate the housing sector to use less energy.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Final Blueprint</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (The Energy Transition Blueprint).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Current Audit:</strong> Why the Diesel system is failing.<br>
+                        2. <strong>The Mix:</strong> Pie chart of your proposed future energy grid.<br>
+                        3. <strong>Saskatchewan Context:</strong> Why did you choose SMR/Solar/Wind? (Reference local geography/resources).<br>
+                        4. <strong>Waste Management:</strong> Detailed plan for Nuclear Waste storage OR Battery/Solar panel recycling.<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 7: RESOURCE MANAGER -->
+        <div id="role7" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #07</div>
+            <h1>Resource Manager (Ag & Water)</h1>
+            <p><strong>Focus:</strong> ES20-HP1 & AH2 (Food Security)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> Feeding 780 people in a biodome is hard. The water table is dropping, and the soil is losing nitrogen.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Sustainable Agriculture</span>
+                <p><strong>Monoculture:</strong> Growing only one crop (like wheat). It is efficient but risky (one bug can kill it all) and depletes soil.</p>
+                <p><strong>Nitrogen Cycle:</strong> Plants need nitrogen. Bacteria in the soil fix nitrogen from the air. Over-farming kills these bacteria.</p>
+                <p><strong>Aquifers:</strong> Underground water storage. If you pump water out faster than it rains (recharge), the aquifer dries up.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Resource</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
+                <tr>
+                    <td>Wheat Yield</td>
+                    <td>1,200 bushels</td>
+                    <td><strong>900 bushels</strong> (Heat stress)</td>
+                </tr>
+                <tr>
+                    <td>Potable Water</td>
+                    <td>50,000 Liters</td>
+                    <td><strong>35,000 Liters</strong></td>
+                </tr>
+                <tr>
+                    <td>Soil Nitrogen</td>
+                    <td>Optimal</td>
+                    <td><strong>Depleted</strong></td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Calculation Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Retrieve Data.</strong> Go to Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #2 (MEDICAL).</strong> Check the "Workforce Capacity." Are there enough healthy people to farm?</li>
+                        <li><strong>Task B: Calorie Math.</strong> (900 bushels x 40,000 calories) / (2000 cal/person x 365 days). How many people can you feed? Show your work.</li>
+                        <li><strong>Task C: Output.</strong> Write "Max Sustainable Population" on a slip. <strong>ACTION: PLACE SLIP IN FOLDER #7 (RESOURCES).</strong> Student #3 needs this immediately.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Drought Protocol</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Retrieve Forecast.</strong> Go to Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #5 (PALEO).</strong> Look at the 2050 Temperature Projection. Will Wheat survive?</li>
+                        <li><strong>Task B: GMO Defense Paper.</strong> Write a 1-page defense of using "Drought Resistant GMO Crops." Address the pros (survival) vs the cons (biodiversity loss).</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Regenerative Ag</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (Food Security Plan).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Status Report:</strong> Current Yields vs Population Needs.<br>
+                        2. <strong>Water Strategy:</strong> Detailed explanation of Drip Irrigation and Aquifer management.<br>
+                        3. <strong>Soil Strategy:</strong> 3-Year Crop Rotation plan (explain how Pulses fix Nitrogen).<br>
+                        4. <strong>Future Adaptation:</strong> Plan for changing crops if temps rise +2°C.<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 8: URBAN PLANNER -->
+        <div id="role8" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #08</div>
+            <h1>The Urban Planner</h1>
+            <p><strong>Focus:</strong> ES20-HP1 (Urbanization & Waste)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> People are living in hallways. Trash is piling up. You must redesign the living quarters to handle high density without spreading disease.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Urban Systems</span>
+                <p><strong>Urban Heat Island:</strong> Cities are hotter than the countryside because concrete absorbs heat and there are fewer trees to cool things down.</p>
+                <p><strong>High Density Housing:</strong> Stacking people (apartments) saves space but requires good ventilation and waste removal.</p>
+                <p><strong>Integrated Waste Management:</strong> Reduce -> Reuse -> Recycle -> Recover (Energy) -> Landfill.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
+                <tr>
+                    <td>Housing Density</td>
+                    <td>2 people / room</td>
+                    <td><strong>4 people / room</strong></td>
+                </tr>
+                <tr>
+                    <td>Solid Waste / Day</td>
+                    <td>500 kg</td>
+                    <td><strong>900 kg</strong></td>
+                </tr>
+                <tr>
+                    <td>Recycling Rate</td>
+                    <td>40%</td>
+                    <td><strong>25%</strong> (System overwhelmed)</td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Zoning Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Retrieve Count.</strong> Go to Central Station. <strong>ACTION: RETRIEVE FROM FOLDER #3 (DEMOGRAPHICS).</strong> Get the "Total Population" count.</li>
+                        <li><strong>Task B: The Map.</strong> Draw a large, detailed map of the Dome. You must designate zones for: Housing, Energy (Ask #6 how much space they need), Agriculture, and Waste.</li>
+                        <li><strong>Task C: Output.</strong> Fold your map and <strong>ACTION: PLACE MAP IN FOLDER #8 (URBAN).</strong> Student #6 needs to see this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Waste Crisis</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Waste Audit.</strong> Analyze the 900kg of waste. Research "Integrated Waste Management." Create a pyramid diagram showing how you will process this waste (Compost? Recycle? Incinerate?).</li>
+                        <li><strong>Task B: Incineration Report.</strong> If you burn waste, it creates energy but also smoke. Write a Risk Assessment. (Consult Student #1's Air Quality data).</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Green City Design</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (Urban Resilience Plan).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Population Strategy:</strong> How to house 780+ people (High density design).<br>
+                        2. <strong>The Heat Island:</strong> Strategy to cool the city (Green Roofs, Albedo modification).<br>
+                        3. <strong>Waste Loop:</strong> Diagram of the "Circular Economy" (Waste -> Resource).<br>
+                        4. <strong>Zoning Justification:</strong> Why did you put the Industry zone there? (Wind direction?).<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 9: POLICY ARCHITECT -->
+        <div id="role9" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #09</div>
+            <h1>The Policy Architect</h1>
+            <p><strong>Focus:</strong> ES20-AH2 (Global Treaties & Synthesis)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> You are the law. While others crunch numbers, you ensure their solutions don't violate safety protocols. You must research Earth's history of environmental treaties to write the Dome's Constitution.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Global Treaties</span>
+                <p><strong>Montreal Protocol (1987):</strong> Banned CFCs to save the Ozone layer. Highly successful.</p>
+                <p><strong>Kyoto Protocol (1997):</strong> Set binding targets for rich countries to cut CO2. The US didn't sign. Considered a partial failure.</p>
+                <p><strong>Paris Agreement (2015):</strong> Goal is to keep warming under 2°C. Countries set their own voluntary targets.</p>
+                <p><strong>Precautionary Principle:</strong> "If an action might cause harm, don't do it until you prove it is safe."</p>
+            </div>
+
+            <h3>1. The Data Archive</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li><strong>Protocol A:</strong> Montreal Protocol (Ozone) - Status: SUCCESS</li>
+                <li><strong>Protocol B:</strong> Kyoto Protocol (GHG) - Status: FAILED</li>
+                <li><strong>Protocol C:</strong> Paris Agreement (2°C Limit) - Status: MIXED</li>
+            </ul>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Constitution Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Draft Rules.</strong> Write the "Dome Constitution." It must have 3 Articles based on the Paris Agreement (e.g., Emissions Limits, Forest Protection, Equity).</li>
+                        <li><strong>Task B: The Checklist.</strong> Create a physical "Compliance Checklist." Write one for each student.</li>
+                        <li><strong>Task C: Output.</strong> Distribute the Checklists by placing them in <strong>FOLDERS #1-8.</strong></li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: The Audit (Active Phase)</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Physical Inspections.</strong> Go to Central Station. Open <strong>FOLDER #6 (ENERGY)</strong>. Are they using Diesel? That violates Article 1. Open <strong>FOLDER #7 (AG)</strong>. Are they using GMOs?</li>
+                        <li><strong>Task B: Citation Slips.</strong> If a student is breaking your rules, fill out a "Non-Compliance Notice" slip. Write what they did wrong and what the penalty is. <strong>ACTION: PLACE CITATION IN THEIR FOLDER.</strong></li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: The Accord</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Document (The Survival Accord).</strong> You are responsible for assembling the final class project. It must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED ACCORD STRUCTURE:</strong><br>
+                        1. <strong>Preamble:</strong> Statement of the crisis and the Council's intent.<br>
+                        2. <strong>Sector Summaries:</strong> You must read the final reports of Students #1-8 and write a 3-sentence summary of each for the final treaty.<br>
+                        3. <strong>The Legal Framework:</strong> The final laws regarding Carbon, Population, and Resources.<br>
+                        4. <strong>Signatures:</strong> Space for every student to sign.<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all dossiers
+            const dossiers = document.querySelectorAll('.dossier-container');
+            dossiers.forEach(d => d.classList.remove('active'));
+
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+
+            // Update sidebar active state
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
