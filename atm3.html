@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOL ZERO: Command Terminal</title>
+    <style>
+        :root {
+            --primary: #0f0;
+            --bg: #0a0a0a;
+            --panel: #1a1a1a;
+            --text: #e0e0e0;
+            --alert: #ff3333;
+            --info: #00ffff;
+            --print-bg: #ffffff;
+            --print-text: #000000;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background-color: var(--panel);
+            border-right: 1px solid var(--primary);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: 1px solid #333;
+            color: var(--text);
+            padding: 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .nav-btn.active {
+            background-color: var(--primary);
+            color: var(--bg);
+            font-weight: bold;
+        }
+
+        .teacher-btn {
+            border-color: var(--alert);
+            color: var(--alert);
+        }
+        
+        .training-btn {
+            border-color: var(--info);
+            color: var(--info);
+            font-weight: bold;
+        }
+
+        .teacher-btn:hover {
+            background-color: var(--alert);
+            color: white;
+        }
+        
+        .training-btn:hover {
+            background-color: var(--info);
+            color: #000;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .dossier-container {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--panel);
+            padding: 40px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .dossier-container.active {
+            display: block;
+        }
+
+        h1, h2, h3 {
+            text-transform: uppercase;
+            border-bottom: 1px solid #444;
+            padding-bottom: 5px;
+        }
+
+        h1 { color: var(--primary); }
+        h3 { color: var(--info); margin-top: 30px; }
+        
+        h4 {
+            color: #ccc;
+            border-bottom: 1px dotted #555;
+            padding-bottom: 3px;
+            margin-top: 15px;
+        }
+
+        .header-classification {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background-color: #333;
+        }
+
+        .mission-box {
+            background-color: #222;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .concept-box {
+            background-color: #112233;
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .concept-title {
+            color: var(--info);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .daily-tasks {
+            background-color: #1a1a1a;
+            border: 1px solid #444;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .task-day {
+            margin-bottom: 25px;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 15px;
+        }
+
+        .task-list {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .task-list li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .task-list li:before {
+            content: ">>";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .report-outline {
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-left: 2px solid #aaa;
+            margin: 10px 0;
+            font-size: 0.85em;
+        }
+
+        .resources-box {
+            background-color: #111;
+            padding: 15px;
+            border: 1px dotted #666;
+            margin-top: 20px;
+        }
+
+        .print-btn {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            background-color: var(--primary);
+            color: var(--bg);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        /* Training Module Styles */
+        .training-card {
+            background-color: #111;
+            border: 1px solid #333;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .training-card h4 {
+            color: var(--info);
+            margin-top: 0;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+                height: auto;
+                overflow: visible;
+                display: block;
+            }
+            .sidebar, .print-btn {
+                display: none;
+            }
+            .main-content {
+                padding: 0;
+                overflow: visible;
+            }
+            .dossier-container {
+                display: none; /* Hide all by default */
+                background-color: white;
+                color: black;
+                border: 2px solid black;
+                box-shadow: none;
+                padding: 20px;
+                margin: 0;
+                page-break-after: always;
+            }
+            .dossier-container.active {
+                display: block; /* Only show active */
+            }
+            .header-classification {
+                border-color: black;
+                color: black;
+            }
+            .mission-box, .daily-tasks, .resources-box, .concept-box, .report-outline, .training-card {
+                background-color: white;
+                border: 1px solid black;
+                color: black;
+            }
+            .concept-title, h1, h3, h4 {
+                color: black;
+            }
+            .data-table th {
+                background-color: #ddd;
+                color: black;
+            }
+            a {
+                text-decoration: underline;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">PROTOCOL ZERO<br><span style="font-size:0.8rem">Saskatchewan Biosphere</span></div>
+        <button class="nav-btn teacher-btn" onclick="showTab('teacher')">TEACHER GUIDE</button>
+        <button class="nav-btn training-btn" onclick="showTab('training')">TRAINING MODULES</button>
+        <div style="height: 10px;"></div>
+        <button class="nav-btn" onclick="showTab('role1')">#1 Atmospherics</button>
+        <button class="nav-btn" onclick="showTab('role2')">#2 Medical</button>
+        <button class="nav-btn" onclick="showTab('role3')">#3 Demographer</button>
+        <button class="nav-btn" onclick="showTab('role4')">#4 Carbon Audit</button>
+        <button class="nav-btn" onclick="showTab('role5')">#5 Paleoclimate</button>
+        <button class="nav-btn" onclick="showTab('role6')">#6 Energy Grid</button>
+        <button class="nav-btn" onclick="showTab('role7')">#7 Resource Mgr</button>
+        <button class="nav-btn" onclick="showTab('role8')">#8 Urban Plan</button>
+        <button class="nav-btn" onclick="showTab('role9')">#9 Policy Arch</button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <button class="print-btn" onclick="window.print()">PRINT CURRENT DOSSIER</button>
+
+        <!-- TEACHER GUIDE -->
+        <div id="teacher" class="dossier-container active">
+            <div class="header-classification">INSTRUCTOR EYES ONLY</div>
+            <h1>Mission Control: Teacher Guide</h1>
+            
+            <h3>The Scenario</h3>
+            <p>The year is 2045. The students are the Council of "The Sanctuary," a biosphere in Northern Saskatchewan. Outside, the climate has collapsed. Inside, systems are failing.</p>
+
+            <h3>The Analog "Mesh" System</h3>
+            <p>This simulation relies on physical document sharing. You need to set up:</p>
+            <ol>
+                <li><strong>The Central Station:</strong> A table with 9 folders, labeled #1 through #9.</li>
+                <li><strong>The Procedure:</strong> When a student task says <em>"Output to Folder #X"</em>, they must write their data on a slip of paper (or a sticky note) and physically place it in that folder.</li>
+                <li><strong>Retrieval:</strong> When a student task says <em>"Retrieve from Folder #Y"</em>, they walk to the table and copy the data found in that folder.</li>
+            </ol>
+
+            <h3>The Day 4 Event Trigger</h3>
+            <div class="mission-box">
+                <strong>EVENT: THE HEAT DOME</strong><br>
+                On Day 4, read this to the class:<br>
+                <em>"Attention Council. External sensors detect a stalled high-pressure ridge. Ambient external temperature has risen to 42°C. Internal cooling systems are straining. Internal temperature is rising by 0.5°C per hour. Adjust your calculations immediately."</em>
+            </div>
+        </div>
+        
+        <!-- TRAINING MODULES (NEW SECTION) -->
+        <div id="training" class="dossier-container">
+            <div class="header-classification">PUBLIC ACCESS // TRAINING</div>
+            <h1>The Archives: Biosphere Basics</h1>
+            <p><strong>Note to Council:</strong> Review these modules to understand the science behind your survival.</p>
+
+            <h3>Module 1: Atmosphere Mechanics</h3>
+            <div class="training-card">
+                <h4>The Recipe of Air</h4>
+                <p>We often think air is just oxygen, but it is a specific mixture. If this balance breaks, we die.</p>
+                <ul>
+                    <li><strong>Nitrogen (N2):</strong> 78% (Most abundant)</li>
+                    <li><strong>Oxygen (O2):</strong> 21% (Required for breathing & combustion)</li>
+                    <li><strong>Trace Gases:</strong> 1% (Argon, CO2, Water Vapor)</li>
+                </ul>
+            </div>
+            <div class="training-card">
+                <h4>The Layer Ladder</h4>
+                <table class="data-table" style="width:100%">
+                    <tr><th>Layer</th><th>Altitude</th><th>Function</th></tr>
+                    <tr><td>Troposphere</td><td>0-12km</td><td>Where we live. Where weather happens.</td></tr>
+                    <tr><td>Stratosphere</td><td>12-50km</td><td>Home of the Ozone Layer (UV protection).</td></tr>
+                    <tr><td>Mesosphere</td><td>50-85km</td><td>Meteors burn up here.</td></tr>
+                </table>
+            </div>
+
+            <h3>Module 2: Pollution Dynamics</h3>
+            <div class="training-card">
+                <h4>Temperature Inversions</h4>
+                <p>Normally, warm air rises and carries pollution away. In a "Heat Dome" (Inversion), a layer of warm air sits on top of cold air near the ground, acting like a <strong>LID</strong>. This traps smoke and smog at ground level.</p>
+            </div>
+            <div class="training-card">
+                <h4>Combustion Chemistry</h4>
+                <p><strong>Complete Combustion:</strong> Fuel + Oxygen → Heat + CO2 + Water (Clean burn).</p>
+                <p><strong>Incomplete Combustion:</strong> Not enough Oxygen → Heat + CO2 + Water + <strong>Soot + Carbon Monoxide (CO)</strong> (Dangerous).</p>
+            </div>
+
+            <h3>Module 3: The Great Misunderstanding</h3>
+            <div class="training-card">
+                <h4>Ozone Hole vs. Global Warming</h4>
+                <p>These are two different problems. Don't confuse them!</p>
+                <table class="data-table" style="width:100%">
+                    <tr>
+                        <th>Concept</th>
+                        <th>The Analogy</th>
+                        <th>Function</th>
+                    </tr>
+                    <tr>
+                        <td><strong>The Ozone Layer</strong></td>
+                        <td><strong></strong></td>
+                        <td>Protects us from UV Rays (Sunburn/Cancer). Does NOT trap heat.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Greenhouse Gases</strong></td>
+                        <td><strong></strong></td>
+                        <td>Traps heat (Infrared) to keep Earth warm. Too many layers = Overheating.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>Module 4: Climate Detectives</h3>
+            <div class="training-card">
+                <h4>Proxy Data: How do we know the past?</h4>
+                <p>We use "Proxies" to measure climate from before we had thermometers.</p>
+                <ul>
+                    <li><strong>Tree Rings:</strong> Wide Ring = Warm/Wet year. Narrow Ring = Cold/Dry year.</li>
+                    <li><strong>Ice Cores:</strong> Tiny bubbles trapped in ancient ice contain old air. We analyze them to measure CO2 levels from 10,000 years ago.</li>
+                </ul>
+            </div>
+            
+             <h3>Module 5: Stewardship Solutions</h3>
+            <div class="training-card">
+                <h4>Changing the Economy</h4>
+                <ul>
+                    <li><strong>Linear Economy:</strong> Take -> Make -> Waste. (Unsustainable).</li>
+                    <li><strong>Circular Economy:</strong> Take -> Make -> Reuse -> Return. (The goal of the Dome).</li>
+                </ul>
+                <p><strong>Indigenous Ways of Knowing:</strong> Focuses on stewardship and treating nature as a <em>relative</em> rather than a <em>commodity</em> to be sold.</p>
+            </div>
+        </div>
+
+        <!-- ROLE 1: ATMOSPHERICS -->
+        <div id="role1" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #01</div>
+            <h1>The Atmospherics Engineer</h1>
+            <p><strong>Focus:</strong> ES20-AH1 (Air Quality)</p>
+            
+            <div class="mission-box">
+                <strong>MISSION:</strong> You manage the air filtration systems. The CO2 scrubbers are failing, and particulate matter is rising. You must calculate the current Air Quality Index (AQI) and identify the chemical threats.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: What is Air Quality?</span>
+                <p><strong>Particulate Matter (PM2.5):</strong> These are tiny particles (dust, smoke) smaller than 2.5 microns. They can penetrate deep into lungs and enter the bloodstream. High PM2.5 causes asthma and heart issues.</p>
+                <p><strong>Carbon Dioxide (CO2):</strong> Safe levels are ~400 ppm (parts per million). At 1000 ppm, people get headaches and drowsy. At 2000 ppm, cognitive function drops.</p>
+                <p><strong>AQI (Air Quality Index):</strong> A scale from 1-10+ used in Canada. 1-3 is Low Risk, 7-10 is High Risk.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Parameter</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
+                <tr>
+                    <td>Carbon Dioxide (CO2)</td>
+                    <td>415 ppm</td>
+                    <td><strong>580 ppm</strong> (Rising)</td>
+                </tr>
+                <tr>
+                    <td>Particulate Matter (PM2.5)</td>
+                    <td>12 µg/m³</td>
+                    <td><strong>45 µg/m³</strong> (Critical)</td>
+                </tr>
+                <tr>
+                    <td>Methane (CH4)</td>
+                    <td>1.8 ppm</td>
+                    <td><strong>3.2 ppm</strong></td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Analysis Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Calculation Report.</strong> Calculate the % increase for CO2 and PM2.5 using <code>(New - Old) / Old * 100</code>. Show all steps of your math in your logbook.</li>
+                        <li><strong>Task B: The Pollutant Profile.</strong> Research "Saskatchewan Air Quality common pollutants." Write a 1-page profile on the 6 major pollutants. For each, include: Source, Health Effect, and Environmental Effect.</li>
+                        <li><strong>Task C: The Output.</strong> Write your "Current CO2 Level" and AQI Risk Level (Low/Med/High) on a slip of paper. <strong>Place this slip in Folder #1 (Atmospherics).</strong> Student #2 will need this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: The Crisis Phase (Heat Dome)</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Inversion Diagram.</strong> Draw a detailed, full-page diagram of a Temperature Inversion. Label: Warm Air Layer, Cold Air Layer, Trapped Pollutants, and Ground Level. Write a paragraph explaining why this is dangerous for the Dome.</li>
+                        <li><strong>Task B: Recalculation.</strong> A fire in the Ag sector adds +20% to PM2.5. Calculate the new total. Is the air safe to breathe?</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Solution Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (The Clean Air Protocol).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>Executive Summary:</strong> 1 paragraph overview of the air crisis.<br>
+                        2. <strong>Data Analysis:</strong> Present your calculations and graphs of the rising CO2/PM2.5.<br>
+                        3. <strong>Scientific Context:</strong> Explain the health risks of these pollutants.<br>
+                        4. <strong>The Solution:</strong> Detailed proposal for HEPA filtration or Carbon Scrubbing. Include cost estimates and installation locations.<br>
+                        5. <strong>Conclusion:</strong> Final recommendation to the Council.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 2: MEDICAL -->
+        <div id="role2" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #02</div>
+            <h1>Chief Medical Officer</h1>
+            <p><strong>Focus:</strong> ES20-AH1 & HP1 (Health & Disease)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> The hospital is overwhelmed. You must link the failing environment to the symptoms you are seeing in the population.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Environmental Health</span>
+                <p><strong>Vector-Borne Disease:</strong> Diseases spread by organisms like mosquitos or ticks (vectors). As climate warms, vectors move into new areas (like Northern Saskatchewan) bringing diseases like West Nile or Lyme Disease.</p>
+                <p><strong>Respiratory Stress:</strong> High PM2.5 (smoke/dust) triggers asthma. High CO2 causes "Sick Building Syndrome" (headaches/fatigue).</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Metric</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
+                <tr>
+                    <td>Asthma Admissions (Weekly)</td>
+                    <td>5</td>
+                    <td><strong>24</strong></td>
+                </tr>
+                <tr>
+                    <td>Vector-Borne Cases (West Nile)</td>
+                    <td>0</td>
+                    <td><strong>12</strong> (Mosquitos detected)</td>
+                </tr>
+                <tr>
+                    <td>Heat Stroke Incidents</td>
+                    <td>2</td>
+                    <td><strong>15</strong></td>
+                </tr>
+            </table>
+
+            <h3>2. Daily Protocol</h3>
+            <div class="daily-tasks">
+                <div class="task-day">
+                    <strong>Days 1-3: Triage Phase</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Retrieve Data.</strong> Go to the Central Station. <strong>Open Folder #1 (Atmospherics)</strong> and find the Air Toxicity Index. Record it.</li>
+                        <li><strong>Task B: The Advisory.</strong> Write a formal "Public Health Advisory" (1 page). It must warn citizens about the link between the specific air pollutants found in Folder #1 and their respiratory symptoms.</li>
+                        <li><strong>Task C: The Output.</strong> Calculate "Workforce Capacity" (100% - % of sick population). Write this number on a slip. <strong>Place in Folder #2 (Medical).</strong> Student #7 needs this.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 4-6: Heat Response</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Diagnosis Guide.</strong> Create a visual guide (Poster format) comparing "Heat Exhaustion" vs "Heat Stroke." Include: Symptoms, First Aid, and Triage Priority.</li>
+                        <li><strong>Task B: Vulnerability Assessment.</strong> Write a report identifying which sectors of the population (Elderly, Children, Manual Laborers) are most at risk during the Heat Dome event.</li>
+                    </ul>
+                </div>
+                <div class="task-day">
+                    <strong>Days 7-10: Prevention Plan</strong>
+                    <ul class="task-list">
+                        <li><strong>Task A: Final Report (The Health Accord).</strong> Your final submission must follow this structure:</li>
+                    </ul>
+                    <div class="report-outline">
+                        <strong>REQUIRED REPORT STRUCTURE:</strong><br>
+                        1. <strong>State of Health:</strong> Summary of current disease rates (Asthma/Vector/Heat).<br>
+                        2. <strong>Environmental Causation:</strong> Explain EXACTLY how the environment (Data from Folder #1 & #5) is causing these diseases.<br>
+                        3. <strong>Vector Control Plan:</strong> Detailed strategy for managing mosquitos (IPM) without using toxic chemicals.<br>
+                        4. <strong>Future Projections:</strong> What happens to health if temps rise another 2 degrees?<br>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROLE 3: DEMOGRAPHER -->
+        <div id="role3" class="dossier-container">
+            <div class="header-classification">CLASSIFIED // ROLE #03</div>
+            <h1>The Demographer</h1>
+            <p><strong>Focus:</strong> ES20-HP1 (Population Dynamics)</p>
+
+            <div class="mission-box">
+                <strong>MISSION:</strong> The Dome was built for 500 people. We are over capacity. You must calculate growth rates and determine if we are experiencing exponential or logistic growth.
+            </div>
+
+            <div class="concept-box">
+                <span class="concept-title">Training Manual: Population Math</span>
+                <p><strong>Growth Rate (r):</strong> The speed at which a population grows. <br>Formula: <code>r = (Births + Immigration) - (Deaths + Emigration)</code>.</p>
+                <p><strong>Rule of 70:</strong> Estimating how many years it takes a population to double. <br>Formula: <code>Doubling Time = 70 / growth rate (as a percentage)</code>.</p>
+                <p><strong>Carrying Capacity (K):</strong> The maximum number of individuals the environment can support sustainably.</p>
+            </div>
+
+            <h3>1. The Data Log</h3>
+            <table class="data-table">
+                <tr>
+                    <th>Statistic</th>
+                    <th>Shadow Data (2044)</th>
+                    <th>LIVE DATA (2045)</th>
+                </tr>
