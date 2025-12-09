@@ -26,6 +26,73 @@
             overflow: hidden;
         }
 
+        /* Splash Screen Styles */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 40px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .splash-content {
+            max-width: 800px;
+            border: 2px solid var(--primary);
+            padding: 40px;
+            background-color: #111;
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.2);
+            position: relative;
+        }
+
+        .splash-content h1 {
+            color: var(--primary);
+            border-bottom: 2px dashed var(--primary);
+            padding-bottom: 10px;
+            margin-top: 0;
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+        .splash-text {
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .splash-btn {
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        .splash-btn:hover {
+            background-color: #fff;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+
         /* Sidebar Navigation */
         .sidebar {
             width: 250px;
@@ -248,7 +315,7 @@
                 overflow: visible;
                 display: block;
             }
-            .sidebar, .print-btn {
+            .sidebar, .print-btn, #splash-screen {
                 display: none;
             }
             .main-content {
@@ -292,6 +359,32 @@
     </style>
 </head>
 <body>
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <div style="text-align:center; margin-bottom: 20px; color: var(--primary);">
+                ⚠️ TOP SECRET // EYES ONLY ⚠️
+            </div>
+            <h1>PROTOCOL ZERO INITIATED</h1>
+            
+            <div class="splash-text">
+                <p><strong>YEAR: 2045 | LOCATION: NORTHERN SASKATCHEWAN BIOSPHERE</strong></p>
+                
+                <p>Welcome to "The Sanctuary." You are standing inside the last self-sustaining ecosystem on the continent. Outside these reinforced glass walls, the world has collapsed. The temperature in Saskatoon hits 42°C by noon. The sky is a permanent, hazy orange from wildfire smoke. The old economy—the linear "take-make-waste" system—has failed.</p>
+                
+                <p>Inside, things are not much better. The Sanctuary was designed for 500 people, but we let in 780 desperate survivors. The air scrubbers are clogged. The water table is dropping. The hydroponic wheat is withering from heat stress. We are on the brink of a total systems crash.</p>
+                
+                <p>Director Halloway and the Senior Council have vanished. Their last transmission transferred all command codes to <strong>YOU</strong>—the Junior Council. You are the engineers, doctors, and planners who must now keep us alive.</p>
+                
+                <p>You have 10 days. You must stabilize the atmosphere, ration the food, and write a new "Survival Accord" to govern this dome. You cannot work alone. Your data is the key to someone else's survival.</p>
+                
+                <p style="color: var(--alert); text-align: center;"><strong>FAILURE IS NOT AN OPTION. OXYGEN RESERVES AT 80%.</strong></p>
+            </div>
+            
+            <button class="splash-btn" onclick="enterTerminal()">INITIALIZE SYSTEM &gt;&gt;</button>
+        </div>
+    </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -1069,8 +1162,28 @@
             // Update sidebar active state
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            // Keep training button highlight if active
+             if(tabId === 'training') {
+                document.querySelector('.training-btn').classList.add('active');
+            } else {
+                // Remove from all then add to target
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                 // find button with onclick matching tabId
+                const matchingBtn = Array.from(document.querySelectorAll('.nav-btn')).find(btn => btn.getAttribute('onclick') === `showTab('${tabId}')`);
+                if(matchingBtn) matchingBtn.classList.add('active');
+            }
+        }
+        
+        function enterTerminal() {
+            const splash = document.getElementById('splash-screen');
+            splash.style.transition = 'opacity 1s';
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.display = 'none';
+            }, 1000);
         }
     </script>
+</body>
+</html>
 </body>
 </html>
