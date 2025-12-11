@@ -87,8 +87,9 @@
             stroke-linejoin: round;
         }
         
-        .core-text { font-size: 14px; }
-        .secondary-text { font-size: 12px; }
+        /* CSS fallbacks - JS overrides these */
+        .core-text { font-size: 16px; }
+        .secondary-text { font-size: 14px; }
 
         /* Center Circle */
         .center-circle {
@@ -217,8 +218,8 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            max-width: 800px;
+            gap: 15px; /* Increased gap */
+            max-width: 900px;
             margin-top: -30px;
             margin-bottom: 30px;
             padding: 0 10px;
@@ -226,23 +227,29 @@
         .legend-item {
             display: flex;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 1.4rem; /* Much bigger font */
             font-weight: 700;
             background: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 10px 20px; /* Larger padding */
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .legend-item:hover {
+            transform: scale(1.05);
         }
         .legend-dot {
-            width: 12px;
-            height: 12px;
+            width: 20px; /* Bigger dot */
+            height: 20px;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 12px;
         }
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .modal-title { font-size: 2rem; }
+            .legend-item { font-size: 1.1rem; } /* Slightly smaller on mobile but still big */
         }
     </style>
 </head>
@@ -785,11 +792,13 @@
             rotation += 180;
         }
 
-        // Adjust font size based on length
-        let fontSize = 14; 
-        if (cssClass.includes("secondary")) fontSize = 13;
-        if (textContent.length > 10) fontSize -= 2;
-        if (textContent.length > 14) fontSize -= 2;
+        // Adjust font size based on length - Increased sizes
+        let fontSize = 18; // Base size for inner ring
+        if (cssClass.includes("secondary")) fontSize = 18; // Increased base size for outer ring
+        
+        // Slight reduction for longer words to prevent extreme overlap, but kept large
+        if (textContent.length > 8) fontSize -= 1;
+        if (textContent.length > 12) fontSize -= 2;
 
         let text = createSVGElement("text", {
             x: coords.x,
@@ -841,6 +850,9 @@
     renderWheel();
 
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
