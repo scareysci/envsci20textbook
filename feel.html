@@ -50,7 +50,6 @@
             aspect-ratio: 1/1;
             position: relative;
             margin-bottom: 50px;
-            /* No shadow on container, shadow on SVG elements for cleaner look */
         }
 
         svg {
@@ -88,6 +87,7 @@
         }
         
         /* CSS fallbacks - JS overrides these */
+        .category-text { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
         .core-text { font-size: 16px; }
         .secondary-text { font-size: 14px; }
 
@@ -99,7 +99,7 @@
         }
         .center-text {
             font-family: 'Fredoka', sans-serif;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             fill: #444;
             text-anchor: middle;
@@ -213,43 +213,9 @@
         }
         .close-btn:hover { background: #ddd; }
 
-        /* Legend for categories at the bottom */
-        .legend {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px; /* Increased gap */
-            max-width: 900px;
-            margin-top: -30px;
-            margin-bottom: 30px;
-            padding: 0 10px;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            font-size: 1.4rem; /* Much bigger font */
-            font-weight: 700;
-            background: white;
-            padding: 10px 20px; /* Larger padding */
-            border-radius: 30px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .legend-item:hover {
-            transform: scale(1.05);
-        }
-        .legend-dot {
-            width: 20px; /* Bigger dot */
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 12px;
-        }
-
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .modal-title { font-size: 2rem; }
-            .legend-item { font-size: 1.1rem; } /* Slightly smaller on mobile but still big */
         }
     </style>
 </head>
@@ -262,10 +228,6 @@
 
 <div id="wheel-container">
     <!-- SVG will be injected here by JS -->
-</div>
-
-<div class="legend" id="legend">
-    <!-- Legend items injected by JS -->
 </div>
 
 <!-- Modal -->
@@ -292,7 +254,7 @@
     const rawData = [
         {
             category: "Happiness",
-            color: "#66BB6A", // Lighter Green
+            color: "#4CAF50", // Green
             def: "When you feel good, safe, and positive.",
             children: [
                 {
@@ -347,7 +309,7 @@
         },
         {
             category: "Sadness",
-            color: "#42A5F5", // Lighter Blue
+            color: "#2196F3", // Blue
             def: "When you feel down, heavy, or low energy.",
             children: [
                 {
@@ -402,7 +364,7 @@
         },
         {
             category: "Fear",
-            color: "#AB47BC", // Lighter Purple
+            color: "#9C27B0", // Purple
             def: "When you feel unsafe, worried, or nervous.",
             children: [
                 {
@@ -457,7 +419,7 @@
         },
         {
             category: "Anger",
-            color: "#EF5350", // Lighter Red
+            color: "#F44336", // Red
             def: "When you feel mad, annoyed, or frustrated.",
             children: [
                 {
@@ -512,7 +474,7 @@
         },
         {
             category: "Surprise",
-            color: "#FFA726", // Lighter Orange
+            color: "#FF9800", // Orange
             def: "When something unexpected happens.",
             children: [
                 {
@@ -567,7 +529,7 @@
         },
         {
             category: "Disgust",
-            color: "#DCE775", // Lighter Lime
+            color: "#D4E157", // Lime
             def: "When you feel like something is 'yuck' or wrong.",
             children: [
                 {
@@ -675,82 +637,114 @@
 
     function renderWheel() {
         const container = document.getElementById('wheel-container');
-        const legendContainer = document.getElementById('legend');
+        // Removed legend container logic
+        
         const width = 900;
         const height = 900;
         const cx = width / 2;
         const cy = height / 2;
         
-        // Revised Radii - Removing the "Category" ring to save space for text
-        const r0 = 0; // center point
-        const r1 = 100; // center white circle
-        const r2 = 280; // First ring (Inner Words like Joyful)
-        const r3 = 440; // Second ring (Outer Words like Ecstatic)
+        // Revised Radii for 3 Rings
+        const r1 = 80;  // Center "I feel" circle (smaller to fit more)
+        const r2 = 200; // Ring 1: Categories (Happiness)
+        const r3 = 320; // Ring 2: Inner Words (Joyful)
+        const r4 = 440; // Ring 3: Outer Words (Ecstatic)
         
         const svg = createSVGElement("svg", {
             viewBox: `0 0 ${width} ${height}`
         });
 
-        // Calculate total leaf nodes in the first layer to distribute angles
+        // Calculate total wedges based on outermost leaves (Level 3)
+        // Each Level 2 item has 2 children in this dataset.
         let totalWedges = 0;
-        rawData.forEach(cat => totalWedges += cat.children.length);
+        rawData.forEach(cat => {
+            cat.children.forEach(child => {
+                totalWedges += child.children.length;
+            });
+        });
         
         let anglePerWedge = 360 / totalWedges;
         let currentAngle = 0;
 
         rawData.forEach(category => {
-            // Add to Legend
-            const legendItem = document.createElement('div');
-            legendItem.className = 'legend-item';
-            legendItem.innerHTML = `<div class="legend-dot" style="background:${category.color}"></div>${category.category}`;
-            legendItem.onclick = () => openModal(category, category.category, category.color);
-            legendContainer.appendChild(legendItem);
+            // Determine span of the category
+            // It spans the sum of its children's spans
+            let catLeafCount = 0;
+            category.children.forEach(c => catLeafCount += c.children.length);
+            
+            let catAngleSpan = catLeafCount * anglePerWedge;
+            let catStartA = currentAngle;
+            let catEndA = currentAngle + catAngleSpan;
+
+            // --- RING 1: CATEGORY (e.g. Happiness) ---
+            let catPath = createSVGElement("path", {
+                d: describeArc(cx, cy, r1, r2, catStartA, catEndA),
+                fill: category.color,
+                class: "segment"
+            });
+            // Open modal for category
+            catPath.addEventListener('click', () => openModal(category, category.category, category.color));
+            svg.appendChild(catPath);
+
+            // Ring 1 Text
+            renderRadialText(svg, cx, cy, r1, r2, catStartA, catEndA, category.category, "category-text");
+
+
+            // --- PROCESS CHILDREN ---
+            let currentSubAngle = catStartA;
 
             category.children.forEach(sub => {
-                let startA = currentAngle;
-                let endA = currentAngle + anglePerWedge;
-                
-                // --- INNER RING (Level 1 - e.g. Joyful) ---
-                let path = createSVGElement("path", {
-                    d: describeArc(cx, cy, r1, r2, startA, endA),
-                    fill: category.color,
+                // Each 'sub' (Joyful) has children. 
+                let subLeafCount = sub.children.length; // Should be 2
+                let subAngleSpan = subLeafCount * anglePerWedge;
+                let subStartA = currentSubAngle;
+                let subEndA = currentSubAngle + subAngleSpan;
+
+                // --- RING 2: INNER WORDS (e.g. Joyful) ---
+                // Lighten color slightly
+                let subColor = adjustColor(category.color, 0.15);
+
+                let subPath = createSVGElement("path", {
+                    d: describeArc(cx, cy, r2, r3, subStartA, subEndA),
+                    fill: subColor,
                     class: "segment"
                 });
-                // Pass category info for modal coloring
-                path.addEventListener('click', () => openModal(sub, category.category, category.color));
-                svg.appendChild(path);
+                subPath.addEventListener('click', () => openModal(sub, category.category, category.color));
+                svg.appendChild(subPath);
 
-                // Inner Text
-                renderRadialText(svg, cx, cy, r1, r2, startA, endA, sub.name, "core-text");
+                // Ring 2 Text
+                renderRadialText(svg, cx, cy, r2, r3, subStartA, subEndA, sub.name, "core-text");
 
-                // --- OUTER RING (Level 2 - e.g. Ecstatic) ---
-                let subChildren = sub.children;
-                let subAnglePerChild = anglePerWedge / subChildren.length;
-                let currentSubAngle = startA;
 
-                subChildren.forEach(child => {
-                    let childStartA = currentSubAngle;
-                    let childEndA = currentSubAngle + subAnglePerChild;
+                // --- RING 3: OUTER WORDS (e.g. Ecstatic) ---
+                let currentTertAngle = subStartA;
+                let tertAnglePerChild = subAngleSpan / subLeafCount; // Should equal anglePerWedge
 
-                    // Lighter color for outer ring
-                    let childColor = adjustColor(category.color, 0.2);
+                sub.children.forEach(child => {
+                    let childStartA = currentTertAngle;
+                    let childEndA = currentTertAngle + tertAnglePerChild;
+
+                    // Lighten color more
+                    let childColor = adjustColor(category.color, 0.35);
 
                     let childPath = createSVGElement("path", {
-                        d: describeArc(cx, cy, r2, r3, childStartA, childEndA),
+                        d: describeArc(cx, cy, r3, r4, childStartA, childEndA),
                         fill: childColor,
                         class: "segment"
                     });
                     childPath.addEventListener('click', () => openModal(child, category.category, category.color));
                     svg.appendChild(childPath);
 
-                    // Outer Text
-                    renderRadialText(svg, cx, cy, r2, r3, childStartA, childEndA, child.name, "secondary-text");
+                    // Ring 3 Text
+                    renderRadialText(svg, cx, cy, r3, r4, childStartA, childEndA, child.name, "secondary-text");
 
-                    currentSubAngle += subAnglePerChild;
+                    currentTertAngle += tertAnglePerChild;
                 });
 
-                currentAngle += anglePerWedge;
+                currentSubAngle += subAngleSpan;
             });
+
+            currentAngle += catAngleSpan;
         });
 
         // Center "I Feel" Circle
@@ -780,11 +774,7 @@
         // Convert to Cartesian
         let coords = polarToCartesian(cx, cy, midRadius, midAngle);
         
-        // --- ROTATION LOGIC UPDATE ---
-        // 1. Align text with the radius (midAngle)
-        // 2. Adjust for SVG coordinate system (-90deg offset)
-        // 3. Flip text on the bottom half of the wheel so it reads edge-to-center rather than upside down
-        
+        // --- ROTATION LOGIC ---
         let rotation = midAngle - 90; // Align with radius
 
         // Bottom half flip (from 3 o'clock to 9 o'clock)
@@ -792,12 +782,13 @@
             rotation += 180;
         }
 
-        // Adjust font size based on length - Increased sizes
-        let fontSize = 18; // Base size for inner ring
-        if (cssClass.includes("secondary")) fontSize = 18; // Increased base size for outer ring
+        // Adjust font size based on length
+        let fontSize = 18; // Base
+        if (cssClass.includes("category")) fontSize = 22; // Bigger for center categories
+        if (cssClass.includes("secondary")) fontSize = 18; 
         
-        // Slight reduction for longer words to prevent extreme overlap, but kept large
-        if (textContent.length > 8) fontSize -= 1;
+        // Prevent overflow
+        if (textContent.length > 8) fontSize -= 2;
         if (textContent.length > 12) fontSize -= 2;
 
         let text = createSVGElement("text", {
@@ -815,7 +806,9 @@
     // --- MODAL LOGIC ---
 
     function openModal(data, categoryName, baseColor) {
-        document.getElementById('m-title').textContent = data.name || data.category;
+        // Use name if available, otherwise category name
+        let title = data.name || data.category;
+        document.getElementById('m-title').textContent = title;
         document.getElementById('m-category').textContent = categoryName;
         document.getElementById('m-category').style.color = baseColor;
         document.getElementById('m-title').style.color = "#333";
@@ -850,9 +843,6 @@
     renderWheel();
 
 </script>
-
-</body>
-</html>
 
 </body>
 </html>
