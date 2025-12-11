@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm feeling...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Nunito:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #fdfbf7;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 0px;
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3rem;
+            color: #444;
+            margin: 0;
+        }
+
+        p.subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Container for the SVG Wheel */
+        #wheel-container {
+            width: 98vw;
+            max-width: 900px;
+            aspect-ratio: 1/1;
+            position: relative;
+            margin-bottom: 50px;
+            /* No shadow on container, shadow on SVG elements for cleaner look */
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            transform: rotate(-90deg); /* Start at 12 o'clock */
+        }
+
+        /* Styles for wheel segments */
+        .segment {
+            cursor: pointer;
+            transition: opacity 0.2s;
+            stroke: #fff;
+            stroke-width: 1.5px;
+        }
+
+        .segment:hover {
+            opacity: 0.8;
+            stroke-width: 3px;
+            z-index: 10;
+        }
+
+        .segment-text {
+            pointer-events: none; /* Let clicks pass through to the path */
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            dominant-baseline: middle;
+            fill: #000; 
+            /* White halo for readability on dark colors */
+            stroke: rgba(255, 255, 255, 0.8);
+            stroke-width: 3px;
+            paint-order: stroke;
+            stroke-linejoin: round;
+        }
+        
+        .core-text { font-size: 14px; }
+        .secondary-text { font-size: 12px; }
+
+        /* Center Circle */
+        .center-circle {
+            fill: white;
+            filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.2));
+            cursor: default;
+        }
+        .center-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            fill: #444;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            transform: rotate(90deg); /* Counteract SVG rotation */
+        }
+
+        /* Modal Popup */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-card {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            border-top: 15px solid #ccc; /* Will be colored dynamically */
+        }
+
+        #modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            color: #333;
+            text-transform: capitalize;
+        }
+
+        .modal-subtitle {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-definition-box {
+            background: #f0f4f8;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .modal-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .modal-content {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #444;
+            margin: 0;
+        }
+
+        .modal-example-box {
+            background: #fff8e1;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: left;
+            border-left: 5px solid #FFC107;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+            transition: background 0.2s;
+        }
+        .close-btn:hover { background: #ddd; }
+
+        /* Legend for categories at the bottom */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 800px;
+            margin-top: -30px;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .modal-title { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>I'm feeling...</h1>
+    <p class="subtitle">Click on a word to see what it means!</p>
+</header>
+
+<div id="wheel-container">
+    <!-- SVG will be injected here by JS -->
+</div>
+
+<div class="legend" id="legend">
+    <!-- Legend items injected by JS -->
+</div>
+
+<!-- Modal -->
+<div id="modal-overlay">
+    <div class="modal-card" id="modal-card">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <h2 class="modal-title" id="m-title">Emotion</h2>
+        <div class="modal-subtitle" id="m-category">Category</div>
+        
+        <div class="modal-definition-box">
+            <span class="modal-label">What it means</span>
+            <p class="modal-content" id="m-def">Definition goes here.</p>
+        </div>
+
+        <div class="modal-example-box" id="example-container">
+            <span class="modal-label">Example</span>
+            <p class="modal-content" id="m-ex">Example goes here.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- DATA ---
+    const rawData = [
+        {
+            category: "Happiness",
+            color: "#66BB6A", // Lighter Green
+            def: "When you feel good, safe, and positive.",
+            children: [
+                {
+                    name: "Joyful",
+                    def: "You are bursting with happiness and fun.",
+                    children: [
+                        { name: "Ecstatic", def: "Feeling incredibly excited and energetic.", ex: "You just found out you got an A+ on the huge math test!" },
+                        { name: "Elated", def: "Feeling very proud and high-spirited.", ex: "Your team just won the relay race at Field Day." }
+                    ]
+                },
+                {
+                    name: "Proud",
+                    def: "Feeling good about something you or someone else did.",
+                    children: [
+                        { name: "Triumphant", def: "Feeling like a winner after a challenge.", ex: "You finally made it across the monkey bars without falling." },
+                        { name: "Illustrious", def: "Feeling admired or respected (like a star!).", ex: "The teacher read your creative story out loud to the class." }
+                    ]
+                },
+                {
+                    name: "Peaceful",
+                    def: "Your mind and body feel quiet and calm.",
+                    children: [
+                        { name: "Loving", def: "Feeling deep care for others.", ex: "You gave your best friend a hug when they were having a bad day." },
+                        { name: "Hopeful", def: "Believing that good things will happen.", ex: "You go to bed excited because you know your birthday is tomorrow." }
+                    ]
+                },
+                {
+                    name: "Cheerful",
+                    def: "You are in a good mood and easy to smile.",
+                    children: [
+                        { name: "Jovial", def: "Friendly and joking around.", ex: "You and your friends are laughing at lunch about a funny cartoon." },
+                        { name: "Playful", def: "Wanting to have fun and be silly.", ex: "You start a game of tag on the playground just for fun." }
+                    ]
+                },
+                {
+                    name: "Optimistic",
+                    def: "Looking on the bright side of things.",
+                    children: [
+                        { name: "Eager", def: "You can't wait to start something!", ex: "Raising your hand high because you know the answer." },
+                        { name: "Hopeful", def: "Looking forward to the future with a smile.", ex: "Even though it's raining, you are sure the sun will come out." }
+                    ]
+                },
+                {
+                    name: "Appreciative",
+                    def: "Being thankful for what you have.",
+                    children: [
+                        { name: "Pleased", def: "Feeling happy and satisfied with how things are.", ex: "You are happy that your drawing turned out exactly how you wanted." },
+                        { name: "Grateful", def: "Feeling thankful to someone.", ex: "You say 'thank you' to the cafeteria worker for an extra napkin." }
+                    ]
+                }
+            ]
+        },
+        {
+            category: "Sadness",
+            color: "#42A5F5", // Lighter Blue
+            def: "When you feel down, heavy, or low energy.",
+            children: [
+                {
+                    name: "Depressed",
+                    def: "A deep sadness that lasts a while.",
+                    children: [
+                        { name: "Empty", def: "Feeling like nothing matters or you have no energy.", ex: "You don't feel like playing any games at recess." },
+                        { name: "Somber", def: "Feeling very serious and gloomy.", ex: "The whole class is quiet because the class pet is sick." }
+                    ]
+                },
+                {
+                    name: "Despair",
+                    def: "Feeling like things won't get better.",
+                    children: [
+                        { name: "Miserable", def: "Feeling very unhappy or uncomfortable.", ex: "It's raining, you lost your lunchbox, and you feel cold." },
+                        { name: "Hopeless", def: "Feeling like there is no solution to a problem.", ex: "You broke a toy and don't think it can ever be fixed." }
+                    ]
+                },
+                {
+                    name: "Bored",
+                    def: "Not interested in what is happening.",
+                    children: [
+                        { name: "Indifferent", def: "Not caring about anything one way or the other.", ex: "The teacher asks what game you want, and you just shrug." },
+                        { name: "Apathetic", def: "Feeling lazy or like you don't want to try.", ex: "Sitting on the bench during P.E. because you don't want to run." }
+                    ]
+                },
+                {
+                    name: "Lonely",
+                    def: "Wishing you had company or friends nearby.",
+                    children: [
+                        { name: "Isolated", def: "Feeling separated from everyone.", ex: "Everyone else is whispering a secret, but they won't tell you." },
+                        { name: "Neglected", def: "Feeling like nobody is paying attention.", ex: "The teacher skipped your turn during show-and-tell by accident." }
+                    ]
+                },
+                {
+                    name: "Abandoned",
+                    def: "Feeling left behind.",
+                    children: [
+                        { name: "Ignored", def: "Feeling like people act like you aren't there.", ex: "You asked to join a game, but the other kids pretended not to hear." },
+                        { name: "Forgotten", def: "Feeling like people don't remember you.", ex: "Your friends walked to the library without waiting for you." }
+                    ]
+                },
+                {
+                    name: "Guilty",
+                    def: "Feeling bad because you think you did something wrong.",
+                    children: [
+                        { name: "Remorseful", def: "Feeling sorry for a mistake.", ex: "You accidentally knocked over someone's project and feel terrible." },
+                        { name: "Ashamed", def: "Feeling embarrassed about what you did.", ex: "The teacher corrected you in front of everyone, and your face feels hot." }
+                    ]
+                }
+            ]
+        },
+        {
+            category: "Fear",
+            color: "#AB47BC", // Lighter Purple
+            def: "When you feel unsafe, worried, or nervous.",
+            children: [
+                {
+                    name: "Worried",
+                    def: "Thinking about bad things that might happen.",
+                    children: [
+                        { name: "Tense", def: "Your body feels tight and stiff.", ex: "Gripping your pencil really hard during a spelling test." },
+                        { name: "Uneasy", def: "A funny feeling in your stomach that something is wrong.", ex: "You see two kids whispering and looking at you." }
+                    ]
+                },
+                {
+                    name: "Scared",
+                    def: "Being afraid of something specific.",
+                    children: [
+                        { name: "Terrified", def: "Being extremely scared.", ex: "A large dog barks loudly right next to you." },
+                        { name: "Frightened", def: "Feeling sudden fear.", ex: "The fire alarm goes off unexpectedly and makes you jump." }
+                    ]
+                },
+                {
+                    name: "Anxious",
+                    def: "Feeling nervous about the future.",
+                    children: [
+                        { name: "Overwhelmed", def: "Feeling like there is too much happening at once.", ex: "Everyone is talking at once and it's too loud to think." },
+                        { name: "Nervous", def: "Feeling jittery or shaky.", ex: "Standing in line waiting to give a presentation." }
+                    ]
+                },
+                {
+                    name: "Insecure",
+                    def: "Not feeling confident in yourself.",
+                    children: [
+                        { name: "Unsure", def: "Not knowing the right answer or what to do.", ex: "The teacher gives instructions you didn't understand." },
+                        { name: "Apprehensive", def: "Feeling fearful that something bad is about to happen.", ex: "Walking slowly to the principal's office thinking you're in trouble." }
+                    ]
+                },
+                {
+                    name: "Rejected",
+                    def: "Feeling pushed away by others.",
+                    children: [
+                        { name: "Inadequate", def: "Feeling like you aren't 'good enough'.", ex: "Everyone else finished the race faster than you." },
+                        { name: "Excluded", def: "Being left out on purpose.", ex: "You see friends handing out invites, but you didn't get one." }
+                    ]
+                },
+                {
+                    name: "Horrified",
+                    def: "Being shocked and scared at the same time.",
+                    children: [
+                        { name: "Mortified", def: "Being extremely embarrassed.", ex: "You tripped and spilled your lunch tray in the middle of the cafeteria." },
+                        { name: "Dread", def: "A heavy feeling that something bad is coming.", ex: "You know report cards are coming out and are scared to show your parents." }
+                    ]
+                }
+            ]
+        },
+        {
+            category: "Anger",
+            color: "#EF5350", // Lighter Red
+            def: "When you feel mad, annoyed, or frustrated.",
+            children: [
+                {
+                    name: "Mad",
+                    def: "The basic feeling of being angry.",
+                    children: [
+                        { name: "Furious", def: "Being very, very angry (exploding!).", ex: "Someone purposefully ripped your drawing." },
+                        { name: "Enraged", def: "Feeling wild with anger.", ex: "Someone pushed you down and laughed." }
+                    ]
+                },
+                {
+                    name: "Hateful",
+                    def: "Disliking something or someone very intensely.",
+                    children: [
+                        { name: "Resentful", def: "Being angry because you think something is unfair.", ex: "Your sibling got a bigger piece of cake than you." },
+                        { name: "Bitter", def: "Holding onto anger for a long time.", ex: "Still mad that your friend didn't pick you last week." }
+                    ]
+                },
+                {
+                    name: "Envious",
+                    def: "Wanting what someone else has.",
+                    children: [
+                        { name: "Jealous", def: "Feeling unhappy because someone else has something you want.", ex: "You wish you had the cool new sneakers your friend is wearing." },
+                        { name: "Resentful", def: "Feeling upset because someone has something you don't.", ex: "You are mad that your classmate got the new video game." }
+                    ]
+                },
+                {
+                    name: "Offended",
+                    def: "Feeling hurt by someone's words or actions.",
+                    children: [
+                        { name: "Insulted", def: "Feeling attacked by a mean comment.", ex: "Someone made fun of your new shoes." },
+                        { name: "Slighted", def: "Feeling disrespected or ignored.", ex: "You held the door for someone and they didn't say thanks." }
+                    ]
+                },
+                {
+                    name: "Irritated",
+                    def: "Being slightly angry or annoyed.",
+                    children: [
+                        { name: "Frustrated", def: "Feeling blocked when trying to do something.", ex: "Trying to tie your shoe but the knot keeps getting tangled." },
+                        { name: "Agitated", def: "Feeling restless and easily annoyed.", ex: "Someone keeps tapping their pencil while you are trying to read." }
+                    ]
+                },
+                {
+                    name: "Aggressive",
+                    def: "Ready to attack or argue.",
+                    children: [
+                        { name: "Threatened", def: "Feeling in danger, so you get angry to protect yourself.", ex: "Someone walks too close to your art project and you yell." },
+                        { name: "Jealous", def: "Afraid someone will take what is yours.", ex: "Your best friend made a new friend and is with them instead of you." }
+                    ]
+                }
+            ]
+        },
+        {
+            category: "Surprise",
+            color: "#FFA726", // Lighter Orange
+            def: "When something unexpected happens.",
+            children: [
+                {
+                    name: "Startled",
+                    def: "A sudden shock.",
+                    children: [
+                        { name: "Shocked", def: "A big surprise that stops you in your tracks.", ex: "You walk into class and there is a substitute teacher you didn't expect." },
+                        { name: "Dismayed", def: "A surprise that makes you feel sad.", ex: "You open your lunchbox and realize you left your sandwich at home." }
+                    ]
+                },
+                {
+                    name: "Confused",
+                    def: "Not understanding what is happening.",
+                    children: [
+                        { name: "Perplexed", def: "Being puzzled; trying to figure it out.", ex: "You are reading a math problem that makes no sense." },
+                        { name: "Disillusioned", def: "Finding out something isn't as good as you thought.", ex: "You met your favorite character, but they were rude." }
+                    ]
+                },
+                {
+                    name: "Moved",
+                    def: "Feeling a strong emotion from something you see.",
+                    children: [
+                        { name: "Stimulated", def: "Feeling awake and interested.", ex: "You watched a science experiment and now want to learn chemistry!" },
+                        { name: "Touched", def: "Feeling a sweet emotion in your heart.", ex: "You saw a classmate help a younger kid tie their shoes." }
+                    ]
+                },
+                {
+                    name: "Amazed",
+                    def: "Being very impressed.",
+                    children: [
+                        { name: "Astonished", def: "Being totally surprised by something incredible.", ex: "Someone made a half-court shot in basketball!" },
+                        { name: "Awe", def: "Feeling respect and wonder.", ex: "Looking at a double rainbow over the playground." }
+                    ]
+                },
+                {
+                    name: "Overcome",
+                    def: "The feeling is so big you can't handle it.",
+                    children: [
+                        { name: "Speechless", def: "You are so surprised you can't talk.", ex: "You won the 'Student of the Year' award and didn't expect it." },
+                        { name: "Astounded", def: "Extremely surprised.", ex: "A magician pulled a rabbit out of an empty hat." }
+                    ]
+                },
+                {
+                    name: "Excited",
+                    def: "High energy happiness about the future.",
+                    children: [
+                        { name: "Enthusiastic", def: "Ready to jump in and do something.", ex: "The teacher asks for volunteers and you wave your hand." },
+                        { name: "Eager", def: "Impatiently waiting for something good.", ex: "Watching the clock tick down the last minute before summer break." }
+                    ]
+                }
+            ]
+        },
+        {
+            category: "Disgust",
+            color: "#DCE775", // Lighter Lime
+            def: "When you feel like something is 'yuck' or wrong.",
+            children: [
+                {
+                    name: "Aversion",
+                    def: "Wanting to turn away from something.",
+                    children: [
+                        { name: "Distaste", def: "Not liking the taste or look of something.", ex: "You spit out a vegetable because it tasted bitter." },
+                        { name: "Repugnance", def: "Finding something totally gross.", ex: "Seeing a squashed bug on the sidewalk." }
+                    ]
+                },
+                {
+                    name: "Indignation",
+                    def: "Feeling anger because something is unfair.",
+                    children: [
+                        { name: "Outrage", def: "A strong anger at something bad.", ex: "Seeing a big kid push a little kid down." },
+                        { name: "Resentment", def: "Feeling bitter about unfair treatment.", ex: "You got in trouble for talking, but the person next to you didn't." }
+                    ]
+                },
+                {
+                    name: "Disapproval",
+                    def: "Thinking something is bad or wrong.",
+                    children: [
+                        { name: "Loathing", def: "Hating something very much.", ex: "You absolutely hate when people lie to you." },
+                        { name: "Contempt", def: "Feeling like something is beneath you.", ex: "Rolling your eyes because someone is playing a 'baby game'." }
+                    ]
+                },
+                {
+                    name: "Nausea",
+                    def: "Feeling sick to your stomach.",
+                    children: [
+                        { name: "Sick", def: "Physically feeling ill.", ex: "You ate too much candy and your stomach hurts." },
+                        { name: "Queasy", def: "Feeling like you might throw up.", ex: "The spinning tire swing went too fast." }
+                    ]
+                },
+                {
+                    name: "Awful",
+                    def: "Feeling terrible.",
+                    children: [
+                        { name: "Detestable", def: "Thinking something is hateful.", ex: "Someone cheated in the game and lied about it." },
+                        { name: "Abhorrent", def: "Thinking something is horrible.", ex: "Hearing a bully say really mean words to someone." }
+                    ]
+                },
+                {
+                    name: "Avoidant",
+                    def: "Trying to stay away from something.",
+                    children: [
+                        { name: "Hesitant", def: "Pausing because you aren't sure.", ex: "You don't want to enter the dark equipment shed." },
+                        { name: "Aversion", def: "A strong dislike or desire to avoid.", ex: "You stay far away from bees because you don't want to get stung." }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    // --- SVG GENERATION ---
+
+    function createSVGElement(tag, attrs) {
+        const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+        for (let k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+    }
+
+    function polarToCartesian(cx, cy, radius, angleInDegrees) {
+        var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+        return {
+            x: cx + (radius * Math.cos(angleInRadians)),
+            y: cy + (radius * Math.sin(angleInRadians))
+        };
+    }
+
+    function describeArc(x, y, innerRadius, outerRadius, startAngle, endAngle) {
+        var start = polarToCartesian(x, y, outerRadius, endAngle);
+        var end = polarToCartesian(x, y, outerRadius, startAngle);
+        var start2 = polarToCartesian(x, y, innerRadius, endAngle);
+        var end2 = polarToCartesian(x, y, innerRadius, startAngle);
+
+        var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+        var d = [
+            "M", start.x, start.y,
+            "A", outerRadius, outerRadius, 0, largeArcFlag, 0, end.x, end.y,
+            "L", end2.x, end2.y,
+            "A", innerRadius, innerRadius, 0, largeArcFlag, 1, start2.x, start2.y,
+            "Z"
+        ].join(" ");
+
+        return d;
+    }
+
+    // Color manipulator
+    function adjustColor(hex, lum) {
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+            hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+            c = parseInt(hex.substr(i*2,2), 16);
+            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+            rgb += ("00"+c).substr(c.length);
+        }
+        return rgb;
+    }
+
+    function renderWheel() {
+        const container = document.getElementById('wheel-container');
+        const legendContainer = document.getElementById('legend');
+        const width = 900;
+        const height = 900;
+        const cx = width / 2;
+        const cy = height / 2;
+        
+        // Revised Radii - Removing the "Category" ring to save space for text
+        const r0 = 0; // center point
+        const r1 = 100; // center white circle
+        const r2 = 280; // First ring (Inner Words like Joyful)
+        const r3 = 440; // Second ring (Outer Words like Ecstatic)
+        
+        const svg = createSVGElement("svg", {
+            viewBox: `0 0 ${width} ${height}`
+        });
+
+        // Calculate total leaf nodes in the first layer to distribute angles
+        let totalWedges = 0;
+        rawData.forEach(cat => totalWedges += cat.children.length);
+        
+        let anglePerWedge = 360 / totalWedges;
+        let currentAngle = 0;
+
+        rawData.forEach(category => {
+            // Add to Legend
+            const legendItem = document.createElement('div');
+            legendItem.className = 'legend-item';
+            legendItem.innerHTML = `<div class="legend-dot" style="background:${category.color}"></div>${category.category}`;
+            legendItem.onclick = () => openModal(category, category.category, category.color);
+            legendContainer.appendChild(legendItem);
+
+            category.children.forEach(sub => {
+                let startA = currentAngle;
+                let endA = currentAngle + anglePerWedge;
+                
+                // --- INNER RING (Level 1 - e.g. Joyful) ---
+                let path = createSVGElement("path", {
+                    d: describeArc(cx, cy, r1, r2, startA, endA),
+                    fill: category.color,
+                    class: "segment"
+                });
+                // Pass category info for modal coloring
+                path.addEventListener('click', () => openModal(sub, category.category, category.color));
+                svg.appendChild(path);
+
+                // Inner Text
+                renderRadialText(svg, cx, cy, r1, r2, startA, endA, sub.name, "core-text");
+
+                // --- OUTER RING (Level 2 - e.g. Ecstatic) ---
+                let subChildren = sub.children;
+                let subAnglePerChild = anglePerWedge / subChildren.length;
+                let currentSubAngle = startA;
+
+                subChildren.forEach(child => {
+                    let childStartA = currentSubAngle;
+                    let childEndA = currentSubAngle + subAnglePerChild;
+
+                    // Lighter color for outer ring
+                    let childColor = adjustColor(category.color, 0.2);
+
+                    let childPath = createSVGElement("path", {
+                        d: describeArc(cx, cy, r2, r3, childStartA, childEndA),
+                        fill: childColor,
+                        class: "segment"
+                    });
+                    childPath.addEventListener('click', () => openModal(child, category.category, category.color));
+                    svg.appendChild(childPath);
+
+                    // Outer Text
+                    renderRadialText(svg, cx, cy, r2, r3, childStartA, childEndA, child.name, "secondary-text");
+
+                    currentSubAngle += subAnglePerChild;
+                });
+
+                currentAngle += anglePerWedge;
+            });
+        });
+
+        // Center "I Feel" Circle
+        let centerCircle = createSVGElement("circle", {
+            cx: cx, cy: cy, r: r1 - 5,
+            class: "center-circle"
+        });
+        svg.appendChild(centerCircle);
+
+        let centerText = createSVGElement("text", {
+            x: cx, y: cy,
+            class: "center-text"
+        });
+        centerText.textContent = "I feel";
+        svg.appendChild(centerText);
+
+        container.appendChild(svg);
+    }
+
+    function renderRadialText(svg, cx, cy, innerR, outerR, startAngle, endAngle, textContent, cssClass) {
+        // Calculate mid-angle
+        let midAngle = startAngle + (endAngle - startAngle) / 2;
+        
+        // Calculate placement radius (middle of the band)
+        let midRadius = (innerR + outerR) / 2;
+        
+        // Convert to Cartesian
+        let coords = polarToCartesian(cx, cy, midRadius, midAngle);
+        
+        // --- ROTATION LOGIC UPDATE ---
+        // 1. Align text with the radius (midAngle)
+        // 2. Adjust for SVG coordinate system (-90deg offset)
+        // 3. Flip text on the bottom half of the wheel so it reads edge-to-center rather than upside down
+        
+        let rotation = midAngle - 90; // Align with radius
+
+        // Bottom half flip (from 3 o'clock to 9 o'clock)
+        if (midAngle > 90 && midAngle < 270) {
+            rotation += 180;
+        }
+
+        // Adjust font size based on length
+        let fontSize = 14; 
+        if (cssClass.includes("secondary")) fontSize = 13;
+        if (textContent.length > 10) fontSize -= 2;
+        if (textContent.length > 14) fontSize -= 2;
+
+        let text = createSVGElement("text", {
+            x: coords.x,
+            y: coords.y,
+            class: `segment-text ${cssClass}`,
+            "text-anchor": "middle", // Center text in the segment
+            transform: `rotate(${rotation}, ${coords.x}, ${coords.y})`,
+            style: `font-size: ${fontSize}px;`
+        });
+        text.textContent = textContent;
+        svg.appendChild(text);
+    }
+
+    // --- MODAL LOGIC ---
+
+    function openModal(data, categoryName, baseColor) {
+        document.getElementById('m-title').textContent = data.name || data.category;
+        document.getElementById('m-category').textContent = categoryName;
+        document.getElementById('m-category').style.color = baseColor;
+        document.getElementById('m-title').style.color = "#333";
+        
+        document.getElementById('modal-card').style.borderTopColor = baseColor;
+        
+        document.getElementById('m-def').textContent = data.def || "Definition not found.";
+        
+        const exContainer = document.getElementById('example-container');
+        if (data.ex) {
+            document.getElementById('m-ex').textContent = data.ex;
+            exContainer.style.display = "block";
+            exContainer.style.borderLeftColor = baseColor;
+        } else {
+            exContainer.style.display = "none";
+        }
+
+        document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    document.getElementById('modal-overlay').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('modal-overlay')) {
+            closeModal();
+        }
+    });
+
+    // --- INIT ---
+    renderWheel();
+
+</script>
+
+</body>
+</html>
