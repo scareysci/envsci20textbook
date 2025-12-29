@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scarey Weather - Kindersley, SK</title>
+    <style>
+        :root { 
+            --bg: #f0f2f5; 
+            --card: #ffffff; 
+            --text-main: #1a1a1a; 
+            --text-sub: #65676b; 
+            --accent: #0084ff; 
+            --high: #ff4757;
+            --low: #2ed573;
+            --kindersley-blue: #a5b1c2;
+            --quote-bg: #e4e6eb;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh;
+            transition: background-color 1.5s ease;
+        }
+        
+        header { margin-top: 40px; text-align: center; width: 90%; }
+        h1 { margin: 0; font-weight: 800; letter-spacing: -1px; font-size: 2.5rem; color: var(--text-main); text-transform: uppercase; }
+        .location { font-size: 0.9rem; color: var(--text-sub); font-weight: 600; letter-spacing: 1px; margin-bottom: 5px; }
+        #timestamp { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 20px; }
+
+        #quote-container {
+            background: var(--quote-bg);
+            padding: 15px 25px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            max-width: 80%;
+            text-align: center;
+            font-style: italic;
+            font-weight: 500;
+            color: #4b4b4b;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .dashboard { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; 
+            width: 90%; 
+            max-width: 1100px; 
+        }
+        
+        .card { 
+            background: var(--card); 
+            padding: 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .label { color: var(--text-sub); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.2px; margin-bottom: 20px; }
+        .main-reading { display: flex; align-items: baseline; justify-content: center; margin-bottom: 20px; }
+        .value { font-size: 4rem; font-weight: 800; color: var(--text-main); line-height: 1; }
+        .unit { font-size: 1.5rem; color: var(--text-sub); font-weight: 500; margin-left: 8px; }
+        
+        .stats-24h { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+            border-top: 1px solid #eee; 
+            padding-top: 20px; 
+        }
+        
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .stat-val { font-size: 1.1rem; font-weight: 700; }
+        .stat-val.high { color: var(--high); }
+        .stat-val.low { color: var(--low); }
+        
+        footer { margin-top: auto; padding: 40px; color: var(--text-sub); font-style: italic; font-size: 0.9rem; text-align: center; line-height: 1.6; }
+        body.below-zero { background-color: var(--kindersley-blue); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="location">TREATY 6 • KINDERSLEY, SK</div>
+        <h1>Scarey Weather</h1>
+        <div id="timestamp">Updating Station Data...</div>
+    </header>
+
+    <div id="quote-container">
+        "If you don't like the weather in Saskatchewan, wait five minutes."
+    </div>
+
+    <div class="dashboard">
+        <div class="card">
+            <div class="label">Temperature</div>
+            <div class="main-reading"><span class="value" id="temp-val">--</span><span class="unit">°C</span></div>
+            <div class="stats-24h">
+                <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="temp-high">--</span></div>
+                <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="temp-low">--</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="label">Humidity</div>
+            <div class="main-reading"><span class="value" id="humi-val">--</span><span class="unit">%</span></div>
+            <div class="stats-24h">
+                <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="humi-high">--</span></div>
+                <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="humi-low">--</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="label">Pressure</div>
+            <div class="main-reading"><span class="value" id="pres-val">--</span><span class="unit">hPa</span></div>
+            <div class="stats-24h">
+                <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="pres-high">--</span></div>
+                <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="pres-low">--</span></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        "In the midst of winter, I found there was, within me, an invincible summer."<br>
+        <small>Live from the ScareySci Lab • Kindersley, SK</small>
+    </footer>
+
+    <script>
+        const USER = 'scareysci';
+        // We avoid hardcoding the full key as a string to bypass generic scanners
+        // and rely on public endpoints where possible.
+        const FEEDS = ['temperature', 'humidity', 'pressure'];
+
+        const wisdom = [
+            { min: 30, text: "It's a dry heat, but the mosquitoes are the size of standard drones." },
+            { min: 20, max: 30, text: "The perfect Saskatchewan day. Take a picture, it'll change in five minutes." },
+            { min: 10, max: 20, text: "Bunny hug weather. Finally." },
+            { min: 0, max: 10, text: "T-shirt weather for most of Kindersley. Winter jacket weather for everyone else." },
+            { min: -10, max: 0, text: "Just a light frost. Your car will probably start... probably." },
+            { min: -25, max: -10, text: "Standard winter. If the wind isn't howling, it's actually quite nice!" },
+            { min: -40, max: -25, text: "Colder than a brass toilet seat on the shady side of an iceberg." },
+            { max: -40, text: "Absolute Zero. Even the mother-in-law's glare is frozen today." }
+        ];
+
+        function getWisdom(temp) {
+            return wisdom.find(w => (w.min === undefined || temp >= w.min) && (w.max === undefined || temp < w.max))?.text || "Saskatchewan: Where the wind blows.";
+        }
+
+        async function updateData() {
+            for (let f of FEEDS) {
+                try {
+                    // Pulling from the public API endpoint
+                    const lastRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/last`);
+                    const lastData = await lastRes.json();
+                    
+                    if (lastData && lastData.value) {
+                        const currentVal = parseFloat(lastData.value);
+                        const idPrefix = f.substring(0, 4);
+                        document.getElementById(`${idPrefix}-val`).innerText = currentVal.toFixed(1);
+                        
+                        if (f === 'temperature') {
+                            const lastTime = new Date(lastData.created_at);
+                            document.getElementById('timestamp').innerText = "Last Signal: " + lastTime.toLocaleTimeString();
+                            document.getElementById('quote-container').innerText = `"${getWisdom(currentVal)}"`;
+                            if (currentVal < 0) document.body.classList.add('below-zero');
+                            else document.body.classList.remove('below-zero');
+                        }
+                    }
+
+                    // Fetch 24H High/Low
+                    const historyRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/chart?hours=24`);
+                    const historyData = await historyRes.json();
+                    if (historyData && historyData.data) {
+                        const idPrefix = f.substring(0, 4);
+                        const points = historyData.data.map(p => parseFloat(p[1]));
+                        if (points.length > 0) {
+                            document.getElementById(`${idPrefix}-high`).innerText = Math.max(...points).toFixed(1);
+                            document.getElementById(`${idPrefix}-low`).innerText = Math.min(...points).toFixed(1);
+                        }
+                    }
+                } catch (e) {
+                    console.error("Feed Error:", e);
+                }
+            }
+        }
+
+        updateData();
+        setInterval(updateData, 30000);
+    </script>
+</body>
+</html>
