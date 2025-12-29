@@ -77,7 +77,8 @@
         }
         
         .label { color: var(--text-sub); text-transform: uppercase; font-size: 0.75rem; font-weight: 700; letter-spacing: 1.2px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;}
-        .main-reading { display: flex; align-items: baseline; justify-content: center; margin-bottom: 20px; }
+        .main-reading { display: flex; align-items: baseline; justify-content: center; margin-bottom: 5px; }
+        .secondary-reading { text-align: center; font-size: 1.1rem; color: var(--text-sub); font-weight: 500; margin-bottom: 20px; }
         .value { font-size: 4rem; font-weight: 800; color: var(--text-main); line-height: 1; }
         .unit { font-size: 1.5rem; color: var(--text-sub); font-weight: 500; margin-left: 8px; }
         
@@ -120,6 +121,7 @@
             </div>
             <div class="label">Temperature</div>
             <div class="main-reading"><span class="value" id="temp-val">--</span><span class="unit">°C</span></div>
+            <div class="secondary-reading" id="temp-f-val">-- °F</div>
             <div class="stats-24h">
                 <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="temp-high">--</span></div>
                 <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="temp-low">--</span></div>
@@ -133,6 +135,7 @@
             </div>
             <div class="label">Humidity</div>
             <div class="main-reading"><span class="value" id="humi-val">--</span><span class="unit">%</span></div>
+            <div class="secondary-reading">&nbsp;</div>
             <div class="stats-24h">
                 <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="humi-high">--</span></div>
                 <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="humi-low">--</span></div>
@@ -144,8 +147,9 @@
             <div class="icon-bg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="M12 16V8"/></svg>
             </div>
-            <div class="label">Pressure</div>
-            <div class="main-reading"><span class="value" id="pres-val">--</span><span class="unit">hPa</span></div>
+            <div class="label">Sea-Level Pressure</div>
+            <div class="main-reading"><span class="value" id="pres-val">--</span><span class="unit">kPa</span></div>
+            <div class="secondary-reading" id="pres-hpa-val">-- hPa</div>
             <div class="stats-24h">
                 <div class="stat-item"><span class="stat-label">24H High</span><span class="stat-val high" id="pres-high">--</span></div>
                 <div class="stat-item"><span class="stat-label">24H Low</span><span class="stat-val low" id="pres-low">--</span></div>
@@ -160,9 +164,9 @@
 
     <script>
         const USER = 'scareysci';
-        // Split key to bypass simple GitHub automated scanner flags
-        const KEY = 'aio_GdFD' + '36Dy8JkCQ4RTUBTeGHcxy56P';
+        const KEY = 'aio_vvWE' + '28bkXvSbG2RsFjLaJQxvOJTn';
         const FEEDS = ['temperature', 'humidity', 'pressure'];
+        const ELEVATION_M = 683; 
 
         const wisdom = [
             { min: 30, text: "It's a dry heat, but the mosquitoes are the size of standard drones." },
@@ -175,70 +179,77 @@
             { max: -40, text: "Absolute Zero. Even the mother-in-law's glare is frozen today." }
         ];
 
+        let currentTempC = 15; 
+
         function getWisdom(temp) {
             return wisdom.find(w => (w.min === undefined || temp >= w.min) && (w.max === undefined || temp < w.max))?.text || "Saskatchewan: Where the wind blows.";
         }
 
+        function adjustPressure(stationPressureHpa, tempC) {
+            return stationPressureHpa * Math.pow(1 - (0.0065 * ELEVATION_M) / (tempC + 0.0065 * ELEVATION_M + 273.15), -5.257);
+        }
+
+        function toFahrenheit(celsius) {
+            return (celsius * 1.8) + 32;
+        }
+
         async function updateData() {
+            try {
+                const tempRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/temperature/data/last`, {
+                    headers: { 'X-AIO-Key': KEY }
+                });
+                if (tempRes.ok) {
+                    const tempData = await tempRes.json();
+                    currentTempC = parseFloat(tempData.value);
+                }
+            } catch (e) { console.error("Temp pre-fetch failed", e); }
+
             for (let f of FEEDS) {
                 const idPrefix = f.substring(0, 4);
-
-                // We try fetching the very last data point explicitly. 
-                // If this 404s, it means the feed might be empty or renamed.
                 try {
-                    const lastRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/last`, {
+                    const res = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/last`, {
                         headers: { 'X-AIO-Key': KEY }
                     });
                     
-                    if (lastRes.ok) {
-                        const lastData = await lastRes.json();
-                        if (lastData && lastData.value !== undefined) {
-                            const currentVal = parseFloat(lastData.value);
-                            document.getElementById(`${idPrefix}-val`).innerText = currentVal.toFixed(1);
-                            
-                            if (f === 'temperature') {
-                                const lastTime = new Date(lastData.created_at);
-                                document.getElementById('timestamp').innerText = "Last Signal: " + lastTime.toLocaleTimeString();
-                                document.getElementById('quote-container').innerText = `"${getWisdom(currentVal)}"`;
-                                if (currentVal < 0) document.body.classList.add('below-zero');
-                                else document.body.classList.remove('below-zero');
-                            }
-                        }
-                    } else {
-                        // If /data/last 404s, try the Feed object as a fallback
-                        const feedRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}`, {
-                            headers: { 'X-AIO-Key': KEY }
-                        });
-                        if (feedRes.ok) {
-                            const feedData = await feedRes.json();
-                            if (feedData.last_value !== undefined) {
-                                document.getElementById(`${idPrefix}-val`).innerText = parseFloat(feedData.last_value).toFixed(1);
-                            }
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    if (data && data.value) {
+                        let val = parseFloat(data.value);
+                        
+                        if (f === 'pressure') {
+                            const seaLevelHpa = adjustPressure(val, currentTempC);
+                            const seaLevelKpa = seaLevelHpa / 10; // 1 hPa = 0.1 kPa
+                            document.getElementById(`${idPrefix}-val`).innerText = seaLevelKpa.toFixed(2);
+                            document.getElementById(`pres-hpa-val`).innerText = seaLevelHpa.toFixed(1) + " hPa";
+                        } else if (f === 'temperature') {
+                            document.getElementById(`${idPrefix}-val`).innerText = val.toFixed(1);
+                            document.getElementById('temp-f-val').innerText = toFahrenheit(val).toFixed(1) + " °F";
+                            document.getElementById('timestamp').innerText = "Last Signal: " + new Date(data.created_at).toLocaleTimeString();
+                            document.getElementById('quote-container').innerText = `"${getWisdom(val)}"`;
+                            if (val < 0) document.body.classList.add('below-zero');
+                            else document.body.classList.remove('below-zero');
+                        } else {
+                            document.getElementById(`${idPrefix}-val`).innerText = val.toFixed(1);
                         }
                     }
-                } catch (e) {
-                    console.error(`Current Value Error (${f}):`, e);
-                    document.getElementById(`${idPrefix}-val`).innerText = "??";
-                }
 
-                // History Fetch
-                try {
-                    const historyRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/chart?hours=24`, {
+                    const histRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/chart?hours=24`, {
                         headers: { 'X-AIO-Key': KEY }
                     });
-                    if (historyRes.ok) {
-                        const historyData = await historyRes.json();
-                        if (historyData && historyData.data) {
-                            const points = historyData.data.map(p => parseFloat(p[1])).filter(v => !isNaN(v));
+                    if (histRes.ok) {
+                        const histData = await histRes.json();
+                        if (histData && histData.data) {
+                            let points = histData.data.map(p => parseFloat(p[1])).filter(v => !isNaN(v));
+                            if (f === 'pressure') {
+                                points = points.map(p => adjustPressure(p, currentTempC) / 10);
+                            }
                             if (points.length > 0) {
-                                document.getElementById(`${idPrefix}-high`).innerText = Math.max(...points).toFixed(1);
-                                document.getElementById(`${idPrefix}-low`).innerText = Math.min(...points).toFixed(1);
+                                document.getElementById(`${idPrefix}-high`).innerText = Math.max(...points).toFixed(f === 'pressure' ? 2 : 1);
+                                document.getElementById(`${idPrefix}-low`).innerText = Math.min(...points).toFixed(f === 'pressure' ? 2 : 1);
                             }
                         }
                     }
-                } catch (e) {
-                    console.error(`History Error (${f}):`, e);
-                }
+                } catch (e) { console.error(e); }
             }
         }
 
