@@ -137,8 +137,7 @@
 
     <script>
         const USER = 'scareysci';
-        // We avoid hardcoding the full key as a string to bypass generic scanners
-        // and rely on public endpoints where possible.
+        const KEY = 'aio_GdFD36Dy8JkCQ4RTUBTeGHcxy56P';
         const FEEDS = ['temperature', 'humidity', 'pressure'];
 
         const wisdom = [
@@ -158,14 +157,19 @@
 
         async function updateData() {
             for (let f of FEEDS) {
+                const idPrefix = f.substring(0, 4);
+
+                // 1. Independent Fetch for Last Value
                 try {
-                    // Pulling from the public API endpoint
-                    const lastRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/last`);
+                    // Restoring X-AIO-Key header which is often required even for public feeds for reliable CORS/API access
+                    const lastRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/last`, {
+                        headers: { 'X-AIO-Key': KEY }
+                    });
+                    if (!lastRes.ok) throw new Error(`Status ${lastRes.status}`);
                     const lastData = await lastRes.json();
                     
-                    if (lastData && lastData.value) {
+                    if (lastData && lastData.value !== undefined) {
                         const currentVal = parseFloat(lastData.value);
-                        const idPrefix = f.substring(0, 4);
                         document.getElementById(`${idPrefix}-val`).innerText = currentVal.toFixed(1);
                         
                         if (f === 'temperature') {
@@ -176,26 +180,37 @@
                             else document.body.classList.remove('below-zero');
                         }
                     }
+                } catch (e) {
+                    console.error(`Live Feed Error (${f}):`, e);
+                    document.getElementById(`${idPrefix}-val`).innerText = "??";
+                }
 
-                    // Fetch 24H High/Low
-                    const historyRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/chart?hours=24`);
+                // 2. Independent Fetch for 24H High/Low
+                try {
+                    const historyRes = await fetch(`https://io.adafruit.com/api/v2/${USER}/feeds/${f}/data/chart?hours=24`, {
+                        headers: { 'X-AIO-Key': KEY }
+                    });
+                    if (!historyRes.ok) throw new Error(`Status ${historyRes.status}`);
                     const historyData = await historyRes.json();
+                    
                     if (historyData && historyData.data) {
-                        const idPrefix = f.substring(0, 4);
-                        const points = historyData.data.map(p => parseFloat(p[1]));
+                        const points = historyData.data.map(p => parseFloat(p[1])).filter(v => !isNaN(v));
                         if (points.length > 0) {
                             document.getElementById(`${idPrefix}-high`).innerText = Math.max(...points).toFixed(1);
                             document.getElementById(`${idPrefix}-low`).innerText = Math.min(...points).toFixed(1);
                         }
                     }
                 } catch (e) {
-                    console.error("Feed Error:", e);
+                    console.error(`History Error (${f}):`, e);
                 }
             }
         }
 
         updateData();
         setInterval(updateData, 30000);
+    </script>
+</body>
+</html>
     </script>
 </body>
 </html>
