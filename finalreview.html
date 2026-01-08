@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Env Sci 20: Ultimate Review</title>
+    <!-- Tailwind CSS for Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* Light green bg */
+            color: #1a2e05;
+        }
+
+        .animate-pop {
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.9); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .correct-anim {
+            background-color: #4ade80 !important;
+            border-color: #22c55e !important;
+            color: white !important;
+        }
+
+        .wrong-anim {
+            background-color: #f87171 !important;
+            border-color: #ef4444 !important;
+            color: white !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: white;
+                color: black;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            /* Reset tailwind shadows/colors for print */
+            .shadow-xl, .shadow-md, .shadow-sm {
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // --- DATA: COMPLETE QUESTION BANK (240 Questions) ---
+        // Format: q: Question, o: Options[], a: AnswerIndex (0-3)
+        const QUESTION_DATA = {
+            unit1: [
+                // Part 1: Knowledge
+                {q:"Which type of reasoning moves from specific observations to a general conclusion?", o:["Inductive reasoning", "Deductive reasoning", "Reductive reasoning", "Objective reasoning"], a:0},
+                {q:"In the context of the scientific method, what is a 'counter-example'?", o:["A mathematical calculation that checks for errors", "A set of data that supports the original hypothesis", "An observation that disproves a generalization or hypothesis", "A secondary experiment conducted by a different scientist"], a:2},
+                {q:"What is the primary goal of the systematic process known as 'Science'?", o:["To eliminate all human bias from data collection", "To understand the world and universe through orderly observation", "To provide absolute proof of natural laws", "To create technological solutions for economic growth"], a:1},
+                {q:"Which scientific discipline in environmental science focuses on chemical cycles and soil pH?", o:["Biology", "Statistics", "Chemistry", "Meteorology"], a:2},
+                {q:"Which of the following is NOT one of the five basic assumptions of science?", o:["Patterns in the natural world can be understood through observation.", "Scientific rules apply throughout the universe.", "Generalizations can be tested and disproved.", "Science provides absolute proof that never changes."], a:3},
+                {q:"Which justification for conservation argues that nature is beautiful and offers psychological restoration?", o:["Aesthetic", "Utilitarian", "Moral", "Ecological"], a:0},
+                {q:"Which worldview views nature as a resource to be used through 'wise management'?", o:["Ecological Worldview", "Romantic Worldview", "Expansionist Worldview", "Counter-Enlightenment Worldview"], a:2},
+                {q:"A worldview is defined as:", o:["A scientific theory regarding the origin of the universe", "A set of shared values concerning reality and humanity's role", "The physical landscape of a specific geographic region", "A political strategy for resource management"], a:1},
+                {q:"What was the primary reason the 'First Wave' of environmentalism (1968-1976) ended?", o:["A lack of scientific data", "The emergence of the Post-industrial stage", "All pollution problems were solved", "Economic trouble and inflation shifted public focus"], a:3},
+                {q:"The Second Wave of environmentalism (1985-Present) is characterized by a focus on:", o:["Local littering only", "Global issues like global warming and ozone depletion", "Returning to a hunter-gatherer lifestyle", "The expansionist worldview exclusively"], a:1},
+                {q:"In which societal stage did the domestication of plants and animals first occur?", o:["Hunters and Gatherers", "The Machine Age", "Pre-industrial Agriculture", "The Modern Era"], a:2},
+                {q:"Which era is characterized by rapid population growth due to medical and sanitation advances?", o:["Hunters and Gatherers", "The Machine Age (Industrial Revolution)", "Pre-industrial Agriculture", "The Stone Age"], a:1},
+                {q:"According to the text, what stage of societal development is Canada currently in?", o:["Pre-industrial Agriculture", "The Machine Age", "The Modern Era", "The Expansionist Era"], a:2},
+                {q:"What does the term 'Natality' refer to in population dynamics?", o:["The movement of individuals into a population", "The number of deaths in a population", "The number of births in a population", "The movement of individuals out of a population"], a:2},
+                {q:"Which demographic term describes the average number of children a woman will have in her lifetime?", o:["Crude Birth Rate", "Total Fertility Rate (TFR)", "Growth Rate", "Mortality Rate"], a:1},
+                {q:"What is the formula for Population Growth?", o:["(Natality + Emigration) - (Mortality + Immigration)", "(Natality + Immigration) - (Mortality + Emigration)", "(Mortality + Emigration) - (Natality + Immigration)", "(Natality x Immigration) / (Mortality x Emigration)"], a:1},
+                {q:"In the Demographic Transition Model (DTM), which stage has high birth rates and high death rates?", o:["Pre-industrial Stage", "Transitional Stage", "Industrial Stage", "Post-industrial Stage"], a:0},
+                {q:"Which stage of the DTM experiences the fastest rate of population growth?", o:["Stage 4: Post-industrial", "Stage 2: Transitional", "Stage 3: Industrial", "Stage 1: Pre-industrial"], a:1},
+                {q:"A 'Demographic Trap' occurs when a country is stuck in which stage?", o:["Stage 1", "Stage 2", "Stage 3", "Stage 4"], a:1},
+                {q:"What shape identifies a 'Youthful/Expanding' population pyramid?", o:["Inverted Cup (Narrow base, wide top)", "Rectangular", "Triangle (Wide base, narrow top)", "Beehive"], a:2},
+                {q:"Which country used a 'One Child Policy' to strictly regulate population?", o:["India", "Iran", "China", "Canada"], a:2},
+                {q:"What is the 'Replacement Level' fertility rate usually considered to be?", o:["1.0", "2.1", "3.5", "5.0"], a:1},
+                {q:"Which Millennium Development Goal specifically helps reduce TFR?", o:["Achieving universal primary education", "Increasing industrial resource use", "Promoting the expansionist worldview", "Increasing the Crude Birth Rate"], a:0},
+                {q:"In the DTM, what causes the death rate to drop in the Transitional Stage?", o:["A sudden decrease in birth rates", "Improved sanitation and healthcare", "Increased emigration", "A return to hunting and gathering"], a:1},
+                {q:"Which justification for conservation says elements of the environment have a 'right to exist' regardless of human needs?", o:["Utilitarian", "Ecological", "Aesthetic", "Moral"], a:3},
+                {q:"Which discipline studies the relationships between organisms and their physical environment?", o:["Statistics", "Meteorology", "Ecology", "Chemistry"], a:2},
+                {q:"What is 'Emigration'?", o:["People moving into a country", "People moving out of a country", "The number of births per 1,000 people", "The rate of infant mortality"], a:1},
+                {q:"In an 'Aged Population' pyramid, the base is:", o:["Rapidly expanding", "Equal to the middle", "Narrower than the middle/top", "Much wider than the middle"], a:2},
+                {q:"Which worldview believes that human activities must work within ecosystem limitations?", o:["Expansionist", "Industrial", "Ecological", "Pre-industrial"], a:2},
+                {q:"Which country successfully used a combination of education, contraception, and religion to reduce TFR?", o:["India", "China", "Japan", "Iran"], a:3},
+                // Part 2: Application
+                {q:"A scientist observes that every swan they have seen in Wascana Lake is white. They conclude, 'All swans in Saskatchewan are white.' This is an example of:", o:["Inductive reasoning", "Deductive reasoning", "A counter-example", "Absolute proof"], a:0},
+                {q:"A researcher knows that 'All mammals breathe air.' They are then presented with a dolphin and conclude 'This dolphin must breathe air.' This is an example of:", o:["Inductive reasoning", "Deductive reasoning", "The Demographic Trap", "Aesthetic justification"], a:1},
+                {q:"A city has 500 births, 200 deaths, 50 immigrants, and 100 emigrants in a year. What is the net population change?", o:["+250", "+350", "+450", "+650"], a:0},
+                {q:"If a country has a TFR of 1.2, what will likely happen to its population size over the next 50 years (assuming no immigration)?", o:["It will grow rapidly.", "It will remain perfectly stable.", "It will decline.", "It will reach the 'Demographic Trap'."], a:2},
+                {q:"A nation is seeing its death rate fall sharply due to new hospitals, but its birth rate remains at 6 children per woman. Which stage of the DTM is this nation in?", o:["Stage 1", "Stage 2", "Stage 3", "Stage 4"], a:1},
+                {q:"A logging company argues that they should be allowed to clear-cut a forest because it will create 500 jobs and provide lumber for housing. Which justification are they using?", o:["Aesthetic", "Moral", "Utilitarian", "Ecological"], a:2},
+                {q:"A conservation group argues that a specific wetland should be protected because it naturally filters water and prevents downstream flooding. Which justification are they using?", o:["Aesthetic", "Ecological", "Utilitarian", "Moral"], a:1},
+                {q:"A population pyramid has a very narrow top and a very wide base. What is the most likely social requirement for this country?", o:["More nursing homes for the elderly", "More schools and pediatric healthcare", "A larger workforce to replace retiring workers", "A focus on reducing emigration of the elderly"], a:1},
+                {q:"In a 'Stage 4' country, if the birth rate is 10 per 1,000 and the death rate is 10 per 1,000, what is the natural increase rate?", o:["20%", "1%", "0%", "-10%"], a:2},
+                {q:"A scientist predicts that 'If global temperatures rise, then polar ice will melt.' They observe a year where temperatures rose but ice thickness increased in one specific spot. This specific observation is:", o:["Inductive reasoning", "A counter-example", "Absolute proof of the hypothesis", "A worldview shift"], a:1},
+                {q:"Which societal stage would be most likely to suffer from 'massive resource use' and 'rapid population growth' simultaneously?", o:["Hunters and Gatherers", "Pre-industrial Agriculture", "The Machine Age", "The Ecological Era"], a:2},
+                {q:"A country's government decides to provide free secondary education to girls to help lower the national birth rate. This strategy targets:", o:["Emigration", "Total Fertility Rate (TFR)", "Mortality rates", "Expansionist worldviews"], a:1},
+                {q:"Looking at a population pyramid that looks like a 'Beehive' (straight sides, slightly narrowing at the very top), what can you infer about the TFR?", o:["The death rate is higher than the birth rate.", "It is near replacement level (approx 2.1).", "It is around 6.0 or higher.", "It is below 1.0."], a:1},
+                {q:"If a scientist assumes that 'Patterns in nature can be understood through observation,' they are applying:", o:["A scientific law", "A core assumption of science", "Inductive reasoning", "An expansionist worldview"], a:1},
+                {q:"Which wave of environmentalism would most likely address the issue of the 'Great Pacific Garbage Patch' (a global pollution issue)?", o:["The First Wave", "The Second Wave", "The Hunters and Gatherers Wave", "The Pre-industrial Wave"], a:1},
+                // Part 3: Synthesis
+                {q:"How does the 'Expansionist Worldview' differ fundamentally from the 'Ecological Worldview' regarding the role of technology?", o:["Expansionists fear technology, while Ecologists embrace it.", "Expansionists have faith in technology to solve all environmental problems, while Ecologists believe humans must work within ecosystem limits.", "Both believe technology is irrelevant to the environment.", "Ecologists believe technology should only be used for sustainable exploitation."], a:1},
+                {q:"Why might a country in the 'Transitional Stage' (Stage 2) of the DTM be more vulnerable to environmental degradation than a Stage 1 country?", o:["Stage 2 countries have lower populations.", "The rapid population growth in Stage 2 puts extreme pressure on local resources before the economy can modernize.", "Stage 2 countries have high death rates that prevent resource use.", "Stage 1 countries use more advanced technology."], a:1},
+                {q:"Analyze the relationship between female education and the Demographic Transition Model. At which point does education typically begin to show its greatest impact on the birth rate?", o:["Moving from Stage 1 to Stage 2", "Moving from Stage 2 to Stage 3", "Moving from Stage 4 to Stage 5", "Only during Stage 1"], a:1},
+                {q:"Evaluate the 'Demographic Trap.' Which of the following is the most likely outcome for a country that cannot move past Stage 2?", o:["It will automatically become a Stage 4 nation.", "Population growth will overwhelm economic gains, leading to poverty and resource depletion.", "The birth rate will drop naturally without any government intervention.", "It will return to the Hunter-Gatherer stage."], a:1},
+                {q:"Contrast the 'Wise Management' approach of conservation with the 'Righteous Management' approach of preservation. Which statement is most accurate?", o:["Wise management (Expansionist) seeks sustainable use; Righteous management (Ecological) seeks to protect nature's intrinsic value.", "Wise management is for the Modern Era; Righteous management is for the Machine Age.", "Righteous management focuses on jobs; Wise management focuses on beauty.", "Both are identical in their treatment of resources."], a:0},
+                {q:"If a scientist claims that 'Science never provides absolute proof,' how does this impact the way we should view current environmental theories like Climate Change?", o:["We should ignore them until they are 100% proven.", "We should treat them as the best current explanations, which are subject to refinement as new evidence emerges.", "We should assume they are likely false because science is always changing.", "We should only believe theories that use deductive reasoning."], a:1},
+                {q:"A country has a 'Type 3' (Aged/Declining) population pyramid. What is the most significant long-term economic challenge they will face?", o:["Overcrowded schools", "High infant mortality", "A shrinking workforce and a high 'dependency ratio' of elderly citizens", "Rapidly expanding urbanization"], a:2},
+                {q:"How does the 'Romantic/Counter-Enlightenment' movement's view of nature correlate with modern environmental ethics?", o:["It introduced the idea that nature has intrinsic value beyond human utility (Preservation).", "It provided the foundation for the Expansionist worldview.", "It argued that science is the only way to understand beauty.", "It promoted the Industrial Revolution."], a:0},
+                {q:"Synthesize the impact of the Industrial Revolution (Machine Age) on human population. Why was this era a 'turning point'?", o:["It was the first time birth rates dropped.", "It combined medical advances (lowering death rates) with massive resource extraction, decoupling humans from local ecosystem limits.", "It returned humans to a stable, low-impact lifestyle.", "It made immigration impossible."], a:1},
+                {q:"Predict the effect on a 'Stage 2' country if it suddenly loses access to modern healthcare while maintaining high birth rates.", o:["It will Likely revert toward Stage 1 as death rates rise again.", "It will move immediately to Stage 4.", "Its population will grow even faster.", "It will enter a Demographic Trap."], a:0},
+                {q:"Which of the following scenarios best illustrates the conflict between Utilitarian and Moral justifications for conservation?", o:["Planting trees in a park to make it look nice versus planting trees to harvest them later.", "Building a dam for hydro-power (jobs/energy) versus protecting a valley because the resident species have a right to exist.", "Using a telescope to look at stars versus using a microscope to look at bacteria.", "Studying the DTM of India versus studying the DTM of China."], a:1},
+                {q:"In the context of Environmental Science being 'interdisciplinary,' how would a statistician and an ecologist collaborate on a study of a declining fish population?", o:["The ecologist would study the fish's biology, while the statistician would analyze the data for significant trends.", "They would only compete to see who has the better worldview.", "The statistician would determine the pH, and the ecologist would count the money.", "They would both focus only on the aesthetic beauty of the fish."], a:0},
+                {q:"Explain why 'Sustainable Development' is a core concept of the Second Wave of environmentalism but not the First Wave.", o:["Sustainable development was invented in the Hunter-Gatherer era.", "The Second Wave recognizes that economic development must be balanced with global ecological health to persist long-term.", "The First Wave only focused on global warming.", "The First Wave didn't care about the environment."], a:1},
+                {q:"A scientist uses Inductive Reasoning to predict weather. A massive storm occurs that was not predicted. How does this event demonstrate the nature of science?", o:["It proves science is useless.", "It serves as a counter-example that requires the scientist to modify their theory/model.", "It proves that deductive reasoning should have been used instead.", "It shows that the scientist had an Expansionist worldview."], a:1},
+                {q:"Evaluate the following statement: 'Canada's high level of technology and urbanization means we no longer depend on the nature of science for survival.' Based on the text, is this true or false?", o:["True; we are now detached from nature.", "False; systematic observation remains crucial for understanding ecosystems and managing human impacts.", "True; the Machine Age solved all survival problems.", "False; we only need science for aesthetic reasons."], a:1}
+            ],
+            unit2: [
+                // Part 1: Knowledge
+                {q:"What is the term for the release of water vapor from plants through their leaves?", o:["Evaporation", "Condensation", "Transpiration", "Infiltration"], a:2},
+                {q:"Which part of the hydrologic cycle involves water soaking into the ground to become groundwater?", o:["Surface runoff", "Precipitation", "Evapotranspiration", "Infiltration"], a:3},
+                {q:"Freshwater ecosystems are generally characterized by a salt concentration of less than:", o:["1%", "3%", "5%", "10%"], a:0},
+                {q:"Which term describes 'standing water' ecosystems like lakes and ponds?", o:["Lotic", "Lentic", "Riparian", "Estuarine"], a:1},
+                {q:"In a lake, the shallow area near the shore where sunlight reaches the bottom is the:", o:["Limnetic zone", "Profundal zone", "Littoral zone", "Benthic zone"], a:2},
+                {q:"The middle layer of a stratified lake, characterized by a rapid drop in temperature, is the:", o:["Epilimnion", "Hypolimnion", "Metalimnion (Thermocline)", "Euphotic zone"], a:2},
+                {q:"Which river zone is typically characterized by cold, clear, fast-flowing water?", o:["Transitional Zone", "Floodplain Zone", "Estuary Zone", "Source Zone"], a:3},
+                {q:"A wetland dominated by woody plants like trees and shrubs is a:", o:["Marsh", "Bog", "Swamp", "Fen"], a:2},
+                {q:"What distinguishes a Fen from a Bog?", o:["Fens are forested; Bogs are not.", "Fens receive water from groundwater/runoff; Bogs rely on precipitation.", "Bogs are basic; Fens are highly acidic.", "Fens are found in the ocean; Bogs are freshwater."], a:1},
+                {q:"Passive drifters in the ocean that cannot swim against the current are called:", o:["Nekton", "Benthos", "Plankton", "Coral Polyps"], a:2},
+                {q:"Organisms that live on or in the seafloor are categorized as:", o:["Plankton", "Nekton", "Benthos", "Pelagic"], a:2},
+                {q:"Which coastal body of water is formed where freshwater from rivers mixes with saltwater from the ocean?", o:["A bog", "An estuary", "A lotic system", "A profundal zone"], a:1},
+                {q:"What is the term for the land area that channels all rainfall and snowmelt to a single outflow point?", o:["Riparian zone", "Watershed", "Euphotic zone", "Benthic zone"], a:1},
+                {q:"The area of land directly along the banks of a river or lake is called the:", o:["Limnetic zone", "Riparian zone", "Profundal zone", "Pelagic zone"], a:1},
+                {q:"Water is at its most dense at approximately what temperature?", o:["0°C", "4°C", "20°C", "100°C"], a:1},
+                {q:"Which abiotic factor is a measure of water cloudiness caused by suspended particles?", o:["pH", "Salinity", "Turbidity", "Alkalinity"], a:2},
+                {q:"The zone in a water body where there is enough light for photosynthesis is the:", o:["Aphotic zone", "Euphotic zone", "Hypolimnion", "Benthic zone"], a:1},
+                {q:"Which gas becomes less soluble in water as the temperature increases?", o:["Nitrogen", "Carbon Dioxide", "Oxygen", "Helium"], a:2},
+                {q:"A pH of 5.0 is how many times more acidic than a pH of 6.0?", o:["2 times", "5 times", "10 times", "100 times"], a:2},
+                {q:"Which ions provide 'buffering capacity' (alkalinity) to a lake?", o:["Sodium and Chloride", "Carbonate and Bicarbonate", "Iron and Phosphorus", "Nitrate and Ammonium"], a:1},
+                {q:"What is the primary 'limiting nutrient' for algal growth in most freshwater lakes?", o:["Carbon", "Phosphorus", "Nitrogen", "Oxygen"], a:1},
+                {q:"The process where nitrogen gas (N2) is converted into usable ammonium (NH4+) is:", o:["Nitrification", "Denitrification", "Nitrogen Fixation", "Photosynthesis"], a:2},
+                {q:"Which process removes nitrogen from an ecosystem and returns it to the atmosphere?", o:["Nitrification", "Denitrification", "Infiltration", "Decomposition"], a:1},
+                {q:"Cultural eutrophication is caused primarily by an excess of which two nutrients?", o:["Oxygen and Carbon", "Phosphorus and Nitrogen", "Calcium and Magnesium", "Hydrogen and Helium"], a:1},
+                {q:"A nutrient-poor, clear-water lake with high oxygen levels is described as:", o:["Eutrophic", "Mesotrophic", "Oligotrophic", "Hypereutrophic"], a:2},
+                {q:"What is the term for the natural aging process of a lake over millennia?", o:["Natural Eutrophication", "Cultural Eutrophication", "Thermal Stratification", "Biogeochemical Cycling"], a:0},
+                {q:"'Glacial flour' (rock silt) causes turbidity in which type of Western Canadian water body?", o:["Prairie sloughs", "Mountain rivers (e.g., Bow River)", "Boreal bogs", "Estuaries"], a:1},
+                {q:"Internal phosphorus loading occurs when phosphorus is released from:", o:["The atmosphere", "Bottom sediments under anoxic conditions", "Riparian vegetation", "Glacial melt"], a:1},
+                {q:"What is the main source of dissolved oxygen in fast-moving, shallow streams?", o:["Respiration", "Decomposition", "Atmospheric diffusion (Reaeration)", "Internal loading"], a:2},
+                {q:"Thermal pollution refers to the discharge of:", o:["Acidic waste", "Heated water (e.g., from power plants)", "Suspended sediments", "Synthetic fertilizers"], a:1},
+                // Part 2: Application
+                {q:"If a farmer clears all the shrubs and trees from the bank of a creek to plant crops, what is the most likely immediate abiotic change in the creek?", o:["Water temperature will drop.", "Salinity will drop.", "The creek will become lotic.", "Water temperature will increase due to loss of shade."], a:3},
+                {q:"During a hot Saskatchewan summer, a shallow pond experiences a massive algal bloom. Why might the fish in the pond die during the night?", o:["Photosynthesis stops, but respiration by algae and bacteria consumes the remaining oxygen.", "Algae produce too much oxygen at night.", "The water becomes too cold at night.", "Infiltration increases at night."], a:0},
+                {q:"A researcher uses a Secchi disk in Lake Winnipeg and finds it disappears after only 0.5 meters. What does this indicate?", o:["The lake is in the Source Zone.", "The water has high turbidity.", "The water has high clarity.", "The lake is oligotrophic."], a:1},
+                {q:"You are studying a river. Near the mountains, the water is 5°C and very fast. Downstream, it is 22°C and slow. Where is the concentration of dissolved oxygen highest?", o:["In the fast, cold water (Source Zone).", "In the slow, warm water (Floodplain Zone).", "Oxygen levels will be identical in both.", "In the estuary where it meets the sea."], a:0},
+                {q:"A lake in Northern Saskatchewan sits on granite bedrock. A lake in Southern Saskatchewan sits on limestone. Which lake is more sensitive to acid rain?", o:["The Southern lake (high buffering capacity).", "The Northern lake (low buffering capacity).", "Both are equally sensitive.", "Neither can be affected by acid rain."], a:1},
+                {q:"A developer wants to build a parking lot right up to the edge of a wetland. How will this affect the 'water filtration' function of the area?", o:["It will cause nitrogen fixation.", "The parking lot will act as a bog.", "Filtration will decrease because the riparian vegetation is removed.", "Filtration will improve because asphalt is clean."], a:2},
+                {q:"If a lake's hypolimnion becomes anoxic (no oxygen) in late August, what chemical event is most likely to trigger an even larger algal bloom?", o:["Phosphorus will bind to iron in the sediment.", "The pH will drop to 1.0.", "Nitrogen gas will turn into ice.", "Internal phosphorus loading will release nutrients from the sediment."], a:3},
+                {q:"In the spring, as ice melts and the surface water of a lake warms to 4°C, it sinks. This drives which process?", o:["Spring turnover", "Summer stagnation", "Cultural eutrophication", "Winter stratification"], a:0},
+                {q:"Why do deep-sea creatures in the abyssopelagic zone often use bioluminescence?", o:["To filter salt out of their bodies.", "To attract mates or prey in total darkness.", "To perform photosynthesis.", "To stay warm in the cold water."], a:1},
+                {q:"Which of the following is an example of a 'Point Source' of water pollution?", o:["Fertilizer runoff from 1,000 different farms.", "Acid rain falling over a whole province.", "Sediment from urban streets during a storm.", "A single discharge pipe from a factory."], a:3},
+                {q:"A town in Alberta uses water from the Bow River. A town in Saskatchewan uses water from the South Saskatchewan River. How are these towns connected?", o:["They share the same watershed; the Saskatchewan town is 'downstream.'", "They are in different watersheds.", "They are separated by a bog barrier.", "One is lotic and one is lentic."], a:0},
+                {q:"If the 'Euphotic Zone' of a lake is reduced from 5 meters deep to 1 meter deep due to silt, what happens to the lake's primary productivity?", o:["It increases.", "The lake becomes a marine ecosystem.", "It decreases because less volume is available for photosynthesis.", "It stays the same because algae don't need light."], a:2},
+                {q:"A sample of 'Brackish' water is found. Where was this sample most likely taken?", o:["The center of Lake Diefenbaker.", "A mountain stream in Banff.", "A bog on the Canadian Shield.", "An estuary where a river meets the ocean."], a:3},
+                {q:"Which organism would you most likely find in the Limnetic Zone of a lake?", o:["A rooted water lily.", "A beaver in its lodge.", "A deep-sea tube worm.", "Floating phytoplankton."], a:3},
+                {q:"Why is the 'Fall Turnover' considered a 'critical reset' for a lake?", o:["It freezes the lake for the winter.", "It recharges the deep water with oxygen from the surface.", "It removes all phosphorus from the water.", "It turns the lake from marine to freshwater."], a:1},
+                // Part 3: Synthesis
+                {q:"Evaluate the impact of climate change on the Peace River downstream of the W.A.C. Bennett Dam. If spring melt becomes smaller and earlier, how does this compound the dam's existing effects?", o:["It helps restore the natural flood pulse.", "It further reduces the 'spring pulse,' potentially accelerating the drying of the Peace-Athabasca Delta.", "It increases the amount of sediment trapped by the dam.", "It has no effect because dams control all water regardless of climate."], a:1},
+                {q:"Analyze the relationship between thermal stratification and dissolved oxygen. Why does a 'longer summer' (due to global warming) pose a threat to cold-water fish like trout in deep lakes?", o:["It extends the period where the hypolimnion is isolated, increasing the risk of total oxygen depletion (anoxia).", "It makes the epilimnion too cold for them.", "It causes the fish to turn into plankton.", "It stops the phosphorus cycle completely."], a:0},
+                {q:"Compare the 'Legacy Phosphorus' problem in Lake Winnipeg to external nutrient loading. Why is reducing fertilizer use on farms not an instant fix for the lake's health?", o:["Decades of accumulated phosphorus in the sediment can be re-released (internal loading), fueling blooms even if new inputs stop.", "Fertilizer doesn't contain phosphorus.", "Algae don't actually need phosphorus to bloom.", "The lake is too deep for phosphorus to matter."], a:0},
+                {q:"Synthesize the 'domino effect' that occurs when a massive algal bloom dies in a eutrophic lake.", o:["Death -> Decomposition -> Oxygen Consumption -> Anoxia -> Internal Phosphorus Release -> More Blooms.", "Death -> Photosynthesis -> Oxygen Production -> Clear Water.", "Death -> Nitrification -> Cooling -> Infiltration.", "Death -> Salinity Increase -> Marine Transition -> Coral Growth."], a:0},
+                {q:"Evaluate the use of 'once-through' cooling at Wabamun Lake. Why was the creation of year-round open water in winter considered an 'unnatural alteration'?", o:["It disrupted the lake’s fundamental thermal cycle and prevented the natural winter stratification process.", "Waterfowl are invasive species.", "It made the water too acidic for birds.", "It caused the lake to dry up."], a:0},
+                {q:"Explain the 'Unseen Architect' concept: How does the polarity of the water molecule determine the chemistry of a prairie slough compared to a mountain stream?", o:["Polarity allows water to dissolve minerals from local soils; therefore, water chemistry reflects the geology it travels through.", "Polarity makes mountain water colder than prairie water.", "Polarity only affects the nitrogen cycle, not minerals.", "Polarity causes water to flow uphill in the mountains."], a:0},
+                {q:"Predict the consequence for an estuary if a dam is built upstream on the contributing river, significantly reducing the freshwater flow.", o:["The salinity will increase as saltwater dominates, potentially harming species adapted to brackish conditions.", "The estuary will become purely freshwater.", "The estuary will turn into a bog.", "There will be no change because estuaries only depend on the ocean."], a:0},
+                {q:"Contrast the sources of turbidity in the Athabasca River during the spring melt versus the summer. How do human activities change this balance?", o:["Natural melt brings sediment; oil sands development adds a pulse of airborne contaminants (PAHs) stored in the snowpack.", "Humans decrease turbidity in the spring.", "Humans only affect turbidity in bogs, not rivers.", "There is no natural turbidity in the Athabasca River."], a:0},
+                {q:"How does the 'River Continuum Concept' explain why a 'Floodplain Zone' fish might struggle to survive if moved to the 'Source Zone'?", o:["The fish is adapted to slow, warm, nutrient-rich water, while the Source Zone is fast, cold, and nutrient-poor.", "The water in the Source Zone is too warm.", "The Source Zone has too much salt.", "There are no zones in a river."], a:0},
+                {q:"Analyze the role of Riparian Zones in 'Groundwater Recharge.' How does this function benefit the river during a drought?", o:["Stored groundwater can seep back into the river, maintaining flow when there is no rain.", "It makes the river flow faster.", "It prevents the water from ever reaching the ocean.", "It turns the river into a swamp."], a:0},
+                {q:"Evaluate the impact of 'Glacial Flour' on the euphotic zone. Why is a turquoise mountain lake often less productive than a clear-water lake?", o:["The suspended silt scatters light, creating a very shallow euphotic zone and limiting photosynthesis.", "Turquoise water is toxic.", "Mountain lakes have too much nitrogen.", "Algae prefer muddy water to turquoise water."], a:0},
+                {q:"If a lake sits on the Boreal Shield (granite) and has very low alkalinity, what happens to the pH if a small amount of acid rain falls?", o:["The pH drops significantly because there are few carbonate ions to neutralize the acid.", "The pH stays the same because of the nitrogen cycle.", "The pH rises and becomes basic.", "The lake turns into an estuary."], a:0},
+                {q:"Synthesize the relationship between Turbidity, Dissolved Oxygen, and Temperature. Which combination is most stressful for a cold-water fish?", o:["High Turbidity, High Temperature, Low Oxygen.", "High Turbidity, Low Temperature, High Oxygen.", "Low Turbidity, Low Temperature, High Oxygen.", "Low Turbidity, High Temperature, High Oxygen."], a:0},
+                {q:"Why is 'Nitrogen Fixation' considered an energy-intensive process for cyanobacteria?", o:["Because nitrogen gas (N2) is very stable and hard to break apart.", "Because nitrogen is liquid in the atmosphere.", "Because it only happens in the profundal zone.", "Because it produces oxygen as a waste product."], a:0},
+                {q:"Evaluate the 'Human Footprint' on Lake Winnipeg. If the watershed is 40 times larger than the lake, what does this imply about management?", o:["We must manage land use across millions of hectares and three provinces/states to truly protect the lake.", "We only need to manage the shoreline of the lake.", "Watershed size has no impact on lake health.", "The lake should be drained to create more farmland."], a:0}
+            ],
+            unit3: [
+                // Part 1: Knowledge
+                {q:"Which abiotic factors primarily determine the characteristics of a biome?", o:["Soil pH and nitrogen levels", "Temperature and precipitation", "Biodiversity and human use", "Wind speed and soil texture"], a:1},
+                {q:"Which Saskatchewan biome features vast peatlands and covers the northern one-third of the province?", o:["Boreal Forest", "Aspen Parkland", "Grasslands", "Athabasca Plain"], a:0},
+                {q:"What is the term for the semi-arid region in southwest Saskatchewan known for its natural drought risk?", o:["The Canadian Shield", "The Boreal Upland", "The Parkland Belt", "Palliser’s Triangle"], a:3},
+                {q:"Which soil component typically makes up about 45% of a healthy soil’s volume?", o:["Organic Matter", "Mineral Matter (Sand, Silt, Clay)", "Soil Water", "Soil Air"], a:1},
+                {q:"The dark, stable organic matter created by the decomposition of plants and animals is called:", o:["Parent Material", "Bedrock", "Humus", "Glacial Till"], a:2},
+                {q:"In a soil profile, which horizon is known as the 'Zone of Accumulation'?", o:["B-Horizon", "E-Horizon", "A-Horizon", "R-Horizon"], a:0},
+                {q:"Which Saskatchewan soil type is considered the most fertile and is characteristic of the prairies?", o:["Podzolic", "Chernozemic", "Gleysolic", "Brunisolic"], a:1},
+                {q:"Which process involves water carrying dissolved nutrients from upper soil layers to lower layers?", o:["Infiltration", "Deposition", "Weathering", "Leaching"], a:3},
+                {q:"The R-Horizon in a soil profile refers to:", o:["Parent Material", "Solid Bedrock", "Rich Topsoil", "Root Zone"], a:1},
+                {q:"Which biogeochemical cycle has NO significant atmospheric phase?", o:["Phosphorus Cycle", "Carbon Cycle", "Nitrogen Cycle", "Water Cycle"], a:0},
+                {q:"What is the primary product of photosynthesis that plants use for energy and growth?", o:["Carbon Dioxide", "Oxygen", "Glucose", "Chlorophyll"], a:2},
+                {q:"In the photosynthesis equation, what are the two primary inorganic inputs (reactants)?", o:["Oxygen and Water", "Carbon Dioxide and Water", "Glucose and Sunlight", "Carbon Dioxide and Oxygen"], a:1},
+                {q:"Which process is defined as the buildup of excess salts on the soil surface?", o:["Salinization", "Desertification", "Eutrophication", "Fragmentation"], a:0},
+                {q:"What are 'biopores' in the context of soil science?", o:["Tiny holes in plant leaves for gas exchange", "Salt crystals found on the soil surface", "Channels created by roots and decomposers that aid water infiltration", "Protective layers of lichen on the Athabasca Plain"], a:2},
+                {q:"Which agricultural practice involves planting nitrogen-fixing crops like lentils or peas?", o:["Pulse Crop Rotation", "Precision Farming", "Monoculture", "Selective Cutting"], a:0},
+                {q:"'Shelterbelts' are rows of trees planted to primarily prevent:", o:["Biodiversity loss", "Wind erosion", "Nutrient runoff", "Habitat fragmentation"], a:1},
+                {q:"Which term refers to the variety of life at the genetic, species, and ecosystem levels?", o:["Resilience", "Biodiversity", "Reciprocity", "Trophic Cascade"], a:1},
+                {q:"Habitat fragmentation often creates boundary zones with different conditions known as:", o:["Core patches", "Gene flow", "Edge Effects", "In-situ corridors"], a:2},
+                {q:"An endangered prairie bird that nests in burrows and serves as a key indicator of habitat health is the:", o:["Swift Fox", "Black Bear", "Greater Sage Grouse", "Burrowing Owl"], a:3},
+                {q:"Conservation focused on protecting a species within its natural environment is called:", o:["Ex-situ conservation", "In-situ conservation", "Habitat homogenization", "Selective harvesting"], a:1},
+                {q:"Traditional Ecological Knowledge (TEK) often emphasizes a balanced, mutual relationship called:", o:["Fragmentation", "Monoculture", "Sustainable Intensification", "Reciprocity"], a:3},
+                {q:"Which horizon consists primarily of organic litter like forest needles and leaves?", o:["O-Horizon", "A-Horizon", "C-Horizon", "B-Horizon"], a:0},
+                {q:"The mechanical breakdown of rock into smaller pieces by ice or wind is:", o:["Chemical Weathering", "Physical Weathering", "Biological Weathering", "Leaching"], a:1},
+                {q:"Which biome is characterized by sandy deposits and specialized plants like the Athabasca Sand Dunes?", o:["Mid-Boreal Upland", "Grasslands", "Athabasca Plain", "Aspen Parkland"], a:2},
+                {q:"What percentage of soil is ideally composed of pore space (air and water)?", o:["5%", "25%", "50%", "75%"], a:2},
+                {q:"Which nutrient is 'fixed' from the atmosphere by specialized soil bacteria?", o:["Carbon", "Phosphorus", "Nitrogen", "Oxygen"], a:2},
+                {q:"What is the primary land-use change that has occurred in the Saskatchewan prairies?", o:["Conversion of boreal forest to urban centers", "Expansion of lichen fields", "Conversion of sand dunes to wetlands", "Conversion of native perennial grassland to annual crop monoculture"], a:3},
+                {q:"Ex-situ conservation examples include:", o:["National Parks and Provincial Parks", "Stewardship agreements with farmers", "Zoos and seed banks", "Cultural burning practices"], a:2},
+                {q:"Which plant pigment captures the light energy required for photosynthesis?", o:["Glucose", "Humus", "Chlorophyll", "Stomata"], a:2},
+                {q:"Non-Timber Forest Products (NTFPs) include resources such as:", o:["Lumber for housing", "Pulp for paper", "Synthetic nitrogen fertilizer", "Wild rice and berries"], a:3},
+                // Part 2: Application
+                {q:"A farmer in Southern Saskatchewan notices a white, crusty substance forming in a low-lying area of a field. What management practice should they adopt?", o:["Plant deep-rooted perennial crops like alfalfa to lower the water table.", "Apply more synthetic fertilizer to boost growth.", "Tillage the soil deeply to bury the salts.", "Increase the amount of irrigation water used."], a:0},
+                {q:"A scientist is comparing soil from a native prairie and a field that has been under continuous wheat monoculture for 50 years. What is the most likely finding?", o:["The native prairie has better water infiltration due to continuous root systems.", "The wheat field has higher organic matter.", "The native prairie has more salt buildup (salinization).", "The wheat field has deeper soil biopores."], a:0},
+                {q:"During a drought in Palliser’s Triangle, which type of crop would be the most sustainable choice for a farmer?", o:["A moisture-heavy crop requiring intensive irrigation.", "An annual crop that requires deep tillage.", "A crop that requires high levels of nitrogen fertilizer.", "A drought-tolerant, deep-rooted variety that minimizes water extraction."], a:3},
+                {q:"If a new highway is built through a large forest in the Mid-Boreal Upland, which species is likely to suffer the most?", o:["A generalist species that thrives in open areas.", "A species that prefers 'edge habitat' for foraging.", "An 'interior' species that requires large, undisturbed tracts of shade.", "A species that is currently in a captive breeding program."], a:2},
+                {q:"A forestry company is deciding between clear-cutting and selective cutting in the Boreal Forest. Which method is better for maintaining habitat for wood-decaying insects?", o:["Clear-cutting, as it allows for uniform replanting.", "Selective cutting, as it leaves coarse woody debris and a variety of tree ages.", "Clear-cutting, as it opens up the ground to sun.", "Neither method affects insect communities."], a:1},
+                {q:"A gardener uses a mulch of wood chips on their soil. Which soil horizon are they essentially mimicking/adding to?", o:["A-Horizon", "B-Horizon", "C-Horizon", "O-Horizon"], a:3},
+                {q:"A soil test shows a severe deficiency in nitrogen. Instead of buying fertilizer, how could the farmer use the nitrogen cycle to help?", o:["Tilling the soil to release nitrogen gas.", "Planting a rotation of legumes (pulses) like lentils or peas.", "Applying more irrigation water to dissolve salts.", "Planting more wheat to capture nitrogen from the air."], a:1},
+                {q:"In the 1930s, 'Black Blizzards' were caused by wind erosion. Which specific soil horizon was being blown away?", o:["A-Horizon (Topsoil)", "B-Horizon (Subsoil)", "C-Horizon (Parent Material)", "R-Horizon (Bedrock)"], a:0},
+                {q:"How does 'no-till' farming combined with 'cover crops' mimic a natural grassland ecosystem?", o:["By removing all insects from the soil.", "By maintaining continuous living cover and undisturbed soil structure.", "By increasing the use of heavy machinery.", "By focusing exclusively on one crop type."], a:1},
+                {q:"An Indigenous community harvests Sweetgrass for ceremonial purposes. According to the principle of reciprocity, how should they harvest?", o:["Take only what is needed and ensure the roots remain to allow for regrowth.", "Harvest every plant in the area to maximize efficiency.", "Use heavy machinery to clear the field.", "Replace the sweetgrass with a more profitable annual crop."], a:0},
+                {q:"Why might a soil in the Boreal Lowlands be acidic and low in fertility despite having high organic matter?", o:["It has too much sand.", "Waterlogged conditions slow down decomposition, leading to peat buildup.", "It is in Palliser’s Triangle.", "There are no trees to provide shade."], a:1},
+                {q:"A researcher finds that a forest patch has higher wind speeds and lower humidity at its boundary than at its center. This is a direct example of:", o:["Soil stabilization.", "Edge Effects.", "Groundwater recharge.", "Selective cutting."], a:1},
+                {q:"A farmer uses GPS and satellite imagery to apply fertilizer only to specific areas of a field that need it. This is called:", o:["Monoculture.", "Agroforestry.", "Habitat Fragmentation.", "Precision Agriculture."], a:3},
+                {q:"Which biome would be the most likely place to find a 'Podzol' soil, which is thin and acidic?", o:["Grasslands", "Aspen Parkland", "Boreal Forest", "Palliser's Triangle"], a:2},
+                {q:"What is the ecological benefit of a 'wildlife corridor' between two fragmented patches of native prairie?", o:["It promotes gene flow and allows animals to migrate safely.", "It increases the amount of edge habitat.", "It increases the rate of salinization.", "It prevents nitrogen fixation."], a:0},
+                // Part 3: Synthesis
+                {q:"How does the loss of soil organic matter (humus) create a 'positive feedback loop' of degradation?", o:["Less humus -> better drainage -> more plant growth -> more humus.", "Less humus -> less water retention -> more plant stress -> less organic matter added back -> less humus.", "Less humus -> more salinization -> more nitrogen fixation -> better soil.", "There is no relationship between humus and soil health."], a:1},
+                {q:"Evaluate the impact of 'Sustainable Intensification' on the Phosphorus Cycle. Why is 'Precision Agriculture' a necessary tool for this strategy?", o:["It helps find more phosphorus mines in the Boreal Forest.", "It allows for the maximum crop yield while minimizing excess phosphorus runoff that causes eutrophication.", "It eliminates the need for phosphorus in plant growth.", "It speeds up the weathering of bedrock."], a:1},
+                {q:"Analyze the role of plants as 'Carbon Sinks.' How does the conversion of perennial grasslands to annual crops affect global climate change?", o:["It increases carbon storage because annual crops grow fast.", "It reduces carbon storage because soil is tilled, releasing stored carbon and reducing sequestration.", "It has no effect on carbon storage.", "It eliminates the need for photosynthesis."], a:1},
+                {q:"Synthesize the relationship between plants and the Water Cycle: How does a forest canopy influence groundwater recharge?", o:["It prevents rain from ever hitting the ground.", "It breaks the force of rain, allowing for better infiltration into biopores, which recharges groundwater.", "It speeds up evaporation so water never enters the soil.", "It turns groundwater into salt water."], a:1},
+                {q:"Compare the ecological resilience of a native prairie to a wheat monoculture. Why is the prairie more likely to survive a major disease outbreak?", o:["It has high species and functional diversity, ensuring some plants are likely resistant.", "It is located in a colder climate.", "It receives more synthetic fertilizer.", "It has fewer roots to maintain."], a:0},
+                {q:"Predict the multi-step consequence of habitat fragmentation for the Swift Fox population.", o:["Fragmentation -> Increased core habitat -> Larger population.", "Fragmentation -> Fewer edge effects -> Better genetic health.", "Fragmentation -> More roads -> Better access to food for the fox.", "Fragmentation -> Isolated populations -> Reduced gene flow -> Inbreeding -> Extinction risk."], a:3},
+                {q:"Explain the 'Unseen Architect' concept in soil: How does parent material influence the type of agriculture possible in a region?", o:["The minerals and texture provided by parent material dictate nutrient availability and water retention.", "It doesn't; only climate matters.", "Parent material is created by the plants.", "Only human fertilization determines soil texture."], a:0},
+                {q:"Evaluate the use of 'Cultural Burning' in a Parkland biome. How does this TEK practice enhance ecosystem health?", o:["It clears old brush, releases nutrients, and stimulates growth of diverse new plants, increasing resilience.", "It destroys the ecosystem completely.", "It is only used to scare away wildlife.", "It turns the soil into sand."], a:0},
+                {q:"How does 'Intercropping' (planting two species together) mimic the spatial diversity of a natural ecosystem to improve yield?", o:["It reduces the number of plants in a field.", "It allows for better resource use efficiency and reduces pest pressure.", "It requires more chemicals to manage two crops.", "It makes the soil more acidic."], a:1},
+                {q:"Analyze the impact of the 'Dust Bowl' on modern soil science. What was the most important lesson learned about soil as a resource?", o:["Soil is an infinite resource.", "Soil is effectively non-renewable and requires constant protective cover to prevent total loss.", "Wind has no power over soil.", "Tilling the soil deeper is always better."], a:1},
+                {q:"Predict the effect of 'Perennialization' on the Nitrogen Cycle.", o:["It would reduce nitrogen leaching by maintaining active roots year-round to capture nutrients.", "It would increase the need for synthetic nitrogen.", "It would stop nitrogen fixation entirely.", "It would turn nitrogen gas into carbon dioxide."], a:0},
+                {q:"Evaluate the 'Man-Made Sponge' concept: How does no-till farming help a Saskatchewan farm survive a drought?", o:["It makes the soil harder so water can't enter.", "It preserves natural biopores and surface residue, maximizing water infiltration and minimizing evaporation.", "It allows the farmer to use more water from the ocean.", "It stops the water cycle locally."], a:1},
+                {q:"Synthesis: How does 'Desertification' differ from simple 'Erosion'?", o:["Desertification only happens in the Boreal Forest.", "Erosion is the loss of topsoil; desertification is the long-term expansion of arid conditions and loss of productivity.", "They are the same thing.", "Erosion only happens in sand dunes."], a:1},
+                {q:"Why is 'Traditional Ecological Knowledge' (TEK) often described as 'adaptive'?", o:["It never changes.", "It is only based on books.", "It evolves based on generations of direct observation and relationship with the changing environment.", "It is only for use in ex-situ conservation."], a:2},
+                {q:"Evaluate the statement: 'Soil is the thin skin of the Earth that connects all spheres.' Which interaction is most critical for terrestrial food production?", o:["The geosphere providing mineral particles and the biosphere (microbes) providing nutrient cycling.", "The hydrosphere making the soil salty.", "The atmosphere blowing the soil away.", "The R-horizon being too hard for roots."], a:0}
+            ],
+            unit4: [
+                // Part 1: Knowledge
+                {q:"What is the most abundant gas in Earth's atmosphere?", o:["Nitrogen", "Oxygen", "Argon", "Carbon Dioxide"], a:0},
+                {q:"In which layer of the atmosphere does nearly all weather occur?", o:["Stratosphere", "Mesosphere", "Thermosphere", "Troposphere"], a:3},
+                {q:"What percentage of the atmosphere is composed of Oxygen?", o:["78%", "0.9%", "0.1%", "21%"], a:3},
+                {q:"Which atmospheric layer contains the ozone layer that protects Earth from UV radiation?", o:["Troposphere", "Mesosphere", "Stratosphere", "Exosphere"], a:2},
+                {q:"The transition between the Boreal Forest and the vacuum of space occurs in which outermost layer?", o:["Thermosphere", "Exosphere", "Mesosphere", "Stratosphere"], a:1},
+                {q:"What is a 'primary pollutant'?", o:["A pollutant emitted directly from a source.", "A pollutant formed by chemical reactions in the air.", "A pollutant that only affects indoor air.", "A pollutant that is always radioactive."], a:0},
+                {q:"Ground-level ozone (smog) is an example of which type of pollutant?", o:["Primary pollutant", "Secondary pollutant", "Radioactive pollutant", "Geological pollutant"], a:1},
+                {q:"Particulate Matter 2.5 (PM2.5) is defined as particles with a diameter of less than:", o:["2.5 millimeters", "2.5 centimeters", "2.5 microns", "25 microns"], a:2},
+                {q:"What toxic gas is found in Southeast Saskatchewan's oilfields and is known as 'Sour Gas'?", o:["Carbon Monoxide", "Hydrogen Sulfide", "Methane", "Radon"], a:1},
+                {q:"Radon gas is produced by the natural decay of which element in soil and rock?", o:["Carbon", "Nitrogen", "Argon", "Uranium"], a:3},
+                {q:"Which device uses high-voltage wires to give dust particles a negative charge for collection?", o:["Wet Scrubber", "Electrostatic Precipitator", "Amine Tower", "HEPA Purifier"], a:1},
+                {q:"In a 'Wet Scrubber,' limestone reacts with sulfur dioxide to produce which recyclable material?", o:["Cement", "Steel", "Plastic", "Gypsum (Drywall)"], a:3},
+                {q:"'Climate' is defined as weather patterns averaged over a minimum of:", o:["Decades or centuries", "24 hours", "1 week", "1 year"], a:0},
+                {q:"Which greenhouse gas is the most abundant and is the primary driver of weather?", o:["Methane", "Carbon Dioxide", "Water Vapor", "Nitrous Oxide"], a:2},
+                {q:"What is the name for preserved physical characteristics used to reconstruct past climates?", o:["Proxy Data", "Primary Data", "Digital Data", "Anecdotal Data"], a:0},
+                {q:"Which scientific field analyzes tree rings to determine climate history?", o:["Meteorology", "Geology", "Biology", "Dendrochronology"], a:3},
+                {q:"Saskatchewan's Boundary Dam project is a world leader in which technology?", o:["Carbon Capture and Storage (CCS)", "Solar fusion", "Tidal power", "Nuclear waste recycling"], a:0},
+                {q:"What liquid solution is used at Boundary Dam to bind with CO2 molecules?", o:["Amine solution", "Saltwater", "Liquid nitrogen", "Sulfuric acid"], a:0},
+                {q:"What is 'leachate' in the context of a landfill?", o:["Methane gas produced by rot.", "The machinery used to compact trash.", "Toxic 'garbage juice' formed by rainwater filtering through waste.", "The plastic liner at the bottom of the pit."], a:2},
+                {q:"Which term describes an economy where resources are kept in use as long as possible?", o:["Industrial Economy", "Market Economy", "Linear Economy", "Circular Economy"], a:3},
+                {q:"The 'stack effect' in Saskatchewan homes is responsible for drawing in which gas?", o:["Radon", "Oxygen", "Smog", "Nitrogen"], a:0},
+                {q:"What temperature must be reached to kill Mountain Pine Beetle larvae in Saskatchewan?", o:["0°C", "-10°C", "-25°C", "Extended periods below -40°C"], a:3},
+                {q:"Which bacteria convert ammonia into nitrite in the BNR process?", o:["Nitrosomonas", "Pseudomonas", "E. coli", "Algae"], a:0},
+                {q:"In which zone of a BNR plant are bacteria forced to strip oxygen from nitrate molecules?", o:["Aerobic Zone", "Disinfection Zone", "Primary Clarifier", "Anoxic Zone"], a:3},
+                {q:"The Aurora Borealis (Northern Lights) occurs in which atmospheric layer?", o:["Troposphere", "Stratosphere", "Thermosphere", "Mesosphere"], a:2},
+                {q:"What does the 'AQHI' measure?", o:["The amount of water in the air.", "The health risk associated with air pollution levels.", "The thickness of the ozone layer.", "The temperature of the exosphere."], a:1},
+                {q:"Chlorofluorocarbons (CFCs) are primarily responsible for the depletion of:", o:["Stratospheric ozone", "Ground-level oxygen", "Methane stores", "Argon concentrations"], a:0},
+                {q:"Which pollutant causes 'Black Blizzards' of haze when forest fires occur?", o:["PM2.5", "Carbon Dioxide", "Radon", "Helium"], a:0},
+                {q:"The Earth's 'Natural Greenhouse Effect' is necessary because without it:", o:["The Earth would be too hot.", "There would be no oxygen to breathe.", "The Earth would be a frozen rock.", "There would be no gravity."], a:2},
+                {q:"Where is the captured CO2 from Boundary Dam eventually stored?", o:["3.4 km deep in the Deadwood formation (Aquistore).", "In massive plastic bags in the ocean.", "In the stratosphere to fix the ozone hole.", "It is released into the Boreal Forest."], a:0},
+                // Part 2: Application
+                {q:"A weather app in Regina shows an AQHI of 8. According to the health guidelines, what should a high-school athlete with asthma do?", o:["Exercise as normal.", "Only exercise if they wear a mask.", "Avoid strenuous activities outdoors.", "Move their exercise to the basement."], a:2},
+                {q:"A researcher drills an ice core in Greenland and finds a layer with significantly higher CO2 concentrations than the layer above it. What does this tell us?", o:["There was a higher concentration of greenhouse gases in the ancient atmosphere.", "There was a global cooling event.", "The layer was formed during a time with no volcanic activity.", "The ice core was contaminated by modern air."], a:0},
+                {q:"A temperature inversion occurs in the Qu'Appelle Valley during a calm winter night. How will this affect a resident who is burning wood in their fireplace?", o:["The smoke will rise rapidly into the stratosphere.", "The smoke will be trapped near the ground, causing air quality to drop.", "The smoke will turn into oxygen due to the cold.", "The inversion will prevent the wood from burning."], a:1},
+                {q:"Why is PM2.5 considered a greater danger than larger PM10 particles?", o:["PM2.5 can bypass the nose and throat, entering the bloodstream.", "PM2.5 particles are visible and cause fear.", "PM2.5 particles are made of lead.", "PM2.5 only comes from cars."], a:0},
+                {q:"A homeowner in Saskatoon installs a radon test kit in their basement for 90 days during the winter. Why is winter the best time to test?", o:["Radon is frozen in the soil during the summer.", "The 'stack effect' is strongest when indoor air is warmer than the outdoors.", "Radon only exists in the winter.", "Testing is cheaper in the winter."], a:1},
+                {q:"If a dendrochronology sample shows 10 years of extremely narrow rings, what is the most likely climate inference?", o:["A decade of warm, wet, 'plenty' years.", "A decade of severe drought or extreme cold.", "A decade of high volcanic activity.", "The tree was growing in the thermosphere."], a:1},
+                {q:"A farmer switches from a 'linear' waste model to a 'circular' one for tractor tires. Which action fits the circular model?", o:["Shredding tires into rubber mulch for local playgrounds.", "Burning the tires in a field.", "Dumping the tires in a local coulee.", "Leaving the tires in the barn forever."], a:0},
+                {q:"A power plant installs an electrostatic precipitator. What is the primary benefit of this specific tool?", o:["It stops CO2 emissions.", "It cools the water before it enters the river.", "It removes 99% of particulate matter (fly ash) from the smoke.", "It produces renewable wind energy."], a:2},
+                {q:"How would shrinking glaciers in the Rockies directly affect the water security of Saskatoon in August?", o:["It would reduce the flow of the South Saskatchewan River during the dry summer.", "It would cause massive flooding in August.", "It would make the river water too cold for fish.", "It would turn the South Saskatchewan River into saltwater."], a:0},
+                {q:"A worker notes that they can no longer smell the 'rotten egg' odor of Hydrogen Sulfide. why is this life-threatening?", o:["High concentrations of H2S deaden the sense of smell.", "It means the gas has all gone away.", "It means the worker has developed a cold.", "H2S turns into oxygen when you can't smell it."], a:0},
+                {q:"A wastewater operator notes the bacteria in the anoxic zone are not releasing nitrogen gas. What is a likely cause?", o:["There is too much dissolved oxygen in the anoxic zone.", "There is too much ammonia.", "The UV lights are turned off.", "The water is too cold."], a:0},
+                {q:"If a community observes muskrats building exceptionally high lodges, what is the traditional prediction?", o:["A mild, dry spring.", "A spring with high water levels or severe runoff.", "An invasion of Mountain Pine Beetles.", "A hole in the ozone layer."], a:1},
+                {q:"Which of the following would have the highest 'albedo'?", o:["A field of dark soil in the spring.", "The dark waters of Lake Diefenbaker.", "A fresh snowpack on the Boreal Shield.", "A newly paved blacktop highway."], a:2},
+                {q:"A student argues that the ozone hole causes global warming because it 'lets in more heat.' why is this student incorrect?", o:["The ozone hole is about UV radiation; global warming is about trapped infrared heat.", "The ozone hole actually lets in cold air from space.", "The ozone hole only exists over the ocean.", "Global warming is caused by PM2.5."], a:0},
+                {q:"A municipality wants to reduce 'leachate' problems. What is the most effective solution?", o:["Building a wind turbine next to the pit.", "Painting the trash white.", "Moving the landfill to the thermosphere.", "Installing a clay and plastic liner with a collection system."], a:3},
+                // Part 3: Synthesis
+                {q:"Evaluate the 'Positive Feedback Loop' involving albedo and Arctic ice melt. If global temperatures rise, what is the most likely sequence?", o:["Temp rises -> Ice melts -> Albedo increases -> Earth cools.", "Temp rises -> Ice melts -> Dark water absorbs more heat -> More ice melts.", "Temp rises -> More snow falls -> Albedo increases -> Ice grows.", "Temp rises -> UV radiation increases -> Ozone hole closes."], a:1},
+                {q:"Compare the 'Linear' vs. 'Circular' Economy approach to a smartphone. Which statement best synthesizes the circular model's benefit?", o:["The circular model designs phones to be disassembled and minerals reused, reducing resource extraction.", "The linear model is better because it creates jobs for miners.", "The circular model is more expensive and therefore worse.", "The linear model prevents leachate by putting phones in the exosphere."], a:0},
+                {q:"How does the survival of the Mountain Pine Beetle demonstrate atmospheric/biospheric interconnectivity?", o:["Atmospheric warming leads to fewer nights below -40°C, allowing a pest to cross barriers and threaten forests.", "Beetles use the Aurora Borealis to navigate.", "Beetles produce the CO2 that causes the ozone hole.", "The Beetles are a primary pollutant emitted by volcanoes."], a:0},
+                {q:"Synthesize the relationship between the 'Anthropogenic Greenhouse Effect' and 'Carrying Capacity.'", o:["Human emissions may degrade the global climate, eventually lowering the planet's ability to sustain our population.", "GHGs increase the carrying capacity of the Earth for all species.", "Carrying capacity is only affected by PM2.5.", "There is no relationship between the two concepts."], a:0},
+                {q:"Contrast 'Stewardship' (TEK) and 'Management' (Western Science). How might combining them lead to a better outcome?", o:["Combining Western data with Indigenous long-term observations leads to more sustainable, holistic decision-making.", "They shouldn't be combined because they are too different.", "Management is for the city; stewardship is for the forest.", "Indigenous knowledge is only for muskrat lodges."], a:0},
+                {q:"Analyze BNR. If a plant had only an aerobic zone and no anoxic zone, what would be the consequence for the river?", o:["Nitrate would stay in the water, potentially fueling an algal bloom (eutrophication) in the river.", "The water would be too clean.", "The river would turn into a glacier.", "The exosphere would get thicker."], a:0},
+                {q:"Predict the consequence of a total failure of the stratospheric ozone layer for Saskatchewan's agriculture.", o:["Increased UV-B radiation could damage plant DNA and reduce crop yields significantly.", "Crops would grow faster due to more light.", "Global warming would stop.", "Farmers would have to use more amine solution."], a:0},
+                {q:"Evaluate 'Aquistore' CCS. Why is injecting CO2 underground considered 'mitigation' rather than a total 'solution'?", o:["It manages the emissions of fossil fuel use during a transition, rather than eliminating the need for fossil fuels entirely.", "Because it doesn't work.", "Because the CO2 will eventually turn into uranium.", "Because it is only done in the summer."], a:0},
+                {q:"How does the 'stack effect' in a home connect the geosphere and the indoor atmosphere?", o:["It creates a pressure difference that sucks radioactive gases from the soil (geosphere) into the house (atmosphere).", "It proves the house is made of dirt.", "It causes the roof to blow off.", "It turns nitrogen into radon."], a:0},
+                {q:"Synthesize the data: If a scientist finds both a thinning ozone layer and rising global CO2, which statement is most accurate?", o:["They are two separate atmospheric problems with different causes and different physical effects.", "CO2 causes the ozone hole.", "The ozone hole causes the greenhouse effect.", "They are the same thing and should be called 'smog.'"], a:0},
+                {q:"Evaluate the Cowessess 'Hybrid Energy' project. How does it address the 'intermittency' problem?", o:["By combining wind and solar with battery storage, it ensures power is available when wind/sun are absent.", "It uses H2S to power the turbines at night.", "It makes the wind blow harder.", "It uses amine to capture CO2 from the wind."], a:0},
+                {q:"Predict the long-term impact on a 'Linear Economy' city if it runs out of accessible raw materials.", o:["It will face an economic and waste crisis as it can no longer produce new goods or manage discarded ones.", "It will become a circular economy automatically.", "It will move to the mesosphere.", "It will have a high albedo."], a:0},
+                {q:"Explain how temperature stratification can create a 'dead zone' in a deep lake.", o:["The thermocline prevents oxygen-rich surface water from mixing with the bottom, while decomposition consumes oxygen.", "The thermosphere heats the water too much.", "Fish forget how to breathe in the dark.", "High albedo prevents light from entering."], a:0},
+                {q:"Why is the 'Anthropogenic' greenhouse effect more urgent than the 'Natural' one?", o:["It is occurring at a rate that exceeds the ability of ecosystems and human systems to adapt.", "The natural effect is too cold.", "Anthropogenic gases are made of lead.", "Natural gases don't have molecules."], a:0},
+                {q:"Synthesis: If a city's AQHI is high due to wildfire smoke, which 'sphere' interaction is most responsible?", o:["The Biosphere (burning forests) interacting with the Atmosphere (smoke transport) and the Biosphere again (human health).", "The Exosphere interacting with the Geosphere.", "The Hydrosphere turning into the Thermosphere.", "The Ozone layer interacting with the BNR plant."], a:0}
+            ]
+        };
+
+        const UNIT_INFO = {
+            unit1: "Nature of Science & Populations",
+            unit2: "Aquatic Ecosystems",
+            unit3: "Terrestrial Ecosystems",
+            unit4: "Atmosphere & Climate"
+        };
+
+        // --- COMPONENTS ---
+
+        const Button = ({ children, onClick, className = "", variant = "primary", disabled = false }) => {
+            const baseStyle = "px-6 py-3 rounded-xl font-bold transition-all transform active:scale-95 shadow-md flex items-center justify-center gap-2";
+            const variants = {
+                primary: "bg-emerald-600 text-white hover:bg-emerald-500 border-b-4 border-emerald-800 hover:border-emerald-700",
+                secondary: "bg-slate-600 text-white hover:bg-slate-500 border-b-4 border-slate-800 hover:border-slate-700",
+                option: "bg-white text-slate-800 hover:bg-emerald-50 border-2 border-slate-200 hover:border-emerald-400 text-left justify-start",
+                danger: "bg-red-500 text-white hover:bg-red-400 border-b-4 border-red-700",
+                selected: "bg-emerald-100 border-2 border-emerald-500 text-emerald-800 shadow-inner",
+                outline: "bg-white text-emerald-700 border-2 border-emerald-600 hover:bg-emerald-50"
+            };
+
+            return (
+                <button 
+                    onClick={onClick} 
+                    disabled={disabled}
+                    className={`${baseStyle} ${variants[variant]} ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                    {children}
+                </button>
+            );
+        };
+
+        const Card = ({ children, className = "" }) => (
+            <div className={`bg-white rounded-2xl shadow-xl p-6 ${className}`}>
+                {children}
+            </div>
+        );
+
+        // --- AUDIO ---
+        const playSound = (type) => {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            if (type === 'correct') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.1);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.1);
+            } else if (type === 'wrong') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.2);
+            } else if (type === 'click') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            }
+        };
+
+        // --- PRINT VIEW COMPONENT ---
+        const PrintView = ({ questions, onBack }) => {
+            useEffect(() => {
+                // Optional: Auto-print on load
+                // window.print();
+            }, []);
+
+            return (
+                <div className="max-w-4xl mx-auto bg-white p-8 text-black print:p-0">
+                    <div className="flex justify-between items-center mb-8 no-print">
+                        <button 
+                            onClick={onBack}
+                            className="px-4 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg font-bold flex items-center gap-2"
+                        >
+                            <i data-lucide="arrow-left" className="w-4 h-4"></i> Back to Menu
+                        </button>
+                        <button 
+                            onClick={() => window.print()}
+                            className="px-6 py-2 bg-emerald-600 text-white hover:bg-emerald-700 rounded-lg font-bold flex items-center gap-2"
+                        >
+                            <i data-lucide="printer" className="w-4 h-4"></i> Print Quiz
+                        </button>
+                    </div>
+
+                    <div className="mb-8 border-b-2 border-black pb-4">
+                        <h1 className="text-3xl font-bold mb-2">Environmental Science 20</h1>
+                        <h2 className="text-xl">Unit Review Quiz</h2>
+                        <div className="flex justify-between mt-6 text-sm">
+                            <div className="w-1/3 border-b border-black">Name:</div>
+                            <div className="w-1/3 border-b border-black">Date:</div>
+                            <div className="w-1/6 border-b border-black">Score: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / {questions.length}</div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
+                        {questions.map((q, idx) => (
+                            <div key={idx} className="break-inside-avoid">
+                                <div className="flex gap-2 font-bold mb-1">
+                                    <span>{idx + 1}.</span>
+                                    <span>{q.q}</span>
+                                </div>
+                                <div className="ml-6 space-y-1">
+                                    {q.o.map((opt, oIdx) => (
+                                        <div key={oIdx} className="flex gap-2 items-start">
+                                            <div className="w-4 h-4 border border-black rounded-full mt-1 shrink-0"></div>
+                                            <span className="text-sm">{['A', 'B', 'C', 'D'][oIdx]}) {opt}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="page-break"></div>
+
+                    <div className="mt-12 pt-8 border-t-2 border-black">
+                        <h3 className="text-xl font-bold mb-4">Answer Key</h3>
+                        <div className="grid grid-cols-5 gap-2 text-sm">
+                            {questions.map((q, idx) => (
+                                <div key={idx} className="flex gap-2">
+                                    <span className="font-bold">{idx + 1}.</span>
+                                    <span>{['A', 'B', 'C', 'D'][q.a]}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const MainMenu = ({ onStart, highScores }) => {
+            const [selectedUnits, setSelectedUnits] = useState([]); // Default unchecked
+            const [mode, setMode] = useState('review');
+            const [difficulty, setDifficulty] = useState('balanced');
+            const [printCount, setPrintCount] = useState(10); // Default question count for print
+
+            const toggleUnit = (unit) => {
+                playSound('click');
+                setSelectedUnits(prev => 
+                    prev.includes(unit) 
+                        ? prev.filter(u => u !== unit) 
+                        : [...prev, unit]
+                );
+            };
+
+            const toggleAll = () => {
+                playSound('click');
+                if (selectedUnits.length === 4) setSelectedUnits([]);
+                else setSelectedUnits(['unit1', 'unit2', 'unit3', 'unit4']);
+            };
+
+            const startGame = () => {
+                if (selectedUnits.length === 0) return;
+                playSound('click');
+                onStart(selectedUnits, mode, difficulty, printCount);
+            };
+
+            const modes = [
+                { id: 'review', icon: 'book-open', title: 'Review Mode', desc: 'No timer. Learn at your own pace.' },
+                { id: 'timed', icon: 'clock', title: 'Time Attack', desc: '60s on clock. +5s for correct answers.' },
+                { id: 'sudden', icon: 'skull', title: 'Sudden Death', desc: 'One wrong move and it’s game over.' },
+                { id: 'print', icon: 'printer', title: 'Printable Quiz', desc: 'Generate a paper worksheet.' },
+            ];
+            
+            const difficulties = [
+                { id: 'easy', title: 'Easy' },
+                { id: 'balanced', title: 'Balanced' },
+                { id: 'hard', title: 'Hard' },
+            ];
+
+            return (
+                <div className="max-w-3xl mx-auto space-y-8 animate-pop">
+                    <div className="text-center space-y-2">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-emerald-800 tracking-tight">
+                            EnvSci 20
+                            <span className="block text-xl md:text-2xl text-emerald-600 font-medium mt-2">Ultimate Review Game</span>
+                        </h1>
+                    </div>
+
+                    <Card>
+                        <div className="flex justify-between items-center mb-4">
+                             <h3 className="text-lg font-bold text-slate-700 flex items-center gap-2">
+                                <i data-lucide="layers" className="w-5 h-5"></i> Select Units
+                            </h3>
+                            <button 
+                                onClick={toggleAll}
+                                className={`px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors border ${selectedUnits.length === 4 ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-500 border-slate-300 hover:bg-slate-50'}`}
+                            >
+                                {selectedUnits.length === 4 ? 'Unselect All' : 'Select All'}
+                            </button>
+                        </div>
+                       
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {['unit1', 'unit2', 'unit3', 'unit4'].map(u => (
+                                <button
+                                    key={u}
+                                    onClick={() => toggleUnit(u)}
+                                    className={`p-4 rounded-xl font-bold text-left transition-all border-2 flex items-center gap-3 ${
+                                        selectedUnits.includes(u) 
+                                            ? 'bg-emerald-100 border-emerald-500 text-emerald-800 shadow-sm' 
+                                            : 'bg-white border-slate-200 text-slate-400 hover:border-emerald-200 hover:bg-slate-50'
+                                    }`}
+                                >
+                                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs border ${selectedUnits.includes(u) ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-transparent border-slate-300'}`}>
+                                        {selectedUnits.includes(u) && <i data-lucide="check" className="w-3 h-3"></i>}
+                                    </div>
+                                    <div>
+                                        <div className="text-xs uppercase opacity-70">Unit {u.replace('unit','')}</div>
+                                        <div className="leading-tight">{UNIT_INFO[u]}</div>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </Card>
+
+                    <Card>
+                         <h3 className="text-lg font-bold text-slate-700 flex items-center gap-2 mb-4">
+                            <i data-lucide="bar-chart-2" className="w-5 h-5"></i> Difficulty Level
+                        </h3>
+                        <div className="grid grid-cols-3 gap-3">
+                            {difficulties.map(d => (
+                                <button
+                                    key={d.id}
+                                    onClick={() => { playSound('click'); setDifficulty(d.id); }}
+                                    className={`p-3 rounded-xl text-center transition-all border-2 ${
+                                        difficulty === d.id 
+                                            ? 'bg-amber-100 border-amber-500 text-amber-800' 
+                                            : 'bg-white border-slate-200 text-slate-400 hover:border-amber-200 hover:bg-slate-50'
+                                    }`}
+                                >
+                                    <div className="font-bold">{d.title}</div>
+                                </button>
+                            ))}
+                        </div>
+                    </Card>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        {modes.map(m => (
+                            <button
+                                key={m.id}
+                                onClick={() => { playSound('click'); setMode(m.id); }}
+                                className={`relative p-4 rounded-xl text-left transition-all border-2 ${
+                                    mode === m.id 
+                                        ? 'bg-white border-emerald-500 ring-4 ring-emerald-500/20 shadow-lg transform scale-105 z-10' 
+                                        : 'bg-white border-slate-200 hover:border-emerald-200 hover:bg-slate-50 opacity-80'
+                                }`}
+                            >
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${mode === m.id ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
+                                    <i data-lucide={m.icon} className="w-5 h-5"></i>
+                                </div>
+                                <div className="font-bold text-slate-800 text-sm">{m.title}</div>
+                                <div className="text-xs text-slate-500 mt-1 leading-tight">{m.desc}</div>
+                                {highScores[m.id] > 0 && m.id !== 'print' && (
+                                    <div className="absolute top-2 right-2 text-xs font-bold text-amber-500">
+                                        Best: {highScores[m.id]}
+                                    </div>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+
+                    {mode === 'print' && (
+                         <div className="bg-slate-100 p-4 rounded-xl flex items-center justify-center gap-4 animate-pop border-2 border-emerald-200">
+                            <span className="font-bold text-slate-700">Questions:</span>
+                            {[10, 15, 20].map(num => (
+                                <button 
+                                    key={num}
+                                    onClick={() => setPrintCount(num)}
+                                    className={`px-4 py-2 rounded-lg font-bold text-sm transition-colors border ${printCount === num ? 'bg-emerald-600 text-white border-emerald-700' : 'bg-white text-slate-500 border-slate-300'}`}
+                                >
+                                    {num}
+                                </button>
+                            ))}
+                         </div>
+                    )}
+
+                    <Button onClick={startGame} disabled={selectedUnits.length === 0} className="w-full text-xl py-4 shadow-xl shadow-emerald-200">
+                        {selectedUnits.length === 0 ? 'Select a Unit to Start' : (mode === 'print' ? 'Generate Quiz' : 'Start Game')}
+                    </Button>
+                </div>
+            );
+        };
+
+        const GameScreen = ({ units, mode, difficulty, onEnd, onQuit }) => {
+            const [pool, setPool] = useState([]);
+            const [currentQ, setCurrentQ] = useState(null);
+            const [score, setScore] = useState(0);
+            const [streak, setStreak] = useState(0);
+            const [timeLeft, setTimeLeft] = useState(mode === 'timed' ? 60 : 0);
+            const [status, setStatus] = useState('playing'); // playing, feedback
+            const [feedback, setFeedback] = useState(null); // { correct: bool, correctIndex: number }
+
+            // Initialize Pool
+            useEffect(() => {
+                let questions = [];
+                units.forEach(u => {
+                    let unitQuestions = QUESTION_DATA[u];
+                    
+                    // Filter based on difficulty
+                    if (difficulty === 'easy') {
+                        unitQuestions = unitQuestions.slice(0, 30);
+                    } else if (difficulty === 'hard') {
+                        unitQuestions = unitQuestions.slice(30);
+                    }
+                    questions = [...questions, ...unitQuestions];
+                });
+                
+                // Shuffle
+                questions.sort(() => Math.random() - 0.5);
+                setPool(questions);
+                setCurrentQ(questions[0]);
+            }, [units, difficulty]);
+
+            // Timer Logic
+            useEffect(() => {
+                if (mode !== 'timed' || status !== 'playing') return;
+                
+                if (timeLeft <= 0) {
+                    onEnd(score);
+                    return;
+                }
+
+                const timer = setInterval(() => {
+                    setTimeLeft(t => t - 1);
+                }, 1000);
+
+                return () => clearInterval(timer);
+            }, [timeLeft, mode, status, onEnd, score]);
+
+            const handleAnswer = (index) => {
+                if (status !== 'playing') return;
+
+                const isCorrect = index === currentQ.a;
+                
+                if (isCorrect) {
+                    playSound('correct');
+                    setScore(s => s + 10 + (streak * 2));
+                    setStreak(s => s + 1);
+                    if (mode === 'timed') setTimeLeft(t => t + 5);
+                    setFeedback({ correct: true, selected: index, correctIndex: currentQ.a });
+                } else {
+                    playSound('wrong');
+                    setStreak(0);
+                    if (mode === 'timed') setTimeLeft(t => Math.max(0, t - 5));
+                    if (mode === 'sudden') {
+                        setFeedback({ correct: false, selected: index, correctIndex: currentQ.a });
+                        setTimeout(() => onEnd(score), 1500);
+                        return;
+                    }
+                    setFeedback({ correct: false, selected: index, correctIndex: currentQ.a });
+                }
+
+                setStatus('feedback');
+                
+                // Next Question Delay
+                setTimeout(() => {
+                    const currentIndex = pool.indexOf(currentQ);
+                    if (currentIndex + 1 < pool.length) {
+                        setCurrentQ(pool[currentIndex + 1]);
+                        setStatus('playing');
+                        setFeedback(null);
+                    } else {
+                        onEnd(score + (isCorrect ? 10 : 0)); // Add last point if standard mode
+                    }
+                }, 1500);
+            };
+
+            if (!currentQ) return <div className="text-center p-10">Loading...</div>;
+
+            return (
+                <div className="max-w-3xl mx-auto relative pt-12 md:pt-0">
+                    {/* Header Stats */}
+                    <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm relative">
+                        <button 
+                            onClick={() => { playSound('click'); onQuit(); }}
+                            className="absolute -top-12 left-0 md:static md:mr-4 p-2 bg-slate-200 hover:bg-red-100 text-slate-600 hover:text-red-600 rounded-lg transition-colors flex items-center gap-2 text-sm font-bold"
+                        >
+                            <i data-lucide="x" className="w-5 h-5"></i>
+                            <span className="hidden md:inline">Quit</span>
+                        </button>
+
+                        <div className="flex-1 flex justify-around items-center">
+                            <div className="text-center">
+                                <div className="text-xs uppercase text-slate-400 font-bold">Score</div>
+                                <div className="text-2xl font-bold text-emerald-600">{score}</div>
+                            </div>
+                            {mode === 'timed' && (
+                                <div className={`text-center ${timeLeft < 10 ? 'animate-pulse text-red-500' : ''}`}>
+                                    <div className="text-xs uppercase text-slate-400 font-bold">Time</div>
+                                    <div className="text-3xl font-black">{timeLeft}s</div>
+                                </div>
+                            )}
+                            <div className="text-center">
+                                <div className="text-xs uppercase text-slate-400 font-bold">Streak</div>
+                                <div className="text-2xl font-bold text-amber-500">x{streak}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Question Card */}
+                    <Card className="mb-6 min-h-[160px] flex items-center justify-center text-center relative overflow-hidden">
+                        <span className="absolute top-2 left-4 text-xs font-bold text-emerald-200">Q: {pool.indexOf(currentQ) + 1} / {pool.length}</span>
+                        <h2 className="text-xl md:text-2xl font-bold text-slate-800 leading-snug">
+                            {currentQ.q}
+                        </h2>
+                    </Card>
+
+                    {/* Options Grid */}
+                    <div className="grid gap-3">
+                        {currentQ.o.map((opt, idx) => {
+                            let variant = 'option';
+                            if (feedback) {
+                                if (idx === feedback.correctIndex) variant = 'primary'; // Show Correct
+                                else if (idx === feedback.selected && !feedback.correct) variant = 'danger'; // Show Wrong
+                                else variant = 'option';
+                            }
+
+                            return (
+                                <Button 
+                                    key={idx} 
+                                    onClick={() => handleAnswer(idx)}
+                                    variant={feedback && idx === feedback.correctIndex ? 'primary' : (feedback && idx === feedback.selected && !feedback.correct ? 'danger' : 'option')}
+                                    className={`w-full py-4 px-6 text-lg ${feedback && idx === feedback.correctIndex ? 'correct-anim' : ''} ${feedback && idx === feedback.selected && !feedback.correct ? 'wrong-anim' : ''}`}
+                                    disabled={status !== 'playing'}
+                                >
+                                    <span className="inline-block w-8 h-8 rounded-full bg-slate-100 text-slate-500 text-sm flex items-center justify-center mr-4 font-bold shrink-0">
+                                        {['A','B','C','D'][idx]}
+                                    </span>
+                                    {opt}
+                                </Button>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        const ResultScreen = ({ score, mode, onRestart, onQuit }) => {
+            const title = score > 1000 ? "Legendary!" : score > 500 ? "Great Job!" : "Nice Try!";
+            
+            return (
+                <div className="max-w-md mx-auto text-center space-y-8 animate-pop">
+                    <Card className="py-12">
+                        <div className="mb-2 text-slate-400 uppercase tracking-widest font-bold text-sm">Final Score</div>
+                        <div className="text-6xl font-black text-emerald-600 mb-4">{score}</div>
+                        <h2 className="text-2xl font-bold text-slate-800 mb-6">{title}</h2>
+                        
+                        <div className="flex justify-center gap-2 mb-8">
+                            {[1,2,3].map(i => (
+                                <i key={i} data-lucide="star" className={`w-8 h-8 ${score > i*200 ? 'text-amber-400 fill-amber-400' : 'text-slate-200'}`}></i>
+                            ))}
+                        </div>
+
+                        <div className="space-y-3">
+                            <Button onClick={onRestart} className="w-full">
+                                Play Again
+                            </Button>
+                            <button 
+                                onClick={onQuit} 
+                                className="w-full py-3 text-slate-500 font-bold hover:bg-slate-50 rounded-lg transition-colors"
+                            >
+                                Back to Menu
+                            </button>
+                        </div>
+                    </Card>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [gameState, setGameState] = useState('menu'); // menu, playing, end, print
+            const [gameConfig, setGameConfig] = useState(null);
+            const [finalScore, setFinalScore] = useState(0);
+            const [highScores, setHighScores] = useState({ review: 0, timed: 0, sudden: 0 });
+            const [printQuestions, setPrintQuestions] = useState([]);
+
+            useEffect(() => {
+                const saved = localStorage.getItem('envSciScores');
+                if (saved) setHighScores(JSON.parse(saved));
+                lucide.createIcons();
+            }, []);
+
+            useEffect(() => {
+                lucide.createIcons();
+            }, [gameState]);
+
+            const startGame = (units, mode, difficulty, printCount) => {
+                setGameConfig({ units, mode, difficulty });
+                
+                if (mode === 'print') {
+                    // Generate Print Questions
+                    let questions = [];
+                    units.forEach(u => {
+                        let unitQuestions = QUESTION_DATA[u];
+                        if (difficulty === 'easy') unitQuestions = unitQuestions.slice(0, 30);
+                        else if (difficulty === 'hard') unitQuestions = unitQuestions.slice(30);
+                        questions = [...questions, ...unitQuestions];
+                    });
+                    
+                    // Shuffle and slice
+                    questions.sort(() => Math.random() - 0.5);
+                    setPrintQuestions(questions.slice(0, printCount));
+                    setGameState('print');
+                } else {
+                    setGameState('playing');
+                }
+            };
+
+            const endGame = (score) => {
+                setFinalScore(score);
+                if (score > highScores[gameConfig.mode]) {
+                    const newScores = { ...highScores, [gameConfig.mode]: score };
+                    setHighScores(newScores);
+                    localStorage.setItem('envSciScores', JSON.stringify(newScores));
+                }
+                setGameState('end');
+            };
+
+            return (
+                <div className="min-h-screen p-4 md:p-8 print:p-0 print:bg-white relative">
+                    <div className="absolute top-4 left-4 no-print z-50">
+                        <a href="index.html" className="bg-white/80 hover:bg-white border border-slate-300 text-slate-600 px-4 py-2 rounded-lg font-bold text-sm shadow-sm flex items-center gap-2 transition-all">
+                            <i data-lucide="book-open" className="w-4 h-4"></i> Return To Textbook
+                        </a>
+                    </div>
+
+                    {gameState === 'menu' && <MainMenu onStart={startGame} highScores={highScores} />}
+                    {gameState === 'playing' && <GameScreen units={gameConfig.units} mode={gameConfig.mode} difficulty={gameConfig.difficulty} onEnd={endGame} onQuit={() => setGameState('menu')} />}
+                    {gameState === 'end' && <ResultScreen score={finalScore} mode={gameConfig.mode} onRestart={() => setGameState('menu')} onQuit={() => setGameState('menu')} />}
+                    {gameState === 'print' && <PrintView questions={printQuestions} onBack={() => setGameState('menu')} />}
+                    
+                    <footer className="text-center mt-12 text-slate-400 text-sm no-print">
+                        Environmental Science 20 • Saskatchewan Curriculum Review
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
