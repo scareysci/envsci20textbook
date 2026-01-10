@@ -28,7 +28,7 @@
     </style>
 </head>
 <body class="p-4 bg-gray-50 full-center-container">
-    <div class="bg-white rounded-2xl shadow-2xl shadow-green-200/50 p-6 md:p-12 max-w-5xl w-full text-center border-t-8 border-green-600">
+    <div class="bg-white rounded-2xl shadow-2xl shadow-green-200/50 p-6 md:p-12 max-w-5xl w-full text-center border-t-8 border-green-600 my-8">
         <!-- Header Section -->
         <h1 class="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
             Environmental Science 20
@@ -203,6 +203,34 @@
             </a>
         </div>
 
+        <!-- NEW SECTION: Printable Review Packages -->
+        <div class="mt-12 pt-10 border-t-2 border-gray-100 text-left">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Printable Review Packages
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="u1review.pdf" class="chapter-link p-4 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-800 text-center flex flex-col items-center justify-center">
+                    <span class="text-[10px] uppercase opacity-70 tracking-tighter">Download</span>
+                    Unit 1
+                </a>
+                <a href="u2review.pdf" class="chapter-link p-4 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-800 text-center flex flex-col items-center justify-center">
+                    <span class="text-[10px] uppercase opacity-70 tracking-tighter">Download</span>
+                    Unit 2
+                </a>
+                <a href="u3review.pdf" class="chapter-link p-4 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-800 text-center flex flex-col items-center justify-center">
+                    <span class="text-[10px] uppercase opacity-70 tracking-tighter">Download</span>
+                    Unit 3
+                </a>
+                <a href="u4review.pdf" class="chapter-link p-4 bg-gray-700 text-white font-bold rounded-xl shadow-md hover:bg-gray-800 text-center flex flex-col items-center justify-center">
+                    <span class="text-[10px] uppercase opacity-70 tracking-tighter">Download</span>
+                    Unit 4
+                </a>
+            </div>
+        </div>
+
     </div>
     
     <script>
@@ -212,9 +240,8 @@
             const messageBox = document.getElementById('messageBox');
             const resultsDiv = document.getElementById('results');
 
-            // --- MOCK CONTENT DATA (Expanded) ---
+            // --- MOCK CONTENT DATA ---
             const textbookData = [
-                // --- NEW UNIT 1 ---
                 {
                     unit: 'Nature of Science and Human Populations',
                     chapter: 'Chapter 1',
@@ -229,7 +256,6 @@
                         <p>The human population has grown exponentially, leading to increased resource consumption. Understanding **demographics** and age structures helps predict future trends and environmental impacts.</p>
                     `
                 },
-                // --- RENAMED UNIT 2 (Was Unit 1) ---
                 {
                     unit: 'Aquatic Ecosystems',
                     chapter: 'Chapter 2',
@@ -257,7 +283,6 @@
                         <p>The vast ocean ecosystems are characterized by high **salinity** (salt content), typically around 35 parts per thousand. They include productive zones like the coastal zone (estuaries, coral reefs) and the deep, open ocean. Ocean depth and light availability are key differentiators.</p>
                         <h3 id="estuaries" class="text-xl font-semibold mt-4">Estuaries and Wetlands</h3>
                         <p>Estuaries are transitional areas where freshwater rivers meet the ocean, resulting in brackish water and high biodiversity. Wetlands (swamps, marshes) are crucial for water filtration and flood control.</p>
-
                     `
                 },
                 {
@@ -274,7 +299,6 @@
                         <p>High concentrations of **nitrates** and **phosphates** (nutrients) often lead to eutrophication, causing algal blooms and ultimately reducing dissolved oxygen when the algae decompose.</p>
                     `
                 },
-                // --- RENAMED UNIT 3 (Was Unit 2) ---
                 {
                     unit: 'Terrestrial Ecosystems',
                     chapter: 'Chapter 5',
@@ -311,7 +335,6 @@
                         <p>A **biodiversity hotspot** is a biogeographic region with significant levels of biodiversity that is threatened by human habitation. These areas are critical for global conservation efforts due to their high number of endemic species.</p>
                     `
                 },
-                // --- RENAMED UNIT 4 (Was Unit 3) ---
                 {
                     unit: 'Atmosphere and Human Impact',
                     chapter: 'Chapter 8',
@@ -355,27 +378,21 @@
 
                 if (index === -1) return null;
 
-                // Calculate start and end indices for the snippet
                 let startIndex = Math.max(0, index - contextLength);
                 let endIndex = Math.min(text.length, index + lowerSearchTerm.length + contextLength);
 
-                // Adjust to stop at previous sentence end or heading, if possible, for cleaner context
-                // This is a simple approximation: look for '. ' before the start
                 const startEllipsis = startIndex > 0;
                 if (startEllipsis) {
                     const sentenceEnd = text.lastIndexOf('.', startIndex) + 1;
-                    if (sentenceEnd > startIndex - contextLength + 10) { // Check if the sentence end is reasonably close
+                    if (sentenceEnd > startIndex - contextLength + 10) { 
                         startIndex = sentenceEnd;
                     }
                 }
 
                 let snippet = text.substring(startIndex, endIndex).trim();
-
-                // Highlight the search term (case insensitive)
                 const regex = new RegExp(lowerSearchTerm.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1"), 'gi');
                 snippet = snippet.replace(regex, (match) => `<span class="bg-yellow-200 font-bold text-gray-900 rounded px-1">${match}</span>`);
 
-                // Add ellipses
                 if (startIndex > 0) snippet = '... ' + snippet;
                 if (endIndex < text.length) snippet = snippet + ' ...';
 
@@ -405,10 +422,8 @@
 
                     if (pageContent.includes(searchTerm.toLowerCase())) {
                         foundResults++;
-                        
                         const snippet = extractSnippet(rawText, searchTerm);
 
-                        // Find closest heading (H3 is used for sections)
                         let closestHeading = 'Chapter Introduction';
                         let closestHeadingId = '';
                         let closestDistance = Infinity;
@@ -427,7 +442,6 @@
                         });
 
                         const finalLinkUrl = closestHeadingId ? `${page.url}#${closestHeadingId}` : page.url;
-
                         const resultItem = document.createElement('div');
                         resultItem.className = 'p-4 bg-white border border-green-300 rounded-lg shadow-md hover:bg-green-50 transition duration-150 flex flex-col space-y-2';
                         
@@ -444,7 +458,6 @@
                                 ${snippet}
                             </p>
                         `;
-                        
                         resultsDiv.appendChild(resultItem);
                     }
                 });
@@ -465,4 +478,3 @@
     </script>
 </body>
 </html>
-
