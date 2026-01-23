@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnviroSci 20 Jeopardy: Random Mix</title>
+    <style>
+        :root {
+            --jeopardy-blue: #060CE9;
+            --jeopardy-dark: #010a78;
+            --jeopardy-gold: #D69F4C;
+            --jeopardy-yellow: #FFCC00;
+            --correct-green: #28a745;
+            --wrong-red: #dc3545;
+            --text-shadow: 2px 2px 0px #000;
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SETUP SCREEN --- */
+        #setup-screen, #game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--jeopardy-blue), var(--jeopardy-dark));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: var(--jeopardy-gold);
+            text-shadow: 3px 3px 0 #000;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-family: 'Impact', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .btn {
+            background: var(--jeopardy-blue);
+            border: 3px solid var(--jeopardy-gold);
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            background: var(--jeopardy-gold);
+            color: var(--jeopardy-blue);
+            transform: scale(1.05);
+        }
+
+        .setup-group {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--jeopardy-yellow);
+        }
+
+        /* --- GAME BOARD --- */
+        #game-board-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            display: none; /* Hidden by default */
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #000;
+            border-bottom: 2px solid var(--jeopardy-gold);
+            height: 80px;
+        }
+
+        .score-box {
+            background: #000;
+            border: 2px solid var(--jeopardy-gold);
+            padding: 5px 15px;
+            text-align: center;
+            min-width: 140px;
+            transition: all 0.3s;
+        }
+        
+        .score-box.active-turn {
+            background: var(--jeopardy-blue);
+            box-shadow: 0 0 15px var(--jeopardy-gold);
+            border-color: white;
+        }
+
+        .score-value {
+            font-size: 1.8rem;
+            color: var(--jeopardy-yellow);
+            font-family: 'Impact', sans-serif;
+        }
+
+        .player-name {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: white;
+        }
+
+        .center-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #round-indicator {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            font-family: 'Impact', sans-serif;
+            text-transform: uppercase;
+        }
+
+        #quit-btn {
+            background: transparent;
+            border: 1px solid #666;
+            color: #999;
+            font-size: 0.8rem;
+            padding: 2px 10px;
+            cursor: pointer;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+        #quit-btn:hover {
+            border-color: red;
+            color: red;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: auto repeat(5, 1fr);
+            gap: 6px;
+            flex: 1;
+            margin-top: 10px;
+            height: 100%;
+        }
+
+        .category-header {
+            background: var(--jeopardy-blue);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            padding: 5px;
+            text-transform: uppercase;
+            font-size: 1.1vw; 
+            text-shadow: 1px 1px 0 #000;
+            border: 2px solid #000;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .card {
+            background: var(--jeopardy-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-family: 'Impact', sans-serif;
+            color: var(--jeopardy-gold);
+            cursor: pointer;
+            text-shadow: 2px 2px 0 #000;
+            transition: transform 0.2s, background 0.2s;
+            border: 2px solid #000;
+        }
+
+        .card:hover {
+            background: #3b42ff;
+            z-index: 10;
+            transform: scale(1.02);
+        }
+
+        .card.disabled {
+            background: #000044;
+            color: transparent;
+            pointer-events: none;
+            cursor: default;
+            border-color: #111;
+        }
+
+        /* --- CLUE MODAL --- */
+        #clue-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--jeopardy-blue);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        #clue-content {
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #player-toggle-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .player-toggle {
+            padding: 10px 20px;
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.5;
+            transition: all 0.3s;
+        }
+        
+        .player-toggle.active {
+            opacity: 1;
+            background: var(--jeopardy-gold);
+            color: #000;
+            border-color: var(--jeopardy-gold);
+            transform: scale(1.1);
+        }
+
+        #clue-text {
+            font-size: 2.2rem;
+            font-family: 'Segoe UI', serif;
+            color: white;
+            text-shadow: 2px 2px 4px #000;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        #options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .option-btn {
+            background: #000088;
+            border: 3px solid var(--jeopardy-gold);
+            color: white;
+            padding: 20px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover {
+            background: #0000aa;
+        }
+        
+        .option-btn .letter {
+            font-weight: bold;
+            color: var(--jeopardy-gold);
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .option-btn.correct {
+            background: var(--correct-green) !important;
+            border-color: #fff !important;
+        }
+
+        .option-btn.wrong {
+            background: var(--wrong-red) !important;
+            opacity: 0.6;
+        }
+
+        #feedback-area {
+            margin-top: 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        #feedback-msg {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #000;
+        }
+
+        #continue-btn {
+            background: white;
+            color: var(--jeopardy-blue);
+            border: none;
+            padding: 10px 30px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: none; /* Hidden until answer */
+            margin-left: 20px;
+            border-radius: 5px;
+        }
+        
+        /* Mobile adjustment */
+        @media (max-width: 800px) {
+            #options-container { grid-template-columns: 1fr; }
+            #clue-text { font-size: 1.5rem; }
+            .category-header { font-size: 0.7rem; }
+            .card { font-size: 1.5rem; }
+        }
+
+        .hidden { display: none !important; }
+
+    </style>
+</head>
+<body>
+
+    <!-- SETUP SCREEN -->
+    <div id="setup-screen">
+        <h1>Environmental Science 20<br>Review Challenge</h1>
+        
+        <div class="setup-group">
+            <span class="label">Number of Players</span>
+            <button class="btn" style="background:var(--jeopardy-gold); color:blue;" onclick="setPlayers(1)" id="btn-p1">1 Player</button>
+            <button class="btn" onclick="setPlayers(2)" id="btn-p2">2 Players</button>
+        </div>
+        
+        <div class="setup-group">
+             <span class="label">Game Length</span>
+             <button class="btn" onclick="startGame(1)">1 Round</button>
+             <button class="btn" onclick="startGame(2)">2 Rounds</button>
+             <button class="btn" onclick="startGame(3)">Full Game (3)</button>
+        </div>
+    </div>
+
+    <!-- GAME BOARD UI -->
+    <div id="game-board-container">
+        <header>
+            <div id="score-p1" class="score-box active-turn">
+                <div class="player-name">Player 1</div>
+                <div class="score-value" id="p1-score">0</div>
+            </div>
+            
+            <div class="center-header">
+                <div id="round-indicator">ROUND 1</div>
+                <button id="quit-btn" onclick="resetGame()">End Early</button>
+            </div>
+
+            <div id="score-p2" class="score-box" style="display:none; opacity: 0.5;">
+                <div class="player-name">Player 2</div>
+                <div class="score-value" id="p2-score">0</div>
+            </div>
+        </header>
+
+        <div id="board">
+            <!-- JS injects grid here -->
+        </div>
+    </div>
+
+    <!-- CLUE MODAL -->
+    <div id="clue-modal">
+        <div id="clue-content">
+            
+            <!-- Player Selector (Only for 2P mode) -->
+            <div id="player-toggle-container" style="display:none;">
+                <span style="color:white; align-self:center; margin-right:10px;">ANSWERING:</span>
+                <button class="player-toggle active" id="toggle-p1" onclick="setActivePlayer(1)">PLAYER 1</button>
+                <button class="player-toggle" id="toggle-p2" onclick="setActivePlayer(2)">PLAYER 2</button>
+            </div>
+
+            <div id="clue-text">Question goes here...</div>
+            
+            <div id="options-container">
+                <button class="option-btn" onclick="handleAnswer(0)"><span class="letter">A</span> <span class="opt-text">Option 1</span></button>
+                <button class="option-btn" onclick="handleAnswer(1)"><span class="letter">B</span> <span class="opt-text">Option 2</span></button>
+                <button class="option-btn" onclick="handleAnswer(2)"><span class="letter">C</span> <span class="opt-text">Option 3</span></button>
+                <button class="option-btn" onclick="handleAnswer(3)"><span class="letter">D</span> <span class="opt-text">Option 4</span></button>
+            </div>
+
+            <div id="feedback-area">
+                <div id="feedback-msg"></div>
+                <button id="continue-btn" onclick="closeModal()">CONTINUE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME OVER SCREEN -->
+    <div id="game-over-screen" class="hidden">
+        <h1>Review Complete!</h1>
+        <div style="display: flex; gap: 40px; margin-bottom: 30px;">
+            <div style="text-align: center;">
+                <h2>Player 1 Score</h2>
+                <div class="score-value" id="final-score-p1" style="font-size: 4rem;">0</div>
+            </div>
+            <div id="final-p2-container" style="text-align: center; display:none;">
+                <h2>Player 2 Score</h2>
+                <div class="score-value" id="final-score-p2" style="font-size: 4rem;">0</div>
+            </div>
+        </div>
+        <p style="color: white; font-size: 1.2rem;">Great job reviewing the material!</p>
+        <button class="btn" onclick="location.reload()">Play Again</button>
+    </div>
+
+    <script>
+        // --- EXPANDED DATA SOURCE (Question Pools) ---
+        // Each category has a large list of questions. The game picks 5 randomly.
+        
+        const questionPool = {
+            "Nature of Science": [
+                { q: "What is the primary goal of the systematic process known as 'Science'?", opts: ["To prove natural laws", "To understand the world through orderly observation", "To create technology", "To eliminate bias"], a: 1 },
+                { q: "Which reasoning moves from specific observations to a general conclusion?", opts: ["Deductive", "Reductive", "Inductive", "Objective"], a: 2 },
+                { q: "What is a 'counter-example' in the scientific method?", opts: ["Data supporting a hypothesis", "A math error", "Observation disproving a generalization", "A secondary experiment"], a: 2 },
+                { q: "Which worldview views nature primarily as a resource for human benefit?", opts: ["Deep Ecology", "Expansionist", "Biocentric", "Stewardship"], a: 1 },
+                { q: "Traditional Ecological Knowledge (TEK) is best described as:", opts: ["Static and unchanging", "Based only on books", "Adaptive and based on generations of observation", "Only for ex-situ conservation"], a: 2 },
+                { q: "Which of the following is NOT a basic assumption of science?", opts: ["Patterns exist in nature", "Science provides absolute proof that never changes", "Generalizations can be tested", "Science assumes cause and effect"], a: 1 },
+                { q: "Quantitative data refers to:", opts: ["Descriptions and observations", "Numerical measurements", "Personal opinions", "Historical records"], a: 1 },
+                { q: "Qualitative data refers to:", opts: ["Descriptions and characteristics", "Numerical measurements", "Graphs and charts", "Statistical analysis"], a: 0 },
+                { q: "The process of having other scientists check research before publication is:", opts: ["Censorship", "Peer Review", "Plagiarism", "Copyright"], a: 1 }
+            ],
+            "Populations (Unit 1)": [
+                { q: "In the Demographic Transition Model (DTM), Stage 2 is characterized by:", opts: ["High birth, High death", "High birth, Falling death", "Low birth, Low death", "Falling birth, Low death"], a: 1 },
+                { q: "A population pyramid with a very wide base indicates:", opts: ["Rapid Growth", "Negative Growth", "Slow Growth", "Zero Growth"], a: 0 },
+                { q: "The 'Demographic Trap' occurs when a country gets stuck in which stage?", opts: ["Stage 1", "Stage 2", "Stage 3", "Stage 4"], a: 1 },
+                { q: "Millennium Development Goal #2 (Universal Primary Education) helps reduce:", opts: ["Death Rate", "Immigration", "Total Fertility Rate (TFR)", "Life Expectancy"], a: 2 },
+                { q: "What does 'Carrying Capacity' refer to?", opts: ["Max weight of a vehicle", "Max population an environment can sustain", "The growth rate of a species", "Total number of species"], a: 1 },
+                { q: "A 'Dependency Ratio' compares which two groups?", opts: ["Rich vs Poor", "Working age vs Non-working age (Young/Old)", "Men vs Women", "Urban vs Rural"], a: 1 },
+                { q: "Which factor most directly lowers fertility rates in developing nations?", opts: ["Building more roads", "Education and empowerment of women", "Increased farming", "Higher death rates"], a: 1 },
+                { q: "The 'Rule of 70' is used to calculate:", opts: ["Life expectancy", "Doubling time of a population", "Carrying capacity", "Pollution levels"], a: 1 },
+                { q: "Emigration refers to:", opts: ["Moving into a country", "Moving out of a country", "Birth rates", "Internal migration"], a: 1 }
+            ],
+            "Water Cycle (Unit 2)": [
+                { q: "The release of water vapor from plants through their leaves is called:", opts: ["Evaporation", "Condensation", "Transpiration", "Infiltration"], a: 2 },
+                { q: "Water soaking into the ground to become groundwater is known as:", opts: ["Runoff", "Precipitation", "Infiltration", "Sublimation"], a: 2 },
+                { q: "At what temperature is water most dense?", opts: ["0°C", "4°C", "100°C", "-4°C"], a: 1 },
+                { q: "The area of land where all water drains to a common body of water is a:", opts: ["Watershed", "Aquifer", "Water table", "Wetland"], a: 0 },
+                { q: "Which unique property of water allows it to dissolve many substances?", opts: ["High Albedo", "Polarity", "Low Viscosity", "Transparency"], a: 1 },
+                { q: "Water molecules sticking to OTHER surfaces is called:", opts: ["Cohesion", "Adhesion", "Surface Tension", "Viscosity"], a: 1 },
+                { q: "Water molecules sticking to EACH OTHER is called:", opts: ["Cohesion", "Adhesion", "Gravity", "Magnetic attraction"], a: 0 },
+                { q: "What percentage of Earth's water is fresh water?", opts: ["97%", "50%", "3%", "10%"], a: 2 },
+                { q: "The change of state from gas directly to solid is:", opts: ["Sublimation", "Deposition", "Evaporation", "Melting"], a: 1 }
+            ],
+            "Lakes & Rivers": [
+                { q: "Standing water ecosystems like lakes and ponds are called:", opts: ["Lotic", "Lentic", "Riparian", "Estuarine"], a: 1 },
+                { q: "The middle layer of a stratified lake with a rapid temperature drop is:", opts: ["Epilimnion", "Hypolimnion", "Thermocline", "Benthic"], a: 2 },
+                { q: "An oligotrophic lake is characterized by:", opts: ["High nutrients, murky water", "Low nutrients, clear water", "High salt content", "Warm temperatures"], a: 1 },
+                { q: "The shallow area near the shore where sunlight reaches the bottom:", opts: ["Limnetic Zone", "Profundal Zone", "Littoral Zone", "Benthic Zone"], a: 2 },
+                { q: "River zones: Which is typically cold, clear, and fast-flowing?", opts: ["Source Zone", "Transitional Zone", "Floodplain Zone", "Estuary"], a: 0 },
+                { q: "A 'Eutrophic' lake is typically:", opts: ["Deep and cold", "Clear and Blue", "Nutrient-rich and green/algae-filled", "Saltwater"], a: 2 },
+                { q: "Lake turnover (mixing) typically happens in:", opts: ["Summer & Winter", "Spring & Fall", "Only Summer", "Never"], a: 1 },
+                { q: "Flowing water ecosystems like rivers and streams are called:", opts: ["Lotic", "Lentic", "Marine", "Static"], a: 0 },
+                { q: "The bottom sediment zone of a lake is called the:", opts: ["Pelagic Zone", "Benthic Zone", "Littoral Zone", "Photic Zone"], a: 1 }
+            ],
+            "Water Quality": [
+                { q: "Cultural eutrophication is primarily caused by excess:", opts: ["Lead & Mercury", "Nitrogen & Phosphorus", "Oxygen & Hydrogen", "Salt & Silt"], a: 1 },
+                { q: "High turbidity in a water body means:", opts: ["It is very clear", "It is very salty", "It is cloudy with suspended particles", "It is very cold"], a: 2 },
+                { q: "Which bacteria indicates fecal contamination in water?", opts: ["Cyanobacteria", "E. coli / Coliforms", "Nitrobacter", "Rhizobium"], a: 1 },
+                { q: "In a BNR plant, the 'anoxic zone' removes which nutrient?", opts: ["Phosphorus", "Nitrogen (Nitrate)", "Carbon", "Sulfur"], a: 1 },
+                { q: "Groundwater aquifers that are confined by impermeable rock are under:", opts: ["Vacuum", "Pressure", "Evaporation", "Heat"], a: 1 },
+                { q: "Point Source pollution comes from:", opts: ["A single identifiable source (pipe)", "Runoff from many farms", "Rain", "Wind"], a: 0 },
+                { q: "Biological Oxygen Demand (BOD) measures:", opts: ["How much oxygen fish need", "Amount of oxygen bacteria use to break down waste", "Number of plants", "Water clarity"], a: 1 },
+                { q: "Leachate is a liquid associated with:", opts: ["Water treatment", "Landfills contaminating groundwater", "Rain clouds", "Glaciers"], a: 1 },
+                { q: "Riparian zones protect water quality by:", opts: ["Increasing runoff", "Filtering runoff and stabilizing banks", "Heating the water", "Adding salt"], a: 1 }
+            ],
+            "Biomes & Soil (Unit 3)": [
+                { q: "Which two factors primarily determine a biome?", opts: ["Soil & Wind", "Temperature & Precipitation", "Animals & Plants", "Latitude & Longitude"], a: 1 },
+                { q: "Which soil horizon is the 'Zone of Accumulation'?", opts: ["A-Horizon", "B-Horizon", "C-Horizon", "O-Horizon"], a: 1 },
+                { q: "The dark, stable organic matter in soil is called:", opts: ["Clay", "Silt", "Humus", "Bedrock"], a: 2 },
+                { q: "Saskatchewan's northern biome with vast peatlands is:", opts: ["Grasslands", "Aspen Parkland", "Boreal Forest", "Tundra"], a: 2 },
+                { q: "The ideal percentage of pore space (air/water) in soil is:", opts: ["10%", "25%", "50%", "90%"], a: 2 },
+                { q: "Which biome is characterized by permafrost?", opts: ["Tundra", "Desert", "Rainforest", "Grassland"], a: 0 },
+                { q: "Which soil particle is the smallest?", opts: ["Sand", "Silt", "Clay", "Gravel"], a: 2 },
+                { q: "Loam soil is best for farming because:", opts: ["It is 100% clay", "It is a balance of sand, silt, and clay", "It has no organic matter", "It is solid rock"], a: 1 },
+                { q: "The O-Horizon consists mainly of:", opts: ["Solid Rock", "Leaf litter and organic material", "Clay and minerals", "Iron deposits"], a: 1 }
+            ],
+            "Agriculture": [
+                { q: "Planting different crops in the same field to mimic diversity is:", opts: ["Monoculture", "Intercropping", "Tilling", "Grazing"], a: 1 },
+                { q: "Rows of trees planted to prevent wind erosion are called:", opts: ["Shelterbelts", "Buffer zones", "Riparian areas", "Canopies"], a: 0 },
+                { q: "No-till farming helps primarily by:", opts: ["Killing weeds", "Preserving soil structure & moisture", "Heating the soil", "Increasing runoff"], a: 1 },
+                { q: "Integrated Pest Management (IPM) aims to:", opts: ["Kill all insects", "Use only chemicals", "Minimize pest damage with minimal risk", "Ignore pests"], a: 2 },
+                { q: "Which nutrient is 'fixed' by bacteria in legume roots?", opts: ["Potassium", "Phosphorus", "Nitrogen", "Carbon"], a: 2 },
+                { q: "Monoculture farming is risky because:", opts: ["It is too efficient", "It increases susceptibility to pests/diseases", "It uses no water", "It requires no machinery"], a: 1 },
+                { q: "Summerfallow (leaving land bare) is used to:", opts: ["Conserve moisture", "Feed cattle", "Grow trees", "Stop wind"], a: 0 },
+                { q: "Salinization of soil is caused by:", opts: ["Too much compost", "Water evaporating and leaving salts behind", "Earthworms", "Wind erosion"], a: 1 },
+                { q: "GMO stands for:", opts: ["General Modification Option", "Genetically Modified Organism", "Green Market Organization", "Global Monitoring Office"], a: 1 }
+            ],
+            "Atmosphere (Unit 4)": [
+                { q: "The most abundant gas in Earth's atmosphere is:", opts: ["Oxygen", "Nitrogen", "Argon", "CO2"], a: 1 },
+                { q: "Nearly all weather occurs in this atmospheric layer:", opts: ["Stratosphere", "Mesosphere", "Troposphere", "Thermosphere"], a: 2 },
+                { q: "The ozone layer protects Earth from:", opts: ["Infrared Radiation", "Gamma Rays", "UV Radiation", "Visible Light"], a: 2 },
+                { q: "Radon gas in homes is a leading cause of:", opts: ["Asthma", "Lung Cancer", "Skin Cancer", "Allergies"], a: 1 },
+                { q: "A pollutant emitted directly from a source is called:", opts: ["Primary Pollutant", "Secondary Pollutant", "Point Source", "Fugitive"], a: 0 },
+                { q: "The layer above the Troposphere is the:", opts: ["Mesosphere", "Stratosphere", "Thermosphere", "Exosphere"], a: 1 },
+                { q: "Acid rain is primarily caused by:", opts: ["CO2", "Sulfur Dioxide and Nitrogen Oxides", "Methane", "Ozone"], a: 1 },
+                { q: "Particulate Matter (PM2.5) affects:", opts: ["Digestion", "Respiratory/Lung health", "Bone density", "Hearing"], a: 1 },
+                { q: "A thermal inversion occurs when:", opts: ["Warm air traps cold air (and pollution) near the ground", "Cold air sits on top of warm air", "Wind blows very fast", "It rains sideways"], a: 0 }
+            ],
+            "Climate Change": [
+                { q: "The 'Albedo Effect' refers to:", opts: ["Heat retention", "Reflectivity of a surface", "Greenhouse gas levels", "Ocean acidity"], a: 1 },
+                { q: "Which is a major Greenhouse Gas?", opts: ["Nitrogen", "Oxygen", "Methane", "Argon"], a: 2 },
+                { q: "Dendrochronology studies what to infer climate history?", opts: ["Ice cores", "Tree rings", "Pollen", "Coral reefs"], a: 1 },
+                { q: "Carbon Capture and Storage (CCS) involves:", opts: ["Planting trees", "Injecting CO2 underground", "Filtering car exhaust", "Banishing fossil fuels"], a: 1 },
+                { q: "The 'Anthropogenic' greenhouse effect is caused by:", opts: ["Volcanoes", "Solar flares", "Human activity", "Ocean currents"], a: 2 },
+                { q: "Which surface has the highest Albedo?", opts: ["Asphalt", "Forest", "Fresh Snow", "Ocean"], a: 2 },
+                { q: "Positive feedback loops in climate change:", opts: ["Slow down warming", "Accelerate warming", "Have no effect", "Cool the earth"], a: 1 },
+                { q: "Melting permafrost releases which potent gas?", opts: ["Oxygen", "Methane", "Nitrogen", "Helium"], a: 1 },
+                { q: "Ocean acidification is caused by:", opts: ["Absorption of CO2", "Oil spills", "Plastic waste", "Overfishing"], a: 0 }
+            ],
+            "Waste/Energy": [
+                { q: "A 'Linear Economy' follows which path?", opts: ["Take-Make-Waste", "Reduce-Reuse-Recycle", "Borrow-Use-Return", "Grow-Harvest-Compost"], a: 0 },
+                { q: "Which energy source is non-renewable?", opts: ["Solar", "Wind", "Nuclear (Uranium)", "Geothermal"], a: 2 },
+                { q: "Leachate is a liquid problem associated with:", opts: ["Solar panels", "Landfills", "Wind turbines", "Hydro dams"], a: 1 },
+                { q: "Which gas is often harvested from landfills for energy?", opts: ["Oxygen", "Methane", "Nitrogen", "Chlorine"], a: 1 },
+                { q: "The 3 Rs hierarchy (best to worst) is:", opts: ["Recycle, Reuse, Reduce", "Reduce, Reuse, Recycle", "Reuse, Recycle, Reduce", "Burn, Bury, Ignore"], a: 1 },
+                { q: "Composting is an example of:", opts: ["Linear economy", "Biological recycling / Nutrient cycling", "Toxic waste", "Energy creation"], a: 1 },
+                { q: "Geothermal energy uses heat from:", opts: ["The Sun", "The Earth's core/crust", "Burning garbage", "Wind friction"], a: 1 },
+                { q: "Photovoltaic cells are used in:", opts: ["Wind Turbines", "Solar Panels", "Nuclear Reactors", "Coal Plants"], a: 1 },
+                { q: "Planned Obsolescence means:", opts: ["Products designed to last forever", "Products designed to break/fail quickly", "Recycling plans", "Government regulations"], a: 1 }
+            ],
+            "Unit 1 Synthesis": [
+                { q: "Why is 'Sustainable Development' a core Second Wave concept?", opts: ["It ignores economics", "It balances economy with ecology", "It focuses only on parks", "It was invented by logging companies"], a: 1 },
+                { q: "If a scientist finds a counter-example to a theory, they must:", opts: ["Ignore it", "Modify the theory", "Quit science", "Hide the data"], a: 1 },
+                { q: "Stage 4 of DTM (Post-Industrial) typically has:", opts: ["Zero/Negative Growth", "Rapid Growth", "High Death Rates", "Low Life Expectancy"], a: 0 },
+                { q: "Which justification for conservation argues species have a 'right to exist'?", opts: ["Utilitarian", "Aesthetic", "Moral", "Ecological"], a: 2 },
+                { q: "Rachel Carson's 'Silent Spring' focused on:", opts: ["Deforestation", "DDT/Pesticides", "Ozone Layer", "Nuclear War"], a: 1 },
+                { q: "The 'Tragedy of the Commons' explains:", opts: ["Why shared resources are often overused/destroyed", "Why kings are rich", "Why parks are empty", "Why private property fails"], a: 0 },
+                { q: "Paradigm Shift refers to:", opts: ["A small change in data", "A fundamental change in approach/underlying assumptions", "Moving a graph", "Shift work schedules"], a: 1 }
+            ],
+            "Unit 2 Synthesis": [
+                { q: "Internal Phosphorus Loading occurs when:", opts: ["Fish die", "Sediments release P in anoxic conditions", "Rain washes fertilizer in", "Algae eat rocks"], a: 1 },
+                { q: "Why is Nitrogen Fixation energy-intensive for cyanobacteria?", opts: ["N2 has a strong triple bond", "It requires sunlight", "It only happens at night", "It uses oxygen"], a: 0 },
+                { q: "Glacial flour in mountain rivers increases:", opts: ["Temperature", "Turbidity", "Salinity", "Oxygen"], a: 1 },
+                { q: "To protect Lake Winnipeg, we must manage:", opts: ["Only the shoreline", "The entire watershed", "Only city sewage", "Only fishing boats"], a: 1 },
+                { q: "Winterkill in shallow lakes is caused by:", opts: ["Cold water", "Ice blocking light & O2 depletion", "Too many fish", "Acid rain"], a: 1 },
+                { q: "The 'Unseen Architect' concept refers to:", opts: ["God", "Water's chemical properties determining ecosystem structure", "Beavers building dams", "Human engineers"], a: 1 }
+            ],
+            "Unit 3 Synthesis": [
+                { q: "Palliser's Triangle is risky for farming because:", opts: ["It is too cold", "It is semi-arid/drought-prone", "It has too many trees", "It is too hilly"], a: 1 },
+                { q: "Salinization of soil is often caused by:", opts: ["Over-irrigation & evaporation", "Too much fertilizer", "Acid rain", "Compaction"], a: 0 },
+                { q: "Chernozemic soil (Grasslands) is distinguished by:", opts: ["Thick, dark A-horizon", "Sandy texture", "Acidic pH", "Frozen permafrost"], a: 0 },
+                { q: "Edge Effects in habitat fragmentation typically:", opts: ["Increase biodiversity", "Reduce core habitat quality", "Help interior species", "Have no impact"], a: 1 },
+                { q: "Bioaccumulation vs Biomagnification: Biomagnification happens:", opts: ["In one organism over time", "Across the food chain", "In the soil", "In the water"], a: 1 },
+                { q: "Soil compaction hurts plants by:", opts: ["Reducing pore space for air and water", "Making soil too hot", "Killing worms", "Adding too much nitrogen"], a: 0 }
+            ],
+            "Unit 4 Synthesis": [
+                { q: "Ground-level Ozone (Smog) is which type of pollutant?", opts: ["Primary", "Secondary", "Tertiary", "Radioactive"], a: 1 },
+                { q: "The 'Stack Effect' in winter causes homes to:", opts: ["Repel radon", "Draw soil gases in", "Overheat", "Collapse"], a: 1 },
+                { q: "Thermal Inversions trap pollution because:", opts: ["Warm air sits over cold air", "Cold air sits over warm air", "Wind blows hard", "It rains"], a: 0 },
+                { q: "AQHI measures health risk based on:", opts: ["Temperature", "Three specific pollutants (O3, NO2, PM2.5)", "Just CO2", "Pollen count"], a: 1 },
+                { q: "Why is the Anthropogenic Greenhouse effect different from the Natural one?", opts: ["Different gases", "Rate of change is too fast for adaptation", "It makes the earth colder", "It only affects cities"], a: 1 }
+            ],
+            "Deep Thoughts": [
+                { q: "A Circular Economy aims to:", opts: ["Burn all waste", "Design out waste/keep materials in use", "Export waste", "Recycle only glass"], a: 1 },
+                { q: "In-situ conservation means protecting species:", opts: ["In zoos", "In their natural habitat", "In seed banks", "In labs"], a: 1 },
+                { q: "The tragedy of the commons refers to:", opts: ["Overuse of shared resources", "Private property rights", "Government regulations", "Forest fires"], a: 0 },
+                { q: "Eutrophication leads to fish kills primarily due to:", opts: ["Toxins", "Oxygen depletion at night/decomposition", "High pH", "Too much food"], a: 1 },
+                { q: "Sustainable Yield is:", opts: ["Maximum harvest without depleting future stock", "Maximum possible harvest", "Zero harvest", "Harvesting only males"], a: 0 },
+                { q: "Ecological Footprint measures:", opts: ["How much land/water is needed to support a lifestyle", "Shoe size", "Carbon emissions only", "Forest area"], a: 0 }
+            ]
+        };
+
+        // --- GAME STATE ---
+        let players = 1;
+        let activePlayer = 1; 
+        let currentRoundIndex = 0;
+        let maxRounds = 3;
+        let scores = { p1: 0, p2: 0 };
+        let activeClue = null;
+        let cardsRemaining = 0;
+        let currentGameConfig = []; // Stores the 3 rounds of 5 categories
+
+        // --- HELPER FUNCTIONS ---
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function generateGameConfig() {
+            // Get all category names (15 total)
+            const allCategories = Object.keys(questionPool);
+            
+            // Shuffle them completely so rounds are mixed up
+            shuffleArray(allCategories);
+            
+            // Split into 3 rounds of 5
+            currentGameConfig = [];
+            currentGameConfig.push(allCategories.slice(0, 5));
+            currentGameConfig.push(allCategories.slice(5, 10));
+            currentGameConfig.push(allCategories.slice(10, 15));
+        }
+
+        function getQuestionsForRound(roundIdx) {
+            // Use the pre-generated config for this round
+            // (Clone it to be safe, though shuffling within round is fine)
+            const categories = [...currentGameConfig[roundIdx]];
+            
+            // Optional: Shuffle columns within the round too, just for variety
+            shuffleArray(categories);
+
+            const roundData = [];
+
+            categories.forEach(catName => {
+                const pool = questionPool[catName];
+                // Clone and shuffle questions
+                const shuffled = shuffleArray([...pool]);
+                // Take top 5
+                const selected = shuffled.slice(0, 5);
+                
+                // Assign values based on position (not difficulty)
+                const finalQuestions = selected.map((q, idx) => ({
+                    ...q,
+                    val: (idx + 1) * 200
+                }));
+
+                roundData.push({
+                    category: catName,
+                    questions: finalQuestions
+                });
+            });
+
+            return roundData;
+        }
+
+        // --- SETUP FUNCTIONS ---
+        function setPlayers(n) {
+            players = n;
+            document.getElementById('btn-p1').style.background = (n === 1) ? 'var(--jeopardy-gold)' : 'var(--jeopardy-blue)';
+            document.getElementById('btn-p1').style.color = (n === 1) ? 'blue' : 'white';
+            
+            document.getElementById('btn-p2').style.background = (n === 2) ? 'var(--jeopardy-gold)' : 'var(--jeopardy-blue)';
+            document.getElementById('btn-p2').style.color = (n === 2) ? 'blue' : 'white';
+        }
+
+        function startGame(roundsCount) {
+            scores = { p1: 0, p2: 0 };
+            currentRoundIndex = 0;
+            maxRounds = roundsCount;
+            
+            // Generate the random 3-round structure for this specific game
+            generateGameConfig();
+            
+            // UI Updates
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('game-board-container').style.display = 'flex';
+            
+            document.getElementById('score-p2').style.display = 'none';
+
+            if (players === 2) {
+                document.getElementById('score-p2').style.display = 'block';
+                document.getElementById('score-p2').style.opacity = '0.5';
+                document.getElementById('player-toggle-container').style.display = 'flex';
+                activePlayer = 1;
+                updateTurnUI();
+            } else {
+                 document.getElementById('player-toggle-container').style.display = 'none';
+            }
+
+            document.getElementById('p1-score').textContent = "0";
+            document.getElementById('p2-score').textContent = "0";
+
+            renderBoard();
+        }
+
+        function resetGame() {
+            if(!confirm("End game and return to menu?")) return;
+            document.getElementById('game-board-container').style.display = 'none';
+            document.getElementById('game-over-screen').classList.add('hidden');
+            document.getElementById('setup-screen').style.display = 'flex';
+        }
+
+        function renderBoard() {
+            const board = document.getElementById('board');
+            board.innerHTML = ''; 
+
+            // GENERATE NEW QUESTIONS FOR THIS ROUND
+            const roundData = getQuestionsForRound(currentRoundIndex);
+            
+            document.getElementById('round-indicator').textContent = `ROUND ${currentRoundIndex + 1}`;
+            cardsRemaining = 0;
+
+            // Render Headers
+            roundData.forEach(cat => {
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.textContent = cat.category;
+                board.appendChild(header);
+            });
+
+            // Render Questions Grid
+            for (let i = 0; i < 5; i++) {
+                roundData.forEach((cat, colIndex) => {
+                    const q = cat.questions[i];
+                    cardsRemaining++;
+                    
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.textContent = `$${q.val}`;
+                    
+                    card.onclick = () => openClue(card, q);
+                    board.appendChild(card);
+                });
+            }
+        }
+
+        function updateTurnUI() {
+            if (players < 2) return;
+            if (activePlayer === 1) {
+                document.getElementById('score-p1').classList.add('active-turn');
+                document.getElementById('score-p1').style.opacity = '1';
+                document.getElementById('score-p2').classList.remove('active-turn');
+                document.getElementById('score-p2').style.opacity = '0.5';
+                
+                document.getElementById('toggle-p1').classList.add('active');
+                document.getElementById('toggle-p2').classList.remove('active');
+            } else {
+                document.getElementById('score-p2').classList.add('active-turn');
+                document.getElementById('score-p2').style.opacity = '1';
+                document.getElementById('score-p1').classList.remove('active-turn');
+                document.getElementById('score-p1').style.opacity = '0.5';
+                
+                document.getElementById('toggle-p2').classList.add('active');
+                document.getElementById('toggle-p1').classList.remove('active');
+            }
+        }
+
+        function setActivePlayer(p) {
+            activePlayer = p;
+            updateTurnUI();
+        }
+
+        // --- GAMEPLAY FUNCTIONS ---
+        function openClue(cardElement, qData) {
+            if (cardElement.classList.contains('disabled')) return;
+
+            activeClue = { ...qData, element: cardElement };
+            
+            document.getElementById('clue-text').textContent = qData.q;
+            
+            const opts = document.querySelectorAll('.option-btn');
+            opts.forEach((btn, idx) => {
+                if(qData.opts[idx]) {
+                    btn.style.display = 'flex';
+                    btn.querySelector('.opt-text').textContent = qData.opts[idx];
+                } else {
+                    btn.style.display = 'none'; // Handle <4 options if necessary
+                }
+                btn.classList.remove('correct', 'wrong');
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            });
+
+            document.getElementById('feedback-msg').textContent = "";
+            document.getElementById('continue-btn').style.display = 'none';
+            document.getElementById('clue-modal').style.display = 'flex';
+        }
+
+        function handleAnswer(selectedIndex) {
+            const correctIndex = activeClue.a;
+            const buttons = document.querySelectorAll('.option-btn');
+            
+            buttons.forEach(btn => btn.disabled = true);
+
+            const isCorrect = (selectedIndex === correctIndex);
+            
+            if (isCorrect) {
+                buttons[selectedIndex].classList.add('correct');
+                document.getElementById('feedback-msg').textContent = "CORRECT!";
+                document.getElementById('feedback-msg').style.color = "var(--correct-green)";
+                scores[`p${activePlayer}`] += activeClue.val;
+            } else {
+                buttons[selectedIndex].classList.add('wrong');
+                buttons[correctIndex].classList.add('correct'); 
+                document.getElementById('feedback-msg').textContent = "WRONG!";
+                document.getElementById('feedback-msg').style.color = "var(--wrong-red)";
+                scores[`p${activePlayer}`] -= activeClue.val;
+            }
+
+            document.getElementById(`p${activePlayer}-score`).textContent = scores[`p${activePlayer}`];
+            document.getElementById('continue-btn').style.display = 'block';
+            
+            activeClue.element.classList.add('disabled');
+            activeClue.element.textContent = "";
+            cardsRemaining--;
+        }
+
+        function closeModal() {
+            document.getElementById('clue-modal').style.display = 'none';
+            
+            if (players === 2) {
+                setActivePlayer(activePlayer === 1 ? 2 : 1);
+            }
+
+            if (cardsRemaining === 0) {
+                setTimeout(endRound, 500);
+            }
+        }
+
+        function endRound() {
+            if (currentRoundIndex < maxRounds - 1 && currentRoundIndex < currentGameConfig.length - 1) {
+                currentRoundIndex++;
+                alert(`Round ${currentRoundIndex} Complete! Starting Round ${currentRoundIndex + 1}...`);
+                renderBoard();
+            } else {
+                endGame();
+            }
+        }
+
+        function endGame() {
+            document.getElementById('game-board-container').style.display = 'none';
+            document.getElementById('game-over-screen').classList.remove('hidden');
+            document.getElementById('game-over-screen').style.display = 'flex';
+            
+            document.getElementById('final-score-p1').textContent = scores.p1;
+            
+            if (players === 2) {
+                document.getElementById('final-p2-container').style.display = 'block';
+                document.getElementById('final-score-p2').textContent = scores.p2;
+            }
+        }
+    </script>
+</body>
+</html>
