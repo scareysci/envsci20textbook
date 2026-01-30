@@ -8,13 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .category-header {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(4px);
-        }
         .modal {
             display: none;
             position: fixed;
@@ -32,6 +25,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
         html { scroll-behavior: smooth; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="bg-gray-50 pb-24">
@@ -39,23 +33,23 @@
     <!-- Header -->
     <header class="bg-blue-600 text-white p-6 shadow-lg text-center">
         <h1 class="text-3xl font-extrabold italic tracking-wider uppercase">The 21-44 Store</h1>
-        <p class="text-sm mt-1 opacity-90 font-medium">"A FAMILY BUSINESS WITH FAMILY VALUES"</p>
-        <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-bold">
+        <p class="text-sm mt-1 opacity-90 font-medium tracking-wide">"A FAMILY BUSINESS WITH FAMILY VALUES"</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-bold uppercase">
             <span><i class="fas fa-map-marker-alt"></i> EATONIA, SK</span>
-            <span><i class="fas fa-clock"></i> OPEN 7 DAYS A WEEK | 6am - 11pm</span>
+            <span><i class="fas fa-clock"></i> OPEN 7 DAYS | 6am - 11pm</span>
             <a href="tel:3069672241" class="bg-white text-blue-600 px-3 py-1 rounded-full"><i class="fas fa-phone"></i> 306-967-2241</a>
         </div>
     </header>
 
     <!-- Navigation -->
     <nav class="sticky top-0 bg-white border-b shadow-sm z-30 flex overflow-x-auto py-3 px-4 gap-3 custom-scrollbar no-scrollbar">
-        <a href="#pizzas" class="flex-none bg-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Pizzas</a>
-        <a href="#burgers" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Burgers</a>
-        <a href="#apps" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Appetizers</a>
-        <a href="#pasta" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Pasta/Wings</a>
-        <a href="#chicken" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Chicken/Meals</a>
-        <a href="#subs" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Subs/DIY</a>
-        <a href="#treats" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Treats</a>
+        <a href="#pizzas" class="nav-link flex-none bg-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Pizzas</a>
+        <a href="#burgers" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Burgers</a>
+        <a href="#apps" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Appetizers</a>
+        <a href="#pasta" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Pasta/Wings</a>
+        <a href="#chicken" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Chicken/Meals</a>
+        <a href="#subs" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Subs/DIY</a>
+        <a href="#treats" class="nav-link flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase transition-colors">Treats</a>
     </nav>
 
     <!-- Main Content -->
@@ -69,7 +63,7 @@
     <footer class="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-2xl z-40">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div>
-                <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Order Total</p>
+                <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Estimated Total</p>
                 <p id="total-price" class="text-2xl font-black text-blue-600">$0.00</p>
             </div>
             <button onclick="showSummary()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-3 shadow-lg active:scale-95">
@@ -85,7 +79,7 @@
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div class="p-6 border-b flex justify-between items-center bg-blue-50">
                 <div>
-                    <h2 class="text-xl font-black text-blue-900">YOUR ORDER</h2>
+                    <h2 class="text-xl font-black text-blue-900 uppercase">Your Order</h2>
                     <p class="text-xs text-blue-600 font-bold uppercase tracking-tight">The 21-44 Store, Eatonia</p>
                 </div>
                 <button onclick="hideSummary()" class="text-gray-400 hover:text-black text-3xl">&times;</button>
@@ -95,14 +89,14 @@
             </div>
             <div class="p-6 bg-gray-50 border-t space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="font-black text-gray-500 uppercase text-xs tracking-widest">Grand Total</span>
+                    <span class="font-black text-gray-500 uppercase text-xs tracking-widest">Total Cost</span>
                     <span id="modal-total" class="text-3xl font-black text-blue-600">$0.00</span>
                 </div>
                 <div class="flex flex-col gap-2">
                     <a id="call-btn" href="tel:3069672241" class="bg-green-600 hover:bg-green-700 text-white text-center py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-md">
-                        <i class="fas fa-phone-alt"></i> CALL TO ORDER
+                        <i class="fas fa-phone-alt"></i> CALL 306-967-2241
                     </a>
-                    <button onclick="clearOrder()" class="text-gray-400 text-xs font-bold uppercase hover:text-red-500 tracking-widest">Empty Cart</button>
+                    <button onclick="clearOrder()" class="text-gray-400 text-xs font-bold uppercase hover:text-red-500 tracking-widest">Clear Order</button>
                 </div>
             </div>
         </div>
@@ -267,32 +261,68 @@
 
         function renderMenu() {
             const container = document.getElementById('menu-container');
+            container.innerHTML = ''; 
+
             menuData.forEach(section => {
-                const sectionHtml = `
-                    <div id="${section.id}" class="pt-8">
-                        <h2 class="text-xl font-black text-blue-900 border-b-4 border-blue-600 mb-6 pb-2 inline-block uppercase tracking-wider">${section.title}</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            ${section.items.map(item => `
-                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-lg transition-all">
-                                    <div class="mb-4">
-                                        <h3 class="font-black text-gray-800 uppercase text-sm mb-1">${item.name}</h3>
-                                        ${item.desc ? `<p class="text-[10px] text-gray-400 font-bold leading-tight uppercase">${item.desc}</p>` : ''}
-                                    </div>
-                                    <div class="flex flex-wrap gap-2">
-                                        ${Object.keys(item.prices).map(size => `
-                                            <button onclick="addItem('${item.name}', '${size}', ${item.prices[size]})" 
-                                                    class="flex-1 bg-gray-50 hover:bg-blue-600 hover:text-white text-blue-700 px-3 py-2 rounded-xl text-[11px] font-black transition-all border border-gray-100 flex flex-col items-center">
-                                                <span class="opacity-50 uppercase">${size}</span>
-                                                <span>$${item.prices[size].toFixed(2)}</span>
-                                            </button>
-                                        `).join('')}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += sectionHtml;
+                const sectionDiv = document.createElement('div');
+                sectionDiv.id = section.id;
+                sectionDiv.className = 'pt-8';
+                
+                const title = document.createElement('h2');
+                title.className = 'text-xl font-black text-blue-900 border-b-4 border-blue-600 mb-6 pb-2 inline-block uppercase tracking-wider';
+                title.textContent = section.title;
+                sectionDiv.appendChild(title);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4';
+
+                section.items.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-lg transition-all';
+                    
+                    const top = document.createElement('div');
+                    top.className = 'mb-4';
+                    
+                    const itemName = document.createElement('h3');
+                    itemName.className = 'font-black text-gray-800 uppercase text-sm mb-1';
+                    itemName.textContent = item.name;
+                    top.appendChild(itemName);
+
+                    if(item.desc) {
+                        const desc = document.createElement('p');
+                        desc.className = 'text-[10px] text-gray-400 font-bold leading-tight uppercase';
+                        desc.textContent = item.desc;
+                        top.appendChild(desc);
+                    }
+                    card.appendChild(top);
+
+                    const btnGroup = document.createElement('div');
+                    btnGroup.className = 'flex flex-wrap gap-2';
+
+                    Object.keys(item.prices).forEach(size => {
+                        const btn = document.createElement('button');
+                        btn.className = 'flex-1 bg-gray-50 hover:bg-blue-600 hover:text-white text-blue-700 px-3 py-2 rounded-xl text-[11px] font-black transition-all border border-gray-100 flex flex-col items-center';
+                        
+                        const sizeSpan = document.createElement('span');
+                        sizeSpan.className = 'opacity-50 uppercase';
+                        sizeSpan.textContent = size;
+                        
+                        const priceSpan = document.createElement('span');
+                        priceSpan.textContent = `$${item.prices[size].toFixed(2)}`;
+                        
+                        btn.appendChild(sizeSpan);
+                        btn.appendChild(priceSpan);
+                        
+                        btn.addEventListener('click', () => addItem(item.name, size, item.prices[size]));
+                        btnGroup.appendChild(btn);
+                    });
+
+                    card.appendChild(btnGroup);
+                    grid.appendChild(card);
+                });
+
+                sectionDiv.appendChild(grid);
+                container.appendChild(sectionDiv);
             });
         }
 
@@ -311,27 +341,32 @@
             const list = document.getElementById('order-list');
             const total = order.reduce((sum, item) => sum + item.price, 0);
             
+            list.innerHTML = '';
             if (order.length === 0) {
                 list.innerHTML = `
                     <div class="flex flex-col items-center justify-center py-20 text-gray-300">
                         <i class="fas fa-shopping-basket text-6xl mb-4 opacity-20"></i>
-                        <p class="font-black uppercase tracking-widest text-sm">Cart is empty</p>
+                        <p class="font-black uppercase tracking-widest text-sm">Your order is empty</p>
                     </div>`;
             } else {
-                list.innerHTML = order.map((item, idx) => `
-                    <div class="flex justify-between items-center mb-4 p-4 bg-gray-50 rounded-2xl">
+                order.forEach((item, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'flex justify-between items-center mb-4 p-4 bg-gray-50 rounded-2xl';
+                    row.innerHTML = `
                         <div>
                             <p class="font-black text-xs uppercase text-gray-800">${item.name}</p>
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${item.size}</p>
                         </div>
                         <div class="flex items-center gap-4">
                             <span class="font-black text-blue-600">$${item.price.toFixed(2)}</span>
-                            <button onclick="removeItem(${idx})" class="text-red-300 hover:text-red-600 p-2">
+                            <button class="remove-btn text-red-300 hover:text-red-600 p-2">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
-                    </div>
-                `).join('');
+                    `;
+                    row.querySelector('.remove-btn').addEventListener('click', () => removeItem(idx));
+                    list.appendChild(row);
+                });
             }
             
             document.getElementById('modal-total').innerText = `$${total.toFixed(2)}`;
@@ -349,7 +384,7 @@
         }
 
         function clearOrder() {
-            if (confirm("Empty your selection?")) {
+            if (confirm("Clear your order?")) {
                 order = [];
                 updateCart();
                 hideSummary();
@@ -359,7 +394,7 @@
         // Active Nav Tracking
         window.addEventListener('scroll', () => {
             const sections = menuData.map(s => document.getElementById(s.id));
-            const navLinks = document.querySelectorAll('nav a');
+            const navLinks = document.querySelectorAll('.nav-link');
             
             let current = "";
             sections.forEach(section => {
