@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The 21-44 Store - Online Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .category-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 pb-24">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-6 shadow-lg text-center">
+        <h1 class="text-3xl font-extrabold italic tracking-wider uppercase">The 21-44 Store</h1>
+        <p class="text-sm mt-1 opacity-90 font-medium">"A FAMILY BUSINESS WITH FAMILY VALUES"</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-bold">
+            <span><i class="fas fa-map-marker-alt"></i> EATONIA, SK</span>
+            <span><i class="fas fa-clock"></i> OPEN 7 DAYS A WEEK | 6am - 11pm</span>
+            <a href="tel:3069672241" class="bg-white text-blue-600 px-3 py-1 rounded-full"><i class="fas fa-phone"></i> 306-967-2241</a>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-white border-b shadow-sm z-30 flex overflow-x-auto py-3 px-4 gap-3 custom-scrollbar no-scrollbar">
+        <a href="#pizzas" class="flex-none bg-blue-600 text-white px-4 py-2 rounded-full text-xs font-bold uppercase">Pizzas</a>
+        <a href="#burgers" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Burgers</a>
+        <a href="#apps" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Appetizers</a>
+        <a href="#pasta" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Pasta/Wings</a>
+        <a href="#chicken" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Chicken/Meals</a>
+        <a href="#subs" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Subs/DIY</a>
+        <a href="#treats" class="flex-none bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-xs font-bold uppercase">Treats</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto p-4 space-y-12">
+        <div id="menu-container">
+            <!-- JavaScript will inject sections here -->
+        </div>
+    </main>
+
+    <!-- Floating Footer -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-white border-t p-4 shadow-2xl z-40">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div>
+                <p class="text-[10px] text-gray-500 uppercase font-black tracking-widest">Order Total</p>
+                <p id="total-price" class="text-2xl font-black text-blue-600">$0.00</p>
+            </div>
+            <button onclick="showSummary()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-3 shadow-lg active:scale-95">
+                <i class="fas fa-receipt"></i>
+                <span>Review Order</span>
+                <span id="item-count" class="bg-white text-blue-600 px-2 py-0.5 rounded-md text-xs">0</span>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b flex justify-between items-center bg-blue-50">
+                <div>
+                    <h2 class="text-xl font-black text-blue-900">YOUR ORDER</h2>
+                    <p class="text-xs text-blue-600 font-bold uppercase tracking-tight">The 21-44 Store, Eatonia</p>
+                </div>
+                <button onclick="hideSummary()" class="text-gray-400 hover:text-black text-3xl">&times;</button>
+            </div>
+            <div id="order-list" class="flex-1 p-6 overflow-y-auto custom-scrollbar">
+                <!-- Order items -->
+            </div>
+            <div class="p-6 bg-gray-50 border-t space-y-4">
+                <div class="flex justify-between items-center">
+                    <span class="font-black text-gray-500 uppercase text-xs tracking-widest">Grand Total</span>
+                    <span id="modal-total" class="text-3xl font-black text-blue-600">$0.00</span>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <a id="call-btn" href="tel:3069672241" class="bg-green-600 hover:bg-green-700 text-white text-center py-4 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-md">
+                        <i class="fas fa-phone-alt"></i> CALL TO ORDER
+                    </a>
+                    <button onclick="clearOrder()" class="text-gray-400 text-xs font-bold uppercase hover:text-red-500 tracking-widest">Empty Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuData = [
+            {
+                id: "pizzas",
+                title: "Pizzas (#1 - #30)",
+                items: [
+                    { name: "#1 Cheese", desc: "Pizza Sauce, Mozza", prices: { '10"': 15.70, '12"': 19.75, '15"': 25.95 } },
+                    { name: "#2 Pepperoni", desc: "Pepperoni, Sauce, Mozza", prices: { '10"': 16.00, '12"': 20.05, '15"': 26.50 } },
+                    { name: "#3 Ham", desc: "Ham, Sauce, Mozza", prices: { '10"': 16.00, '12"': 20.05, '15"': 26.50 } },
+                    { name: "#4 Ham & Mushrooms", prices: { '10"': 16.50, '12"': 20.55, '15"': 27.25 } },
+                    { name: "#5 Ham, Mush & Pineapple", prices: { '10"': 16.70, '12"': 23.05, '15"': 28.25 } },
+                    { name: "#6 Ham, Pep & Mush", prices: { '10"': 17.50, '12"': 21.35, '15"': 28.25 } },
+                    { name: "#7 Ham, Pep, Mush, Grn Pep, Pine", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#8 Spartan Special", desc: "Ham, Pep, Pineapple", prices: { '10"': 17.50, '12"': 22.10, '15"': 29.25 } },
+                    { name: "#9 Greek Special", desc: "Pep, Grn Pep, Tomato, Olive, Onion, Feta, Parm", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#10 Vegetarian", desc: "Mush, Grn Pep, Onion, Olives, Tomato, Pineapple", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#11 Cheeseburger", desc: "Mustard, Mayo, Ketchup, Pickles, Onions, Tomato, Beef, Mozza, Cheddar", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#12 Inferno", desc: "Pep, Onion, Grn Pep, Jalapeño, Hot Peppers", prices: { '10"': 17.00, '12"': 23.30, '15"': 29.50 } },
+                    { name: "#13 Cheese It Up", desc: "Parm, Cheddar, Feta, Mozza", prices: { '10"': 18.00, '12"': 23.30, '15"': 29.50 } },
+                    { name: "#14 The Mexican", desc: "Beef, Taco Chips, Grn Pep, Tomato, Mozza, Cheddar, Salsa", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#15 Meathouse", desc: "Pep, Salami, Summer Sausage, Ham, Bacon", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#16 Ham It Up", desc: "Ham, Mush, Grn Pep, Pineapple", prices: { '10"': 18.00, '12"': 23.30, '15"': 29.50 } },
+                    { name: "#17 Hawaiian", desc: "Ham, Pineapple", prices: { '10"': 17.00, '12"': 21.30, '15"': 28.25 } },
+                    { name: "#18 Huskie Special", desc: "Pep, Double Sauce, Double Mozza, Cheddar", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#19 Chicken Supreme", desc: "Chicken, Tomato, Pine, Onion, Grn Pep, BBQ Sauce", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#20 The 21-44 Special", desc: "Pep, Salami, Sausage, Ham, Bacon, Mush, Grn Pep, Pine, Onion, Olive", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#21 Farmer's Special", desc: "Roast Beef, Onion, BBQ Sauce", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#22 Chicken Caesar", desc: "Chicken, Mush, Caesar Dressing", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#23 El Rancho", desc: "Chicken, Onion, Mush, Tomato, Ranch", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#24 Chicken Teriyaki", desc: "Chicken, Pineapple, Teriyaki Sauce", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#25 Chicken Greek", desc: "Chicken, Grn Pep, Tomato, Onion, Olive, Feta, Parm", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#26 Breakfast Pizza", desc: "Eggs, Ham, Bacon, Grn Pep, Onion, Mush, Cheddar", prices: { '10"': 18.00, '12"': 23.30, '15"': 30.25 } },
+                    { name: "#27 Chicken Bacon", desc: "Chicken Breast, Bacon", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#28 Steakhouse", desc: "Beef Steak, Mush, Onion, Grn Pep", prices: { '10"': 20.00, '12"': 25.30, '15"': 32.25 } },
+                    { name: "#29 Pizza Bones", desc: "Garlic Spread, Mozza", prices: { '10"': 12.50, '12"': 16.05, '15"': 22.25 } },
+                    { name: "#30 Chippers Pizza", desc: "Chippers, Bacon, Sour Cream, Garlic Spread", prices: { '10"': 14.70, '12"': 19.75, '15"': 25.95 } },
+                    { name: "Extra: Veggies", prices: { '10"': 2.00, '12"': 2.50, '15"': 3.10 } },
+                    { name: "Extra: Cheese", prices: { '10"': 3.50, '12"': 4.00, '15"': 5.00 } },
+                    { name: "Extra: Meat", prices: { '10"': 2.50, '12"': 3.00, '15"': 4.00 } },
+                    { name: "10\" Gluten Free", prices: { "Add": 4.00 } }
+                ]
+            },
+            {
+                id: "burgers",
+                title: "Burgers & Dogs",
+                items: [
+                    { name: "21-44 Traffic Light Burger", desc: "Loaded", prices: { "Sgl": 7.50, "Dbl": 10.25 } },
+                    { name: "Yellowhead (Cheeseburger)", prices: { "Sgl": 6.75, "Dbl": 9.50 } },
+                    { name: "Back Road Bacon Burger", prices: { "Sgl": 7.25, "Dbl": 10.00 } },
+                    { name: "Gravel Road Bacon & Swiss", prices: { "Sgl": 7.25, "Dbl": 10.00 } },
+                    { name: "Grid Road Mushroom Burger", prices: { "Sgl": 7.25, "Dbl": 10.00 } },
+                    { name: "Pizza Burger", prices: { "Sgl": 7.25, "Dbl": 10.00 } },
+                    { name: "One Way Burger", prices: { "Sgl": 6.25, "Dbl": 9.00 } },
+                    { name: "Inferno Burger", prices: { "Sgl": 7.50, "Dbl": 10.25 } },
+                    { name: "Prairie Chicken Burger", prices: { "Price": 7.00 } },
+                    { name: "Supreme Prairie Burger", prices: { "Price": 7.00 } },
+                    { name: "Beef Eater", prices: { "Price": 7.00 } },
+                    { name: "River Fish Burger", prices: { "Price": 7.00 } },
+                    { name: "Plain Hotdog", prices: { "Price": 5.00 } },
+                    { name: "Pizza Hotdog", prices: { "Price": 5.50 } },
+                    { name: "Cheese Hotdog", prices: { "Price": 5.50 } },
+                    { name: "Loaded Hotdog", prices: { "Price": 5.50 } },
+                    { name: "Add: Extra Cheese", prices: { "Add": 1.50 } },
+                    { name: "Add: Extra Bacon", prices: { "Add": 1.50 } }
+                ]
+            },
+            {
+                id: "apps",
+                title: "Appetizers",
+                items: [
+                    { name: "Chicken Fingers", prices: { "Reg": 7.50 } },
+                    { name: "Appetizer Platter", prices: { "Reg": 24.00, "Family": 48.00 } },
+                    { name: "Nachos & Cheese", prices: { "Reg": 6.00 } },
+                    { name: "Popcorn Chicken", prices: { "Reg": 6.00 } },
+                    { name: "Boneless Dry Ribs", prices: { "Reg": 6.00 } },
+                    { name: "Battered Mushrooms", prices: { "Reg": 6.00 } },
+                    { name: "Chicken Nuggets (6pc)", prices: { "Reg": 5.00 } },
+                    { name: "Chicken Nuggets (18pc)", prices: { "Reg": 12.00 } },
+                    { name: "KD Nuggets", prices: { "Reg": 6.00 } },
+                    { name: "Mozza Sticks", prices: { "Reg": 6.00 } },
+                    { name: "Pickle Spikes", prices: { "Reg": 6.00 } },
+                    { name: "Jalapeño Bites", prices: { "Reg": 6.00 } },
+                    { name: "Fantail Shrimp", prices: { "Reg": 7.00 } },
+                    { name: "Mozza Toast", prices: { "Reg": 2.75 } },
+                    { name: "Garlic Toast", prices: { "Reg": 2.75 } },
+                    { name: "Chippers", prices: { "Reg": 5.00 } },
+                    { name: "Poutine", prices: { "Reg": 7.00 } },
+                    { name: "Poutine with Bacon", prices: { "Reg": 8.50 } },
+                    { name: "Sweet Potato Fries", prices: { "Reg": 5.00 } },
+                    { name: "Fries", prices: { "Reg": 4.25, "Family": 8.25 } },
+                    { name: "Onion Rings", prices: { "Reg": 4.25, "Family": 8.25 } },
+                    { name: "Gravy", prices: { "Reg": 1.50, "Lg": 2.75 } }
+                ]
+            },
+            {
+                id: "pasta",
+                title: "Pasta & Wings",
+                items: [
+                    { name: "Baked Lasagna (Meat)", prices: { "Reg": 9.00, "Lg": 13.00 } },
+                    { name: "The 21-44 Lasagna (Loaded)", prices: { "Reg": 9.50, "Lg": 14.00 } },
+                    { name: "Veggie Lasagna", prices: { "Reg": 9.50, "Lg": 14.00 } },
+                    { name: "Chicken Lasagna", prices: { "Reg": 9.50, "Lg": 14.00 } },
+                    { name: "Wings (Reg/Boneless)", desc: "Buff Ranch, H-Garlic, Teriyaki, Greek, H-Mustard, BBQ, S&P, Hot, Lem-Pep, S&S Thai", prices: { "1 lb": 12.50 } }
+                ]
+            },
+            {
+                id: "chicken",
+                title: "Chicken & Meals",
+                items: [
+                    { name: "Chicken On Road (9 pce)", prices: { "Price": 21.99 } },
+                    { name: "Chicken On Road (18 pce)", prices: { "Price": 39.99 } },
+                    { name: "Chicken Finger Dinner", desc: "Inc Fries, Slaw & Bun", prices: { "Meal": 12.75 } },
+                    { name: "Fish & Chips Dinner", desc: "Inc Fries, Slaw & Bun", prices: { "Meal": 12.75 } },
+                    { name: "Rib Dinner", desc: "Inc Fries, Slaw & Bun", prices: { "Meal": 12.75 } },
+                    { name: "Nest of Chicken Dinner", desc: "Inc Fries, Slaw & Bun", prices: { "Meal": 12.75 } },
+                    { name: "Shrimp Dinner", desc: "Inc Fries, Slaw & Bun", prices: { "Meal": 12.75 } },
+                    { name: "Little People's Meal", desc: "Inc Drink & Treat: Nachos, KD, Hotdog, Chick-Nug, Popcorn, or Fish", prices: { "Meal": 7.50 } }
+                ]
+            },
+            {
+                id: "subs",
+                title: "Subs & Salads",
+                items: [
+                    { name: "Sub ($7.50)", desc: "Roast Beef, Ham/Cheese, Turkey, Club, Teriyaki, Pizza, Tuna, Veggie, Beef Steak, Super", prices: { "Reg": 7.50 } },
+                    { name: "DIY Wrap/Pita/Salad", desc: "Fully Customizable", prices: { "Reg": 8.00 } },
+                    { name: "Caesar Salad", prices: { "Reg": 11.00 } },
+                    { name: "Greek Salad", prices: { "Reg": 12.25 } },
+                    { name: "Taco Salad", prices: { "Reg": 12.25 } },
+                    { name: "Chicken Caesar Salad", prices: { "Reg": 16.00 } },
+                    { name: "Chicken Greek Salad", prices: { "Reg": 17.25 } },
+                    { name: "Taco in a Bag", prices: { "Reg": 6.50 } },
+                    { name: "Coleslaw", prices: { "Reg": 3.00, "Lg": 5.00 } }
+                ]
+            },
+            {
+                id: "treats",
+                title: "Treats & Cones",
+                items: [
+                    { name: "Soft Ice Cream Cone", prices: { "Reg": 3.50, "Lg": 4.25 } },
+                    { name: "Hard Ice Cream Cone", prices: { "1 Sc": 3.50, "2 Sc": 4.25 } },
+                    { name: "Add a Waffle Cone", prices: { "Add": 1.00 } },
+                    { name: "Sundae", prices: { "Reg": 4.75 } },
+                    { name: "Parfait", prices: { "Reg": 6.00 } },
+                    { name: "Banana Split", prices: { "Reg": 5.75 } },
+                    { name: "Mini Twist", prices: { "Reg": 5.25 } },
+                    { name: "Regular Twister", prices: { "Reg": 6.00 } },
+                    { name: "Milkshake", prices: { "Reg": 4.75, "Jumbo": 6.75 } },
+                    { name: "Hailstorm Shake", prices: { "Reg": 4.75 } },
+                    { name: "Add Nuts", prices: { "Add": 0.75 } },
+                    { name: "35oz Soft Ice Cream", prices: { "Tub": 9.00 } },
+                    { name: "35oz Hard Ice Cream", prices: { "Tub": 9.00 } }
+                ]
+            }
+        ];
+
+        let order = [];
+
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            menuData.forEach(section => {
+                const sectionHtml = `
+                    <div id="${section.id}" class="pt-8">
+                        <h2 class="text-xl font-black text-blue-900 border-b-4 border-blue-600 mb-6 pb-2 inline-block uppercase tracking-wider">${section.title}</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${section.items.map(item => `
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-lg transition-all">
+                                    <div class="mb-4">
+                                        <h3 class="font-black text-gray-800 uppercase text-sm mb-1">${item.name}</h3>
+                                        ${item.desc ? `<p class="text-[10px] text-gray-400 font-bold leading-tight uppercase">${item.desc}</p>` : ''}
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${Object.keys(item.prices).map(size => `
+                                            <button onclick="addItem('${item.name}', '${size}', ${item.prices[size]})" 
+                                                    class="flex-1 bg-gray-50 hover:bg-blue-600 hover:text-white text-blue-700 px-3 py-2 rounded-xl text-[11px] font-black transition-all border border-gray-100 flex flex-col items-center">
+                                                <span class="opacity-50 uppercase">${size}</span>
+                                                <span>$${item.prices[size].toFixed(2)}</span>
+                                            </button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += sectionHtml;
+            });
+        }
+
+        function addItem(name, size, price) {
+            order.push({ name, size, price, id: Date.now() });
+            updateCart();
+        }
+
+        function updateCart() {
+            const total = order.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('total-price').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('item-count').innerText = order.length;
+        }
+
+        function showSummary() {
+            const list = document.getElementById('order-list');
+            const total = order.reduce((sum, item) => sum + item.price, 0);
+            
+            if (order.length === 0) {
+                list.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-gray-300">
+                        <i class="fas fa-shopping-basket text-6xl mb-4 opacity-20"></i>
+                        <p class="font-black uppercase tracking-widest text-sm">Cart is empty</p>
+                    </div>`;
+            } else {
+                list.innerHTML = order.map((item, idx) => `
+                    <div class="flex justify-between items-center mb-4 p-4 bg-gray-50 rounded-2xl">
+                        <div>
+                            <p class="font-black text-xs uppercase text-gray-800">${item.name}</p>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${item.size}</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-black text-blue-600">$${item.price.toFixed(2)}</span>
+                            <button onclick="removeItem(${idx})" class="text-red-300 hover:text-red-600 p-2">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('modal-total').innerText = `$${total.toFixed(2)}`;
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function hideSummary() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        function removeItem(idx) {
+            order.splice(idx, 1);
+            updateCart();
+            showSummary();
+        }
+
+        function clearOrder() {
+            if (confirm("Empty your selection?")) {
+                order = [];
+                updateCart();
+                hideSummary();
+            }
+        }
+
+        // Active Nav Tracking
+        window.addEventListener('scroll', () => {
+            const sections = menuData.map(s => document.getElementById(s.id));
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = "";
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                if (window.scrollY >= top - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-blue-600', 'text-white');
+                link.classList.add('bg-gray-100', 'text-gray-700');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('bg-gray-100', 'text-gray-700');
+                    link.classList.add('bg-blue-600', 'text-white');
+                }
+            });
+        });
+
+        window.onload = renderMenu;
+    </script>
+</body>
+</html>
