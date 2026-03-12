@@ -290,7 +290,8 @@
             score: 0,
             isGameOver: false,
             bgScroll: 0,
-            frame: 0
+            frame: 0,
+            speedMultiplier: 1.0
         };
 
         // Resize handler
@@ -528,6 +529,12 @@
                     gameOver();
                 }
             }
+
+            heal(amount) {
+                this.health = Math.min(this.maxHealth, this.health + amount);
+                healthFill.style.width = Math.max(0, (this.health / this.maxHealth) * 100) + '%';
+                createParticles(this.x, this.y, '#00ff00', 15); // Green healing particles
+            }
         }
 
         class Projectile {
@@ -584,23 +591,38 @@
             constructor() {
                 this.x = game.width + 50;
                 this.y = Math.random() * (game.height - 100) + 50;
-                this.type = Math.random() > 0.5 ? 'cat' : 'vacuum';
-                this.speed = this.type === 'cat' ? (Math.random() * 3 + 3) : (Math.random() * 2 + 1.5);
-                this.width = 40;
-                this.height = 40;
-                this.hp = this.type === 'cat' ? 1 : 3; // Vacuum is tankier
+                
+                // Determine enemy type
+                const rand = Math.random();
+                if (rand > 0.85) { // 15% chance for St. Bernard
+                    this.type = 'stbernard';
+                    this.speed = Math.random() * 2 + 2;
+                    this.width = 120;
+                    this.height = 100;
+                    this.hp = 1; // Dies in one hit, but hitting it is bad
+                } else {
+                    this.type = rand > 0.425 ? 'cat' : 'vacuum';
+                    this.speed = this.type === 'cat' ? (Math.random() * 3 + 3) : (Math.random() * 2 + 1.5);
+                    this.width = 40;
+                    this.height = 40;
+                    this.hp = this.type === 'cat' ? 1 : 3;
+                }
+                
                 this.active = true;
                 this.wobble = Math.random() * Math.PI * 2;
             }
 
             update() {
-                this.x -= this.speed;
+                // Apply global speed multiplier for progressive difficulty
+                this.x -= this.speed * game.speedMultiplier;
                 this.wobble += 0.1;
 
                 if(this.type === 'cat') {
                     this.y += Math.sin(this.wobble) * 2; // Cats jump/wobble around
-                } else {
+                } else if(this.type === 'vacuum') {
                     this.y += Math.sin(this.wobble * 0.5) * 0.5; // Vacuums hover steadily
+                } else if(this.type === 'stbernard') {
+                    this.y += Math.sin(this.wobble * 0.8) * 1; // Gentle trot
                 }
 
                 if(this.x < -100) this.active = false;
@@ -625,7 +647,7 @@
                     ctx.beginPath();
                     ctx.arc(0, -10, 3, 0, Math.PI*2);
                     ctx.fill();
-                } else {
+                } else if(this.type === 'cat') {
                     // Angry Cat (Simple face)
                     ctx.fillStyle = '#ff9900'; // Orange tabby
                     ctx.beginPath();
@@ -645,6 +667,56 @@
                     ctx.lineWidth = 2;
                     ctx.beginPath(); ctx.moveTo(-12, -8); ctx.lineTo(-4, -5); ctx.stroke();
                     ctx.beginPath(); ctx.moveTo(12, -8); ctx.lineTo(4, -5); ctx.stroke();
+                } else if(this.type === 'stbernard') {
+                    // St. Bernard (Moving left)
+                    ctx.scale(2, 2); // Double the visual size to match the new hitboxes
+                    
+                    // Body (White with brown patches)
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, 30, 20, 0, 0, Math.PI*2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#8b4513'; // Brown patch
+                    ctx.beginPath();
+                    ctx.ellipse(10, -5, 15, 12, 0, 0, Math.PI*2);
+                    ctx.fill();
+
+                    // Head (Brown with white stripe)
+                    ctx.beginPath();
+                    ctx.arc(-20, -15, 16, 0, Math.PI*2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(-24, -30, 8, 20); // White face stripe
+                    
+                    // Snout
+                    ctx.beginPath();
+                    ctx.ellipse(-28, -8, 10, 8, 0, 0, Math.PI*2);
+                    ctx.fill();
+                    
+                    // Nose
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath(); ctx.arc(-34, -10, 4, 0, Math.PI*2); ctx.fill();
+
+                    // Barrel (Classic Rescue Dog)
+                    ctx.fillStyle = '#8B0000'; // Dark red/brown barrel
+                    ctx.beginPath();
+                    ctx.ellipse(-10, 10, 8, 12, Math.PI/4, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    // White cross on barrel
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(-12, 6, 4, 8);
+                    ctx.fillRect(-14, 8, 8, 4);
+
+                    // Floppy ear
+                    ctx.fillStyle = '#8b4513';
+                    ctx.beginPath();
+                    ctx.ellipse(-12, -15, 6, 12, -Math.PI/6, 0, Math.PI*2);
+                    ctx.fill();
                 }
 
                 ctx.restore();
@@ -740,6 +812,7 @@
             enemies = [];
             particles = [];
             game.score = 0;
+            game.speedMultiplier = 1.0;
             scoreEl.innerText = game.score;
             game.isGameOver = false;
             game.frame = 0;
@@ -755,14 +828,17 @@
         function update() {
             if(game.isGameOver) return;
 
+            // Increase difficulty based on score
+            game.speedMultiplier = 1.0 + (game.score * 0.002);
+
             game.frame++;
-            game.bgScroll -= 2;
+            game.bgScroll -= 2 * game.speedMultiplier;
             if(game.bgScroll <= -100) game.bgScroll = 0;
 
             player.update();
 
             // Spawn Enemies
-            let spawnRate = Math.max(30, 100 - Math.floor(game.score / 10)); // Gets harder
+            let spawnRate = Math.max(20, 100 - Math.floor(game.score / 10)); // Gets harder
             if(game.frame % spawnRate === 0) {
                 enemies.push(new Enemy());
             }
@@ -780,6 +856,15 @@
                 for(let j = enemies.length - 1; j >= 0; j--) {
                     let e = enemies[j];
                     if(checkCollision(p, e, p.width/2, e.width/2)) {
+                        if (e.type === 'stbernard') {
+                            // Hit the good boy! Penalize player
+                            player.takeDamage(25);
+                            p.active = false;
+                            e.active = false;
+                            createParticles(e.x, e.y, '#ff0000', 20); // Angry red particles
+                            break;
+                        }
+
                         e.hp -= p.damage;
                         p.active = false;
                         
@@ -806,10 +891,15 @@
                     continue;
                 }
 
-                if(checkCollision(player, e, 25, 20)) {
-                    player.takeDamage(15);
-                    e.active = false;
-                    createParticles(e.x, e.y, '#fff', 10);
+                if(checkCollision(player, e, 25, e.width/2)) {
+                    if(e.type === 'stbernard') {
+                        player.heal(30);
+                        e.active = false;
+                    } else {
+                        player.takeDamage(15);
+                        e.active = false;
+                        createParticles(e.x, e.y, '#fff', 10);
+                    }
                 }
             }
 
