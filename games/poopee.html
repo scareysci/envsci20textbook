@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Critical for mobile optimization: prevents scaling and zooming -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Poo Poo Pee Pee - Corgi Defender</title>
+    <style>
+        /* CSS Reset & Mobile Game Setup */
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #4CAF50; /* Yard Green Base */
+            touch-action: none; /* Prevents pull-to-refresh and scrolling */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* The Game Canvas */
+        #gameCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* UI Overlay */
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none; /* Let touches pass through to controls */
+        }
+
+        #score-board {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid rgba(255,255,255,0.2);
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        #health-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 150px;
+            height: 20px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #health-fill {
+            width: 100%;
+            height: 100%;
+            background: #ff3333;
+            transition: width 0.2s;
+        }
+
+        /* Game Over Screen */
+        #game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+            pointer-events: auto;
+            color: white;
+        }
+
+        #game-over-screen h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            color: #FFEB3B;
+            text-shadow: 3px 3px 0 #000;
+        }
+
+        #restart-btn {
+            padding: 15px 40px;
+            font-size: 24px;
+            background: #4CAF50;
+            color: white;
+            border: 3px solid white;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        #restart-btn:active {
+            transform: scale(0.95);
+            background: #45a049;
+        }
+
+        /* Touch Controls Layer */
+        #controls-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
+
+        /* Joystick Area (Left half of screen) */
+        #joystick-zone {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            pointer-events: auto;
+        }
+
+        #joystick-base {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: none;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        #joystick-stick {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Action Buttons Area (Right half) */
+        #action-zone {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 160px;
+            height: 160px;
+            pointer-events: auto;
+        }
+
+        .action-btn {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        /* Pee Pee (Laser) Button */
+        #btn-pee {
+            bottom: 80px;
+            right: 10px;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ffe066 0%, #ffcc00 100%);
+        }
+
+        /* Poo Poo (Bomb) Button */
+        #btn-poo {
+            bottom: 10px;
+            right: 80px;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #8b5a2b 0%, #5c3a21 100%);
+        }
+
+        .action-btn:active {
+            transform: scale(0.9);
+            filter: brightness(0.8);
+        }
+
+        /* Desktop Instructions */
+        #desktop-hint {
+            display: none;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) {
+            #desktop-hint { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="ui-layer">
+        <div id="health-bar"><div id="health-fill"></div></div>
+        <div id="score-board">Score: <span id="score">0</span></div>
+        <div id="desktop-hint">Desktop: Arrow Keys to move. 'Z' for Pee (Laser), 'X' for Poo (Bomb).</div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen">
+        <h1>GAME OVER</h1>
+        <p style="font-size: 24px; margin: 0;">Final Score: <span id="final-score">0</span></p>
+        <button id="restart-btn">Play Again</button>
+    </div>
+
+    <!-- Mobile Touch Controls -->
+    <div id="controls-layer">
+        <!-- Joystick Area -->
+        <div id="joystick-zone">
+            <div id="joystick-base">
+                <div id="joystick-stick"></div>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div id="action-zone">
+            <div id="btn-pee" class="action-btn">PEE</div>
+            <div id="btn-poo" class="action-btn">POO</div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * POO POO PEE PEE - Corgi Defender
+         * Game Engine & Logic
+         */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // UI Elements
+        const scoreEl = document.getElementById('score');
+        const finalScoreEl = document.getElementById('final-score');
+        const healthFill = document.getElementById('health-fill');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const restartBtn = document.getElementById('restart-btn');
+
+        // Game State
+        let game = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            score: 0,
+            isGameOver: false,
+            bgScroll: 0,
+            frame: 0
+        };
+
+        // Resize handler
+        function resize() {
+            game.width = window.innerWidth;
+            game.height = window.innerHeight;
+            canvas.width = game.width;
+            canvas.height = game.height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // --- INPUT HANDLING ---
+        const input = {
+            x: 0,
+            y: 0,
+            pee: false,
+            poo: false
+        };
+
+        // Keyboard support (for desktop testing)
+        window.addEventListener('keydown', (e) => {
+            if(e.code === 'ArrowUp') input.y = -1;
+            if(e.code === 'ArrowDown') input.y = 1;
+            if(e.code === 'ArrowLeft') input.x = -1;
+            if(e.code === 'ArrowRight') input.x = 1;
+            if(e.code === 'KeyZ') shootPee();
+            if(e.code === 'KeyX') dropPoo();
+        });
+        window.addEventListener('keyup', (e) => {
+            if(e.code === 'ArrowUp' || e.code === 'ArrowDown') input.y = 0;
+            if(e.code === 'ArrowLeft' || e.code === 'ArrowRight') input.x = 0;
+        });
+
+        // Touch Control Logic (Mobile)
+        const joyZone = document.getElementById('joystick-zone');
+        const joyBase = document.getElementById('joystick-base');
+        const joyStick = document.getElementById('joystick-stick');
+        
+        let joyTouchId = null;
+        const maxJoyRadius = 50;
+        let joyOrigin = { x: 0, y: 0 };
+
+        joyZone.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            for(let i=0; i<e.changedTouches.length; i++) {
+                const t = e.changedTouches[i];
+                if(joyTouchId === null) {
+                    joyTouchId = t.identifier;
+                    joyOrigin.x = t.clientX;
+                    joyOrigin.y = t.clientY;
+                    joyBase.style.display = 'block';
+                    joyBase.style.left = t.clientX + 'px';
+                    joyBase.style.top = t.clientY + 'px';
+                    joyStick.style.transform = `translate(-50%, -50%)`;
+                    input.x = 0; input.y = 0;
+                }
+            }
+        });
+
+        joyZone.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            for(let i=0; i<e.changedTouches.length; i++) {
+                const t = e.changedTouches[i];
+                if(t.identifier === joyTouchId) {
+                    let dx = t.clientX - joyOrigin.x;
+                    let dy = t.clientY - joyOrigin.y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+                    
+                    if(distance > maxJoyRadius) {
+                        dx = (dx / distance) * maxJoyRadius;
+                        dy = (dy / distance) * maxJoyRadius;
+                    }
+
+                    joyStick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+                    
+                    // Normalize input (-1 to 1)
+                    input.x = dx / maxJoyRadius;
+                    input.y = dy / maxJoyRadius;
+                }
+            }
+        });
+
+        const resetJoystick = (e) => {
+            e.preventDefault();
+            for(let i=0; i<e.changedTouches.length; i++) {
+                if(e.changedTouches[i].identifier === joyTouchId) {
+                    joyTouchId = null;
+                    joyBase.style.display = 'none';
+                    input.x = 0;
+                    input.y = 0;
+                }
+            }
+        };
+        joyZone.addEventListener('touchend', resetJoystick);
+        joyZone.addEventListener('touchcancel', resetJoystick);
+
+        // Action Buttons
+        document.getElementById('btn-pee').addEventListener('touchstart', (e) => { e.preventDefault(); shootPee(); });
+        document.getElementById('btn-pee').addEventListener('mousedown', (e) => { e.preventDefault(); shootPee(); });
+        
+        document.getElementById('btn-poo').addEventListener('touchstart', (e) => { e.preventDefault(); dropPoo(); });
+        document.getElementById('btn-poo').addEventListener('mousedown', (e) => { e.preventDefault(); dropPoo(); });
+
+        // --- ENTITIES ---
+
+        class Corgi {
+            constructor() {
+                this.x = 100;
+                this.y = game.height / 2;
+                this.width = 70;
+                this.height = 45;
+                this.speed = 7;
+                this.health = 100;
+                this.maxHealth = 100;
+                this.capeWave = 0;
+                this.invulnerable = 0;
+            }
+
+            update() {
+                if(game.isGameOver) return;
+
+                // Move based on input
+                this.x += input.x * this.speed;
+                this.y += input.y * this.speed;
+
+                // Boundary checks
+                if(this.x < 30) this.x = 30;
+                if(this.x > game.width - this.width) this.x = game.width - this.width;
+                if(this.y < 30) this.y = 30;
+                if(this.y > game.height - this.height - 20) this.y = game.height - this.height - 20;
+
+                this.capeWave += 0.2;
+                if(this.invulnerable > 0) this.invulnerable--;
+            }
+
+            draw(ctx) {
+                if(this.invulnerable > 0 && Math.floor(Date.now() / 100) % 2 === 0) return; // Flash effect
+
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                // Draw Red Flying Cape
+                ctx.fillStyle = '#e60000';
+                ctx.beginPath();
+                ctx.moveTo(10, -5);
+                ctx.quadraticCurveTo(-30, -10 + Math.sin(this.capeWave)*15, -40, 5 + Math.cos(this.capeWave)*10);
+                ctx.lineTo(-30, 20);
+                ctx.lineTo(10, 15);
+                ctx.fill();
+
+                // Draw Tricolor Corgi
+                // Body (Black saddle)
+                ctx.fillStyle = '#1a1a1a';
+                ctx.beginPath();
+                ctx.ellipse(0, 0, 35, 20, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // White belly & neck
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(5, 8, 30, 12, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Tan Head
+                ctx.fillStyle = '#d2b48c';
+                ctx.beginPath();
+                ctx.arc(30, -15, 18, 0, Math.PI * 2);
+                ctx.fill();
+
+                // White snout line
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.ellipse(38, -12, 12, 8, 0, 0, Math.PI*2);
+                ctx.fill();
+
+                // Black nose
+                ctx.fillStyle = '#000000';
+                ctx.beginPath();
+                ctx.arc(48, -14, 4, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eye
+                ctx.fillStyle = '#000000';
+                ctx.beginPath();
+                ctx.arc(32, -20, 3, 0, Math.PI * 2);
+                ctx.fill();
+                // Eye glint
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(33, -21, 1, 0, Math.PI*2);
+                ctx.fill();
+
+                // Ears (Black outside, tan inside)
+                ctx.fillStyle = '#1a1a1a';
+                ctx.beginPath();
+                ctx.moveTo(25, -28);
+                ctx.lineTo(15, -45);
+                ctx.lineTo(35, -30);
+                ctx.fill();
+                ctx.fillStyle = '#d2b48c';
+                ctx.beginPath();
+                ctx.moveTo(25, -28);
+                ctx.lineTo(18, -40);
+                ctx.lineTo(30, -30);
+                ctx.fill();
+
+                // Legs (White/Tan)
+                ctx.fillStyle = '#ffffff';
+                // Front
+                ctx.fillRect(15, 10, 8, 15);
+                ctx.fillRect(25, 12, 8, 15);
+                // Back
+                ctx.fillRect(-25, 10, 8, 15);
+                ctx.fillRect(-15, 12, 8, 15);
+
+                // Cute nub tail (tan/black)
+                ctx.fillStyle = '#d2b48c';
+                ctx.beginPath();
+                ctx.arc(-35, -5, 6, 0, Math.PI*2);
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            takeDamage(amount) {
+                if(this.invulnerable > 0) return;
+                this.health -= amount;
+                this.invulnerable = 60; // 1 second roughly at 60fps
+                createParticles(this.x, this.y, '#ff0000', 10);
+                
+                healthFill.style.width = Math.max(0, (this.health / this.maxHealth) * 100) + '%';
+
+                if(this.health <= 0) {
+                    gameOver();
+                }
+            }
+        }
+
+        class Projectile {
+            constructor(x, y, type) {
+                this.x = x;
+                this.y = y;
+                this.type = type; // 'pee' or 'poo'
+                this.width = type === 'pee' ? 30 : 15;
+                this.height = type === 'pee' ? 6 : 15;
+                this.vx = type === 'pee' ? 15 : 4;
+                this.vy = type === 'pee' ? 0 : -2;
+                this.gravity = type === 'poo' ? 0.4 : 0;
+                this.active = true;
+                this.damage = type === 'pee' ? 1 : 3; // Poo is stronger but harder to hit
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += this.gravity;
+
+                // Offscreen removal
+                if(this.x > game.width + 50 || this.y > game.height + 50) {
+                    this.active = false;
+                }
+            }
+
+            draw(ctx) {
+                if(this.type === 'pee') {
+                    // Laser Beam
+                    ctx.fillStyle = '#ffff00';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#ffaa00';
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(this.x + 10, this.y + 1, this.width - 20, this.height - 2);
+                    ctx.shadowBlur = 0;
+                } else {
+                    // Bomb
+                    ctx.fillStyle = '#654321'; // Brown
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.width/2, 0, Math.PI*2);
+                    ctx.fill();
+                    // Texture/shine
+                    ctx.fillStyle = '#8b5a2b';
+                    ctx.beginPath();
+                    ctx.arc(this.x - 2, this.y - 2, this.width/4, 0, Math.PI*2);
+                    ctx.fill();
+                }
+            }
+        }
+
+        class Enemy {
+            constructor() {
+                this.x = game.width + 50;
+                this.y = Math.random() * (game.height - 100) + 50;
+                this.type = Math.random() > 0.5 ? 'cat' : 'vacuum';
+                this.speed = this.type === 'cat' ? (Math.random() * 3 + 3) : (Math.random() * 2 + 1.5);
+                this.width = 40;
+                this.height = 40;
+                this.hp = this.type === 'cat' ? 1 : 3; // Vacuum is tankier
+                this.active = true;
+                this.wobble = Math.random() * Math.PI * 2;
+            }
+
+            update() {
+                this.x -= this.speed;
+                this.wobble += 0.1;
+
+                if(this.type === 'cat') {
+                    this.y += Math.sin(this.wobble) * 2; // Cats jump/wobble around
+                } else {
+                    this.y += Math.sin(this.wobble * 0.5) * 0.5; // Vacuums hover steadily
+                }
+
+                if(this.x < -100) this.active = false;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+
+                if(this.type === 'vacuum') {
+                    // Robot Vacuum
+                    ctx.fillStyle = '#555';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, 25, 15, 0, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.fillStyle = '#333';
+                    ctx.beginPath();
+                    ctx.ellipse(0, -5, 20, 10, 0, 0, Math.PI*2);
+                    ctx.fill();
+                    // Blinking light
+                    ctx.fillStyle = (Math.floor(Date.now() / 200) % 2 === 0) ? '#ff0000' : '#550000';
+                    ctx.beginPath();
+                    ctx.arc(0, -10, 3, 0, Math.PI*2);
+                    ctx.fill();
+                } else {
+                    // Angry Cat (Simple face)
+                    ctx.fillStyle = '#ff9900'; // Orange tabby
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 18, 0, Math.PI*2);
+                    ctx.fill();
+                    // Ears
+                    ctx.beginPath();
+                    ctx.moveTo(-15, -10); ctx.lineTo(-18, -25); ctx.lineTo(-5, -15);
+                    ctx.moveTo(15, -10); ctx.lineTo(18, -25); ctx.lineTo(5, -15);
+                    ctx.fill();
+                    // Angry Eyes
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath(); ctx.arc(-7, -3, 6, 0, Math.PI*2); ctx.arc(7, -3, 6, 0, Math.PI*2); ctx.fill();
+                    ctx.fillStyle = '#000';
+                    ctx.beginPath(); ctx.arc(-7, -3, 2, 0, Math.PI*2); ctx.arc(7, -3, 2, 0, Math.PI*2); ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(-12, -8); ctx.lineTo(-4, -5); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(12, -8); ctx.lineTo(4, -5); ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 5 + 2;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1.0;
+                this.decay = Math.random() * 0.05 + 0.02;
+                this.size = Math.random() * 4 + 2;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life -= this.decay;
+            }
+
+            draw(ctx) {
+                ctx.globalAlpha = Math.max(0, this.life);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        // Object Pools/Arrays
+        let player = new Corgi();
+        let projectiles = [];
+        let enemies = [];
+        let particles = [];
+
+        // Actions
+        let lastPeeTime = 0;
+        let lastPooTime = 0;
+
+        function shootPee() {
+            if(game.isGameOver) return;
+            const now = Date.now();
+            if(now - lastPeeTime > 200) { // Fire rate limit
+                // Shoot from the front of the corgi
+                projectiles.push(new Projectile(player.x + 40, player.y - 15, 'pee'));
+                lastPeeTime = now;
+            }
+        }
+
+        function dropPoo() {
+            if(game.isGameOver) return;
+            const now = Date.now();
+            if(now - lastPooTime > 500) { // Slower fire rate for bombs
+                // Drop from the back
+                projectiles.push(new Projectile(player.x - 30, player.y + 10, 'poo'));
+                lastPooTime = now;
+            }
+        }
+
+        function createParticles(x, y, color, count) {
+            for(let i=0; i<count; i++) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        // Collision Check Helper (AABB based on centers/radius approx)
+        function checkCollision(obj1, obj2, r1, r2) {
+            const dx = obj1.x - obj2.x;
+            const dy = obj1.y - obj2.y;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            return dist < (r1 + r2);
+        }
+
+        function addScore(points) {
+            game.score += points;
+            scoreEl.innerText = game.score;
+        }
+
+        function gameOver() {
+            game.isGameOver = true;
+            finalScoreEl.innerText = game.score;
+            gameOverScreen.style.display = 'flex';
+        }
+
+        function resetGame() {
+            player = new Corgi();
+            projectiles = [];
+            enemies = [];
+            particles = [];
+            game.score = 0;
+            scoreEl.innerText = game.score;
+            game.isGameOver = false;
+            game.frame = 0;
+            healthFill.style.width = '100%';
+            gameOverScreen.style.display = 'none';
+        }
+
+        restartBtn.addEventListener('click', resetGame);
+        restartBtn.addEventListener('touchstart', (e) => { e.preventDefault(); resetGame(); });
+
+        // --- MAIN LOOP ---
+
+        function update() {
+            if(game.isGameOver) return;
+
+            game.frame++;
+            game.bgScroll -= 2;
+            if(game.bgScroll <= -100) game.bgScroll = 0;
+
+            player.update();
+
+            // Spawn Enemies
+            let spawnRate = Math.max(30, 100 - Math.floor(game.score / 10)); // Gets harder
+            if(game.frame % spawnRate === 0) {
+                enemies.push(new Enemy());
+            }
+
+            // Update Projectiles
+            for(let i = projectiles.length - 1; i >= 0; i--) {
+                let p = projectiles[i];
+                p.update();
+                if(!p.active) {
+                    projectiles.splice(i, 1);
+                    continue;
+                }
+
+                // Check collision with enemies
+                for(let j = enemies.length - 1; j >= 0; j--) {
+                    let e = enemies[j];
+                    if(checkCollision(p, e, p.width/2, e.width/2)) {
+                        e.hp -= p.damage;
+                        p.active = false;
+                        
+                        // Hit effect
+                        createParticles(e.x, e.y, p.type === 'pee' ? '#ffff00' : '#8b5a2b', 5);
+
+                        if(e.hp <= 0) {
+                            e.active = false;
+                            addScore(e.type === 'vacuum' ? 20 : 10);
+                            createParticles(e.x, e.y, e.type === 'cat' ? '#ff9900' : '#999', 15);
+                        }
+                        break; // Projectile destroyed, stop checking other enemies
+                    }
+                }
+            }
+
+            // Update Enemies & Check Player Collision
+            for(let i = enemies.length - 1; i >= 0; i--) {
+                let e = enemies[i];
+                e.update();
+                
+                if(!e.active) {
+                    enemies.splice(i, 1);
+                    continue;
+                }
+
+                if(checkCollision(player, e, 25, 20)) {
+                    player.takeDamage(15);
+                    e.active = false;
+                    createParticles(e.x, e.y, '#fff', 10);
+                }
+            }
+
+            // Update Particles
+            for(let i = particles.length - 1; i >= 0; i--) {
+                particles[i].update();
+                if(particles[i].life <= 0) {
+                    particles.splice(i, 1);
+                }
+            }
+        }
+
+        function drawBackground() {
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillRect(0, 0, game.width, game.height);
+            
+            // Draw moving grass strips
+            ctx.fillStyle = '#45a049';
+            for(let i=0; i<game.width/100 + 2; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i*100 + game.bgScroll, game.height);
+                ctx.lineTo(i*100 + 40 + game.bgScroll, game.height);
+                ctx.lineTo(i*100 + 80 + game.bgScroll, 0);
+                ctx.lineTo(i*100 + 40 + game.bgScroll, 0);
+                ctx.fill();
+            }
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.clearRect(0, 0, game.width, game.height);
+            
+            drawBackground();
+
+            if(!game.isGameOver) {
+                player.draw(ctx);
+            }
+
+            for(let p of projectiles) p.draw(ctx);
+            for(let e of enemies) e.draw(ctx);
+            for(let pt of particles) pt.draw(ctx);
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        // Start game
+        loop();
+
+    </script>
+</body>
+</html>
